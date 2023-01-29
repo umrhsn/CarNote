@@ -1,6 +1,5 @@
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/consumable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,8 +36,8 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                   LengthLimitingTextInputFormatter(9),
                 ],
               ),
-              SizedBox(height: 5),
-              Spacer(),
+              const SizedBox(height: 5),
+              const Spacer(),
               Flexible(
                 flex: 100,
                 child: SingleChildScrollView(
@@ -84,7 +83,7 @@ class _MaintenanceScreenState extends State<MaintenanceScreen> {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               ElevatedButton(onPressed: () {}, child: Text(AppStrings.btnSave.toUpperCase()))
             ],
           ),
