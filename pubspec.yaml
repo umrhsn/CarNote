@@ -1,0 +1,36 @@
+name: car_note
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  equatable: ^2.0.5
+  animated_text_kit: ^4.2.2
+  intl: ^0.18.0
+  provider: ^6.0.5
+  font_awesome_flutter: ^10.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+
+  fonts:
+    - family: Product Sans
+      fonts:
+        - asset: assets/fonts/Product Sans Bold.ttf
+        - asset: assets/fonts/Product Sans Bold Italic.ttf
+        - asset: assets/fonts/Product Sans Italic.ttf
+        - asset: assets/fonts/Product Sans Regular.ttf
+          style: italic
