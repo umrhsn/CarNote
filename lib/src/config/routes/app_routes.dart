@@ -1,5 +1,5 @@
 import 'package:car_note/src/features/car_info/presentation/pages/car_info.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/maintenance_screen.dart';
+import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -12,7 +12,7 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
-        return MaterialPageRoute(builder: ((context) => const MaintenanceScreen()));
+        return MaterialPageRoute(builder: ((context) => const ConsumablesScreen()));
       case Routes.maintenanceRoute:
         return MaterialPageRoute(builder: ((context) => const CarInfo()));
       default:

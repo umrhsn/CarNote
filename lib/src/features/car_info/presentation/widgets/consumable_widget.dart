@@ -2,42 +2,31 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/consumables_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ConsumableWidget extends StatefulWidget {
   final String name;
-  final TextEditingController currentKmController;
+  final TextEditingController changeIntervalController;
+  final TextEditingController changeKmController;
 
-  const ConsumableWidget({Key? key, required this.name, required this.currentKmController})
-      : super(key: key);
+  const ConsumableWidget({
+    Key? key,
+    required this.name,
+    required this.changeIntervalController,
+    required this.changeKmController,
+  }) : super(key: key);
 
   @override
   State<ConsumableWidget> createState() => ConsumableWidgetState();
 }
 
 class ConsumableWidgetState extends State<ConsumableWidget> {
-  final TextEditingController changeIntervalController = TextEditingController();
-  final TextEditingController changeKmController = TextEditingController();
-
-  void _getChangeKilometer() {
-    setState(() {
-      changeKmController.text =
-          _sumChangeKilometer() != 0 ? _sumChangeKilometer().toThousands() : '';
-    });
-  }
-
-  int _sumChangeKilometer() {
-    if (widget.currentKmController.text.isNotEmpty && changeIntervalController.text.isNotEmpty) {
-      return int.parse(widget.currentKmController.text.removeThousandSeparator()) +
-          int.parse(changeIntervalController.text.removeThousandSeparator());
-    } else {
-      return 0;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    ConsumablesCubit cubit = ConsumablesCubit.get(context);
+
     return Column(
       children: [
         Padding(
@@ -57,8 +46,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 child: Padding(
               padding: const EdgeInsets.only(right: 5),
               child: TextFormField(
-                controller: changeIntervalController,
-                onChanged: (_) => _getChangeKilometer(),
+                controller: widget.changeIntervalController,
+                onChanged: (_) => cubit.getChangeKilometer(),
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(hintText: AppStrings.changeIntervalHint),
                 inputFormatters: [
@@ -72,7 +61,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               padding: const EdgeInsets.only(left: 5),
               child: TextFormField(
                 enabled: false,
-                controller: changeKmController,
+                controller: widget.changeKmController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hintText: AppStrings.changeKmHint,

@@ -4,7 +4,7 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/services/text_input_formatters/uppercase_text_input_formatter.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/maintenance_screen.dart';
+import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -44,7 +44,7 @@ class _MyHomePageState extends State<CarInfo> {
     void navigateToMaintenanceScreen() {
       // TODO: add data to database before navigating
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return const MaintenanceScreen();
+        return const ConsumablesScreen();
       }));
     }
 
