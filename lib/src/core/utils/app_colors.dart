@@ -10,6 +10,8 @@ class AppColors {
   static const Color primaryLight = Color(0xffff9559);
   static const Color primaryDark = Color(0xff7a2c00);
 
+  static const Color labelDark = Color(0xffa23b00);
+
   static const MaterialColor primarySwatchLight = MaterialColor(
     primaryLightHex, //0%
     <int, Color>{

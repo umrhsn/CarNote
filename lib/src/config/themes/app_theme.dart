@@ -1,5 +1,6 @@
 import 'package:car_note/src/config/themes/widgets/app_bar_theme.dart';
 import 'package:car_note/src/config/themes/widgets/button_themes.dart';
+import 'package:car_note/src/config/themes/widgets/scrollbar_theme.dart';
 import 'package:car_note/src/config/themes/widgets/text_field_theme.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -16,6 +17,7 @@ class AppThemes {
       appBarTheme: AppBarThemes.appBarTheme(isLight: isLight),
       elevatedButtonTheme: AppButtonThemes.elevatedButtonTheme(isLight: isLight),
       inputDecorationTheme: AppTextFieldThemes.inputDecorationTheme(isLight: isLight),
+      scrollbarTheme: AppScrollbarThemes.scrollbarTheme(isLight: isLight),
       fontFamily: AppStrings.fontFamily,
       useMaterial3: true,
     );
