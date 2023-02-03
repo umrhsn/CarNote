@@ -27,8 +27,10 @@ class AppTextFieldThemes {
           ? AppColors.btnDisabledLight.withAlpha(20)
           : AppColors.btnDisabledDark.withAlpha(30),
       floatingLabelStyle: TextStyle(
-          color: isLight ? AppColors.primaryLight : AppColors.labelDark,
-          fontWeight: FontWeight.bold),
+        color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark,
+        fontWeight: FontWeight.bold,
+      ),
+      focusColor: isLight ? AppColors.primaryLight : AppColors.labelDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark),
       focusedBorder: outlineBorderWithColorPrimary,
       enabledBorder: outlineBorderWithColorHint,

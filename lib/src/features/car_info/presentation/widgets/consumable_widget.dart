@@ -48,6 +48,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 Flexible(
                     child: Padding(
                   padding: const EdgeInsets.only(right: 8),
+                  // TODO: last changed should not exceed current km
                   child: TextFormField(
                     controller: widget.lastChangedAtController,
                     onChanged: (_) => cubit.getChangeKilometer(),
@@ -75,6 +76,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               ],
             ),
             const SizedBox(height: 8),
+            // TODO: change km should give an alarm to the user if it exceeded current km
             TextFormField(
               enabled: false,
               controller: widget.changeKmController,

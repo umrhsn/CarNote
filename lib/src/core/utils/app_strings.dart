@@ -16,6 +16,7 @@ class AppStrings {
     'Brake Linings' // تيل الفرامل
   ];
 
+  static const String currentKmLabel = 'Current kilometer';
   static const String lastChangedAtLabel = 'Last changed at';
   static const String changeIntervalLabel = 'Change interval';
   static const String changeKmLabel = 'To be changed at';

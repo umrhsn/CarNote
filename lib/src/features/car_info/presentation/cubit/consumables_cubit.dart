@@ -9,6 +9,8 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
 
   static ConsumablesCubit get(context) => BlocProvider.of<ConsumablesCubit>(context);
 
+  final TextEditingController currentKmController = TextEditingController();
+
   final List lastChangedAtControllers = [
     TextEditingController(),
     TextEditingController(),
