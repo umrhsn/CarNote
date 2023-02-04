@@ -40,7 +40,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       labelText: AppStrings.currentKmLabel,
-                      fillColor: AppColors.primaryLight.withAlpha(50),
+                      fillColor: context.isLight
+                          ? AppColors.primaryLight.withAlpha(50)
+                          : AppColors.primaryDark.withAlpha(50),
                     ),
                     inputFormatters: [
                       ThousandSeparatorTextInputFormatter(),

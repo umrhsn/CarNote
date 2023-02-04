@@ -5,7 +5,7 @@ class AppTextFieldThemes {
   static InputDecorationTheme inputDecorationTheme({required bool isLight}) {
     OutlineInputBorder outlineBorderWithColorHint = OutlineInputBorder(
       borderSide: BorderSide(
-        color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark,
+        color: isLight ? AppColors.hintLight : AppColors.hintDark,
         width: 1.2,
         strokeAlign: 0,
       ),
@@ -26,19 +26,20 @@ class AppTextFieldThemes {
       fillColor: isLight
           ? AppColors.btnDisabledLight.withAlpha(20)
           : AppColors.btnDisabledDark.withAlpha(30),
+      // TODO: floatingLabel !hasFocus color light ? hintLight : hintDark
       floatingLabelStyle: TextStyle(
-        color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark,
+        color: isLight ? AppColors.primaryLight : AppColors.labelDark,
         fontWeight: FontWeight.bold,
       ),
       focusColor: isLight ? AppColors.primaryLight : AppColors.labelDark,
-      labelStyle: TextStyle(color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark),
+      labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
       focusedBorder: outlineBorderWithColorPrimary,
       enabledBorder: outlineBorderWithColorHint,
       disabledBorder: outlineBorderWithColorHint,
       border: outlineBorderWithColorHint,
       hintStyle: TextStyle(
         fontWeight: FontWeight.normal,
-        color: isLight ? AppColors.hintColorLight : AppColors.hintColorDark,
+        color: isLight ? AppColors.hintLight : AppColors.hintDark,
       ),
     );
   }

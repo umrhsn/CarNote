@@ -11,7 +11,7 @@ class AppScrollbarThemes {
       trackVisibility: MaterialStateProperty.all(true),
       trackBorderColor: MaterialStateProperty.all(Colors.transparent),
       thumbColor: MaterialStateProperty.all(
-          isLight ? AppColors.hintColorLight.withAlpha(80) : AppColors.hintColorDark),
+          isLight ? AppColors.hintLight.withAlpha(80) : AppColors.hintDark),
     );
   }
 }

@@ -43,8 +43,8 @@ class AppColors {
     },
   );
 
-  static const Color hintColorLight = Color(0xff9c9c9c);
-  static Color hintColorDark = const Color(0xffffffff).withAlpha(70);
+  static const Color hintLight = Color(0xff9c9c9c);
+  static Color hintDark = const Color(0xffffffff).withAlpha(70);
 
   static Color btnDisabledLight = Colors.brown.withAlpha(60);
   static Color btnDisabledDark = Colors.white.withAlpha(70);
