@@ -9,8 +9,7 @@ class AppScrollbarThemes {
       thumbVisibility: MaterialStateProperty.all(true),
       trackVisibility: MaterialStateProperty.all(true),
       trackBorderColor: MaterialStateProperty.all(Colors.transparent),
-      thumbColor: MaterialStateProperty.all(
-          isLight ? AppColors.hintLight : AppColors.hintDark),
+      thumbColor: MaterialStateProperty.all(isLight ? AppColors.hintLight : AppColors.hintDark),
     );
   }
 }

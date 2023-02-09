@@ -30,15 +30,11 @@ class AppColors {
   }
 
   static Color getTextFieldBorderAndLabelFocused(BuildContext context) {
-    return context.isLight
-        ? AppColors.primaryLight
-        : AppColors.floatingLabelDark;
+    return context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark;
   }
 
   static Color getTextFieldBorderAndLabel(BuildContext context) {
-    return context.isLight
-        ? AppColors.hintLight
-        : AppColors.hintDark;
+    return context.isLight ? AppColors.hintLight : AppColors.hintDark;
   }
 
   static Color floatingLabelDark = primarySwatchDark.shade200;
