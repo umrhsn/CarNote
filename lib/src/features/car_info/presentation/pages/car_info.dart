@@ -2,6 +2,7 @@ import 'package:car_note/src/core/services/form_validation/form_validation.dart'
 import 'package:car_note/src/core/services/form_validation/validation_item.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
 import 'package:car_note/src/core/services/text_input_formatters/uppercase_text_input_formatter.dart';
+import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
@@ -128,6 +129,9 @@ class _MyHomePageState extends State<CarInfo> {
   }
 
   CustomButton buildContinueButton(bool btnEnabled, void Function() navigateToMaintenanceScreen) {
-    return CustomButton(btnEnabled: btnEnabled, onPressed: () => navigateToMaintenanceScreen());
+    return CustomButton(
+        text: AppStrings.btnContinue.toUpperCase(),
+        btnEnabled: btnEnabled,
+        onPressed: () => navigateToMaintenanceScreen());
   }
 }

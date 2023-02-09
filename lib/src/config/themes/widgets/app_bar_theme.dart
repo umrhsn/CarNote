@@ -7,6 +7,7 @@ class AppBarThemes {
       systemOverlayStyle:
           AppSystemUiOverlayStyle.setSystemUiOverlayStyle(isLight: isLight),
       backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
       toolbarHeight: 0,
       elevation: 0,
     );
