@@ -24,7 +24,6 @@ class AppTextFieldThemes {
       fillColor: isLight
           ? AppColors.btnDisabledLight.withAlpha(20)
           : AppColors.btnDisabledDark.withAlpha(30),
-      // TODO: floatingLabel !hasFocus color light ? hintLight : hintDark
       floatingLabelStyle: TextStyle(
         color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
         fontWeight: FontWeight.bold,
