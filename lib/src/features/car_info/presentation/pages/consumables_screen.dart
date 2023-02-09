@@ -95,7 +95,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     padding: const EdgeInsets.only(top: 10, right: 15),
                     child: CustomButton(
                       text: AppStrings.btnSave.toUpperCase(),
-                      // FIXME: make it work properly
                       btnEnabled: cubit.shouldEnableSaveButton(context),
                       onPressed: () {},
                     ),
