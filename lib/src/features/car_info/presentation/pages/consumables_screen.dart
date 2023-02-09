@@ -21,53 +21,82 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   Widget build(BuildContext context) {
     ConsumablesCubit cubit = ConsumablesCubit.get(context);
 
+    TextFormField buildAppBarTextFormField() {
+      return TextFormField(
+        focusNode: cubit.currentKmFocus,
+        cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+        controller: cubit.currentKmController,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+        decoration: InputDecoration(
+            fillColor: context.isLight
+                ? AppColors.appBarTextFieldFillLight
+                : AppColors.appBarTextFieldFillDark,
+            floatingLabelStyle: TextStyle(
+              color: cubit.currentKmFocus.hasFocus
+                  ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
+                  : AppColors.getAppBarTextFieldBorderAndLabel(context),
+              fontWeight: FontWeight.bold,
+            ),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
+            labelText: AppStrings.currentKmLabel,
+            labelStyle: TextStyle(
+                color: context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+                    strokeAlign: 0,
+                    width: 1.2))),
+        inputFormatters: [
+          ThousandSeparatorTextInputFormatter(),
+          LengthLimitingTextInputFormatter(9),
+        ],
+        onChanged: (_) {
+          cubit.validateAllLastChangedKilometerFields();
+          cubit.validateAllChangeKilometerFields();
+        },
+        onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
+        autovalidateMode: AutovalidateMode.always,
+      );
+    }
+
+    Expanded buildConsumablesList() {
+      return Expanded(
+        flex: 100,
+        child: Scrollbar(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: ListView.separated(
+              itemCount: AppStrings.consumables.length,
+              itemBuilder: (context, index) =>
+                  ConsumableWidget(index: index, name: AppStrings.consumables[index]),
+              separatorBuilder: (context, index) => const Divider(thickness: 2),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Padding buildSaveButton() {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10, right: 15),
+        child: CustomButton(
+          text: AppStrings.btnSave.toUpperCase(),
+          btnEnabled: cubit.shouldEnableSaveButton(context),
+          onPressed: () {},
+        ),
+      );
+    }
+
     return BlocBuilder<ConsumablesCubit, ConsumablesState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: context.isLight ? AppColors.primaryLight : AppColors.primaryDark,
             toolbarHeight: 100,
-            title: TextFormField(
-              focusNode: cubit.currentKmFocus,
-              cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-              controller: cubit.currentKmController,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                  fillColor: context.isLight
-                      ? AppColors.appBarTextFieldFillLight
-                      : AppColors.appBarTextFieldFillDark,
-                  floatingLabelStyle: TextStyle(
-                    color: cubit.currentKmFocus.hasFocus
-                        ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
-                        : AppColors.getAppBarTextFieldBorderAndLabel(context),
-                    fontWeight: FontWeight.bold,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
-                  labelText: AppStrings.currentKmLabel,
-                  labelStyle: TextStyle(
-                      color: context.isLight
-                          ? Colors.black.withAlpha(70)
-                          : Colors.white.withAlpha(80)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-                          strokeAlign: 0,
-                          width: 1.2))),
-              inputFormatters: [
-                ThousandSeparatorTextInputFormatter(),
-                LengthLimitingTextInputFormatter(9),
-              ],
-              onChanged: (_) {
-                cubit.validateAllLastChangedKilometerFields();
-                cubit.validateAllChangeKilometerFields();
-              },
-              onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
-              autovalidateMode: AutovalidateMode.always,
-            ),
+            title: buildAppBarTextFormField(),
           ),
           extendBody: true,
           body: SafeArea(
@@ -76,29 +105,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    flex: 100,
-                    child: Scrollbar(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: ListView.separated(
-                          itemCount: AppStrings.consumables.length,
-                          itemBuilder: (context, index) =>
-                              ConsumableWidget(index: index, name: AppStrings.consumables[index]),
-                          separatorBuilder: (context, index) => const Divider(thickness: 2),
-                        ),
-                      ),
-                    ),
-                  ),
+                  buildConsumablesList(),
                   const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, right: 15),
-                    child: CustomButton(
-                      text: AppStrings.btnSave.toUpperCase(),
-                      btnEnabled: cubit.shouldEnableSaveButton(context),
-                      onPressed: () {},
-                    ),
-                  ),
+                  buildSaveButton(),
                   const SizedBox(height: 15),
                 ],
               ),

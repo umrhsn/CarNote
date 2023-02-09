@@ -44,6 +44,109 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 2),
     );
 
+    Expanded buildLastChangedTextFormField() {
+      return Expanded(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: TextFormField(
+                controller: cubit.lastChangedAtControllers[widget.index],
+                focusNode: cubit.lastChangedAtFocuses[widget.index],
+                cursorColor: context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+                onChanged: (_) => cubit.getChangeKilometer(widget.index),
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  labelText: AppStrings.lastChangedAtLabel,
+                  floatingLabelStyle: TextStyle(
+                    color: cubit.getLastChangedKmErrorText(context, widget.index).data != ''
+                        ? Theme.of(context).colorScheme.error
+                        : cubit.lastChangedAtFocuses[widget.index].hasFocus
+                            ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                            : AppColors.getTextFieldBorderAndLabel(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  focusedBorder: cubit.getLastChangedKmErrorText(context, widget.index).data != ''
+                      ? errorBorder
+                      : focusedBorder,
+                  enabledBorder: cubit.getLastChangedKmErrorText(context, widget.index).data != ''
+                      ? errorBorder
+                      : defaultBorder,
+                ),
+                inputFormatters: [
+                  ThousandSeparatorTextInputFormatter(),
+                  LengthLimitingTextInputFormatter(9),
+                ],
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: cubit.getLastChangedKmErrorText(context, widget.index),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Expanded buildChangeIntervalTextFormField() {
+      return Expanded(
+          child: TextFormField(
+        controller: cubit.changeIntervalControllers[widget.index],
+        focusNode: cubit.changeIntervalFocuses[widget.index],
+        cursorColor: context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+        onChanged: (_) => cubit.getChangeKilometer(widget.index),
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          labelText: AppStrings.changeIntervalLabel,
+          floatingLabelStyle: TextStyle(
+            color: cubit.changeIntervalFocuses[widget.index].hasFocus
+                ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                : AppColors.getTextFieldBorderAndLabel(context),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        inputFormatters: [
+          ThousandSeparatorTextInputFormatter(),
+          LengthLimitingTextInputFormatter(7),
+        ],
+      ));
+    }
+
+    Column buildChangeKmTextFormField() {
+      return Column(
+        children: [
+          TextFormField(
+            enabled: false,
+            controller: cubit.changeKmControllers[widget.index],
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+            decoration: InputDecoration(
+              labelText: AppStrings.changeKmLabel,
+              fillColor: AppColors.primaryLight.withAlpha(20),
+              floatingLabelStyle: TextStyle(
+                color: cubit.getChangeKmErrorText(context, widget.index).data != ''
+                    ? Theme.of(context).colorScheme.error
+                    : cubit.changeKmFocuses[widget.index].hasFocus
+                        ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                        : AppColors.getTextFieldBorderAndLabel(context),
+                fontWeight: FontWeight.bold,
+              ),
+              disabledBorder: cubit.getChangeKmErrorText(context, widget.index).data != ''
+                  ? errorBorder
+                  : defaultBorder,
+            ),
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: cubit.getChangeKmErrorText(context, widget.index),
+          )
+        ],
+      );
+    }
+
     return Column(
       children: [
         Padding(
@@ -55,111 +158,16 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )),
         ),
-        Column(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                    child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: TextFormField(
-                        controller: cubit.lastChangedAtControllers[widget.index],
-                        focusNode: cubit.lastChangedAtFocuses[widget.index],
-                        cursorColor:
-                            context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
-                        onChanged: (_) => cubit.getChangeKilometer(widget.index),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          labelText: AppStrings.lastChangedAtLabel,
-                          floatingLabelStyle: TextStyle(
-                            color: cubit.getLastChangedKmErrorText(context, widget.index).data != ''
-                                ? Theme.of(context).colorScheme.error
-                                : cubit.lastChangedAtFocuses[widget.index].hasFocus
-                                    ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                                    : AppColors.getTextFieldBorderAndLabel(context),
-                            fontWeight: FontWeight.bold,
-                          ),
-                          focusedBorder:
-                              cubit.getLastChangedKmErrorText(context, widget.index).data != ''
-                                  ? errorBorder
-                                  : focusedBorder,
-                          enabledBorder:
-                              cubit.getLastChangedKmErrorText(context, widget.index).data != ''
-                                  ? errorBorder
-                                  : defaultBorder,
-                        ),
-                        inputFormatters: [
-                          ThousandSeparatorTextInputFormatter(),
-                          LengthLimitingTextInputFormatter(9),
-                        ],
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: cubit.getLastChangedKmErrorText(context, widget.index),
-                    ),
-                  ],
-                )),
-                Expanded(
-                    child: TextFormField(
-                  controller: cubit.changeIntervalControllers[widget.index],
-                  focusNode: cubit.changeIntervalFocuses[widget.index],
-                  cursorColor:
-                      context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
-                  onChanged: (_) => cubit.getChangeKilometer(widget.index),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    labelText: AppStrings.changeIntervalLabel,
-                    floatingLabelStyle: TextStyle(
-                      color: cubit.changeIntervalFocuses[widget.index].hasFocus
-                          ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                          : AppColors.getTextFieldBorderAndLabel(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  inputFormatters: [
-                    ThousandSeparatorTextInputFormatter(),
-                    LengthLimitingTextInputFormatter(7),
-                  ],
-                )),
-              ],
-            ),
-            const SizedBox(height: 10),
-            // TODO: change km should give an alarm to the user if it exceeded current km
-            TextFormField(
-              enabled: false,
-              controller: cubit.changeKmControllers[widget.index],
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                labelText: AppStrings.changeKmLabel,
-                fillColor: AppColors.primaryLight.withAlpha(20),
-                floatingLabelStyle: TextStyle(
-                  color: cubit.getChangeKmErrorText(context, widget.index).data != ''
-                      ? Theme.of(context).colorScheme.error
-                      : cubit.changeKmFocuses[widget.index].hasFocus
-                          ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                          : AppColors.getTextFieldBorderAndLabel(context),
-                  fontWeight: FontWeight.bold,
-                ),
-                disabledBorder: cubit.getChangeKmErrorText(context, widget.index).data != ''
-                    ? errorBorder
-                    : defaultBorder,
-              ),
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: cubit.getChangeKmErrorText(context, widget.index),
-            ),
+            buildLastChangedTextFormField(),
+            buildChangeIntervalTextFormField(),
           ],
         ),
+        const SizedBox(height: 10),
+        buildChangeKmTextFormField(),
         const SizedBox(height: 15),
       ],
     );
