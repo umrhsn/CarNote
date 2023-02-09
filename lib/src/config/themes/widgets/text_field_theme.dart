@@ -9,16 +9,14 @@ class AppTextFieldThemes {
         width: 1.2,
         strokeAlign: 0,
       ),
-      borderRadius: BorderRadius.circular(6),
     );
 
     OutlineInputBorder outlineBorderWithColorPrimary = OutlineInputBorder(
       borderSide: BorderSide(
-        color: isLight ? AppColors.primaryLight : AppColors.labelDark,
+        color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
         width: 1.2,
         strokeAlign: 0,
       ),
-      borderRadius: BorderRadius.circular(6),
     );
 
     return InputDecorationTheme(
@@ -28,10 +26,10 @@ class AppTextFieldThemes {
           : AppColors.btnDisabledDark.withAlpha(30),
       // TODO: floatingLabel !hasFocus color light ? hintLight : hintDark
       floatingLabelStyle: TextStyle(
-        color: isLight ? AppColors.primaryLight : AppColors.labelDark,
+        color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
         fontWeight: FontWeight.bold,
       ),
-      focusColor: isLight ? AppColors.primaryLight : AppColors.labelDark,
+      focusColor: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
       focusedBorder: outlineBorderWithColorPrimary,
       enabledBorder: outlineBorderWithColorHint,

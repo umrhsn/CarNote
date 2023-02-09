@@ -2,6 +2,7 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
+import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/consumables_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/consumable_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,37 +21,61 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   Widget build(BuildContext context) {
     ConsumablesCubit cubit = ConsumablesCubit.get(context);
 
-    return Scaffold(
-      appBar: AppBar(),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15, right: 8.5),
-          child: BlocBuilder<ConsumablesCubit, ConsumablesState>(
-            builder: (context, state) {
-              return Column(
+    return BlocBuilder<ConsumablesCubit, ConsumablesState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: context.isLight ? AppColors.primaryLight : AppColors.primaryDark,
+            toolbarHeight: 100,
+            title: TextFormField(
+              focusNode: cubit.currentKmFocus,
+              cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+              controller: cubit.currentKmController,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              decoration: InputDecoration(
+                  fillColor: context.isLight
+                      ? AppColors.appBarTextFieldFillLight
+                      : AppColors.appBarTextFieldFillDark,
+                  floatingLabelStyle: TextStyle(
+                    color: cubit.currentKmFocus.hasFocus
+                        ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
+                        : AppColors.getAppBarTextFieldBorderAndLabel(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
+                  labelText: AppStrings.currentKmLabel,
+                  labelStyle: TextStyle(
+                      color: context.isLight
+                          ? Colors.black.withAlpha(70)
+                          : Colors.white.withAlpha(80)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+                          strokeAlign: 0,
+                          width: 1.2))),
+              inputFormatters: [
+                ThousandSeparatorTextInputFormatter(),
+                LengthLimitingTextInputFormatter(9),
+              ],
+              onChanged: (_) {
+                cubit.validateAllLastChangedKilometerFields();
+                cubit.validateAllChangeKilometerFields();
+              },
+              onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
+              autovalidateMode: AutovalidateMode.always,
+            ),
+          ),
+          extendBody: true,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    cursorColor: context.isLight ? AppColors.primaryLight : AppColors.primaryDark,
-                    controller: cubit.currentKmController,
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    decoration: InputDecoration(
-                      labelText: AppStrings.currentKmLabel,
-                      fillColor: context.isLight
-                          ? AppColors.primaryLight.withAlpha(50)
-                          : AppColors.primaryDark.withAlpha(50),
-                    ),
-                    inputFormatters: [
-                      ThousandSeparatorTextInputFormatter(),
-                      LengthLimitingTextInputFormatter(9),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  const Divider(thickness: 2),
                   Expanded(
                     flex: 100,
                     child: Scrollbar(
@@ -58,29 +83,30 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                         padding: const EdgeInsets.only(right: 15),
                         child: ListView.separated(
                           itemCount: AppStrings.consumables.length,
-                          itemBuilder: (context, index) {
-                            return ConsumableWidget(
-                              name: AppStrings.consumables[index],
-                              lastChangedAtController: cubit.lastChangedAtControllers[index],
-                              changeIntervalController: cubit.changeIntervalControllers[index],
-                              changeKmController: cubit.changeKmControllers[index],
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return const Divider(thickness: 2);
-                          },
+                          itemBuilder: (context, index) =>
+                              ConsumableWidget(index: index, name: AppStrings.consumables[index]),
+                          separatorBuilder: (context, index) => const Divider(thickness: 2),
                         ),
                       ),
                     ),
                   ),
                   const Spacer(),
-                  ElevatedButton(onPressed: () {}, child: Text(AppStrings.btnSave.toUpperCase()))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, right: 15),
+                    child: CustomButton(
+                      text: AppStrings.btnSave.toUpperCase(),
+                      // FIXME: make it work properly
+                      btnEnabled: cubit.shouldEnableSaveButton(context),
+                      onPressed: () {},
+                    ),
+                  ),
+                  const SizedBox(height: 15),
                 ],
-              );
-            },
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
