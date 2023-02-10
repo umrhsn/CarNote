@@ -30,25 +30,21 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         textAlign: TextAlign.center,
         style: const TextStyle(fontWeight: FontWeight.bold),
         decoration: InputDecoration(
-            fillColor: context.isLight
-                ? AppColors.appBarTextFieldFillLight
-                : AppColors.appBarTextFieldFillDark,
-            floatingLabelStyle: TextStyle(
-              color: cubit.currentKmFocus.hasFocus
-                  ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
-                  : AppColors.getAppBarTextFieldBorderAndLabel(context),
-              fontWeight: FontWeight.bold,
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
-            labelText: AppStrings.currentKmLabel,
-            labelStyle: TextStyle(
-                color: context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-                    strokeAlign: 0,
-                    width: 1.2))),
+          fillColor: context.isLight
+              ? AppColors.appBarTextFieldFillLight
+              : AppColors.appBarTextFieldFillDark,
+          floatingLabelStyle: TextStyle(
+            color: cubit.currentKmFocus.hasFocus
+                ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
+                : AppColors.getAppBarTextFieldBorderAndLabel(context),
+            fontWeight: FontWeight.bold,
+          ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
+          labelText: AppStrings.currentKmLabel,
+          labelStyle: TextStyle(
+              color: context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80)),
+        ),
         inputFormatters: [
           ThousandSeparatorTextInputFormatter(),
           LengthLimitingTextInputFormatter(9),

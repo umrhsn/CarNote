@@ -2,14 +2,11 @@ import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color scaffoldBackgroundLight = Color(0xffffeade);
-  static const Color scaffoldBackgroundDark = Color(0xff290f00);
-
-  static const int primaryLightHex = 0xffff9559;
-  static const int primaryDarkHex = 0xff7a2c00;
+  static const Color scaffoldBackgroundLight = Color(0xffffffff);
+  static const Color scaffoldBackgroundDark = Color(0xff000000);
 
   static const Color primaryLight = Color(0xffff9559);
-  static const Color primaryDark = Color(0xff7a2c00);
+  static const Color primaryDark = Color(0xff3b0000);
 
   static Color appBarTextFieldFillLight = Colors.white.withAlpha(40);
   static Color appBarTextFieldFillDark = Colors.white.withAlpha(30);
@@ -30,7 +27,9 @@ class AppColors {
   }
 
   static Color getTextFieldBorderAndLabelFocused(BuildContext context) {
-    return context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark;
+    return context.isLight
+        ? AppColors.appBarFocusedPrimaryLight
+        : AppColors.appBarFocusedPrimaryDark;
   }
 
   static Color getTextFieldBorderAndLabel(BuildContext context) {
@@ -39,9 +38,9 @@ class AppColors {
 
   static Color floatingLabelDark = primarySwatchDark.shade200;
 
-  static const MaterialColor primarySwatchLight = MaterialColor(
-    primaryLightHex, //0%
-    <int, Color>{
+  static MaterialColor primarySwatchLight = MaterialColor(
+    primaryLight.value, //0%
+    const <int, Color>{
       50: Color(0xffe68650), //10%
       100: Color(0xffcc7747), //20%
       200: Color(0xffb3683e), //30%
@@ -54,18 +53,19 @@ class AppColors {
       900: Color(0xff000000), //100%
     },
   );
-  static const MaterialColor primarySwatchDark = MaterialColor(
-    primaryDarkHex, //0%
-    <int, Color>{
-      50: Color(0xff87411a), //10%
-      100: Color(0xff955633), //20%
-      200: Color(0xffa26b4d), //30%
-      300: Color(0xffaf8066), //40%
-      400: Color(0xffbd9680), //50%
-      500: Color(0xffcaab99), //60%
-      600: Color(0xffd7c0b3), //70%
-      700: Color(0xffe4d5cc), //80%
-      800: Color(0xfff2eae6), //90%
+
+  static MaterialColor primarySwatchDark = MaterialColor(
+    primaryDark.value, //0%
+    const <int, Color>{
+      50: Color(0xff4f1a1a), //10%
+      100: Color(0xff623333), //20%
+      200: Color(0xff764d4d), //30%
+      300: Color(0xff896666), //40%
+      400: Color(0xff9d8080), //50%
+      500: Color(0xffb19999), //60%
+      600: Color(0xffc4b3b3), //70%
+      700: Color(0xffd8cccc), //80%
+      800: Color(0xffebe6e6), //90%
       900: Color(0xffffffff), //100%
     },
   );
@@ -73,7 +73,7 @@ class AppColors {
   static const Color hintLight = Color(0xff9c9c9c);
   static Color hintDark = const Color(0xffffffff).withAlpha(70);
 
-  static Color btnDisabledLight = Colors.brown.withAlpha(60);
+  static Color btnDisabledLight = AppColors.primaryDark.withAlpha(60);
   static Color btnDisabledDark = Colors.white.withAlpha(70);
 
   static Color textDisabledLight = Colors.grey.shade200;

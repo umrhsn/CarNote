@@ -12,9 +12,9 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
-        return MaterialPageRoute(builder: ((context) => const CarInfo()));
-      case Routes.maintenanceRoute:
         return MaterialPageRoute(builder: ((context) => const ConsumablesScreen()));
+      case Routes.maintenanceRoute:
+        return MaterialPageRoute(builder: ((context) => const CarInfo()));
       default:
         return undefinedRoute();
     }

@@ -11,14 +11,6 @@ class AppTextFieldThemes {
       ),
     );
 
-    OutlineInputBorder outlineBorderWithColorPrimary = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
-        width: 1.2,
-        strokeAlign: 0,
-      ),
-    );
-
     return InputDecorationTheme(
       filled: true,
       fillColor: isLight
@@ -28,9 +20,15 @@ class AppTextFieldThemes {
         color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
         fontWeight: FontWeight.bold,
       ),
-      focusColor: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+      focusColor: isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
-      focusedBorder: outlineBorderWithColorPrimary,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+            color:
+                isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
+            strokeAlign: 0,
+            width: 1.2),
+      ),
       enabledBorder: outlineBorderWithColorHint,
       disabledBorder: outlineBorderWithColorHint,
       border: outlineBorderWithColorHint,
