@@ -2,7 +2,6 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
-// FIXME: color doesn't change when enabled
 class AppButtonThemes {
   static ElevatedButtonThemeData elevatedButtonTheme({required bool isLight}) {
     return ElevatedButtonThemeData(

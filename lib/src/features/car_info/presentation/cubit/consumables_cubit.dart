@@ -135,7 +135,6 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
     emit(AddedChangeKilometer());
   }
 
-  // TODO: find a cleaner code
   void validateAllLastChangedKilometerFields() {
     emit(Validating());
     for (int i = 0; i < changeKmControllers.length; i++) {

@@ -26,10 +26,11 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
     OutlineInputBorder focusedBorder = OutlineInputBorder(
       borderSide: BorderSide(
-        color: context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
-        width: 1.2,
-        strokeAlign: 0,
-      ),
+          color: context.isLight
+              ? AppColors.appBarFocusedPrimaryLight
+              : AppColors.appBarFocusedPrimaryDark,
+          strokeAlign: 0,
+          width: 1.2),
     );
 
     OutlineInputBorder defaultBorder = OutlineInputBorder(
@@ -53,7 +54,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               child: TextFormField(
                 controller: cubit.lastChangedAtControllers[widget.index],
                 focusNode: cubit.lastChangedAtFocuses[widget.index],
-                cursorColor: context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+                cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
                 onChanged: (_) => cubit.getChangeKilometer(widget.index),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
@@ -94,7 +95,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           child: TextFormField(
         controller: cubit.changeIntervalControllers[widget.index],
         focusNode: cubit.changeIntervalFocuses[widget.index],
-        cursorColor: context.isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+        cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
         onChanged: (_) => cubit.getChangeKilometer(widget.index),
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
@@ -125,7 +126,9 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             style: const TextStyle(fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               labelText: AppStrings.changeKmLabel,
-              fillColor: AppColors.primaryLight.withAlpha(20),
+              fillColor: context.isLight
+                  ? AppColors.primaryLight.withAlpha(20)
+                  : AppColors.primaryDark.withAlpha(90),
               floatingLabelStyle: TextStyle(
                 color: cubit.getChangeKmErrorText(context, widget.index).data != ''
                     ? Theme.of(context).colorScheme.error
