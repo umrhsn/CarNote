@@ -2,12 +2,12 @@ import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'consumables_state.dart';
+part 'app_state.dart';
 
-class ConsumablesCubit extends Cubit<ConsumablesState> {
-  ConsumablesCubit() : super(ConsumablesInitial());
+class AppCubit extends Cubit<AppState> {
+  AppCubit() : super(AppInitial());
 
-  static ConsumablesCubit get(context) => BlocProvider.of<ConsumablesCubit>(context);
+  static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
   bool shouldEnableSaveButton(BuildContext context) {
     for (int i = 0; i < lastChangedAtControllers.length; i++) {
@@ -126,17 +126,17 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
   }
 
   void getChangeKilometer(int index) {
-    emit(AddingChangeKilometer());
+    emit(AddingChangeKm());
     changeKmControllers[index].text =
         _sumChangeKilometer(lastChangedAtControllers[index], changeIntervalControllers[index]) != 0
             ? _sumChangeKilometer(lastChangedAtControllers[index], changeIntervalControllers[index])
                 .toThousands()
             : '';
-    emit(AddedChangeKilometer());
+    emit(AddedChangeKm());
   }
 
   void validateAllLastChangedKilometerFields() {
-    emit(Validating());
+    emit(ValidatingItem());
     for (int i = 0; i < changeKmControllers.length; i++) {
       validateLastChangedKilometer(i);
     }
@@ -144,7 +144,7 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
   }
 
   void validateAllChangeKilometerFields() {
-    emit(Validating());
+    emit(ValidatingItem());
     for (int i = 0; i < changeKmControllers.length; i++) {
       validateChangeKilometer(i);
     }
@@ -157,14 +157,14 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
 
   // last changed kilometer should not exceed current kilometer
   String? validateLastChangedKilometer(int index) {
-    emit(ValidatingLastChangedKm());
+    emit(ValidatingItem());
     if (lastChangedAtControllers[index].text.isNotEmpty && currentKmController.text.isNotEmpty) {
       if (int.parse(lastChangedAtControllers[index].text.removeThousandSeparator()) >
           int.parse(currentKmController.text.removeThousandSeparator())) {
         return "invalid input";
       }
     }
-    emit(ValidatingLastChangedKmComplete());
+    emit(ValidatingComplete());
     return null;
   }
 
@@ -179,12 +179,12 @@ class ConsumablesCubit extends Cubit<ConsumablesState> {
   // Gives a warning to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
   String? validateChangeKilometer(int index) {
-    emit(ValidatingChangeKm());
+    emit(ValidatingItem());
     if (calculateChangeKmAndCurrentKmDifference(index) > 0) {
       int difference = calculateChangeKmAndCurrentKmDifference(index);
       return "Warning, exceeded by ${difference.toThousands()} km";
     }
-    emit(ValidatingChangeKmComplete());
+    emit(ValidatingComplete());
     return null;
   }
 }

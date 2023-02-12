@@ -3,7 +3,7 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/consumables_cubit.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/app_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/consumable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +19,7 @@ class ConsumablesScreen extends StatefulWidget {
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   @override
   Widget build(BuildContext context) {
-    ConsumablesCubit cubit = ConsumablesCubit.get(context);
+    AppCubit cubit = AppCubit.get(context);
 
     TextFormField buildAppBarTextFormField() {
       return TextFormField(
@@ -86,7 +86,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       );
     }
 
-    return BlocBuilder<ConsumablesCubit, ConsumablesState>(
+    return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(

@@ -2,7 +2,7 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/consumables_cubit.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -19,7 +19,7 @@ class ConsumableWidget extends StatefulWidget {
 class ConsumableWidgetState extends State<ConsumableWidget> {
   @override
   Widget build(BuildContext context) {
-    ConsumablesCubit cubit = ConsumablesCubit.get(context);
+    AppCubit cubit = AppCubit.get(context);
 
     cubit.calculateChangeKmAndCurrentKmDifference(widget.index);
     cubit.getChangeKilometer(widget.index);

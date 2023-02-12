@@ -1,5 +1,5 @@
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/consumables_cubit.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class CarNote extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => FormValidation(),
       child: BlocProvider(
-        create: (context) => ConsumablesCubit(),
+        create: (context) => AppCubit(),
         child: MaterialApp(
           theme: AppThemes.appTheme(isLight: true),
           darkTheme: AppThemes.appTheme(isLight: false),
