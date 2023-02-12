@@ -1,3 +1,4 @@
+import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,14 +10,7 @@ class AppCubit extends Cubit<AppState> {
 
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
-  bool shouldEnableSaveButton(BuildContext context) {
-    for (int i = 0; i < lastChangedAtControllers.length; i++) {
-      if (getLastChangedKmErrorText(context, i).data != '') {
-        return false;
-      }
-    }
-    return true;
-  }
+  // FIXME: Controllers and focus nodes lists are hardcoded
 
   final TextEditingController currentKmController = TextEditingController();
 
@@ -93,6 +87,16 @@ class AppCubit extends Cubit<AppState> {
     FocusNode(),
     FocusNode(),
   ];
+
+
+  bool shouldEnableSaveButton(BuildContext context) {
+    for (int i = 0; i < lastChangedAtControllers.length; i++) {
+      if (getLastChangedKmErrorText(context, i).data != '') {
+        return false;
+      }
+    }
+    return true;
+  }
 
   Text getLastChangedKmErrorText(BuildContext context, int index) {
     return Text(
