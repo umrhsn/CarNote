@@ -12,3 +12,11 @@ class AddedChangeKm extends AppState {}
 class ValidatingItem extends AppState {}
 
 class ValidatingComplete extends AppState {}
+
+// class DbInitialized extends AppState {}
+//
+// class DbLoading extends AppState {}
+//
+// class DbLoaded extends AppState {}
+//
+// class DbConsumableCreated extends AppState {}

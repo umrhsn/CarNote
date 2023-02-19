@@ -1,16 +1,24 @@
 class AppStrings {
-  static String? fontFamily = 'Product Sans';
+  static String db = 'car_note.db';
+  static String dbTableName = 'Consumables';
+  static String dbTableCol1 = 'name';
+  static String dbTableCol2 = 'last_changed_at';
+  static String dbTableCol3 = 'change_interval';
+  static String dbTableCol4 = 'to_be_changed_at';
+
+  static String fontFamily = 'Product Sans';
 
   static const String btnContinue = 'Continue';
   static const String btnSave = 'Save';
 
-  static List consumables = [
+  static List<String> consumables = [
     'Oil & Oil Filter', // الزيت وفلتر الزيت
-    'Serpentine / Drive Belts', // cambelt? // سير الموتور
+    'Timing Belt', // سير الموتور
+    'Fuel Filter', // فلتر البنزين
     'Air Filter', // فلتر الهواء
     'AC Filter', // فلتر التكييف
-    'AC belt', // تيل الفرامل
-    'Gear Lever Oil', // زيت الفتيس
+    'AC belt', // سير التكييف
+    'Gearbox Oil', // زيت الفتيس
     'Antifreeze Coolant', // مية التبريد
     'Spark Plugs', // البوجيهات
     'Brake Linings' // تيل الفرامل

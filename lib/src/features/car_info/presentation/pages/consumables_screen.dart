@@ -3,6 +3,7 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
+import 'package:car_note/src/features/car_info/domain/entities/consumable.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/app_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/consumable_widget.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Padding(
             padding: const EdgeInsets.only(right: 15),
             child: ListView.separated(
-              itemCount: AppStrings.consumables.length,
+              itemCount: Consumable.getCount(),
               itemBuilder: (context, index) =>
                   ConsumableWidget(index: index, name: AppStrings.consumables[index]),
               separatorBuilder: (context, index) => const Divider(thickness: 2),
