@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
-import 'package:car_note/src/features/car_info/data/models/consumable_model.dart';
-import 'package:car_note/src/features/car_info/data/repositories/consumable_repository.dart';
 import 'package:car_note/src/features/car_info/domain/entities/consumable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
