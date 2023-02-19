@@ -1,10 +1,10 @@
 class AppStrings {
-  static String db = 'car_note.db';
-  static String dbTableName = 'Consumables';
-  static String dbTableCol1 = 'name';
-  static String dbTableCol2 = 'last_changed_at';
-  static String dbTableCol3 = 'change_interval';
-  static String dbTableCol4 = 'to_be_changed_at';
+  static String databaseName = 'car_note.db';
+  static String consumablesTable = 'Consumables';
+  static String consumablesTableCol1 = 'name';
+  static String consumablesTableCol2 = 'last_changed_at';
+  static String consumablesTableCol3 = 'change_interval';
+  static String consumablesTableCol4 = 'to_be_changed_at';
 
   static String fontFamily = 'Product Sans';
 
