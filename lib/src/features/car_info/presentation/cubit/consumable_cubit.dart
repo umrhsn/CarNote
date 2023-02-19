@@ -1,12 +1,13 @@
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/domain/entities/consumable.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'app_state.dart';
+part 'consumable_state.dart';
 
-class AppCubit extends Cubit<AppState> {
-  AppCubit() : super(AppInitial()) {
+class ConsumableCubit extends Cubit<ConsumableState> {
+  ConsumableCubit() : super(AppInitial()) {
     for (int i = 0; i < Consumable.getCount(); i++) {
       lastChangedAtControllers.add(TextEditingController());
       changeIntervalControllers.add(TextEditingController());
@@ -17,7 +18,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
+  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
 
   final TextEditingController currentKmController = TextEditingController();
 
