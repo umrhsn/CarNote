@@ -7,19 +7,19 @@ class FormValidation with ChangeNotifier {
 
   ValidationItem _carType = ValidationItem(null, null);
   ValidationItem _modelYear = ValidationItem(null, null);
-  ValidationItem _travelledDistance = ValidationItem(null, null);
+  ValidationItem _currentKm = ValidationItem(null, null);
 
   ValidationItem get carType => _carType;
 
   ValidationItem get modelYear => _modelYear;
 
-  ValidationItem get distanceTravelled => _travelledDistance;
+  ValidationItem get currentKm => _currentKm;
 
   bool get isCarTypeValid => _carType.value != null;
 
   bool get isModelYearValid => _modelYear.value != null;
 
-  bool get isTravelledDistanceValid => _travelledDistance.value != null;
+  bool get isTravelledDistanceValid => _currentKm.value != null;
 
   bool get isValid => isCarTypeValid && isModelYearValid && isTravelledDistanceValid;
 
@@ -50,11 +50,11 @@ class FormValidation with ChangeNotifier {
     notifyListeners();
   }
 
-  void validateDistanceTravelledForm(String? value) {
+  void validateCurrentKmForm(String? value) {
     if (value!.isEmpty) {
-      _travelledDistance = ValidationItem(null, AppStrings.requiredField);
+      _currentKm = ValidationItem(null, AppStrings.requiredField);
     } else {
-      _travelledDistance = ValidationItem(value, null);
+      _currentKm = ValidationItem(value, null);
     }
 
     notifyListeners();
@@ -63,6 +63,6 @@ class FormValidation with ChangeNotifier {
   void submitData() {
     debugPrint('first name: ${_carType.value}'
         '\nlast name: ${_modelYear.value}'
-        '\nusername: ${_travelledDistance.value}');
+        '\nusername: ${_currentKm.value}');
   }
 }

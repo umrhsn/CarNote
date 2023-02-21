@@ -91,6 +91,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: context.isLight ? AppColors.primaryLight : AppColors.primaryDark,
             toolbarHeight: 100,
             title: buildAppBarTextFormField(),

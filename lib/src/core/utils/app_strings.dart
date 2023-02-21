@@ -1,10 +1,21 @@
+import 'package:intl/intl.dart';
+
 class AppStrings {
-  static String dbBoxName = 'car_note';
+  static String carBox = 'car';
+  static String consumableBox = 'consumable';
 
   static String fontFamily = 'Product Sans';
 
   static const String btnContinue = 'Continue';
   static const String btnSave = 'Save';
+
+  static const String dataAddedSuccessfully = 'Data added successfully';
+  static const String somethingWentWrong = 'Something went wrong';
+
+  static const String carTypeHint = 'Car type. e.g. "Suzuki Maruti"';
+  static const String modelYearHint = 'Model year. e.g. "2014"';
+  static String currentKmHint =
+      'Total distance travelled. e.g. ${NumberFormat.decimalPattern().format(100000)} km';
 
   static List<String> consumables = [
     'Oil & Oil Filter', // الزيت وفلتر الزيت

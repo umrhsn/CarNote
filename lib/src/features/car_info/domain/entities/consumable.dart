@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'consumable.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 2)
 class Consumable extends HiveObject {
   @HiveField(0)
   final int id;

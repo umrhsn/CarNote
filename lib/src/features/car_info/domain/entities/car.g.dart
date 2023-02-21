@@ -1,44 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'consumable.dart';
+part of 'car.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ConsumableAdapter extends TypeAdapter<Consumable> {
+class CarAdapter extends TypeAdapter<Car> {
   @override
-  final int typeId = 2;
+  final int typeId = 1;
 
   @override
-  Consumable read(BinaryReader reader) {
+  Car read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Consumable(
-      id: fields[0] as int,
-      name: fields[1] as String,
-      lastChangedAt: fields[2] as int,
-      changeInterval: fields[3] as int,
-      changeKm: fields[4] as int,
+    return Car(
+      type: fields[0] as String,
+      modelYear: fields[1] as int,
+      currentKm: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Consumable obj) {
+  void write(BinaryWriter writer, Car obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.name)
-      ..writeByte(2)
-      ..write(obj.lastChangedAt)
       ..writeByte(3)
-      ..write(obj.changeInterval)
-      ..writeByte(4)
-      ..write(obj.changeKm);
+      ..writeByte(0)
+      ..write(obj.type)
+      ..writeByte(1)
+      ..write(obj.modelYear)
+      ..writeByte(2)
+      ..write(obj.currentKm);
   }
 
   @override
@@ -47,7 +41,7 @@ class ConsumableAdapter extends TypeAdapter<Consumable> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ConsumableAdapter &&
+      other is CarAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

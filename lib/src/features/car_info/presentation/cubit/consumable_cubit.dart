@@ -1,40 +1,68 @@
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
+import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/domain/entities/consumable.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 
 part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
+    initFields();
+  }
+
+  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
+
+  static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+
+  final TextEditingController currentKmController = TextEditingController(
+      text: CarCubit.carBox.get('car') != null
+          ? CarCubit.carBox.get('car')!.currentKm != 0
+              ? CarCubit.carBox.get('car')!.currentKm.toThousands()
+              : ''
+          : '');
+
+  final List<TextEditingController> lastChangedAtControllers = [];
+  final List<TextEditingController> changeIntervalControllers = [];
+  final List<TextEditingController> changeKmControllers = [];
+
+  final FocusNode currentKmFocus = FocusNode();
+
+  final List<FocusNode> lastChangedAtFocuses = [];
+  final List<FocusNode> changeIntervalFocuses = [];
+  final List<FocusNode> changeKmFocuses = [];
+
+  void initFields() {
     // TODO: depend on _myBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
       lastChangedAtControllers.add(
         TextEditingController(
-          text: _myBox.get(index) != null
-              ? _myBox.get(index)!.lastChangedAt != 0
-                  ? _myBox.get(index)!.lastChangedAt.toThousands()
+          text: _consumableBox.get(index) != null
+              ? _consumableBox.get(index)!.lastChangedAt != 0
+                  ? _consumableBox.get(index)!.lastChangedAt.toThousands()
                   : ''
               : '',
         ),
       );
       changeIntervalControllers.add(
         TextEditingController(
-          text: _myBox.get(index) != null
-              ? _myBox.get(index)!.changeInterval != 0
-                  ? _myBox.get(index)!.changeInterval.toThousands()
+          text: _consumableBox.get(index) != null
+              ? _consumableBox.get(index)!.changeInterval != 0
+                  ? _consumableBox.get(index)!.changeInterval.toThousands()
                   : ''
               : '',
         ),
       );
       changeKmControllers.add(
         TextEditingController(
-          text: _myBox.get(index) != null
-              ? _myBox.get(index)!.changeKm != 0
-                  ? _myBox.get(index)!.changeKm.toThousands()
+          text: _consumableBox.get(index) != null
+              ? _consumableBox.get(index)!.changeKm != 0
+                  ? _consumableBox.get(index)!.changeKm.toThousands()
                   : ''
               : '',
         ),
@@ -50,13 +78,20 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
   }
 
-  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
-
-  final Box<Consumable> _myBox = Hive.box<Consumable>(AppStrings.dbBoxName);
-
   void writeData() {
+    CarCubit.carBox.put(
+      'car',
+      Car(
+        type: CarCubit.carBox.get('car')!.type,
+        modelYear: CarCubit.carBox.get('car')!.modelYear,
+        currentKm: int.parse(currentKmController.text.removeThousandSeparator()),
+      ),
+    );
+
+    bool isNotNull = true;
+
     for (int index = 0; index < Consumable.getCount(); index++) {
-      _myBox.put(
+      _consumableBox.put(
         index,
         Consumable(
           id: index,
@@ -72,27 +107,23 @@ class ConsumableCubit extends Cubit<ConsumableState> {
               : 0,
         ),
       );
-      debugPrint('${_myBox.get(index)}');
-      debugPrint(_myBox.get(index)!.name);
-      debugPrint('${_myBox.get(index)!.lastChangedAt}');
-      debugPrint('${_myBox.get(index)!.changeInterval}');
-      debugPrint('${_myBox.get(index)!.changeKm}');
+      debugPrint('${_consumableBox.get(index)}');
+      debugPrint(_consumableBox.get(index)!.name);
+      debugPrint(_consumableBox.get(index)!.lastChangedAt.toThousands());
+      debugPrint(_consumableBox.get(index)!.changeInterval.toThousands());
+      debugPrint(_consumableBox.get(index)!.changeKm.toThousands());
+
+      if (_consumableBox.get(index) == null) {
+        isNotNull = false;
+      }
+    }
+
+    if (isNotNull) {
+      Fluttertoast.showToast(msg: AppStrings.dataAddedSuccessfully);
+    } else {
+      Fluttertoast.showToast(msg: AppStrings.somethingWentWrong);
     }
   }
-
-  final TextEditingController currentKmController = TextEditingController();
-
-  final List<Consumable> consumables = [];
-
-  final List<TextEditingController> lastChangedAtControllers = [];
-  final List<TextEditingController> changeIntervalControllers = [];
-  final List<TextEditingController> changeKmControllers = [];
-
-  final FocusNode currentKmFocus = FocusNode();
-
-  final List<FocusNode> lastChangedAtFocuses = [];
-  final List<FocusNode> changeIntervalFocuses = [];
-  final List<FocusNode> changeKmFocuses = [];
 
   bool shouldEnableSaveButton(BuildContext context) {
     for (int i = 0; i < lastChangedAtControllers.length; i++) {
