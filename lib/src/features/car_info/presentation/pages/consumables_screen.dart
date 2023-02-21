@@ -82,7 +82,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         child: CustomButton(
           text: AppStrings.btnSave.toUpperCase(),
           btnEnabled: cubit.shouldEnableSaveButton(context),
-          onPressed: () {},
+          onPressed: () => cubit.writeData(),
         ),
       );
     }
