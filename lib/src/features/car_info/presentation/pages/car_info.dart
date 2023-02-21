@@ -1,4 +1,3 @@
-import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
 import 'package:car_note/src/core/services/text_input_formatters/uppercase_text_input_formatter.dart';
