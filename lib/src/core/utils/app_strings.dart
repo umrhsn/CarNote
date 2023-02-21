@@ -1,16 +1,30 @@
+import 'package:intl/intl.dart';
+
 class AppStrings {
-  static String? fontFamily = 'Product Sans';
+  static String carBox = 'car';
+  static String consumableBox = 'consumable';
+
+  static String fontFamily = 'Product Sans';
 
   static const String btnContinue = 'Continue';
   static const String btnSave = 'Save';
 
-  static List consumables = [
+  static const String dataAddedSuccessfully = 'Data added successfully';
+  static const String somethingWentWrong = 'Something went wrong';
+
+  static const String carTypeHint = 'Car type. e.g. "Suzuki Maruti"';
+  static const String modelYearHint = 'Model year. e.g. "2014"';
+  static String currentKmHint =
+      'Total distance travelled. e.g. ${NumberFormat.decimalPattern().format(100000)} km';
+
+  static List<String> consumables = [
     'Oil & Oil Filter', // الزيت وفلتر الزيت
-    'Serpentine / Drive Belts', // cambelt? // سير الموتور
+    'Timing Belt', // سير الموتور
+    'Fuel Filter', // فلتر البنزين
     'Air Filter', // فلتر الهواء
     'AC Filter', // فلتر التكييف
-    'AC belt', // تيل الفرامل
-    'Gear Lever Oil', // زيت الفتيس
+    'AC belt', // سير التكييف
+    'Gearbox Oil', // زيت الفتيس
     'Antifreeze Coolant', // مية التبريد
     'Spark Plugs', // البوجيهات
     'Brake Linings' // تيل الفرامل
