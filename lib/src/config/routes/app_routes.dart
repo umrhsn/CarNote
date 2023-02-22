@@ -1,6 +1,6 @@
 import 'package:car_note/src/features/car_info/presentation/pages/car_info.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/splash_screen.dart';
+import 'package:car_note/src/features/consumables/presentation/pages/consumables_screen.dart';
+import 'package:car_note/src/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

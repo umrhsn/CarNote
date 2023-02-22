@@ -1,9 +1,6 @@
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/consumable_cubit.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/car_info.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
-import 'package:car_note/src/features/car_info/presentation/pages/splash_screen.dart';
+import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
