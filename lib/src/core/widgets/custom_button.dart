@@ -1,5 +1,5 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
-import 'package:car_note/src/core/utils/media_query_values.dart';
+import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

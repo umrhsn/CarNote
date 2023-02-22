@@ -3,6 +3,7 @@ import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart
 import 'package:car_note/src/features/car_info/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/pages/car_info.dart';
 import 'package:car_note/src/features/car_info/presentation/pages/consumables_screen.dart';
+import 'package:car_note/src/features/car_info/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -32,25 +33,11 @@ class CarNote extends StatelessWidget {
           BlocProvider(create: (context) => CarCubit()),
           BlocProvider(create: (context) => ConsumableCubit())
         ],
-        child: FutureBuilder(
-          future: checkFirstSeen(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              return MaterialApp(
-                theme: AppThemes.appTheme(isLight: true),
-                darkTheme: AppThemes.appTheme(isLight: false),
-                initialRoute: snapshot.data,
-                routes: {
-                  Routes.initialRoute: (context) => const CarInfo(),
-                  Routes.consumablesRoute: (context) => const ConsumablesScreen(),
-                },
-                onGenerateRoute: AppRoutes.onGenerateRoute,
-                debugShowCheckedModeBanner: false,
-              );
-            }
-          },
+        child: MaterialApp(
+          theme: AppThemes.appTheme(isLight: true),
+          darkTheme: AppThemes.appTheme(isLight: false),
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          debugShowCheckedModeBanner: false,
         ),
       ),
     );

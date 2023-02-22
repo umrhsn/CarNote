@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class Routes {
   static const String initialRoute = '/';
-  static const String consumablesRoute = '/maintenance_screen';
+  static const String carInfoRoute = '/car_info';
+  static const String consumablesRoute = '/consumables_screen';
   static const String noRouteFound = 'No Route Found';
 }
 
@@ -13,6 +14,8 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
+        return MaterialPageRoute(builder: ((context) => const SplashScreen()));
+      case Routes.carInfoRoute:
         return MaterialPageRoute(builder: ((context) => const CarInfo()));
       case Routes.consumablesRoute:
         return MaterialPageRoute(builder: ((context) => const ConsumablesScreen()));
