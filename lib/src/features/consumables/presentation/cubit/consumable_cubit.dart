@@ -1,8 +1,8 @@
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/car_info/domain/entities/consumable.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
+import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
