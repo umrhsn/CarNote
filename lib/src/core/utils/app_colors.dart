@@ -6,7 +6,7 @@ class AppColors {
   static const Color scaffoldBackgroundDark = Color(0xff000000);
 
   static const Color primaryLight = Color(0xffff9559);
-  static const Color primaryDark = Color(0xff3b0000);
+  static const Color primaryDark = Color(0xff190f09);
 
   static Color appBarTextFieldFillLight = Colors.white.withAlpha(40);
   static Color appBarTextFieldFillDark = Colors.white.withAlpha(30);
@@ -57,15 +57,15 @@ class AppColors {
   static MaterialColor primarySwatchDark = MaterialColor(
     primaryDark.value, //0%
     const <int, Color>{
-      50: Color(0xff4f1a1a), //10%
-      100: Color(0xff623333), //20%
-      200: Color(0xff764d4d), //30%
-      300: Color(0xff896666), //40%
-      400: Color(0xff9d8080), //50%
-      500: Color(0xffb19999), //60%
-      600: Color(0xffc4b3b3), //70%
-      700: Color(0xffd8cccc), //80%
-      800: Color(0xffebe6e6), //90%
+      50: Color(0xff302722), //10%
+      100: Color(0xff473f3a), //20%
+      200: Color(0xff5e5753), //30%
+      300: Color(0xff756f6b), //40%
+      400: Color(0xff8c8784), //50%
+      500: Color(0xffa39f9d), //60%
+      600: Color(0xffbab7b5), //70%
+      700: Color(0xffd1cfce), //80%
+      800: Color(0xffe8e7e6), //90%
       900: Color(0xffffffff), //100%
     },
   );
