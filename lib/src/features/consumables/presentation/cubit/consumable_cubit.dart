@@ -1,4 +1,6 @@
+import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
@@ -36,6 +38,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   final List<FocusNode> lastChangedAtFocuses = [];
   final List<FocusNode> changeIntervalFocuses = [];
   final List<FocusNode> changeKmFocuses = [];
+
+  late Color validatingTextColor;
 
   void initFields() {
     // TODO: depend on _myBox.length
@@ -127,14 +131,14 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   bool shouldEnableSaveButton(BuildContext context) {
     for (int i = 0; i < lastChangedAtControllers.length; i++) {
-      if (getLastChangedKmErrorText(context, i).data != '') {
+      if (getLastChangedKmValidatingText(context, i).data != '') {
         return false;
       }
     }
     return true;
   }
 
-  Text getLastChangedKmErrorText(BuildContext context, int index) {
+  Text getLastChangedKmValidatingText(BuildContext context, int index) {
     return Text(
       validateLastChangedKilometer(index) ?? '',
       style: TextStyle(
@@ -145,12 +149,12 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     );
   }
 
-  Text getChangeKmErrorText(BuildContext context, int index) {
+  Text getChangeKmValidatingText(BuildContext context, int index) {
     return Text(
-      validateChangeKilometer(index) ?? '',
+      validateChangeKilometer(index, context) ?? '',
       style: TextStyle(
-        color: Theme.of(context).colorScheme.error,
-        height: validateChangeKilometer(index) != null ? 2 : 0,
+        color: validatingTextColor,
+        height: validateChangeKilometer(index, context) != null ? 2 : 0,
         fontSize: 11,
       ),
     );
@@ -183,10 +187,10 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(ValidatingComplete());
   }
 
-  void validateAllChangeKilometerFields() {
+  void validateAllChangeKilometerFields(BuildContext context) {
     emit(ValidatingItem());
-    for (int i = 0; i < changeKmControllers.length; i++) {
-      validateChangeKilometer(i);
+    for (int index = 0; index < changeKmControllers.length; index++) {
+      validateChangeKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
@@ -216,13 +220,40 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     return 0;
   }
 
-  // Gives a warning to the user if current kilometer exceeded change kilometer.
+  int calculateWarningDifference(int index) {
+    if (currentKmController.text.isNotEmpty && changeKmControllers[index].text.isNotEmpty) {
+      if (int.parse(currentKmController.text.removeThousandSeparator()) <
+          int.parse(changeKmControllers[index].text.removeThousandSeparator())) {
+        return int.parse(changeKmControllers[index].text.removeThousandSeparator()) -
+            int.parse(currentKmController.text.removeThousandSeparator());
+      }
+    }
+    return 0;
+  }
+
+  bool isWarningText(int index) {
+    emit(Calculating());
+    return calculateWarningDifference(index) > 0 && calculateWarningDifference(index) <= 500;
+  }
+
+  bool isErrorText(int index) {
+    emit(Calculating());
+    return calculateChangeKmAndCurrentKmDifference(index) > 0;
+  }
+
+  // Gives an error message to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
-  String? validateChangeKilometer(int index) {
+  String? validateChangeKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
-    if (calculateChangeKmAndCurrentKmDifference(index) > 0) {
+    if (isWarningText(index)) {
+      int difference = calculateWarningDifference(index);
+      validatingTextColor = context.isLight ? AppColors.warningLight : AppColors.warningDark;
+      return "${difference.toThousands()} ${AppStrings.km} ${AppStrings.warningText}";
+    }
+    if (isErrorText(index)) {
       int difference = calculateChangeKmAndCurrentKmDifference(index);
-      return "Warning, exceeded by ${difference.toThousands()} km";
+      validatingTextColor = Theme.of(context).colorScheme.error;
+      return "${AppStrings.errorText} ${difference.toThousands()} ${AppStrings.km}";
     }
     emit(ValidatingComplete());
     return null;

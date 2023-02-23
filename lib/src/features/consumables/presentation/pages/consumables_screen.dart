@@ -52,9 +52,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         ],
         onChanged: (_) {
           cubit.validateAllLastChangedKilometerFields();
-          cubit.validateAllChangeKilometerFields();
+          cubit.validateAllChangeKilometerFields(context);
         },
-        onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
+        onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
         autovalidateMode: AutovalidateMode.always,
       );
     }

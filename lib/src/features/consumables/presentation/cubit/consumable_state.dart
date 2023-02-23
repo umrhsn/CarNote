@@ -18,10 +18,4 @@ class ValidatingItem extends ConsumableState {}
 
 class ValidatingComplete extends ConsumableState {}
 
-// class DbInitialized extends AppState {}
-//
-// class DbLoading extends AppState {}
-//
-// class DbLoaded extends AppState {}
-//
-// class DbConsumableCreated extends AppState {}
+class Calculating extends ConsumableState {}

@@ -44,4 +44,9 @@ class AppStrings {
   static const String requiredField = '*required field';
   static const String yearMatchesLength = '*year should be 4 digits at least';
   static const String yearNotValid = '*invalid year';
+
+  static const String warningText = 'remaining. You need to change this item soon.';
+  static const String errorText = 'Exceeded by';
+
+  static const String km = 'km';
 }
