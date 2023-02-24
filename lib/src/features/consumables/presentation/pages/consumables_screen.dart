@@ -1,7 +1,6 @@
-import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
+import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -31,9 +30,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         textAlign: TextAlign.center,
         style: const TextStyle(fontWeight: FontWeight.bold),
         decoration: InputDecoration(
-          fillColor: context.isLight
-              ? AppColors.appBarTextFieldFillLight
-              : AppColors.appBarTextFieldFillDark,
+          fillColor: AppColors.getAppBarTextFieldFill(context),
           floatingLabelStyle: TextStyle(
             color: cubit.currentKmFocus.hasFocus
                 ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
@@ -41,13 +38,15 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             fontWeight: FontWeight.bold,
           ),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.getAppBarTextFieldBorderAndLabel(context))),
+            borderSide: BorderSide(
+              color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+            ),
+          ),
           labelText: AppStrings.currentKmLabel,
-          labelStyle: TextStyle(
-              color: context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80)),
+          labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
         ),
         inputFormatters: [
-          ThousandSeparatorTextInputFormatter(),
+          ThousandSeparatorInputFormatter(),
           LengthLimitingTextInputFormatter(9),
         ],
         onChanged: (_) {
@@ -92,7 +91,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: context.isLight ? AppColors.primaryLight : AppColors.primaryDark,
+            backgroundColor: AppColors.getPrimaryColor(context),
             toolbarHeight: 100,
             title: buildAppBarTextFormField(),
           ),

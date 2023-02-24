@@ -1,6 +1,5 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
@@ -15,34 +14,7 @@ part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
-    initFields();
-  }
-
-  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
-
-  static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
-
-  final TextEditingController currentKmController = TextEditingController(
-      text: CarCubit.carBox.get('car') != null
-          ? CarCubit.carBox.get('car')!.currentKm != 0
-              ? CarCubit.carBox.get('car')!.currentKm.toThousands()
-              : ''
-          : '');
-
-  final List<TextEditingController> lastChangedAtControllers = [];
-  final List<TextEditingController> changeIntervalControllers = [];
-  final List<TextEditingController> changeKmControllers = [];
-
-  final FocusNode currentKmFocus = FocusNode();
-
-  final List<FocusNode> lastChangedAtFocuses = [];
-  final List<FocusNode> changeIntervalFocuses = [];
-  final List<FocusNode> changeKmFocuses = [];
-
-  late Color validatingTextColor;
-
-  void initFields() {
-    // TODO: depend on _myBox.length
+    // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
       lastChangedAtControllers.add(
         TextEditingController(
@@ -74,20 +46,39 @@ class ConsumableCubit extends Cubit<ConsumableState> {
       lastChangedAtFocuses.add(FocusNode());
       changeIntervalFocuses.add(FocusNode());
       changeKmFocuses.add(FocusNode());
-
-      debugPrint('lastChangedAtControllers[$index].text = ${lastChangedAtControllers[index].text}');
-      debugPrint(
-          'changeIntervalControllers[$index].text = ${changeIntervalControllers[index].text}');
-      debugPrint('changeKmControllers[$index].text = ${changeKmControllers[index].text}');
     }
   }
 
+  /// Easy access object of Cubit
+  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
+
+  /// Main fields
+  final TextEditingController currentKmController = TextEditingController(
+      text: CarCubit.carBox.get(AppStrings.carBox) != null
+          ? CarCubit.carBox.get(AppStrings.carBox)!.currentKm != 0
+              ? CarCubit.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+              : ''
+          : '');
+
+  final List<TextEditingController> lastChangedAtControllers = [];
+  final List<TextEditingController> changeIntervalControllers = [];
+  final List<TextEditingController> changeKmControllers = [];
+
+  final FocusNode currentKmFocus = FocusNode();
+
+  final List<FocusNode> lastChangedAtFocuses = [];
+  final List<FocusNode> changeIntervalFocuses = [];
+  final List<FocusNode> changeKmFocuses = [];
+
+  /// Database fields and methods
+  static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+
   void writeData() {
     CarCubit.carBox.put(
-      'car',
+      AppStrings.carBox,
       Car(
-        type: CarCubit.carBox.get('car')!.type,
-        modelYear: CarCubit.carBox.get('car')!.modelYear,
+        type: CarCubit.carBox.get(AppStrings.carBox)!.type,
+        modelYear: CarCubit.carBox.get(AppStrings.carBox)!.modelYear,
         currentKm: int.parse(currentKmController.text.removeThousandSeparator()),
       ),
     );
@@ -111,15 +102,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
               : 0,
         ),
       );
-      debugPrint('${_consumableBox.get(index)}');
-      debugPrint(_consumableBox.get(index)!.name);
-      debugPrint(_consumableBox.get(index)!.lastChangedAt.toThousands());
-      debugPrint(_consumableBox.get(index)!.changeInterval.toThousands());
-      debugPrint(_consumableBox.get(index)!.changeKm.toThousands());
-
-      if (_consumableBox.get(index) == null) {
-        isNotNull = false;
-      }
+      if (_consumableBox.get(index) == null) isNotNull = false;
     }
 
     if (isNotNull) {
@@ -129,21 +112,59 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
   }
 
+  /// Color controlling methods
+  Color getValidatingTextColor(BuildContext context, int index) {
+    return isWarningText(index)
+        ? AppColors.getWarningColor(context)
+        : AppColors.getErrorColor(context);
+  }
+
+  OutlineInputBorder getFocusedBorder(BuildContext context) => OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.getTextFieldBorderAndLabelFocused(context),
+          strokeAlign: 0,
+          width: 1.2,
+        ),
+      );
+
+  OutlineInputBorder getDefaultBorder(BuildContext context) => OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.getHintColor(context),
+          width: 1.2,
+          strokeAlign: 0,
+        ),
+      );
+
+  OutlineInputBorder getErrorBorder(BuildContext context) => OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.getErrorColor(context),
+          width: 2,
+        ),
+      );
+
+  OutlineInputBorder getWarningBorder(BuildContext context) => OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.getWarningColor(context),
+          width: 2,
+        ),
+      );
+
   bool shouldEnableSaveButton(BuildContext context) {
-    for (int i = 0; i < lastChangedAtControllers.length; i++) {
-      if (getLastChangedKmValidatingText(context, i).data != '') {
+    for (int index = 0; index < lastChangedAtControllers.length; index++) {
+      if (getLastChangedKmValidatingText(context, index).data != '') {
         return false;
       }
     }
     return true;
   }
 
+  /// Error and warning Text widgets
   Text getLastChangedKmValidatingText(BuildContext context, int index) {
     return Text(
-      validateLastChangedKilometer(index) ?? '',
+      _validateLastChangedKilometer(index) ?? '',
       style: TextStyle(
-        color: Theme.of(context).colorScheme.error,
-        height: validateLastChangedKilometer(index) != null ? 2 : 0,
+        color: getValidatingTextColor(context, index),
+        height: _validateLastChangedKilometer(index) != null ? 2 : 0,
         fontSize: 11,
       ),
     );
@@ -151,15 +172,16 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   Text getChangeKmValidatingText(BuildContext context, int index) {
     return Text(
-      validateChangeKilometer(index, context) ?? '',
+      _validateChangeKilometer(index, context) ?? '',
       style: TextStyle(
-        color: validatingTextColor,
-        height: validateChangeKilometer(index, context) != null ? 2 : 0,
+        color: getValidatingTextColor(context, index),
+        height: _validateChangeKilometer(index, context) != null ? 2 : 0,
         fontSize: 11,
       ),
     );
   }
 
+  /// Calculation and validation methods
   int _sumChangeKilometer(TextEditingController lastChangedAtKmController,
       TextEditingController changeIntervalController) {
     if (lastChangedAtKmController.text.isNotEmpty && changeIntervalController.text.isNotEmpty) {
@@ -181,8 +203,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   void validateAllLastChangedKilometerFields() {
     emit(ValidatingItem());
-    for (int i = 0; i < changeKmControllers.length; i++) {
-      validateLastChangedKilometer(i);
+    for (int index = 0; index < changeKmControllers.length; index++) {
+      _validateLastChangedKilometer(index);
     }
     emit(ValidatingComplete());
   }
@@ -190,22 +212,18 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   void validateAllChangeKilometerFields(BuildContext context) {
     emit(ValidatingItem());
     for (int index = 0; index < changeKmControllers.length; index++) {
-      validateChangeKilometer(index, context);
+      _validateChangeKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
 
-  getErrorText(int index) {
-    return validateLastChangedKilometer(index);
-  }
-
   // last changed kilometer should not exceed current kilometer
-  String? validateLastChangedKilometer(int index) {
+  String? _validateLastChangedKilometer(int index) {
     emit(ValidatingItem());
     if (lastChangedAtControllers[index].text.isNotEmpty && currentKmController.text.isNotEmpty) {
       if (int.parse(lastChangedAtControllers[index].text.removeThousandSeparator()) >
           int.parse(currentKmController.text.removeThousandSeparator())) {
-        return "invalid input";
+        return AppStrings.invalidInput;
       }
     }
     emit(ValidatingComplete());
@@ -243,16 +261,16 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   // Gives an error message to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
-  String? validateChangeKilometer(int index, BuildContext context) {
+  String? _validateChangeKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
     if (isWarningText(index)) {
       int difference = calculateWarningDifference(index);
-      validatingTextColor = context.isLight ? AppColors.warningLight : AppColors.warningDark;
+      emit(ValidatingComplete());
       return "${difference.toThousands()} ${AppStrings.km} ${AppStrings.warningText}";
     }
     if (isErrorText(index)) {
       int difference = calculateChangeKmAndCurrentKmDifference(index);
-      validatingTextColor = Theme.of(context).colorScheme.error;
+      emit(ValidatingComplete());
       return "${AppStrings.errorText} ${difference.toThousands()} ${AppStrings.km}";
     }
     emit(ValidatingComplete());

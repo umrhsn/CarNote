@@ -35,7 +35,7 @@ class AppStrings {
   static const String changeIntervalLabel = 'Change interval';
   static const String changeKmLabel = 'To be changed at';
 
-  static String methodName(Function method) {
+  static String getMethodName(Function method) {
     return method
         .toString()
         .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
@@ -49,4 +49,8 @@ class AppStrings {
   static const String errorText = 'Exceeded by';
 
   static const String km = 'km';
+
+  static const String sharedBool = 'seen';
+
+  static const String invalidInput = 'invalid input';
 }

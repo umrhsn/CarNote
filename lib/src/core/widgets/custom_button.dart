@@ -1,13 +1,12 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
-  final bool btnEnabled;
+  bool btnEnabled;
   final void Function()? onPressed;
 
-  const CustomButton({
+  CustomButton({
     Key? key,
     required this.text,
     required this.btnEnabled,
@@ -21,11 +20,10 @@ class CustomButton extends StatelessWidget {
       style: !btnEnabled
           ? ButtonStyle(
               elevation: MaterialStateProperty.all(0),
-              foregroundColor: MaterialStateProperty.all(context.isLight
-                  ? AppColors.scaffoldBackgroundLight
-                  : AppColors.scaffoldBackgroundLight.withAlpha(60)),
-              backgroundColor: MaterialStateProperty.all(
-                  context.isLight ? AppColors.btnDisabledLight : AppColors.btnDisabledDark),
+              foregroundColor:
+                  MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
+              backgroundColor:
+                  MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
             )
           : const ButtonStyle(),
       child: Text(text),

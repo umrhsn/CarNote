@@ -1,7 +1,6 @@
-import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
+import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,40 +22,42 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
     cubit.calculateChangeKmAndCurrentKmDifference(widget.index);
     cubit.calculateWarningDifference(widget.index);
-
     cubit.getChangeKilometer(widget.index);
 
-    OutlineInputBorder focusedBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: context.isLight
-            ? AppColors.appBarFocusedPrimaryLight
-            : AppColors.appBarFocusedPrimaryDark,
-        strokeAlign: 0,
-        width: 1.2,
-      ),
-    );
+    Color getLastChangedAndChangeIntervalLabelColor() =>
+        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+            ? cubit.getValidatingTextColor(context, widget.index)
+            : cubit.lastChangedAtFocuses[widget.index].hasFocus
+                ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                : AppColors.getTextFieldBorderAndLabel(context);
 
-    OutlineInputBorder defaultBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
-        width: 1.2,
-        strokeAlign: 0,
-      ),
-    );
+    Color getChangeKmLabelColor() =>
+        cubit.getChangeKmValidatingText(context, widget.index).data != ''
+            ? cubit.getValidatingTextColor(context, widget.index)
+            : cubit.changeKmFocuses[widget.index].hasFocus
+                ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                : AppColors.getTextFieldBorderAndLabel(context);
 
-    OutlineInputBorder errorBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Theme.of(context).colorScheme.error,
-        width: 2,
-      ),
-    );
+    OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder() =>
+        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+            ? cubit.getErrorBorder(context)
+            : cubit.getFocusedBorder(context);
 
-    OutlineInputBorder warningBorder = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: context.isLight ? AppColors.warningLight : AppColors.warningDark,
-        width: 2,
-      ),
-    );
+    OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder() =>
+        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+            ? cubit.getErrorBorder(context)
+            : cubit.getDefaultBorder(context);
+
+    Color getChangeIntervalLabelColor() => cubit.changeIntervalFocuses[widget.index].hasFocus
+        ? AppColors.getTextFieldBorderAndLabelFocused(context)
+        : AppColors.getTextFieldBorderAndLabel(context);
+
+    OutlineInputBorder getChangeKmDisabledBorder() =>
+        cubit.getChangeKmValidatingText(context, widget.index).data != ''
+            ? cubit.isWarningText(widget.index)
+                ? cubit.getWarningBorder(context)
+                : cubit.getErrorBorder(context)
+            : cubit.getDefaultBorder(context);
 
     Expanded buildLastChangedTextFormField() {
       return Expanded(
@@ -74,25 +75,16 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 decoration: InputDecoration(
                   labelText: AppStrings.lastChangedAtLabel,
                   floatingLabelStyle: TextStyle(
-                    color: cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-                        ? Theme.of(context).colorScheme.error
-                        : cubit.lastChangedAtFocuses[widget.index].hasFocus
-                            ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                            : AppColors.getTextFieldBorderAndLabel(context),
+                    color: getLastChangedAndChangeIntervalLabelColor(),
                     fontWeight: FontWeight.bold,
                   ),
-                  focusedBorder:
-                      cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-                          ? errorBorder
-                          : focusedBorder,
-                  enabledBorder:
-                      cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-                          ? errorBorder
-                          : defaultBorder,
+                  focusedBorder: getLastChangedAndChangeIntervalFocusedBorder(),
+                  enabledBorder: getLastChangedAndChangeIntervalEnabledBorder(),
                 ),
                 inputFormatters: [
-                  ThousandSeparatorTextInputFormatter(),
+                  ThousandSeparatorInputFormatter(),
                   LengthLimitingTextInputFormatter(9),
+                  FilteringTextInputFormatter.digitsOnly,
                 ],
               ),
             ),
@@ -107,27 +99,27 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
     Expanded buildChangeIntervalTextFormField() {
       return Expanded(
-          child: TextFormField(
-        controller: cubit.changeIntervalControllers[widget.index],
-        focusNode: cubit.changeIntervalFocuses[widget.index],
-        cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-        onChanged: (_) => cubit.getChangeKilometer(widget.index),
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          labelText: AppStrings.changeIntervalLabel,
-          floatingLabelStyle: TextStyle(
-            color: cubit.changeIntervalFocuses[widget.index].hasFocus
-                ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                : AppColors.getTextFieldBorderAndLabel(context),
-            fontWeight: FontWeight.bold,
+        child: TextFormField(
+          controller: cubit.changeIntervalControllers[widget.index],
+          focusNode: cubit.changeIntervalFocuses[widget.index],
+          cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
+          onChanged: (_) => cubit.getChangeKilometer(widget.index),
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(
+            labelText: AppStrings.changeIntervalLabel,
+            floatingLabelStyle: TextStyle(
+              color: getChangeIntervalLabelColor(),
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          inputFormatters: [
+            ThousandSeparatorInputFormatter(),
+            LengthLimitingTextInputFormatter(7),
+            FilteringTextInputFormatter.digitsOnly,
+          ],
         ),
-        inputFormatters: [
-          ThousandSeparatorTextInputFormatter(),
-          LengthLimitingTextInputFormatter(7),
-        ],
-      ));
+      );
     }
 
     Column buildChangeKmTextFormField() {
@@ -136,27 +128,14 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           TextFormField(
             enabled: false,
             controller: cubit.changeKmControllers[widget.index],
-            keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               labelText: AppStrings.changeKmLabel,
-              fillColor: context.isLight
-                  ? AppColors.primaryLight.withAlpha(20)
-                  : AppColors.primaryDark.withAlpha(90),
-              floatingLabelStyle: TextStyle(
-                color: cubit.getChangeKmValidatingText(context, widget.index).data != ''
-                    ? cubit.validatingTextColor
-                    : cubit.changeKmFocuses[widget.index].hasFocus
-                        ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                        : AppColors.getTextFieldBorderAndLabel(context),
-                fontWeight: FontWeight.bold,
-              ),
-              disabledBorder: cubit.getChangeKmValidatingText(context, widget.index).data != ''
-                  ? cubit.isWarningText(widget.index)
-                      ? warningBorder
-                      : errorBorder
-                  : defaultBorder,
+              fillColor: AppColors.getChangeKmFillColor(context),
+              floatingLabelStyle:
+                  TextStyle(color: getChangeKmLabelColor(), fontWeight: FontWeight.bold),
+              disabledBorder: getChangeKmDisabledBorder(),
             ),
           ),
           Align(
@@ -172,11 +151,12 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
           child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                widget.name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              )),
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              widget.name,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -13,28 +13,8 @@ class AppColors {
 
   static Color appBarFocusedPrimaryLight = Colors.orange.shade900;
   static Color appBarFocusedPrimaryDark = Colors.white70;
-  static Color appBarPrimaryLight = AppColors.primarySwatchLight.shade400;
-  static Color appBarPrimaryDark = AppColors.primarySwatchDark.shade300;
-
-  static Color getAppBarTextFieldBorderAndLabelFocused(BuildContext context) {
-    return context.isLight
-        ? AppColors.appBarFocusedPrimaryLight
-        : AppColors.appBarFocusedPrimaryDark;
-  }
-
-  static Color getAppBarTextFieldBorderAndLabel(BuildContext context) {
-    return context.isLight ? AppColors.appBarPrimaryLight : AppColors.appBarPrimaryDark;
-  }
-
-  static Color getTextFieldBorderAndLabelFocused(BuildContext context) {
-    return context.isLight
-        ? AppColors.appBarFocusedPrimaryLight
-        : AppColors.appBarFocusedPrimaryDark;
-  }
-
-  static Color getTextFieldBorderAndLabel(BuildContext context) {
-    return context.isLight ? AppColors.hintLight : AppColors.hintDark;
-  }
+  static Color appBarPrimaryLight = primarySwatchLight.shade400;
+  static Color appBarPrimaryDark = primarySwatchDark.shade300;
 
   static Color floatingLabelDark = primarySwatchDark.shade200;
 
@@ -73,7 +53,7 @@ class AppColors {
   static const Color hintLight = Color(0xff9c9c9c);
   static Color hintDark = const Color(0xffffffff).withAlpha(70);
 
-  static Color btnDisabledLight = AppColors.primaryDark.withAlpha(60);
+  static Color btnDisabledLight = primaryDark.withAlpha(60);
   static Color btnDisabledDark = Colors.white.withAlpha(70);
 
   static Color textDisabledLight = Colors.grey.shade200;
@@ -84,4 +64,41 @@ class AppColors {
 
   static const Color warningLight = Color(0xffd4ad00);
   static const Color warningDark = Color(0xfffff694);
+
+  static Color getPrimaryColor(BuildContext context) =>
+      context.isLight ? AppColors.primaryLight : AppColors.primaryDark;
+
+  static Color getAppBarTextFieldFill(BuildContext context) =>
+      context.isLight ? AppColors.appBarTextFieldFillLight : AppColors.appBarTextFieldFillDark;
+
+  static Color getAppBarTextFieldLabel(BuildContext context) =>
+      context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);
+
+  static Color getAppBarTextFieldBorderAndLabelFocused(BuildContext context) =>
+      context.isLight ? appBarFocusedPrimaryLight : appBarFocusedPrimaryDark;
+
+  static Color getAppBarTextFieldBorderAndLabel(BuildContext context) =>
+      context.isLight ? appBarPrimaryLight : appBarPrimaryDark;
+
+  static Color getTextFieldBorderAndLabelFocused(BuildContext context) =>
+      context.isLight ? appBarFocusedPrimaryLight : appBarFocusedPrimaryDark;
+
+  static Color getTextFieldBorderAndLabel(BuildContext context) =>
+      context.isLight ? hintLight : hintDark;
+
+  static Color getChangeKmFillColor(BuildContext context) =>
+      context.isLight ? primaryLight.withAlpha(20) : primaryDark.withAlpha(90);
+
+  static Color getWarningColor(BuildContext context) =>
+      context.isLight ? warningLight : warningDark;
+
+  static Color getErrorColor(BuildContext context) => Theme.of(context).colorScheme.error;
+
+  static Color getHintColor(BuildContext context) => context.isLight ? hintLight : hintDark;
+
+  static Color getBtnDisabledForeground(BuildContext context) =>
+      context.isLight ? scaffoldBackgroundLight : scaffoldBackgroundLight.withAlpha(60);
+
+  static Color getBtnDisabledBackground(BuildContext context) =>
+      context.isLight ? AppColors.btnDisabledLight : AppColors.btnDisabledDark;
 }

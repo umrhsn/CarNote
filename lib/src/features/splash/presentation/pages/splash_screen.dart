@@ -1,10 +1,11 @@
 import 'dart:async';
-
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
+import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,15 +34,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   Future checkFirstSeen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool introSeen = (prefs.getBool('intro_seen') ?? false);
 
-    if (introSeen) {
-      Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
-    } else {
-      await prefs.setBool('intro_seen', true);
-      Navigator.pushReplacementNamed(context, Routes.carInfoRoute);
+    if (CarCubit.carBox.get(AppStrings.carBox) != null) {
+      await prefs.setBool(AppStrings.sharedBool, true);
     }
+
+    navigate(prefs.getBool(AppStrings.sharedBool) ?? false);
   }
+
+  void navigate(bool seen) => seen
+      ? Navigator.pushReplacementNamed(context, Routes.consumablesRoute)
+      : Navigator.pushReplacementNamed(context, Routes.carInfoRoute);
 
   late AnimationController _animationController;
   late Animation<double> _animation;
