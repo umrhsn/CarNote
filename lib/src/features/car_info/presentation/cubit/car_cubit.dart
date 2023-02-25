@@ -15,28 +15,28 @@ class CarCubit extends Cubit<CarState> {
   CarCubit() : super(CarInitial());
 
   /// Easy access object of Cubit
-  static CarCubit get(context) => BlocProvider.of<CarCubit>(context);
+  static CarCubit get(BuildContext context) => BlocProvider.of<CarCubit>(context);
 
   /// Main fields
   final TextEditingController carTypeController = TextEditingController(
       text: _carBox.get(AppStrings.carBox) != null
           ? _carBox.get(AppStrings.carBox)!.type.isNotEmpty
-          ? _carBox.get(AppStrings.carBox)!.type
-          : null
+              ? _carBox.get(AppStrings.carBox)!.type
+              : null
           : null);
 
   final TextEditingController modelYearController = TextEditingController(
       text: _carBox.get(AppStrings.carBox) != null
           ? _carBox.get(AppStrings.carBox)!.modelYear != 0
-          ? _carBox.get(AppStrings.carBox)!.modelYear.toString()
-          : null
+              ? _carBox.get(AppStrings.carBox)!.modelYear.toString()
+              : null
           : null);
 
   final TextEditingController currentKmController = TextEditingController(
       text: _carBox.get(AppStrings.carBox) != null
           ? _carBox.get(AppStrings.carBox)!.currentKm != 0
-          ? _carBox.get(AppStrings.carBox)!.currentKm.toThousands()
-          : null
+              ? _carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+              : null
           : null);
 
   final FocusNode carTypeFocus = FocusNode();
@@ -45,6 +45,7 @@ class CarCubit extends Cubit<CarState> {
 
   /// Database fields and methods
   static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
+
   static Box<Car> get carBox => _carBox;
 
   void writeDataAndNavigate(BuildContext context) async {

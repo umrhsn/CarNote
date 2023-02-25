@@ -21,40 +21,46 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
-    TextFormField buildAppBarTextFormField() {
-      return TextFormField(
-        focusNode: cubit.currentKmFocus,
-        cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-        controller: cubit.currentKmController,
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-        decoration: InputDecoration(
-          fillColor: AppColors.getAppBarTextFieldFill(context),
-          floatingLabelStyle: TextStyle(
-            color: cubit.currentKmFocus.hasFocus
-                ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
-                : AppColors.getAppBarTextFieldBorderAndLabel(context),
-            fontWeight: FontWeight.bold,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+    Column buildAppBarWidgets() {
+      return Column(
+        children: [
+          const Icon(Icons.visibility),
+          const SizedBox(height: 10),
+          TextFormField(
+            focusNode: cubit.currentKmFocus,
+            cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+            controller: cubit.currentKmController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+            decoration: InputDecoration(
+              fillColor: AppColors.getAppBarTextFieldFill(context),
+              floatingLabelStyle: TextStyle(
+                color: cubit.currentKmFocus.hasFocus
+                    ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
+                    : AppColors.getAppBarTextFieldBorderAndLabel(context),
+                fontWeight: FontWeight.bold,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+                ),
+              ),
+              labelText: AppStrings.currentKmLabel,
+              labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
             ),
+            inputFormatters: [
+              ThousandSeparatorInputFormatter(),
+              LengthLimitingTextInputFormatter(9),
+            ],
+            onChanged: (_) {
+              cubit.validateAllLastChangedKilometerFields();
+              cubit.validateAllChangeKilometerFields(context);
+            },
+            onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
+            autovalidateMode: AutovalidateMode.always,
           ),
-          labelText: AppStrings.currentKmLabel,
-          labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
-        ),
-        inputFormatters: [
-          ThousandSeparatorInputFormatter(),
-          LengthLimitingTextInputFormatter(9),
         ],
-        onChanged: (_) {
-          cubit.validateAllLastChangedKilometerFields();
-          cubit.validateAllChangeKilometerFields(context);
-        },
-        onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
-        autovalidateMode: AutovalidateMode.always,
       );
     }
 
@@ -92,8 +98,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: AppColors.getPrimaryColor(context),
-            toolbarHeight: 100,
-            title: buildAppBarTextFormField(),
+            toolbarHeight: 120,
+            title: buildAppBarWidgets(),
           ),
           extendBody: true,
           body: SafeArea(

@@ -47,6 +47,7 @@ class AppStrings {
 
   static const String warningText = 'remaining. You need to change this item soon.';
   static const String errorText = 'Exceeded by';
+  static const String remaining = 'remaining';
 
   static const String km = 'km';
 

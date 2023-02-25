@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +54,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         : AppColors.getTextFieldBorderAndLabel(context);
 
     OutlineInputBorder getChangeKmDisabledBorder() =>
-        cubit.getChangeKmValidatingText(context, widget.index).data != ''
+        cubit.getChangeKmValidatingText(context, widget.index).data != '' &&
+                !cubit.isNormalText(widget.index)
             ? cubit.isWarningText(widget.index)
                 ? cubit.getWarningBorder(context)
                 : cubit.getErrorBorder(context)
@@ -122,7 +124,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       );
     }
 
-    Column buildChangeKmTextFormField() {
+    Column buildChangeKmTextFormField(BuildContext context) {
       return Column(
         children: [
           TextFormField(
@@ -150,12 +152,12 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              widget.name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+          child: Row(
+            children: [
+              Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+              const Spacer(),
+              Icon(Icons.visibility, color: Colors.white.withAlpha(90)),
+            ],
           ),
         ),
         Row(
@@ -167,7 +169,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           ],
         ),
         const SizedBox(height: 10),
-        buildChangeKmTextFormField(),
+        buildChangeKmTextFormField(context),
         const SizedBox(height: 15),
       ],
     );

@@ -7,7 +7,7 @@ abstract class CarState extends Equatable {
 
 class CarInitial extends CarState {}
 
-// TODO: change to Bloc instead of Provider
+// TODO: move to Bloc instead of Provider
 
 // class ValidatingItem extends CarState {}
 

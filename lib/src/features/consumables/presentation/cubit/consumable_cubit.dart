@@ -50,7 +50,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   /// Easy access object of Cubit
-  static ConsumableCubit get(context) => BlocProvider.of<ConsumableCubit>(context);
+  static ConsumableCubit get(BuildContext context) => BlocProvider.of<ConsumableCubit>(context);
 
   /// Main fields
   final TextEditingController currentKmController = TextEditingController(
@@ -114,9 +114,11 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Color controlling methods
   Color getValidatingTextColor(BuildContext context, int index) {
-    return isWarningText(index)
-        ? AppColors.getWarningColor(context)
-        : AppColors.getErrorColor(context);
+    return isNormalText(index)
+        ? AppColors.getHintColor(context)
+        : isWarningText(index)
+            ? AppColors.getWarningColor(context)
+            : AppColors.getErrorColor(context);
   }
 
   OutlineInputBorder getFocusedBorder(BuildContext context) => OutlineInputBorder(
@@ -249,6 +251,11 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     return 0;
   }
 
+  bool isNormalText(int index) {
+    emit(Calculating());
+    return calculateWarningDifference(index) > 500;
+  }
+
   bool isWarningText(int index) {
     emit(Calculating());
     return calculateWarningDifference(index) > 0 && calculateWarningDifference(index) <= 500;
@@ -263,15 +270,17 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   // If exceeded; that means the user forgot to change the consumable item.
   String? _validateChangeKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
-    if (isWarningText(index)) {
-      int difference = calculateWarningDifference(index);
+    if (isNormalText(index)) {
       emit(ValidatingComplete());
-      return "${difference.toThousands()} ${AppStrings.km} ${AppStrings.warningText}";
+      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km} ${AppStrings.remaining}';
+    }
+    if (isWarningText(index)) {
+      emit(ValidatingComplete());
+      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km} ${AppStrings.warningText}';
     }
     if (isErrorText(index)) {
-      int difference = calculateChangeKmAndCurrentKmDifference(index);
       emit(ValidatingComplete());
-      return "${AppStrings.errorText} ${difference.toThousands()} ${AppStrings.km}";
+      return '${AppStrings.errorText} ${calculateChangeKmAndCurrentKmDifference(index).toThousands()} ${AppStrings.km}';
     }
     emit(ValidatingComplete());
     return null;
