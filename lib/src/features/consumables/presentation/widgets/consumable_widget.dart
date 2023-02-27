@@ -84,9 +84,9 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                   enabledBorder: getLastChangedAndChangeIntervalEnabledBorder(),
                 ),
                 inputFormatters: [
-                  ThousandSeparatorInputFormatter(),
                   LengthLimitingTextInputFormatter(9),
                   FilteringTextInputFormatter.digitsOnly,
+                  ThousandSeparatorInputFormatter(),
                 ],
               ),
             ),
@@ -116,9 +116,9 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             ),
           ),
           inputFormatters: [
-            ThousandSeparatorInputFormatter(),
             LengthLimitingTextInputFormatter(7),
             FilteringTextInputFormatter.digitsOnly,
+            ThousandSeparatorInputFormatter(),
           ],
         ),
       );

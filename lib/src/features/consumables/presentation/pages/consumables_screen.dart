@@ -50,8 +50,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
             ),
             inputFormatters: [
-              ThousandSeparatorInputFormatter(),
               LengthLimitingTextInputFormatter(9),
+              FilteringTextInputFormatter.digitsOnly,
+              ThousandSeparatorInputFormatter(),
             ],
             onChanged: (_) {
               cubit.validateAllLastChangedKilometerFields();
