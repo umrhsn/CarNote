@@ -54,4 +54,12 @@ class AppStrings {
   static const String sharedBool = 'seen';
 
   static const String invalidInput = 'invalid input';
+
+  static const String changedDataMsg = "You've changed some data.";
+  static const String sureToExitMsg = 'Are you sure you want to exit the app without saving?';
+
+  static const String saveData = 'Save data';
+  static const String exitWithoutSaving = 'Exit without saving';
+
+  static const String tapBackAgainToExit = 'Tap back again to exit';
 }

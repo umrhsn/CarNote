@@ -72,6 +72,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Database fields and methods
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+  static Box<Consumable> get consumableBox => _consumableBox;
 
   void writeData() {
     CarCubit.carBox.put(

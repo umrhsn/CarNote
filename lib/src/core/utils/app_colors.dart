@@ -68,6 +68,9 @@ class AppColors {
   static Color getPrimaryColor(BuildContext context) =>
       context.isLight ? AppColors.primaryLight : AppColors.primaryDark;
 
+  static Color getPrimarySwatchColor(BuildContext context) =>
+      context.isLight ? AppColors.primarySwatchLight : AppColors.primarySwatchDark;
+
   static Color getAppBarTextFieldFill(BuildContext context) =>
       context.isLight ? AppColors.appBarTextFieldFillLight : AppColors.appBarTextFieldFillDark;
 
