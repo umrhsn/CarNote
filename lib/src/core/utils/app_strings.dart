@@ -51,7 +51,7 @@ class AppStrings {
 
   static const String km = 'km';
 
-  static const String sharedBool = 'seen';
+  static const String prefsBoolSeen = 'seen';
 
   static const String invalidInput = 'invalid input';
 

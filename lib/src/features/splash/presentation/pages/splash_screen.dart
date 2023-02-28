@@ -36,10 +36,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (CarCubit.carBox.get(AppStrings.carBox) != null) {
-      await prefs.setBool(AppStrings.sharedBool, true);
+      await prefs.setBool(AppStrings.prefsBoolSeen, true);
     }
 
-    navigate(prefs.getBool(AppStrings.sharedBool) ?? false);
+    navigate(prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
   }
 
   void navigate(bool seen) => seen

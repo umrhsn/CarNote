@@ -61,7 +61,7 @@ class CarCubit extends Cubit<CarState> {
     );
 
     if (_carBox.get(AppStrings.carBox) != null) {
-      await prefs.setBool(AppStrings.sharedBool, true);
+      await prefs.setBool(AppStrings.prefsBoolSeen, true);
       Fluttertoast.showToast(msg: AppStrings.dataAddedSuccessfully);
       Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
     } else {

@@ -4,12 +4,15 @@ import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsumableWidget extends StatefulWidget {
   final int index;
   final String name;
+  bool visible;
 
-  const ConsumableWidget({Key? key, required this.index, required this.name}) : super(key: key);
+  ConsumableWidget({Key? key, required this.index, required this.name, required this.visible})
+      : super(key: key);
 
   @override
   State<ConsumableWidget> createState() => ConsumableWidgetState();
@@ -151,21 +154,20 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold))),
+        ),
+        Visibility(
+          visible: widget.visible,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const Spacer(),
-              Icon(Icons.visibility, color: Colors.white.withAlpha(90)),
+              buildLastChangedTextFormField(),
+              buildChangeIntervalTextFormField(),
             ],
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildLastChangedTextFormField(),
-            buildChangeIntervalTextFormField(),
-          ],
         ),
         const SizedBox(height: 10),
         buildChangeKmTextFormField(context),

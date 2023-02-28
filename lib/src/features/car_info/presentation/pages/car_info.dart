@@ -72,7 +72,7 @@ class _MyHomePageState extends State<CarInfo> {
           btnEnabled: validator.isValid,
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setBool(AppStrings.sharedBool, true);
+            await prefs.setBool(AppStrings.prefsBoolSeen, true);
             cubit.writeDataAndNavigate(context);
           });
     }

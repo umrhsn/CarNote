@@ -19,3 +19,7 @@ class ValidatingItem extends ConsumableState {}
 class ValidatingComplete extends ConsumableState {}
 
 class Calculating extends ConsumableState {}
+
+class VisibilityChanging extends ConsumableState {}
+
+class VisibilityChanged extends ConsumableState {}

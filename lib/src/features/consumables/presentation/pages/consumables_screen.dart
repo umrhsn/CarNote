@@ -14,7 +14,6 @@ import 'package:car_note/src/features/consumables/presentation/widgets/consumabl
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class ConsumablesScreen extends StatefulWidget {
   const ConsumablesScreen({Key? key}) : super(key: key);
@@ -98,8 +97,11 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     Column buildAppBarWidgets() {
       return Column(
         children: [
-          const Icon(Icons.visibility),
-          const SizedBox(height: 10),
+          // TODO: add granular visibility to consumable widget
+          IconButton(
+            icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility, size: 20),
+            onPressed: () => setState(() => cubit.visible = !cubit.visible),
+          ),
           TextFormField(
             focusNode: cubit.currentKmFocus,
             cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
@@ -147,8 +149,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             padding: const EdgeInsets.only(right: 15),
             child: ListView.separated(
               itemCount: Consumable.getCount(),
-              itemBuilder: (context, index) =>
-                  ConsumableWidget(index: index, name: AppStrings.consumables[index]),
+              itemBuilder: (context, index) => ConsumableWidget(
+                  index: index, name: AppStrings.consumables[index], visible: cubit.visible),
               separatorBuilder: (context, index) => const Divider(thickness: 2),
             ),
           ),
@@ -175,7 +177,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: AppColors.getPrimaryColor(context),
-              toolbarHeight: 120,
+              toolbarHeight: 140,
               title: buildAppBarWidgets(),
             ),
             extendBody: true,

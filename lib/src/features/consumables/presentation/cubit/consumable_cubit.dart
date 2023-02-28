@@ -286,4 +286,13 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(ValidatingComplete());
     return null;
   }
+
+  /// Control widgets visibility
+  bool visible = true;
+
+  void changeVisibility() {
+    emit(VisibilityChanging());
+    visible = !visible;
+    emit(VisibilityChanged());
+  }
 }
