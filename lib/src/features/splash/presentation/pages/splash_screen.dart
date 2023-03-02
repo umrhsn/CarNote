@@ -66,16 +66,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: Stack(children: [
-        Positioned(
-          top: context.height / 2.5,
-          left: context.width / 2.85,
-          child: FadeTransition(opacity: _animation, child: AssetManager.splashImage()),
+      body: SafeArea(
+        child: Center(
+          child: Column(children: [
+            Expanded(
+              child: Center(
+                  child: FadeTransition(opacity: _animation, child: AssetManager.splashImage())),
+            ),
+            const CustomProgressIndicator()
+          ]),
         ),
-        const Align(alignment: Alignment.bottomCenter, child: CustomProgressIndicator())
-      ]),
+      ),
     );
   }
 }

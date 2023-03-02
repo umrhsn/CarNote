@@ -66,7 +66,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsetsDirectional.only(end: 8),
               child: TextFormField(
                 controller: cubit.lastChangedAtControllers[widget.index],
                 focusNode: cubit.lastChangedAtFocuses[widget.index],
@@ -151,7 +151,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 10, right: 3, left: 3),
+          padding: const EdgeInsetsDirectional.only(top: 15, bottom: 10, end: 3, start: 3),
           child: Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold))),

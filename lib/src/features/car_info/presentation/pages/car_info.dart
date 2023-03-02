@@ -79,8 +79,6 @@ class _MyHomePageState extends State<CarInfo> {
 
     return Scaffold(
       appBar: AppBar(),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
       body: Center(
         child: SingleChildScrollView(
           child: SafeArea(

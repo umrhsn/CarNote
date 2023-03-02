@@ -98,7 +98,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           children: [
             // TODO: add granular visibility to consumable widget
             IconButton(
-              icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility, size: 20),
+              icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility),
               onPressed: () => cubit.changeVisibility(),
             ),
             TextFormField(
@@ -143,7 +143,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           flex: 1000,
           child: Scrollbar(
             child: Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: const EdgeInsetsDirectional.only(end: 15),
               child: ListView.separated(
                 itemCount: Consumable.getCount(),
                 itemBuilder: (context, index) =>
@@ -155,7 +155,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         );
 
     Padding buildSaveButton() => Padding(
-          padding: const EdgeInsets.only(top: 10, right: 15),
+          padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
           child: CustomButton(
             text: AppStrings.btnSave.toUpperCase(),
             btnEnabled: cubit.shouldEnableSaveButton(context),
@@ -174,10 +174,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
             ),
-            extendBody: true,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(left: 15),
+                padding: const EdgeInsetsDirectional.only(start: 15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
