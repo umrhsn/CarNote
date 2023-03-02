@@ -1,10 +1,12 @@
 import 'package:intl/intl.dart';
 
 class AppStrings {
-  static String carBox = 'car';
-  static String consumableBox = 'consumable';
+  static const String appName = 'Car Note';
 
-  static String fontFamily = 'Product Sans';
+  static const String carBox = 'car';
+  static const String consumableBox = 'consumable';
+
+  static const String fontFamily = 'Product Sans';
 
   static const String btnContinue = 'Continue';
   static const String btnSave = 'Save';

@@ -2,6 +2,8 @@ import 'package:car_note/src/core/services/form_validation/form_validation.dart'
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/services/text_input_formatters/title_case_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/asset_manager.dart';
+import 'package:car_note/src/core/widgets/animated_title.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
@@ -87,10 +89,19 @@ class _MyHomePageState extends State<CarInfo> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AssetManager.icon, height: 100),
+                      SizedBox(width: 10),
+                      AnimatedTitle(text: AppStrings.appName.toUpperCase()),
+                    ],
+                  ),
+                  SizedBox(height: 20),
                   buildCarTypeTextFormField(),
                   buildModelYearTextFormField(),
                   buildCurrentKmTextFormField(),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 15),
                   buildContinueButton()
                 ],
               ),
