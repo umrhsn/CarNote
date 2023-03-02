@@ -27,6 +27,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
+    // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
         Car? car = CarCubit.carBox.get(AppStrings.carBox);
