@@ -20,6 +20,7 @@ class AppStrings {
   static List<String> consumables = [
     'Oil & Oil Filter', // الزيت وفلتر الزيت
     'Timing Belt', // سير الموتور
+    'Dynamo Belt', // سير الدينامو
     'Fuel Filter', // فلتر البنزين
     'Air Filter', // فلتر الهواء
     'AC Filter', // فلتر التكييف
@@ -35,7 +36,7 @@ class AppStrings {
   static const String changeIntervalLabel = 'Change interval';
   static const String changeKmLabel = 'To be changed at';
 
-  static String methodName(Function method) {
+  static String getMethodName(Function method) {
     return method
         .toString()
         .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
@@ -44,4 +45,22 @@ class AppStrings {
   static const String requiredField = '*required field';
   static const String yearMatchesLength = '*year should be 4 digits at least';
   static const String yearNotValid = '*invalid year';
+
+  static const String warningText = 'remaining. You need to change this item soon.';
+  static const String errorText = 'Exceeded by';
+  static const String remaining = 'remaining';
+
+  static const String km = 'km';
+
+  static const String prefsBoolSeen = 'seen';
+
+  static const String invalidInput = 'invalid input';
+
+  static const String changedDataMsg = "You've changed some data.";
+  static const String sureToExitMsg = 'Are you sure you want to exit the app without saving?';
+
+  static const String saveData = 'Save data';
+  static const String exitWithoutSaving = 'Exit without saving';
+
+  static const String tapBackAgainToExit = 'Tap back again to exit';
 }

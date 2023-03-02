@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   Directory dir = await getApplicationDocumentsDirectory();
   Hive
     ..init(dir.path)

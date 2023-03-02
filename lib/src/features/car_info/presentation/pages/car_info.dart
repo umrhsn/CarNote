@@ -1,6 +1,6 @@
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
-import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_text_input_formatter.dart';
-import 'package:car_note/src/core/services/text_input_formatters/uppercase_text_input_formatter.dart';
+import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
+import 'package:car_note/src/core/services/text_input_formatters/title_case_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
@@ -21,28 +21,16 @@ class _MyHomePageState extends State<CarInfo> {
   @override
   Widget build(BuildContext context) {
     final CarCubit cubit = CarCubit.get(context);
-
-    final formValidationProvider = Provider.of<FormValidation>(context);
-    final bool btnEnabled = formValidationProvider.isValid;
-
-    final getCarTypeValidationItem = formValidationProvider.carType;
-    final getModelYearValidationItem = formValidationProvider.modelYear;
-    final getCurrentKmValidationItem = formValidationProvider.currentKm;
-
-    void validateCarTypeForm(String? value) => formValidationProvider.validateCarTypeForm(value);
-    void validateModelYearForm(String? value) =>
-        formValidationProvider.validateModelYearForm(value);
-    void validateCurrentKmForm(String? value) =>
-        formValidationProvider.validateCurrentKmForm(value);
+    final validator = Provider.of<FormValidation>(context);
 
     CustomTextFormField buildCarTypeTextFormField() {
       return CustomTextFormField(
         controller: cubit.carTypeController,
         focusNode: cubit.carTypeFocus,
         hintText: AppStrings.carTypeHint,
-        inputFormatters: [UpperCaseTextInputFormatter()],
-        validationItem: getCarTypeValidationItem,
-        validateItemForm: validateCarTypeForm,
+        inputFormatters: [TitleCaseInputFormatter()],
+        validationItem: validator.carType,
+        validateItemForm: (value) => validator.validateCarTypeForm(value),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.modelYearFocus),
       );
     }
@@ -54,8 +42,8 @@ class _MyHomePageState extends State<CarInfo> {
         keyboardType: TextInputType.number,
         hintText: AppStrings.modelYearHint,
         inputFormatters: [LengthLimitingTextInputFormatter(4)],
-        validationItem: getModelYearValidationItem,
-        validateItemForm: validateModelYearForm,
+        validationItem: validator.modelYear,
+        validateItemForm: (value) => validator.validateModelYearForm(value),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.currentKmFocus),
       );
     }
@@ -67,12 +55,13 @@ class _MyHomePageState extends State<CarInfo> {
         textInputAction: TextInputAction.done,
         keyboardType: TextInputType.number,
         inputFormatters: [
-          ThousandSeparatorTextInputFormatter(),
+          ThousandSeparatorInputFormatter(),
           LengthLimitingTextInputFormatter(9),
+          FilteringTextInputFormatter.digitsOnly,
         ],
         hintText: AppStrings.currentKmHint,
-        validationItem: getCurrentKmValidationItem,
-        validateItemForm: validateCurrentKmForm,
+        validationItem: validator.currentKm,
+        validateItemForm: (value) => validator.validateCurrentKmForm(value),
         onFieldSubmitted: (_) => cubit.writeDataAndNavigate(context),
       );
     }
@@ -80,18 +69,16 @@ class _MyHomePageState extends State<CarInfo> {
     CustomButton buildContinueButton() {
       return CustomButton(
           text: AppStrings.btnContinue.toUpperCase(),
-          btnEnabled: btnEnabled,
+          btnEnabled: validator.isValid,
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setBool('seen', true);
+            await prefs.setBool(AppStrings.prefsBoolSeen, true);
             cubit.writeDataAndNavigate(context);
           });
     }
 
     return Scaffold(
       appBar: AppBar(),
-      extendBody: true,
-      extendBodyBehindAppBar: true,
       body: Center(
         child: SingleChildScrollView(
           child: SafeArea(

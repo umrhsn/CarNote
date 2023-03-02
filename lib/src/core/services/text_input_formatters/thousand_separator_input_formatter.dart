@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class ThousandSeparatorTextInputFormatter extends TextInputFormatter {
+class ThousandSeparatorInputFormatter extends TextInputFormatter {
   static const separator = ','; // Change this to '.' for other locales
 
   @override

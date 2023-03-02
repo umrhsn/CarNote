@@ -1,7 +1,7 @@
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:flutter/services.dart';
 
-class UpperCaseTextInputFormatter extends TextInputFormatter {
+class TitleCaseInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(text: capitalize(newValue.text), selection: newValue.selection);
