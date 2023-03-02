@@ -94,80 +94,74 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       return true;
     }
 
-    Column buildAppBarWidgets() {
-      return Column(
-        children: [
-          // TODO: add granular visibility to consumable widget
-          IconButton(
-            icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility, size: 20),
-            onPressed: () => setState(() => cubit.visible = !cubit.visible),
-          ),
-          TextFormField(
-            focusNode: cubit.currentKmFocus,
-            cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-            controller: cubit.currentKmController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            decoration: InputDecoration(
-              fillColor: AppColors.getAppBarTextFieldFill(context),
-              floatingLabelStyle: TextStyle(
-                color: cubit.currentKmFocus.hasFocus
-                    ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
-                    : AppColors.getAppBarTextFieldBorderAndLabel(context),
-                fontWeight: FontWeight.bold,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+    Column buildAppBarWidgets() => Column(
+          children: [
+            // TODO: add granular visibility to consumable widget
+            IconButton(
+              icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility, size: 20),
+              onPressed: () => cubit.changeVisibility(),
+            ),
+            TextFormField(
+              focusNode: cubit.currentKmFocus,
+              cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+              controller: cubit.currentKmController,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+              decoration: InputDecoration(
+                fillColor: AppColors.getAppBarTextFieldFill(context),
+                floatingLabelStyle: TextStyle(
+                  color: cubit.currentKmFocus.hasFocus
+                      ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
+                      : AppColors.getAppBarTextFieldBorderAndLabel(context),
+                  fontWeight: FontWeight.bold,
                 ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+                  ),
+                ),
+                labelText: AppStrings.currentKmLabel,
+                labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
               ),
-              labelText: AppStrings.currentKmLabel,
-              labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(9),
+                FilteringTextInputFormatter.digitsOnly,
+                ThousandSeparatorInputFormatter(),
+              ],
+              onChanged: (_) {
+                cubit.validateAllLastChangedKilometerFields();
+                cubit.validateAllChangeKilometerFields(context);
+              },
+              onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
+              autovalidateMode: AutovalidateMode.always,
             ),
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(9),
-              FilteringTextInputFormatter.digitsOnly,
-              ThousandSeparatorInputFormatter(),
-            ],
-            onChanged: (_) {
-              cubit.validateAllLastChangedKilometerFields();
-              cubit.validateAllChangeKilometerFields(context);
-            },
-            onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
-            autovalidateMode: AutovalidateMode.always,
-          ),
-        ],
-      );
-    }
+          ],
+        );
 
-    Expanded buildConsumablesList() {
-      return Expanded(
-        flex: 100,
-        child: Scrollbar(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 15),
-            child: ListView.separated(
-              itemCount: Consumable.getCount(),
-              itemBuilder: (context, index) => ConsumableWidget(
-                  index: index, name: AppStrings.consumables[index], visible: cubit.visible),
-              separatorBuilder: (context, index) => const Divider(thickness: 2),
+    Expanded buildConsumablesList() => Expanded(
+          flex: 1000,
+          child: Scrollbar(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: ListView.separated(
+                itemCount: Consumable.getCount(),
+                itemBuilder: (context, index) =>
+                    ConsumableWidget(index: index, name: AppStrings.consumables[index]),
+                separatorBuilder: (context, index) => const Divider(thickness: 2),
+              ),
             ),
           ),
-        ),
-      );
-    }
+        );
 
-    Padding buildSaveButton() {
-      return Padding(
-        padding: const EdgeInsets.only(top: 10, right: 15),
-        child: CustomButton(
-          text: AppStrings.btnSave.toUpperCase(),
-          btnEnabled: cubit.shouldEnableSaveButton(context),
-          onPressed: () => cubit.writeData(),
-        ),
-      );
-    }
+    Padding buildSaveButton() => Padding(
+          padding: const EdgeInsets.only(top: 10, right: 15),
+          child: CustomButton(
+            text: AppStrings.btnSave.toUpperCase(),
+            btnEnabled: cubit.shouldEnableSaveButton(context),
+            onPressed: () => cubit.writeData(),
+          ),
+        );
 
     return BlocBuilder<ConsumableCubit, ConsumableState>(
       builder: (context, state) {

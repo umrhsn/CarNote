@@ -114,13 +114,11 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   /// Color controlling methods
-  Color getValidatingTextColor(BuildContext context, int index) {
-    return isNormalText(index)
-        ? AppColors.getHintColor(context)
-        : isWarningText(index)
-            ? AppColors.getWarningColor(context)
-            : AppColors.getErrorColor(context);
-  }
+  Color getValidatingTextColor(BuildContext context, int index) => isNormalText(index)
+      ? AppColors.getHintColor(context)
+      : isWarningText(index)
+          ? AppColors.getWarningColor(context)
+          : AppColors.getErrorColor(context);
 
   OutlineInputBorder getFocusedBorder(BuildContext context) => OutlineInputBorder(
         borderSide: BorderSide(
@@ -138,19 +136,11 @@ class ConsumableCubit extends Cubit<ConsumableState> {
         ),
       );
 
-  OutlineInputBorder getErrorBorder(BuildContext context) => OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.getErrorColor(context),
-          width: 2,
-        ),
-      );
+  OutlineInputBorder getErrorBorder(BuildContext context) =>
+      OutlineInputBorder(borderSide: BorderSide(color: AppColors.getErrorColor(context), width: 2));
 
   OutlineInputBorder getWarningBorder(BuildContext context) => OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.getWarningColor(context),
-          width: 2,
-        ),
-      );
+      borderSide: BorderSide(color: AppColors.getWarningColor(context), width: 2));
 
   bool shouldEnableSaveButton(BuildContext context) {
     for (int index = 0; index < lastChangedAtControllers.length; index++) {
@@ -162,27 +152,23 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   /// Error and warning Text widgets
-  Text getLastChangedKmValidatingText(BuildContext context, int index) {
-    return Text(
-      _validateLastChangedKilometer(index) ?? '',
-      style: TextStyle(
-        color: getValidatingTextColor(context, index),
-        height: _validateLastChangedKilometer(index) != null ? 2 : 0,
-        fontSize: 11,
-      ),
-    );
-  }
+  Text getLastChangedKmValidatingText(BuildContext context, int index) => Text(
+        _validateLastChangedKilometer(index) ?? '',
+        style: TextStyle(
+          color: AppColors.getErrorColor(context),
+          height: _validateLastChangedKilometer(index) != null ? 2 : 0,
+          fontSize: 11,
+        ),
+      );
 
-  Text getChangeKmValidatingText(BuildContext context, int index) {
-    return Text(
-      _validateChangeKilometer(index, context) ?? '',
-      style: TextStyle(
-        color: getValidatingTextColor(context, index),
-        height: _validateChangeKilometer(index, context) != null ? 2 : 0,
-        fontSize: 11,
-      ),
-    );
-  }
+  Text getChangeKmValidatingText(BuildContext context, int index) => Text(
+        _validateChangeKilometer(index, context) ?? '',
+        style: TextStyle(
+          color: getValidatingTextColor(context, index),
+          height: _validateChangeKilometer(index, context) != null ? 2 : 0,
+          fontSize: 11,
+        ),
+      );
 
   /// Calculation and validation methods
   int _sumChangeKilometer(TextEditingController lastChangedAtKmController,

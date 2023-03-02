@@ -4,14 +4,12 @@ import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsumableWidget extends StatefulWidget {
   final int index;
   final String name;
-  bool visible;
 
-  ConsumableWidget({Key? key, required this.index, required this.name, required this.visible})
+  ConsumableWidget({Key? key, required this.index, required this.name})
       : super(key: key);
 
   @override
@@ -29,7 +27,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
     Color getLastChangedAndChangeIntervalLabelColor() =>
         cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-            ? cubit.getValidatingTextColor(context, widget.index)
+            ? AppColors.getErrorColor(context)
             : cubit.lastChangedAtFocuses[widget.index].hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
@@ -153,25 +151,30 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+          padding: const EdgeInsets.only(top: 15, bottom: 10, right: 3, left: 3),
           child: Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold))),
         ),
         Visibility(
-          visible: widget.visible,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          visible: cubit.visible,
+          child: Column(
             children: [
-              buildLastChangedTextFormField(),
-              buildChangeIntervalTextFormField(),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildLastChangedTextFormField(),
+                  buildChangeIntervalTextFormField(),
+                ],
+              ),
             ],
           ),
         ),
         const SizedBox(height: 10),
         buildChangeKmTextFormField(context),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
       ],
     );
   }
