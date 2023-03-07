@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,13 +19,22 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   final splashDelay = 2;
+  SharedPreferences prefs = di.sl<SharedPreferences>();
 
   @override
   void initState() {
     super.initState();
-
     _loadWidget();
     _fadeInOutAnimation();
+    _requestNotificationsPermission();
+  }
+
+  _requestNotificationsPermission() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 
   _loadWidget() async {
@@ -32,13 +42,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     return Timer(duration, checkFirstSeen);
   }
 
-  Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
+  void checkFirstSeen() {
     if (CarCubit.carBox.get(AppStrings.carBox) != null) {
-      await prefs.setBool(AppStrings.prefsBoolSeen, true);
+      prefs.setBool(AppStrings.prefsBoolSeen, true);
     }
-
     navigate(prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
   }
 

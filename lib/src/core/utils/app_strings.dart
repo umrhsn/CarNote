@@ -55,6 +55,7 @@ class AppStrings {
   static const String km = 'km';
 
   static const String prefsBoolSeen = 'seen';
+  static const String prefsBoolNotification = 'notifications_set';
 
   static const String invalidInput = 'invalid input';
 
@@ -65,4 +66,20 @@ class AppStrings {
   static const String exitWithoutSaving = 'Exit without saving';
 
   static const String tapBackAgainToExit = 'Tap back again to exit';
+
+  static const String notifChannelBasicGroupKey = 'basic_channel_group';
+  static const String notifChannelBasicGroupName = 'Basic group';
+  static const String notifChannelScheduledGroupKey = 'scheduled_channel_group';
+  static const String notifChannelScheduledGroupName = 'Scheduled group';
+
+  static const String notifChannelBasicKey = 'basic_channel';
+  static const String notifChannelBasicName = 'Basic notifications';
+  static const String notifChannelBasicDescription = 'Notification channel for basic notifications';
+  static const String notifChannelScheduledKey = 'scheduled_channel';
+  static const String notifChannelScheduledName = 'Scheduled notifications';
+  static const String notifChannelScheduledDescription = 'Notification channel for scheduled notifications';
+
+  static const String dailyNotificationTitle = "Don't forget to update your data";
+  static const String dailyNotificationBody = 'Have you entered your current kilometer for today?';
+  static const String dailyNotificationTimePickerHelperText = 'Schedule a daily notification to remind you of updating your data';
 }

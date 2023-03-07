@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -9,14 +10,23 @@ class ConsumableWidget extends StatefulWidget {
   final int index;
   final String name;
 
-  ConsumableWidget({Key? key, required this.index, required this.name})
-      : super(key: key);
+  ConsumableWidget({Key? key, required this.index, required this.name}) : super(key: key);
 
   @override
   State<ConsumableWidget> createState() => ConsumableWidgetState();
 }
 
 class ConsumableWidgetState extends State<ConsumableWidget> {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
