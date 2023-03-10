@@ -29,7 +29,7 @@ void main() async {
 
   /// Notifications init
   AwesomeNotifications().initialize(
-    'resource://drawable/icon',
+    'resource://drawable/ic_stat_icon',
     [
       NotificationChannel(
         channelKey: AppStrings.notifChannelBasicKey,
@@ -37,7 +37,6 @@ void main() async {
         channelDescription: AppStrings.notifChannelBasicDescription,
         ledColor: AppColors.primaryLight,
         importance: NotificationImportance.High,
-        channelShowBadge: true,
       ),
       NotificationChannel(
         channelKey: AppStrings.notifChannelScheduledKey,
@@ -45,7 +44,6 @@ void main() async {
         channelDescription: AppStrings.notifChannelScheduledDescription,
         ledColor: AppColors.primaryLight,
         importance: NotificationImportance.High,
-        channelShowBadge: true,
       ),
     ],
     // Channel groups are only visual and are not required

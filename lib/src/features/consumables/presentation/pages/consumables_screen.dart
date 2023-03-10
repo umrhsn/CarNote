@@ -28,17 +28,26 @@ class ConsumablesScreen extends StatefulWidget {
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   SharedPreferences prefs = di.sl<SharedPreferences>();
 
-  bool getNotificationStatus() {
-    if (prefs.getBool(AppStrings.prefsBoolNotification) == null) {
-      prefs.setBool(AppStrings.prefsBoolNotification, false);
+  bool _getVisibilityStatus() {
+    if (prefs.getBool(AppStrings.prefsBoolVisible) == null) {
+      prefs.setBool(AppStrings.prefsBoolVisible, true);
     }
-    bool notificationsSet = prefs.getBool(AppStrings.prefsBoolNotification) ?? false;
+    bool visible = prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
+    return visible;
+  }
+
+  bool _getNotificationStatus() {
+    if (prefs.getBool(AppStrings.prefsBoolNotif) == null) {
+      prefs.setBool(AppStrings.prefsBoolNotif, false);
+    }
+    bool notificationsSet = prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
     return notificationsSet;
   }
 
   @override
   void initState() {
-    getNotificationStatus();
+    _getVisibilityStatus();
+    _getNotificationStatus();
     super.initState();
   }
 
@@ -123,15 +132,16 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(cubit.visible ? Icons.visibility : Icons.visibility_outlined),
+                  icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
                   onPressed: () => cubit.changeVisibility(),
                 ),
                 IconButton(
-                    icon: Icon(getNotificationStatus()
+                    icon: Icon(_getNotificationStatus()
                         ? Icons.notifications_active
                         : Icons.notifications_outlined),
                     onPressed: () {
-                      if (getNotificationStatus()) {
+                      NotificationsHelper.requestNotificationsPermission();
+                      if (_getNotificationStatus()) {
                         NotificationsHelper.cancelNotification();
                         return;
                       }

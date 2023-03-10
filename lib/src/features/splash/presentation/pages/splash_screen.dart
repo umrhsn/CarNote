@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
+import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
@@ -26,15 +27,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     super.initState();
     _loadWidget();
     _fadeInOutAnimation();
-    _requestNotificationsPermission();
-  }
-
-  _requestNotificationsPermission() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
   }
 
   _loadWidget() async {
