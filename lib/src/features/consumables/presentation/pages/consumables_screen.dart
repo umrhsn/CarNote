@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -14,6 +15,8 @@ import 'package:car_note/src/features/consumables/presentation/widgets/consumabl
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 class ConsumablesScreen extends StatefulWidget {
   const ConsumablesScreen({Key? key}) : super(key: key);
@@ -23,10 +26,38 @@ class ConsumablesScreen extends StatefulWidget {
 }
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
+  SharedPreferences prefs = di.sl<SharedPreferences>();
+
+  bool _getVisibilityStatus() {
+    if (prefs.getBool(AppStrings.prefsBoolVisible) == null) {
+      prefs.setBool(AppStrings.prefsBoolVisible, true);
+    }
+    bool visible = prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
+    return visible;
+  }
+
+  bool _getNotificationStatus() {
+    if (prefs.getBool(AppStrings.prefsBoolNotif) == null) {
+      prefs.setBool(AppStrings.prefsBoolNotif, false);
+    }
+    bool notificationsSet = prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
+    return notificationsSet;
+  }
+
+  @override
+  void initState() {
+    _getVisibilityStatus();
+    _getNotificationStatus();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
+    NotificationsHelper.showAlarmingNotifications(context);
+
+    // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
         Car? car = CarCubit.carBox.get(AppStrings.carBox);
@@ -97,9 +128,26 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     Column buildAppBarWidgets() => Column(
           children: [
             // TODO: add granular visibility to consumable widget
-            IconButton(
-              icon: Icon(cubit.visible ? Icons.visibility_off : Icons.visibility),
-              onPressed: () => cubit.changeVisibility(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
+                  onPressed: () => cubit.changeVisibility(),
+                ),
+                IconButton(
+                    icon: Icon(_getNotificationStatus()
+                        ? Icons.notifications_active
+                        : Icons.notifications_outlined),
+                    onPressed: () {
+                      NotificationsHelper.requestNotificationsPermission();
+                      if (_getNotificationStatus()) {
+                        NotificationsHelper.cancelNotification();
+                        return;
+                      }
+                      NotificationsHelper.scheduleDailyNotification(context);
+                    }),
+              ],
             ),
             TextFormField(
               focusNode: cubit.currentKmFocus,

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
@@ -7,8 +8,9 @@ import 'package:car_note/src/features/consumables/domain/entities/consumable.dar
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 part 'consumable_state.dart';
 
@@ -72,6 +74,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Database fields and methods
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+
   static Box<Consumable> get consumableBox => _consumableBox;
 
   void writeData() {
@@ -107,9 +110,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
 
     if (isNotNull) {
-      Fluttertoast.showToast(msg: AppStrings.dataAddedSuccessfully);
+      BotToast.showText(text: AppStrings.dataAddedSuccessfully);
     } else {
-      Fluttertoast.showToast(msg: AppStrings.somethingWentWrong);
+      BotToast.showText(text: AppStrings.somethingWentWrong);
     }
   }
 
@@ -274,11 +277,14 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   /// Control widgets visibility
-  bool visible = true;
-
   void changeVisibility() {
+    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true;
     emit(VisibilityChanging());
     visible = !visible;
+    visible
+        ? BotToast.showText(text: AppStrings.detailedModeOn)
+        : BotToast.showText(text: AppStrings.detailedModeOff);
+    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolVisible, visible);
     emit(VisibilityChanged());
   }
 }

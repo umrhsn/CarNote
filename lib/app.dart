@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -31,6 +32,8 @@ class CarNote extends StatelessWidget {
           BlocProvider(create: (context) => ConsumableCubit())
         ],
         child: MaterialApp(
+          builder: BotToastInit(),
+          navigatorObservers: [BotToastNavigatorObserver()],
           theme: AppThemes.appTheme(isLight: true),
           darkTheme: AppThemes.appTheme(isLight: false),
           onGenerateRoute: AppRoutes.onGenerateRoute,

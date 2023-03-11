@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/extensions/string_helper.dart';
@@ -5,7 +6,6 @@ import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,10 +62,10 @@ class CarCubit extends Cubit<CarState> {
 
     if (_carBox.get(AppStrings.carBox) != null) {
       await prefs.setBool(AppStrings.prefsBoolSeen, true);
-      Fluttertoast.showToast(msg: AppStrings.dataAddedSuccessfully);
+      BotToast.showText(text: AppStrings.dataAddedSuccessfully);
       Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
     } else {
-      Fluttertoast.showToast(msg: AppStrings.somethingWentWrong);
+      BotToast.showText(text: AppStrings.somethingWentWrong);
     }
   }
 

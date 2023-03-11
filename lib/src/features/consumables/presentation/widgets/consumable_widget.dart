@@ -1,22 +1,34 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:car_note/injection_container.dart' as di;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsumableWidget extends StatefulWidget {
   final int index;
   final String name;
 
-  ConsumableWidget({Key? key, required this.index, required this.name})
-      : super(key: key);
+  ConsumableWidget({Key? key, required this.index, required this.name}) : super(key: key);
 
   @override
   State<ConsumableWidget> createState() => ConsumableWidgetState();
 }
 
 class ConsumableWidgetState extends State<ConsumableWidget> {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
@@ -157,7 +169,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               child: Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold))),
         ),
         Visibility(
-          visible: cubit.visible,
+          visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
           child: Column(
             children: [
               const SizedBox(height: 10),

@@ -93,11 +93,11 @@ class _MyHomePageState extends State<CarInfo> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AssetManager.icon, height: 100),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       AnimatedTitle(text: AppStrings.appName.toUpperCase()),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   buildCarTypeTextFormField(),
                   buildModelYearTextFormField(),
                   buildCurrentKmTextFormField(),

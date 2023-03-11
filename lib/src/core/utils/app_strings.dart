@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppStrings {
@@ -55,6 +56,8 @@ class AppStrings {
   static const String km = 'km';
 
   static const String prefsBoolSeen = 'seen';
+  static const String prefsBoolNotif = 'notifications_set';
+  static const String prefsBoolVisible = 'visible';
 
   static const String invalidInput = 'invalid input';
 
@@ -65,4 +68,33 @@ class AppStrings {
   static const String exitWithoutSaving = 'Exit without saving';
 
   static const String tapBackAgainToExit = 'Tap back again to exit';
+
+  static const String notifChannelBasicGroupKey = 'basic_channel_group';
+  static const String notifChannelBasicGroupName = 'Basic group';
+  static const String notifChannelScheduledGroupKey = 'scheduled_channel_group';
+  static const String notifChannelScheduledGroupName = 'Scheduled group';
+
+  static const String notifChannelBasicKey = 'basic_channel';
+  static const String notifChannelBasicName = 'Basic notifications';
+  static const String notifChannelBasicDescription = 'Notification channel for basic notifications';
+  static const String notifChannelScheduledKey = 'scheduled_channel';
+  static const String notifChannelScheduledName = 'Scheduled notifications';
+  static const String notifChannelScheduledDescription =
+      'Notification channel for scheduled notifications';
+
+  static const String dailyNotificationTitle = "Don't forget to update your data";
+  static const String dailyNotificationBody = 'Have you entered your current kilometer for today?';
+  static const String dailyNotificationTimePickerHelperText =
+      'Schedule a daily notification to remind you of updating your data';
+
+  static const String detailedModeOn = 'Detailed mode on';
+  static const String detailedModeOff = 'Detailed mode off';
+
+  static String showNotificationTime(TimeOfDay scheduleTime) => 'Daily notification on.\n'
+      'A daily reminder notification is set to be shown every day at '
+      '${scheduleTime.toString().substring(scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'))}';
+
+  static const String dailyNotificationOff = 'Daily notification off';
+
+  static const String notificationTimeNotSet = "You didn't set a time for the daily notification.\nNo notification will appear.";
 }

@@ -14,7 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   equatable: ^2.0.5
   animated_text_kit: ^4.2.2
-  intl: ^0.18.0
+  intl: ^0.17.0
   font_awesome_flutter: ^10.4.0
   flutter_bloc: ^8.1.2
   provider: ^6.0.5
@@ -22,7 +22,9 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.0.13
   shared_preferences: ^2.0.18
-  fluttertoast: ^8.2.1
+  awesome_notifications: ^0.7.4+1
+  get_it: ^7.2.0
+  bot_toast: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -37,7 +39,7 @@ flutter_icons:
   ios: true
   image_path: "assets/images/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
-#  remove_alpha_ios: true
+  #  remove_alpha_ios: true
   web:
     generate: true
     image_path: "assets/images/icon.png"
