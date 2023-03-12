@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

@@ -7,7 +7,8 @@ class AppStrings {
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
-  static const String fontFamily = 'Product Sans';
+  static const String fontFamilyProductSans = 'Product Sans';
+  static const String fontFamilyCursedTimer = 'CursedTimer';
 
   static const String btnContinue = 'Continue';
   static const String btnSave = 'Save';
@@ -58,6 +59,7 @@ class AppStrings {
   static const String prefsBoolSeen = 'seen';
   static const String prefsBoolNotif = 'notifications_set';
   static const String prefsBoolVisible = 'visible';
+  static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   static const String invalidInput = 'invalid input';
 

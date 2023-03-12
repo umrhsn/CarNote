@@ -25,6 +25,7 @@ dependencies:
   awesome_notifications: ^0.7.4+1
   get_it: ^7.2.0
   bot_toast: ^4.0.3
+  admob_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -65,3 +66,4 @@ flutter:
         - asset: assets/fonts/Product Sans Italic.ttf
         - asset: assets/fonts/Product Sans Regular.ttf
           style: italic
+        - asset: assets/fonts/CursedTimer.ttf

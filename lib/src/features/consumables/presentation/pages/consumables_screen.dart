@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:admob_flutter/admob_flutter.dart';
+import 'package:car_note/src/core/extensions/app_bar.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
-import 'package:car_note/src/core/utils/extensions/string_helper.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
@@ -26,28 +28,38 @@ class ConsumablesScreen extends StatefulWidget {
 }
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
-  SharedPreferences prefs = di.sl<SharedPreferences>();
+  final SharedPreferences _prefs = di.sl<SharedPreferences>();
+  String? _scheduleTime;
 
   bool _getVisibilityStatus() {
-    if (prefs.getBool(AppStrings.prefsBoolVisible) == null) {
-      prefs.setBool(AppStrings.prefsBoolVisible, true);
+    if (_prefs.getBool(AppStrings.prefsBoolVisible) == null) {
+      _prefs.setBool(AppStrings.prefsBoolVisible, true);
     }
-    bool visible = prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
+    bool visible = _prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
     return visible;
   }
 
   bool _getNotificationStatus() {
-    if (prefs.getBool(AppStrings.prefsBoolNotif) == null) {
-      prefs.setBool(AppStrings.prefsBoolNotif, false);
+    if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
+      _prefs.setBool(AppStrings.prefsBoolNotif, false);
     }
-    bool notificationsSet = prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
+    bool notificationsSet = _prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
     return notificationsSet;
+  }
+
+  String _getNotifScheduleTime() {
+    if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
+      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
+    }
+    String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
+    return scheduleTime;
   }
 
   @override
   void initState() {
     _getVisibilityStatus();
     _getNotificationStatus();
+    Admob.requestTrackingAuthorization();
     super.initState();
   }
 
@@ -63,17 +75,17 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         Car? car = CarCubit.carBox.get(AppStrings.carBox);
         Consumable? consumable = ConsumableCubit.consumableBox.get(index);
 
-        if (car != null && consumable != null) {
-          bool currentKmHasValue = cubit.currentKmController.text.isNotEmpty && car.currentKm != 0;
-          bool lastChangedKmHasValue = cubit.lastChangedAtControllers[index].text.isNotEmpty &&
+        if (consumable != null) {
+          bool currentKmHasValue = cubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
+          bool lastChangedKmHasValue = cubit.lastChangedAtControllers[index].text.isNotEmpty ||
               consumable.lastChangedAt != 0;
-          bool changeIntervalHasValue = cubit.changeIntervalControllers[index].text.isNotEmpty &&
+          bool changeIntervalHasValue = cubit.changeIntervalControllers[index].text.isNotEmpty ||
               consumable.changeInterval != 0;
           bool changeKmHasValue =
-              cubit.changeKmControllers[index].text.isNotEmpty && consumable.changeKm != 0;
+              cubit.changeKmControllers[index].text.isNotEmpty || consumable.changeKm != 0;
 
           bool currentKmMatch =
-              car.currentKm.toString() == cubit.currentKmController.text.removeThousandSeparator();
+              car!.currentKm.toString() == cubit.currentKmController.text.removeThousandSeparator();
           bool lastChangedKmMatch = consumable.lastChangedAt.toString() ==
               cubit.lastChangedAtControllers[index].text.removeThousandSeparator();
           bool changeIntervalMatch = consumable.changeInterval.toString() ==
@@ -129,6 +141,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           children: [
             // TODO: add granular visibility to consumable widget
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
@@ -136,16 +149,35 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () => cubit.changeVisibility(),
                 ),
                 IconButton(
-                    icon: Icon(_getNotificationStatus()
-                        ? Icons.notifications_active
-                        : Icons.notifications_outlined),
+                    icon: Column(
+                      children: [
+                        Icon(_getNotificationStatus()
+                            ? Icons.notifications_active
+                            : Icons.notifications_outlined),
+                        Text(
+                          _getNotifScheduleTime(),
+                          style: TextStyle(
+                            fontSize: 8,
+                            height: _getNotifScheduleTime() != '' ? 2 : 0,
+                            fontFamily: AppStrings.fontFamilyCursedTimer,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                     onPressed: () {
                       NotificationsHelper.requestNotificationsPermission();
                       if (_getNotificationStatus()) {
                         NotificationsHelper.cancelNotification();
+                        setState(
+                            () => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
                         return;
                       }
-                      NotificationsHelper.scheduleDailyNotification(context);
+                      setState(() async {
+                        _scheduleTime =
+                            await NotificationsHelper.scheduleDailyNotification(context);
+                        _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
+                      });
                     }),
               ],
             ),
@@ -221,7 +253,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               backgroundColor: AppColors.getPrimaryColor(context),
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
-            ),
+            ).withBottomAdmobBanner(context),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(start: 15),
