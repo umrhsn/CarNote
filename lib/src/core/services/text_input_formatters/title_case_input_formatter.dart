@@ -1,4 +1,4 @@
-import 'package:car_note/src/core/utils/extensions/string_helper.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:flutter/services.dart';
 
 class TitleCaseInputFormatter extends TextInputFormatter {

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/services/text_input_formatters/title_case_input_formatter.dart';
@@ -11,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 
 class CarInfo extends StatefulWidget {
   const CarInfo({super.key});
@@ -20,6 +24,12 @@ class CarInfo extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<CarInfo> {
+  @override
+  void initState() {
+    Admob.requestTrackingAuthorization();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final CarCubit cubit = CarCubit.get(context);
@@ -81,34 +91,54 @@ class _MyHomePageState extends State<CarInfo> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
+      body: Stack(
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(AssetManager.icon, height: 100),
-                      const SizedBox(width: 10),
-                      AnimatedTitle(text: AppStrings.appName.toUpperCase()),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AssetManager.icon, height: 100),
+                          const SizedBox(width: 10),
+                          AnimatedTitle(text: AppStrings.appName.toUpperCase()),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      buildCarTypeTextFormField(),
+                      buildModelYearTextFormField(),
+                      buildCurrentKmTextFormField(),
+                      const SizedBox(height: 15),
+                      buildContinueButton(),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  buildCarTypeTextFormField(),
-                  buildModelYearTextFormField(),
-                  buildCurrentKmTextFormField(),
-                  const SizedBox(height: 15),
-                  buildContinueButton()
-                ],
+                ),
               ),
             ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: AdmobBanner(
+              adUnitId: getBannerAdUnitId(),
+              adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+            ),
+          )
+        ],
       ),
     );
+  }
+
+  String getBannerAdUnitId() {
+    if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/2934735716';
+    } else if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/6300978111';
+    }
+    return '';
   }
 }

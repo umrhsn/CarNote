@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
-import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
@@ -19,8 +17,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  final splashDelay = 2;
-  SharedPreferences prefs = di.sl<SharedPreferences>();
+  final _splashDelay = 2;
+  final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
   @override
   void initState() {
@@ -30,15 +28,15 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   _loadWidget() async {
-    var duration = Duration(seconds: splashDelay);
+    var duration = Duration(seconds: _splashDelay);
     return Timer(duration, checkFirstSeen);
   }
 
   void checkFirstSeen() {
     if (CarCubit.carBox.get(AppStrings.carBox) != null) {
-      prefs.setBool(AppStrings.prefsBoolSeen, true);
+      _prefs.setBool(AppStrings.prefsBoolSeen, true);
     }
-    navigate(prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
+    navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
   }
 
   void navigate(bool seen) => seen

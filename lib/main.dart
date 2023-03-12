@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 void main() async {
@@ -37,6 +38,7 @@ void main() async {
         channelDescription: AppStrings.notifChannelBasicDescription,
         ledColor: AppColors.primaryLight,
         importance: NotificationImportance.High,
+        playSound: false,
       ),
       NotificationChannel(
         channelKey: AppStrings.notifChannelScheduledKey,
@@ -58,6 +60,8 @@ void main() async {
       ),
     ],
   );
+
+  Admob.initialize();
 
   runApp(const CarNote());
 }

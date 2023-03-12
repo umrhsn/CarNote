@@ -1,4 +1,4 @@
-import 'package:car_note/src/core/utils/extensions/media_query_values.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {

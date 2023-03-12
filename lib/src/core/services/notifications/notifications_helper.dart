@@ -14,7 +14,7 @@ class NotificationsHelper {
     });
   }
 
-  static void scheduleDailyNotification(BuildContext context) async {
+  static Future<String> scheduleDailyNotification(BuildContext context) async {
     TimeOfDay? scheduleTime;
 
     await showTimePicker(
@@ -56,6 +56,8 @@ class NotificationsHelper {
               return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, true);
             },
           );
+    return scheduleTime.toString().substring(
+        scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
   }
 
   static void cancelNotification() async {
