@@ -59,6 +59,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   void initState() {
     _getVisibilityStatus();
     _getNotificationStatus();
+    // to be called only once
+    WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) => NotificationsHelper.showAlarmingNotifications(context));
     Admob.requestTrackingAuthorization();
     super.initState();
   }
@@ -66,8 +69,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
-
-    NotificationsHelper.showAlarmingNotifications(context);
 
     // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
@@ -149,36 +150,39 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () => cubit.changeVisibility(),
                 ),
                 IconButton(
-                    icon: Column(
-                      children: [
-                        Icon(_getNotificationStatus()
-                            ? Icons.notifications_active
-                            : Icons.notifications_outlined),
-                        Text(
-                          _getNotifScheduleTime(),
-                          style: TextStyle(
-                            fontSize: 8,
-                            height: _getNotifScheduleTime() != '' ? 2 : 0,
-                            fontFamily: AppStrings.fontFamilyCursedTimer,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  icon: Column(
+                    children: [
+                      Icon(_getNotificationStatus()
+                          ? Icons.notifications_active
+                          : Icons.notifications_outlined),
+                      Text(
+                        _getNotifScheduleTime(),
+                        style: TextStyle(
+                          fontSize: 8,
+                          height: _getNotifScheduleTime() != '' ? 2 : 0,
+                          fontFamily: AppStrings.fontFamilyCursedTimer,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
-                    ),
-                    onPressed: () {
-                      NotificationsHelper.requestNotificationsPermission();
-                      if (_getNotificationStatus()) {
-                        NotificationsHelper.cancelNotification();
-                        setState(
-                            () => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
-                        return;
-                      }
-                      setState(() async {
-                        _scheduleTime =
-                            await NotificationsHelper.scheduleDailyNotification(context);
-                        _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
-                      });
-                    }),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    NotificationsHelper.requestNotificationsPermission();
+                    if (_getNotificationStatus()) {
+                      NotificationsHelper.cancelNotification();
+                      setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
+                      return;
+                    }
+                    setState(() async {
+                      _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
+                      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.translate),
+                  onPressed: () {},
+                ),
               ],
             ),
             TextFormField(
@@ -211,9 +215,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               ],
               onChanged: (_) {
                 cubit.validateAllLastChangedKilometerFields();
-                cubit.validateAllChangeKilometerFields(context);
+                cubit.validateAllChangeKilometerFields();
               },
-              onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
+              onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
               autovalidateMode: AutovalidateMode.always,
             ),
           ],

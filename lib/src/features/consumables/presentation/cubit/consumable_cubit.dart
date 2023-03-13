@@ -165,10 +165,10 @@ class ConsumableCubit extends Cubit<ConsumableState> {
       );
 
   Text getChangeKmValidatingText(BuildContext context, int index) => Text(
-        _validateChangeKilometer(index, context) ?? '',
+        _validateChangeKilometer(index) ?? '',
         style: TextStyle(
           color: getValidatingTextColor(context, index),
-          height: _validateChangeKilometer(index, context) != null ? 2 : 0,
+          height: _validateChangeKilometer(index) != null ? 2 : 0,
           fontSize: 11,
         ),
       );
@@ -201,10 +201,10 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(ValidatingComplete());
   }
 
-  void validateAllChangeKilometerFields(BuildContext context) {
+  void validateAllChangeKilometerFields() {
     emit(ValidatingItem());
     for (int index = 0; index < changeKmControllers.length; index++) {
-      _validateChangeKilometer(index, context);
+      _validateChangeKilometer(index);
     }
     emit(ValidatingComplete());
   }
@@ -258,7 +258,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   // Gives an error message to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
-  String? _validateChangeKilometer(int index, BuildContext context) {
+  String? _validateChangeKilometer(int index) {
     emit(ValidatingItem());
     if (isNormalText(index)) {
       emit(ValidatingComplete());
