@@ -30,7 +30,7 @@ void main() async {
 
   /// Notifications init
   AwesomeNotifications().initialize(
-    'resource://drawable/ic_stat_icon',
+    'resource://drawable/icon',
     [
       NotificationChannel(
         channelKey: AppStrings.notifChannelBasicKey,
@@ -38,7 +38,6 @@ void main() async {
         channelDescription: AppStrings.notifChannelBasicDescription,
         ledColor: AppColors.primaryLight,
         importance: NotificationImportance.High,
-        playSound: false,
       ),
       NotificationChannel(
         channelKey: AppStrings.notifChannelScheduledKey,
