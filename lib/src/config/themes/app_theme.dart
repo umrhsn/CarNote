@@ -18,7 +18,6 @@ class AppThemes {
       elevatedButtonTheme: AppButtonThemes.elevatedButtonTheme(isLight: isLight),
       inputDecorationTheme: AppTextFieldThemes.inputDecorationTheme(isLight: isLight),
       scrollbarTheme: AppScrollbarThemes.scrollbarTheme(isLight: isLight),
-      fontFamily: AppStrings.fontFamilyProductSans,
       useMaterial3: true,
     );
   }

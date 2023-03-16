@@ -10,9 +10,6 @@ class AppStrings {
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
-  static const String fontFamilyProductSans = 'Product Sans';
-  static const String fontFamilyCursedTimer = 'CursedTimer';
-
   static String btnContinue(BuildContext context) =>
       _translate(context, "btn_continue").toUpperCase();
 

@@ -7,8 +7,7 @@ class AppButtonThemes {
     return ElevatedButtonThemeData(
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(3),
-        textStyle: MaterialStateProperty.all(
-            const TextStyle(fontFamily: AppStrings.fontFamilyProductSans, fontWeight: FontWeight.bold)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontWeight: FontWeight.bold)),
         foregroundColor: MaterialStateProperty.all(Colors.white),
         backgroundColor:
             MaterialStateProperty.all(isLight ? AppColors.primaryLight : AppColors.primaryDark),

@@ -166,7 +166,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                         style: TextStyle(
                           fontSize: 8,
                           height: _getNotifScheduleTime() != '' ? 2 : 0,
-                          fontFamily: AppStrings.fontFamilyCursedTimer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
