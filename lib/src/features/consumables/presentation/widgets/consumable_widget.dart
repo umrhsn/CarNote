@@ -87,7 +87,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  labelText: AppStrings.lastChangedAtLabel,
+                  labelText: AppStrings.lastChangedAtLabel(context),
                   floatingLabelStyle: TextStyle(
                     color: getLastChangedAndChangeIntervalLabelColor(),
                     fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
-            labelText: AppStrings.changeIntervalLabel,
+            labelText: AppStrings.changeIntervalLabel(context),
             floatingLabelStyle: TextStyle(
               color: getChangeIntervalLabelColor(),
               fontWeight: FontWeight.bold,
@@ -145,7 +145,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold),
             decoration: InputDecoration(
-              labelText: AppStrings.changeKmLabel,
+              labelText: AppStrings.changeKmLabel(context),
               fillColor: AppColors.getChangeKmFillColor(context),
               floatingLabelStyle:
                   TextStyle(color: getChangeKmLabelColor(), fontWeight: FontWeight.bold),

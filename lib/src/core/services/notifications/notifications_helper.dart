@@ -20,12 +20,12 @@ class NotificationsHelper {
     await showTimePicker(
             context: context,
             initialTime: TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),
-            helpText: AppStrings.dailyNotificationTimePickerHelperText)
+            helpText: AppStrings.dailyNotificationTimePickerHelperText(context))
         .then((value) => scheduleTime = value);
 
     scheduleTime == null
         ? BotToast.showText(
-            text: AppStrings.notificationTimeNotSet,
+            text: AppStrings.notificationTimeNotSet(context),
             duration: const Duration(seconds: 5),
           )
         : await AwesomeNotifications()
@@ -35,8 +35,8 @@ class NotificationsHelper {
               category: NotificationCategory.Reminder,
               backgroundColor: Colors.transparent,
               channelKey: AppStrings.notifChannelScheduledKey,
-              title: AppStrings.dailyNotificationTitle,
-              body: AppStrings.dailyNotificationBody,
+              title: AppStrings.dailyNotificationTitle(context),
+              body: AppStrings.dailyNotificationBody(context),
               autoDismissible: false,
               badge: 0,
             ),
@@ -50,7 +50,8 @@ class NotificationsHelper {
             .then(
             (value) {
               BotToast.showText(
-                text: "${AppStrings.notifTimeMsg} ${AppStrings.getNotifTime(scheduleTime!)}",
+                text:
+                    "${AppStrings.notifTimeMsg(context)} ${AppStrings.getNotifTime(scheduleTime!)}",
                 duration: const Duration(seconds: 5),
               );
               return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, true);
@@ -60,9 +61,9 @@ class NotificationsHelper {
         scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
   }
 
-  static void cancelNotification() async {
+  static void cancelNotification(BuildContext context) async {
     await AwesomeNotifications().cancel(90).then((value) {
-      BotToast.showText(text: AppStrings.dailyNotificationOff);
+      BotToast.showText(text: AppStrings.dailyNotificationOff(context));
       return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, false);
     });
   }

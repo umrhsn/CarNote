@@ -16,7 +16,7 @@ class AppStrings {
   static String btnContinue(BuildContext context) =>
       _translate(context, "btn_continue").toUpperCase();
 
-  static String btnSave(BuildContext context) => _translate(context, "btn_continue").toUpperCase();
+  static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
 
   static String dataAddedSuccessfully(BuildContext context) =>
       _translate(context, "data_added_successfully");
@@ -42,10 +42,10 @@ class AppStrings {
     'Brake Linings' // تيل الفرامل
   ];
 
-  static const String currentKmLabel = 'Current kilometer';
-  static const String lastChangedAtLabel = 'Last changed at';
-  static const String changeIntervalLabel = 'Change interval';
-  static const String changeKmLabel = 'To be changed at';
+  static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
+  static String lastChangedAtLabel(BuildContext context) => _translate(context, "last_changed_at_label");
+  static String changeIntervalLabel(BuildContext context) => _translate(context, "change_interval_label");
+  static String changeKmLabel(BuildContext context) => _translate(context, "change_km_label");
 
   static String getMethodName(Function method) {
     return method
@@ -53,14 +53,14 @@ class AppStrings {
         .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
   }
 
-  static const String requiredField = '*required field';
-  static const String yearMatchesLength = '*year should be 4 digits at least';
-  static const String yearInvalid = '*invalid year';
-  static const String invalidInput = '*invalid input';
+  static  String requiredField(BuildContext context) => _translate(context, "required_field");
+  static  String yearMatchesLength(BuildContext context) => _translate(context, "year_matches_length");
+  static  String yearInvalid(BuildContext context) => _translate(context, "year_invalid");
+  static  String invalidInput(BuildContext context) => _translate(context, "invalid_input");
 
-  static const String warningText = 'remaining. You need to change this item soon.';
-  static const String errorText = 'Exceeded by';
-  static const String remaining = 'remaining';
+  static String warningText(BuildContext context) => _translate(context, "warning_text");
+  static String errorText(BuildContext context) => _translate(context, "error_text");
+  static String remaining(BuildContext context) => _translate(context, "remaining");
 
   static String km(BuildContext context) => _translate(context, "km");
 
@@ -69,13 +69,13 @@ class AppStrings {
   static const String prefsBoolVisible = 'visible';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
-  static const String changedDataMsg = "You've changed some data.";
-  static const String sureToExitMsg = 'Are you sure you want to exit the app without saving?';
+  static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");
+  static String sureToExitMsg(BuildContext context) => _translate(context, "sure_to_exit");
 
-  static const String saveData = 'Save data';
-  static const String exitWithoutSaving = 'Exit without saving';
+  static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
+  static String exitWithoutSaving(BuildContext context) => _translate(context, "exit_without_saving").toUpperCase();
 
-  static const String tapBackAgainToExit = 'Tap back again to exit';
+  static String tapBackAgainToExit(BuildContext context) => _translate(context, "tap_back_again_to_exit");
 
   static const String notifChannelBasicGroupKey = 'basic_channel_group';
   static const String notifChannelBasicGroupName = 'Basic group';
@@ -90,24 +90,21 @@ class AppStrings {
   static const String notifChannelScheduledDescription =
       'Notification channel for scheduled notifications';
 
-  static const String dailyNotificationTitle = "Don't forget to update your data";
-  static const String dailyNotificationBody = 'Have you entered your current kilometer for today?';
-  static const String dailyNotificationTimePickerHelperText =
-      'Schedule a daily notification to remind you of updating your data';
+  static String dailyNotificationTitle(BuildContext context) => _translate(context, "daily_notif_title");
+  static String dailyNotificationBody(BuildContext context) => _translate(context, "daily_notif_body");
+  static String dailyNotificationTimePickerHelperText(BuildContext context) => _translate(context, "daily_notif_time_picker_helper_text");
 
-  static const String detailedModeOn = 'Detailed mode on';
-  static const String detailedModeOff = 'Detailed mode off';
+  static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
+  static String detailedModeOff(BuildContext context) => _translate(context, "detailed_mode_off");
 
-  static const String notifTimeMsg = 'Daily notification on.\n'
-      'A daily reminder notification is set to be shown every day at';
+  static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
 
   static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
       scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
 
-  static const String dailyNotificationOff = 'Daily notification off';
+  static String dailyNotificationOff(BuildContext context) => _translate(context, "daily_notif_off");
 
-  static const String notificationTimeNotSet =
-      "You didn't set a time for the daily notification.\nNo notification will appear.";
+  static String notificationTimeNotSet(BuildContext context) => _translate(context, "notif_time_not_set");
 
   /// error handling
   static const String cacheFailure = 'Cache Failure';

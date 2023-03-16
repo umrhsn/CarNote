@@ -105,14 +105,14 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 context: context,
                 builder: (context) => AlertDialog(
                   icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-                  title: const Text(AppStrings.changedDataMsg),
-                  content: const Text(AppStrings.sureToExitMsg),
+                  title: Text(AppStrings.changedDataMsg(context)),
+                  content: Text(AppStrings.sureToExitMsg(context)),
                   actions: [
                     TextButton(
                       onPressed: () =>
                           Future.sync(() => cubit.writeData(context)).then((value) => exit(0)),
                       child: Text(
-                        AppStrings.saveData.toUpperCase(),
+                        AppStrings.saveData(context),
                         style: TextStyle(
                             color: context.isLight
                                 ? AppColors.primarySwatchLight.shade100
@@ -122,7 +122,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     TextButton(
                       onPressed: () => exit(0),
                       child: Text(
-                        AppStrings.exitWithoutSaving.toUpperCase(),
+                        AppStrings.exitWithoutSaving(context),
                         style: TextStyle(
                             color: context.isLight
                                 ? AppColors.primarySwatchLight.shade100
@@ -149,7 +149,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               children: [
                 IconButton(
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
-                  onPressed: () => cubit.changeVisibility(),
+                  onPressed: () => cubit.changeVisibility(context),
                 ),
                 IconButton(
                   icon: Column(
@@ -171,7 +171,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () {
                     NotificationsHelper.requestNotificationsPermission();
                     if (_getNotificationStatus()) {
-                      NotificationsHelper.cancelNotification();
+                      NotificationsHelper.cancelNotification(context);
                       setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
                       return;
                     }
@@ -213,7 +213,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     color: AppColors.getAppBarTextFieldBorderAndLabel(context),
                   ),
                 ),
-                labelText: AppStrings.currentKmLabel,
+                labelText: AppStrings.currentKmLabel(context),
                 labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
               ),
               inputFormatters: [
@@ -222,10 +222,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ThousandSeparatorInputFormatter(),
               ],
               onChanged: (_) {
-                cubit.validateAllLastChangedKilometerFields();
-                cubit.validateAllChangeKilometerFields();
+                cubit.validateAllLastChangedKilometerFields(context);
+                cubit.validateAllChangeKilometerFields(context);
               },
-              onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
+              onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
               autovalidateMode: AutovalidateMode.always,
             ),
           ],

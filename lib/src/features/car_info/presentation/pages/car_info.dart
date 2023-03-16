@@ -46,7 +46,7 @@ class _MyHomePageState extends State<CarInfo> {
         hintText: AppStrings.carTypeHint(context),
         inputFormatters: [TitleCaseInputFormatter()],
         validationItem: validator.carType,
-        validateItemForm: (value) => validator.validateCarTypeForm(value),
+        validateItemForm: (value) => validator.validateCarTypeForm(value, context),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.modelYearFocus),
       );
     }
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<CarInfo> {
         hintText: AppStrings.modelYearHint(context),
         inputFormatters: [LengthLimitingTextInputFormatter(4)],
         validationItem: validator.modelYear,
-        validateItemForm: (value) => validator.validateModelYearForm(value),
+        validateItemForm: (value) => validator.validateModelYearForm(value, context),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.currentKmFocus),
       );
     }
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<CarInfo> {
         ],
         hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km}",
         validationItem: validator.currentKm,
-        validateItemForm: (value) => validator.validateCurrentKmForm(value),
+        validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
         onFieldSubmitted: (_) => cubit.writeDataAndNavigate(context),
       );
     }

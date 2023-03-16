@@ -156,19 +156,19 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Error and warning Text widgets
   Text getLastChangedKmValidatingText(BuildContext context, int index) => Text(
-        _validateLastChangedKilometer(index) ?? '',
+        _validateLastChangedKilometer(index, context) ?? '',
         style: TextStyle(
           color: AppColors.getErrorColor(context),
-          height: _validateLastChangedKilometer(index) != null ? 2 : 0,
+          height: _validateLastChangedKilometer(index, context) != null ? 2 : 0,
           fontSize: 11,
         ),
       );
 
   Text getChangeKmValidatingText(BuildContext context, int index) => Text(
-        _validateChangeKilometer(index) ?? '',
+        _validateChangeKilometer(index, context) ?? '',
         style: TextStyle(
           color: getValidatingTextColor(context, index),
-          height: _validateChangeKilometer(index) != null ? 2 : 0,
+          height: _validateChangeKilometer(index, context) != '' ? 2 : 0,
           fontSize: 11,
         ),
       );
@@ -193,29 +193,29 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(AddedChangeKm());
   }
 
-  void validateAllLastChangedKilometerFields() {
+  void validateAllLastChangedKilometerFields(BuildContext context) {
     emit(ValidatingItem());
     for (int index = 0; index < changeKmControllers.length; index++) {
-      _validateLastChangedKilometer(index);
+      _validateLastChangedKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
 
-  void validateAllChangeKilometerFields() {
+  void validateAllChangeKilometerFields(BuildContext context) {
     emit(ValidatingItem());
     for (int index = 0; index < changeKmControllers.length; index++) {
-      _validateChangeKilometer(index);
+      _validateChangeKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
 
   // last changed kilometer should not exceed current kilometer
-  String? _validateLastChangedKilometer(int index) {
+  String? _validateLastChangedKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
     if (lastChangedAtControllers[index].text.isNotEmpty && currentKmController.text.isNotEmpty) {
       if (int.parse(lastChangedAtControllers[index].text.removeThousandSeparator()) >
           int.parse(currentKmController.text.removeThousandSeparator())) {
-        return AppStrings.invalidInput;
+        return AppStrings.invalidInput(context);
       }
     }
     emit(ValidatingComplete());
@@ -258,32 +258,32 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   // Gives an error message to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
-  String? _validateChangeKilometer(int index) {
+  String? _validateChangeKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
     if (isNormalText(index)) {
       emit(ValidatingComplete());
-      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km} ${AppStrings.remaining}';
+      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km(context)} ${AppStrings.remaining(context)}';
     }
     if (isWarningText(index)) {
       emit(ValidatingComplete());
-      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km} ${AppStrings.warningText}';
+      return '${calculateWarningDifference(index).toThousands()} ${AppStrings.km(context)} ${AppStrings.warningText(context)}';
     }
     if (isErrorText(index)) {
       emit(ValidatingComplete());
-      return '${AppStrings.errorText} ${calculateChangeKmAndCurrentKmDifference(index).toThousands()} ${AppStrings.km}';
+      return '${AppStrings.errorText(context)} ${calculateChangeKmAndCurrentKmDifference(index).toThousands()} ${AppStrings.km(context)}';
     }
     emit(ValidatingComplete());
     return null;
   }
 
   /// Control widgets visibility
-  void changeVisibility() {
+  void changeVisibility(BuildContext context) {
     bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true;
     emit(VisibilityChanging());
     visible = !visible;
     visible
-        ? BotToast.showText(text: AppStrings.detailedModeOn)
-        : BotToast.showText(text: AppStrings.detailedModeOff);
+        ? BotToast.showText(text: AppStrings.detailedModeOn(context))
+        : BotToast.showText(text: AppStrings.detailedModeOff(context));
     di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolVisible, visible);
     emit(VisibilityChanged());
   }
