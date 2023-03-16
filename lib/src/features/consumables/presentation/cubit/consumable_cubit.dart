@@ -77,7 +77,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   static Box<Consumable> get consumableBox => _consumableBox;
 
-  void writeData() {
+  void writeData(BuildContext context) {
     CarCubit.carBox.put(
       AppStrings.carBox,
       Car(
@@ -110,9 +110,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
 
     if (isNotNull) {
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully);
+      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
     } else {
-      BotToast.showText(text: AppStrings.somethingWentWrong);
+      BotToast.showText(text: AppStrings.somethingWentWrong(context));
     }
   }
 

@@ -50,7 +50,7 @@ class NotificationsHelper {
             .then(
             (value) {
               BotToast.showText(
-                text: AppStrings.showNotificationTime(scheduleTime!),
+                text: "${AppStrings.notifTimeMsg} ${AppStrings.getNotifTime(scheduleTime!)}",
                 duration: const Duration(seconds: 5),
               );
               return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, true);

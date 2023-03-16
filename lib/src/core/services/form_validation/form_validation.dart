@@ -42,7 +42,7 @@ class FormValidation with ChangeNotifier {
     } else if (!matchesLength) {
       _modelYear = ValidationItem(null, AppStrings.yearMatchesLength);
     } else if (!yearValid) {
-      _modelYear = ValidationItem(null, AppStrings.yearNotValid);
+      _modelYear = ValidationItem(null, AppStrings.yearInvalid);
     } else {
       _modelYear = ValidationItem(value, null);
     }

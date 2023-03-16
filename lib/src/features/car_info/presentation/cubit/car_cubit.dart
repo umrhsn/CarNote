@@ -62,10 +62,10 @@ class CarCubit extends Cubit<CarState> {
 
     if (_carBox.get(AppStrings.carBox) != null) {
       await prefs.setBool(AppStrings.prefsBoolSeen, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully);
+      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
       Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
     } else {
-      BotToast.showText(text: AppStrings.somethingWentWrong);
+      BotToast.showText(text: AppStrings.somethingWentWrong(context));
     }
   }
 

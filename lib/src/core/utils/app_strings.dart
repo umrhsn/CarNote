@@ -1,8 +1,11 @@
+import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class AppStrings {
-  static const String appName = 'Car Note';
+  static String _translate(BuildContext context, String stringKey) =>
+      AppLocalizations.of(context)!.translate(stringKey)!;
+
+  static String appName(BuildContext context) => _translate(context, "app_name");
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
@@ -10,16 +13,20 @@ class AppStrings {
   static const String fontFamilyProductSans = 'Product Sans';
   static const String fontFamilyCursedTimer = 'CursedTimer';
 
-  static const String btnContinue = 'Continue';
-  static const String btnSave = 'Save';
+  static String btnContinue(BuildContext context) =>
+      _translate(context, "btn_continue").toUpperCase();
 
-  static const String dataAddedSuccessfully = 'Data added successfully';
-  static const String somethingWentWrong = 'Something went wrong';
+  static String btnSave(BuildContext context) => _translate(context, "btn_continue").toUpperCase();
 
-  static const String carTypeHint = 'Car type. e.g. "Suzuki Maruti"';
-  static const String modelYearHint = 'Model year. e.g. "2014"';
-  static String currentKmHint =
-      'Total distance travelled. e.g. ${NumberFormat.decimalPattern().format(100000)} km';
+  static String dataAddedSuccessfully(BuildContext context) =>
+      _translate(context, "data_added_successfully");
+
+  static String somethingWentWrong(BuildContext context) =>
+      _translate(context, "something_went_wrong");
+
+  static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
+  static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
+  static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
   static List<String> consumables = [
     'Oil & Oil Filter', // الزيت وفلتر الزيت
@@ -48,20 +55,19 @@ class AppStrings {
 
   static const String requiredField = '*required field';
   static const String yearMatchesLength = '*year should be 4 digits at least';
-  static const String yearNotValid = '*invalid year';
+  static const String yearInvalid = '*invalid year';
+  static const String invalidInput = '*invalid input';
 
   static const String warningText = 'remaining. You need to change this item soon.';
   static const String errorText = 'Exceeded by';
   static const String remaining = 'remaining';
 
-  static const String km = 'km';
+  static String km(BuildContext context) => _translate(context, "km");
 
   static const String prefsBoolSeen = 'seen';
   static const String prefsBoolNotif = 'notifications_set';
   static const String prefsBoolVisible = 'visible';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
-
-  static const String invalidInput = 'invalid input';
 
   static const String changedDataMsg = "You've changed some data.";
   static const String sureToExitMsg = 'Are you sure you want to exit the app without saving?';
@@ -92,11 +98,23 @@ class AppStrings {
   static const String detailedModeOn = 'Detailed mode on';
   static const String detailedModeOff = 'Detailed mode off';
 
-  static String showNotificationTime(TimeOfDay scheduleTime) => 'Daily notification on.\n'
-      'A daily reminder notification is set to be shown every day at '
-      '${scheduleTime.toString().substring(scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'))}';
+  static const String notifTimeMsg = 'Daily notification on.\n'
+      'A daily reminder notification is set to be shown every day at';
+
+  static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
+      scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
 
   static const String dailyNotificationOff = 'Daily notification off';
 
-  static const String notificationTimeNotSet = "You didn't set a time for the daily notification.\nNo notification will appear.";
+  static const String notificationTimeNotSet =
+      "You didn't set a time for the daily notification.\nNo notification will appear.";
+
+  /// error handling
+  static const String cacheFailure = 'Cache Failure';
+  static const String unexpectedError = 'Unexpected Error';
+
+  /// localization
+  static const String locale = 'locale';
+  static const String englishCode = 'en';
+  static const String arabicCode = 'ar';
 }

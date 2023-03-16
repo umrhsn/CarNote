@@ -1,17 +1,21 @@
 import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/services/text_input_formatters/title_case_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/core/widgets/animated_title.dart';
+import 'package:car_note/src/core/widgets/title_text.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
@@ -39,7 +43,7 @@ class _MyHomePageState extends State<CarInfo> {
       return CustomTextFormField(
         controller: cubit.carTypeController,
         focusNode: cubit.carTypeFocus,
-        hintText: AppStrings.carTypeHint,
+        hintText: AppStrings.carTypeHint(context),
         inputFormatters: [TitleCaseInputFormatter()],
         validationItem: validator.carType,
         validateItemForm: (value) => validator.validateCarTypeForm(value),
@@ -52,7 +56,7 @@ class _MyHomePageState extends State<CarInfo> {
         controller: cubit.modelYearController,
         focusNode: cubit.modelYearFocus,
         keyboardType: TextInputType.number,
-        hintText: AppStrings.modelYearHint,
+        hintText: AppStrings.modelYearHint(context),
         inputFormatters: [LengthLimitingTextInputFormatter(4)],
         validationItem: validator.modelYear,
         validateItemForm: (value) => validator.validateModelYearForm(value),
@@ -71,7 +75,7 @@ class _MyHomePageState extends State<CarInfo> {
           LengthLimitingTextInputFormatter(9),
           FilteringTextInputFormatter.digitsOnly,
         ],
-        hintText: AppStrings.currentKmHint,
+        hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km}",
         validationItem: validator.currentKm,
         validateItemForm: (value) => validator.validateCurrentKmForm(value),
         onFieldSubmitted: (_) => cubit.writeDataAndNavigate(context),
@@ -80,7 +84,7 @@ class _MyHomePageState extends State<CarInfo> {
 
     CustomButton buildContinueButton() {
       return CustomButton(
-          text: AppStrings.btnContinue.toUpperCase(),
+          text: AppStrings.btnContinue(context),
           btnEnabled: validator.isValid,
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -93,6 +97,22 @@ class _MyHomePageState extends State<CarInfo> {
       appBar: AppBar(),
       body: Stack(
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20, right: 15),
+              child: IconButton(
+                icon: const Icon(Icons.translate),
+                onPressed: () {
+                  if (AppLocalizations.of(context)!.isEnLocale) {
+                    BlocProvider.of<LocaleCubit>(context).toArabic();
+                  } else {
+                    BlocProvider.of<LocaleCubit>(context).toEnglish();
+                  }
+                },
+              ),
+            ),
+          ),
           Center(
             child: SingleChildScrollView(
               child: SafeArea(
@@ -106,7 +126,7 @@ class _MyHomePageState extends State<CarInfo> {
                         children: [
                           Image.asset(AssetManager.icon, height: 100),
                           const SizedBox(width: 10),
-                          AnimatedTitle(text: AppStrings.appName.toUpperCase()),
+                          TitleText(text: AppStrings.appName(context).toUpperCase()),
                         ],
                       ),
                       const SizedBox(height: 20),

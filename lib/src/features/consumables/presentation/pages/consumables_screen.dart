@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -14,6 +15,7 @@ import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +110,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   actions: [
                     TextButton(
                       onPressed: () =>
-                          Future.sync(() => cubit.writeData()).then((value) => exit(0)),
+                          Future.sync(() => cubit.writeData(context)).then((value) => exit(0)),
                       child: Text(
                         AppStrings.saveData.toUpperCase(),
                         style: TextStyle(
@@ -181,7 +183,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.translate),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (AppLocalizations.of(context)!.isEnLocale) {
+                      BlocProvider.of<LocaleCubit>(context).toArabic();
+                    } else {
+                      BlocProvider.of<LocaleCubit>(context).toEnglish();
+                    }
+                  },
                 ),
               ],
             ),
@@ -241,9 +249,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     Padding buildSaveButton() => Padding(
           padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
           child: CustomButton(
-            text: AppStrings.btnSave.toUpperCase(),
+            text: AppStrings.btnSave(context),
             btnEnabled: cubit.shouldEnableSaveButton(context),
-            onPressed: () => cubit.writeData(),
+            onPressed: () => cubit.writeData(context),
           ),
         );
 
