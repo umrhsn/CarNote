@@ -31,7 +31,7 @@ class CarNote extends StatelessWidget {
       create: (BuildContext context) => FormValidation(),
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => di.sl<LocaleCubit>()),
+          BlocProvider(create: (context) => di.sl<LocaleCubit>()..getSavedLang()),
           BlocProvider(create: (context) => di.sl<CarCubit>()),
           BlocProvider(create: (context) => di.sl<ConsumableCubit>())
         ],

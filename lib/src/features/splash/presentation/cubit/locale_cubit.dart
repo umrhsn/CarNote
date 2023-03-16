@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/usecases/usecase.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/splash/domain/usecases/change_lang.dart';
@@ -13,9 +14,12 @@ class LocaleCubit extends Cubit<LocaleState> {
   final ChangeLangUseCase changeLangUseCase;
 
   LocaleCubit({required this.getSavedLangUseCase, required this.changeLangUseCase})
-      : super(const ChangeLocaleState(Locale(AppStrings.englishCode)));
+      : super(const ChangeLocaleState(Locale(AppStrings.en)));
 
-  String currentLangCode = AppStrings.englishCode;
+  /// Easy access object of Cubit
+  static LocaleCubit get(BuildContext context) => BlocProvider.of<LocaleCubit>(context);
+
+  String currentLangCode = AppStrings.en;
 
   Future<void> getSavedLang() async {
     final response = await getSavedLangUseCase.call(NoParams());
@@ -33,7 +37,11 @@ class LocaleCubit extends Cubit<LocaleState> {
     });
   }
 
-  void toEnglish() => _changeLang(AppStrings.englishCode);
+  void toEnglish(BuildContext context) => _changeLang(AppStrings.en)
+      .then((value) => BotToast.showText(text: AppStrings.langChangedToast(context)));
 
-  void toArabic() => _changeLang(AppStrings.arabicCode);
+  void toArabic(BuildContext context) {
+    _changeLang(AppStrings.ar)
+        .then((value) => BotToast.showText(text: AppStrings.langChangedToast(context)));
+  }
 }

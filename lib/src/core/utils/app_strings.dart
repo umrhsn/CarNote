@@ -25,7 +25,9 @@ class AppStrings {
       _translate(context, "something_went_wrong");
 
   static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
+
   static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
+
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
   static List<String> consumables = [
@@ -43,8 +45,13 @@ class AppStrings {
   ];
 
   static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
-  static String lastChangedAtLabel(BuildContext context) => _translate(context, "last_changed_at_label");
-  static String changeIntervalLabel(BuildContext context) => _translate(context, "change_interval_label");
+
+  static String lastChangedAtLabel(BuildContext context) =>
+      _translate(context, "last_changed_at_label");
+
+  static String changeIntervalLabel(BuildContext context) =>
+      _translate(context, "change_interval_label");
+
   static String changeKmLabel(BuildContext context) => _translate(context, "change_km_label");
 
   static String getMethodName(Function method) {
@@ -53,13 +60,19 @@ class AppStrings {
         .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
   }
 
-  static  String requiredField(BuildContext context) => _translate(context, "required_field");
-  static  String yearMatchesLength(BuildContext context) => _translate(context, "year_matches_length");
-  static  String yearInvalid(BuildContext context) => _translate(context, "year_invalid");
-  static  String invalidInput(BuildContext context) => _translate(context, "invalid_input");
+  static String requiredField(BuildContext context) => _translate(context, "required_field");
+
+  static String yearMatchesLength(BuildContext context) =>
+      _translate(context, "year_matches_length");
+
+  static String yearInvalid(BuildContext context) => _translate(context, "year_invalid");
+
+  static String invalidInput(BuildContext context) => _translate(context, "invalid_input");
 
   static String warningText(BuildContext context) => _translate(context, "warning_text");
+
   static String errorText(BuildContext context) => _translate(context, "error_text");
+
   static String remaining(BuildContext context) => _translate(context, "remaining");
 
   static String km(BuildContext context) => _translate(context, "km");
@@ -70,12 +83,16 @@ class AppStrings {
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");
+
   static String sureToExitMsg(BuildContext context) => _translate(context, "sure_to_exit");
 
   static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
-  static String exitWithoutSaving(BuildContext context) => _translate(context, "exit_without_saving").toUpperCase();
 
-  static String tapBackAgainToExit(BuildContext context) => _translate(context, "tap_back_again_to_exit");
+  static String exitWithoutSaving(BuildContext context) =>
+      _translate(context, "exit_without_saving").toUpperCase();
+
+  static String tapBackAgainToExit(BuildContext context) =>
+      _translate(context, "tap_back_again_to_exit");
 
   static const String notifChannelBasicGroupKey = 'basic_channel_group';
   static const String notifChannelBasicGroupName = 'Basic group';
@@ -90,11 +107,17 @@ class AppStrings {
   static const String notifChannelScheduledDescription =
       'Notification channel for scheduled notifications';
 
-  static String dailyNotificationTitle(BuildContext context) => _translate(context, "daily_notif_title");
-  static String dailyNotificationBody(BuildContext context) => _translate(context, "daily_notif_body");
-  static String dailyNotificationTimePickerHelperText(BuildContext context) => _translate(context, "daily_notif_time_picker_helper_text");
+  static String dailyNotificationTitle(BuildContext context) =>
+      _translate(context, "daily_notif_title");
+
+  static String dailyNotificationBody(BuildContext context) =>
+      _translate(context, "daily_notif_body");
+
+  static String dailyNotificationTimePickerHelperText(BuildContext context) =>
+      _translate(context, "daily_notif_time_picker_helper_text");
 
   static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
+
   static String detailedModeOff(BuildContext context) => _translate(context, "detailed_mode_off");
 
   static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
@@ -102,9 +125,11 @@ class AppStrings {
   static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
       scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
 
-  static String dailyNotificationOff(BuildContext context) => _translate(context, "daily_notif_off");
+  static String dailyNotificationOff(BuildContext context) =>
+      _translate(context, "daily_notif_off");
 
-  static String notificationTimeNotSet(BuildContext context) => _translate(context, "notif_time_not_set");
+  static String notificationTimeNotSet(BuildContext context) =>
+      _translate(context, "notif_time_not_set");
 
   /// error handling
   static const String cacheFailure = 'Cache Failure';
@@ -112,6 +137,8 @@ class AppStrings {
 
   /// localization
   static const String locale = 'locale';
-  static const String englishCode = 'en';
-  static const String arabicCode = 'ar';
+  static const String en = 'en';
+  static const String ar = 'ar';
+
+  static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
 }

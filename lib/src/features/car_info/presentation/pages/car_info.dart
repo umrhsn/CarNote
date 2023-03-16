@@ -15,7 +15,6 @@ import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
@@ -36,38 +35,39 @@ class _MyHomePageState extends State<CarInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final CarCubit cubit = CarCubit.get(context);
+    final LocaleCubit localeCubit = LocaleCubit.get(context);
+    final CarCubit carCubit = CarCubit.get(context);
     final validator = Provider.of<FormValidation>(context);
 
     CustomTextFormField buildCarTypeTextFormField() {
       return CustomTextFormField(
-        controller: cubit.carTypeController,
-        focusNode: cubit.carTypeFocus,
+        controller: carCubit.carTypeController,
+        focusNode: carCubit.carTypeFocus,
         hintText: AppStrings.carTypeHint(context),
         inputFormatters: [TitleCaseInputFormatter()],
         validationItem: validator.carType,
         validateItemForm: (value) => validator.validateCarTypeForm(value, context),
-        onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.modelYearFocus),
+        onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, carCubit.modelYearFocus),
       );
     }
 
     CustomTextFormField buildModelYearTextFormField() {
       return CustomTextFormField(
-        controller: cubit.modelYearController,
-        focusNode: cubit.modelYearFocus,
+        controller: carCubit.modelYearController,
+        focusNode: carCubit.modelYearFocus,
         keyboardType: TextInputType.number,
         hintText: AppStrings.modelYearHint(context),
         inputFormatters: [LengthLimitingTextInputFormatter(4)],
         validationItem: validator.modelYear,
         validateItemForm: (value) => validator.validateModelYearForm(value, context),
-        onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, cubit.currentKmFocus),
+        onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, carCubit.currentKmFocus),
       );
     }
 
     CustomTextFormField buildCurrentKmTextFormField() {
       return CustomTextFormField(
-        controller: cubit.currentKmController,
-        focusNode: cubit.currentKmFocus,
+        controller: carCubit.currentKmController,
+        focusNode: carCubit.currentKmFocus,
         textInputAction: TextInputAction.done,
         keyboardType: TextInputType.number,
         inputFormatters: [
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<CarInfo> {
         hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km}",
         validationItem: validator.currentKm,
         validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
-        onFieldSubmitted: (_) => cubit.writeDataAndNavigate(context),
+        onFieldSubmitted: (_) => carCubit.writeDataAndNavigate(context),
       );
     }
 
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<CarInfo> {
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
             await prefs.setBool(AppStrings.prefsBoolSeen, true);
-            cubit.writeDataAndNavigate(context);
+            carCubit.writeDataAndNavigate(context);
           });
     }
 
@@ -103,13 +103,9 @@ class _MyHomePageState extends State<CarInfo> {
               padding: const EdgeInsets.only(top: 20, right: 15),
               child: IconButton(
                 icon: const Icon(Icons.translate),
-                onPressed: () {
-                  if (AppLocalizations.of(context)!.isEnLocale) {
-                    BlocProvider.of<LocaleCubit>(context).toArabic();
-                  } else {
-                    BlocProvider.of<LocaleCubit>(context).toEnglish();
-                  }
-                },
+                onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                    ? localeCubit.toArabic(context)
+                    : localeCubit.toEnglish(context),
               ),
             ),
           ),

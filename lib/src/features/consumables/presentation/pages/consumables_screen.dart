@@ -70,7 +70,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ConsumableCubit cubit = ConsumableCubit.get(context);
+    LocaleCubit localeCubit = LocaleCubit.get(context);
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
@@ -79,22 +80,25 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         Consumable? consumable = ConsumableCubit.consumableBox.get(index);
 
         if (consumable != null) {
-          bool currentKmHasValue = cubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
-          bool lastChangedKmHasValue = cubit.lastChangedAtControllers[index].text.isNotEmpty ||
-              consumable.lastChangedAt != 0;
-          bool changeIntervalHasValue = cubit.changeIntervalControllers[index].text.isNotEmpty ||
-              consumable.changeInterval != 0;
-          bool changeKmHasValue =
-              cubit.changeKmControllers[index].text.isNotEmpty || consumable.changeKm != 0;
+          bool currentKmHasValue =
+              consumableCubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
+          bool lastChangedKmHasValue =
+              consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
+                  consumable.lastChangedAt != 0;
+          bool changeIntervalHasValue =
+              consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
+                  consumable.changeInterval != 0;
+          bool changeKmHasValue = consumableCubit.changeKmControllers[index].text.isNotEmpty ||
+              consumable.changeKm != 0;
 
-          bool currentKmMatch =
-              car!.currentKm.toString() == cubit.currentKmController.text.removeThousandSeparator();
+          bool currentKmMatch = car!.currentKm.toString() ==
+              consumableCubit.currentKmController.text.removeThousandSeparator();
           bool lastChangedKmMatch = consumable.lastChangedAt.toString() ==
-              cubit.lastChangedAtControllers[index].text.removeThousandSeparator();
+              consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator();
           bool changeIntervalMatch = consumable.changeInterval.toString() ==
-              cubit.changeIntervalControllers[index].text.removeThousandSeparator();
+              consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
           bool changeKmMatch = consumable.changeKm.toString() ==
-              cubit.changeKmControllers[index].text.removeThousandSeparator();
+              consumableCubit.changeKmControllers[index].text.removeThousandSeparator();
 
           if (currentKmHasValue &&
               lastChangedKmHasValue &&
@@ -109,8 +113,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   content: Text(AppStrings.sureToExitMsg(context)),
                   actions: [
                     TextButton(
-                      onPressed: () =>
-                          Future.sync(() => cubit.writeData(context)).then((value) => exit(0)),
+                      onPressed: () => Future.sync(() => consumableCubit.writeData(context))
+                          .then((value) => exit(0)),
                       child: Text(
                         AppStrings.saveData(context),
                         style: TextStyle(
@@ -149,7 +153,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               children: [
                 IconButton(
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
-                  onPressed: () => cubit.changeVisibility(context),
+                  onPressed: () => consumableCubit.changeVisibility(context),
                 ),
                 IconButton(
                   icon: Column(
@@ -183,27 +187,23 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.translate),
-                  onPressed: () {
-                    if (AppLocalizations.of(context)!.isEnLocale) {
-                      BlocProvider.of<LocaleCubit>(context).toArabic();
-                    } else {
-                      BlocProvider.of<LocaleCubit>(context).toEnglish();
-                    }
-                  },
+                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                      ? localeCubit.toArabic(context)
+                      : localeCubit.toEnglish(context),
                 ),
               ],
             ),
             TextFormField(
-              focusNode: cubit.currentKmFocus,
+              focusNode: consumableCubit.currentKmFocus,
               cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-              controller: cubit.currentKmController,
+              controller: consumableCubit.currentKmController,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 fillColor: AppColors.getAppBarTextFieldFill(context),
                 floatingLabelStyle: TextStyle(
-                  color: cubit.currentKmFocus.hasFocus
+                  color: consumableCubit.currentKmFocus.hasFocus
                       ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
                       : AppColors.getAppBarTextFieldBorderAndLabel(context),
                   fontWeight: FontWeight.bold,
@@ -222,10 +222,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ThousandSeparatorInputFormatter(),
               ],
               onChanged: (_) {
-                cubit.validateAllLastChangedKilometerFields(context);
-                cubit.validateAllChangeKilometerFields(context);
+                consumableCubit.validateAllLastChangedKilometerFields(context);
+                consumableCubit.validateAllChangeKilometerFields(context);
               },
-              onEditingComplete: () => cubit.validateAllChangeKilometerFields(context),
+              onEditingComplete: () => consumableCubit.validateAllChangeKilometerFields(context),
               autovalidateMode: AutovalidateMode.always,
             ),
           ],
@@ -250,8 +250,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
           child: CustomButton(
             text: AppStrings.btnSave(context),
-            btnEnabled: cubit.shouldEnableSaveButton(context),
-            onPressed: () => cubit.writeData(context),
+            btnEnabled: consumableCubit.shouldEnableSaveButton(context),
+            onPressed: () => consumableCubit.writeData(context),
           ),
         );
 
