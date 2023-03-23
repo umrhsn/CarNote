@@ -28,7 +28,8 @@ class AppStrings {
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
   static List<String> consumables = [
-    'Oil & Oil Filter', // الزيت وفلتر الزيت
+    'Oil', // الزيت
+    'Oil Filter', // فلتر الزيت
     'Timing Belt', // سير الموتور
     'Dynamo Belt', // سير الدينامو
     'Fuel Filter', // فلتر البنزين

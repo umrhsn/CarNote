@@ -8,7 +8,8 @@
   "model_year_hint": "Model year. e.g. \"2014\"",
   "current_km_hint": "Total distance travelled. e.g.",
   "consumables": [
-    "Oil & Oil Filter",
+    "Oil",
+    "Oil Filter",
     "Timing Belt",
     "Dynamo Belt",
     "Fuel Filter",
