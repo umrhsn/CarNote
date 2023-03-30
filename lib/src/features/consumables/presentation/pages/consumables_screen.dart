@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -14,6 +15,7 @@ import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +70,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ConsumableCubit cubit = ConsumableCubit.get(context);
+    LocaleCubit localeCubit = LocaleCubit.get(context);
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
@@ -77,22 +80,25 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         Consumable? consumable = ConsumableCubit.consumableBox.get(index);
 
         if (consumable != null) {
-          bool currentKmHasValue = cubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
-          bool lastChangedKmHasValue = cubit.lastChangedAtControllers[index].text.isNotEmpty ||
-              consumable.lastChangedAt != 0;
-          bool changeIntervalHasValue = cubit.changeIntervalControllers[index].text.isNotEmpty ||
-              consumable.changeInterval != 0;
-          bool changeKmHasValue =
-              cubit.changeKmControllers[index].text.isNotEmpty || consumable.changeKm != 0;
+          bool currentKmHasValue =
+              consumableCubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
+          bool lastChangedKmHasValue =
+              consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
+                  consumable.lastChangedAt != 0;
+          bool changeIntervalHasValue =
+              consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
+                  consumable.changeInterval != 0;
+          bool changeKmHasValue = consumableCubit.changeKmControllers[index].text.isNotEmpty ||
+              consumable.changeKm != 0;
 
-          bool currentKmMatch =
-              car!.currentKm.toString() == cubit.currentKmController.text.removeThousandSeparator();
+          bool currentKmMatch = car!.currentKm.toString() ==
+              consumableCubit.currentKmController.text.removeThousandSeparator();
           bool lastChangedKmMatch = consumable.lastChangedAt.toString() ==
-              cubit.lastChangedAtControllers[index].text.removeThousandSeparator();
+              consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator();
           bool changeIntervalMatch = consumable.changeInterval.toString() ==
-              cubit.changeIntervalControllers[index].text.removeThousandSeparator();
+              consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
           bool changeKmMatch = consumable.changeKm.toString() ==
-              cubit.changeKmControllers[index].text.removeThousandSeparator();
+              consumableCubit.changeKmControllers[index].text.removeThousandSeparator();
 
           if (currentKmHasValue &&
               lastChangedKmHasValue &&
@@ -103,14 +109,14 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 context: context,
                 builder: (context) => AlertDialog(
                   icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-                  title: const Text(AppStrings.changedDataMsg),
-                  content: const Text(AppStrings.sureToExitMsg),
+                  title: Text(AppStrings.changedDataMsg(context)),
+                  content: Text(AppStrings.sureToExitMsg(context)),
                   actions: [
                     TextButton(
-                      onPressed: () =>
-                          Future.sync(() => cubit.writeData()).then((value) => exit(0)),
+                      onPressed: () => Future.sync(() => consumableCubit.writeData(context))
+                          .then((value) => exit(0)),
                       child: Text(
-                        AppStrings.saveData.toUpperCase(),
+                        AppStrings.saveData(context),
                         style: TextStyle(
                             color: context.isLight
                                 ? AppColors.primarySwatchLight.shade100
@@ -120,7 +126,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     TextButton(
                       onPressed: () => exit(0),
                       child: Text(
-                        AppStrings.exitWithoutSaving.toUpperCase(),
+                        AppStrings.exitWithoutSaving(context),
                         style: TextStyle(
                             color: context.isLight
                                 ? AppColors.primarySwatchLight.shade100
@@ -147,7 +153,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               children: [
                 IconButton(
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
-                  onPressed: () => cubit.changeVisibility(),
+                  onPressed: () => consumableCubit.changeVisibility(context),
                 ),
                 IconButton(
                   icon: Column(
@@ -160,7 +166,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                         style: TextStyle(
                           fontSize: 8,
                           height: _getNotifScheduleTime() != '' ? 2 : 0,
-                          fontFamily: AppStrings.fontFamilyCursedTimer,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -169,7 +174,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () {
                     NotificationsHelper.requestNotificationsPermission();
                     if (_getNotificationStatus()) {
-                      NotificationsHelper.cancelNotification();
+                      NotificationsHelper.cancelNotification(context);
                       setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
                       return;
                     }
@@ -181,21 +186,23 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.translate),
-                  onPressed: () {},
+                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                      ? localeCubit.toArabic(context)
+                      : localeCubit.toEnglish(context),
                 ),
               ],
             ),
             TextFormField(
-              focusNode: cubit.currentKmFocus,
+              focusNode: consumableCubit.currentKmFocus,
               cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
-              controller: cubit.currentKmController,
+              controller: consumableCubit.currentKmController,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 fillColor: AppColors.getAppBarTextFieldFill(context),
                 floatingLabelStyle: TextStyle(
-                  color: cubit.currentKmFocus.hasFocus
+                  color: consumableCubit.currentKmFocus.hasFocus
                       ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
                       : AppColors.getAppBarTextFieldBorderAndLabel(context),
                   fontWeight: FontWeight.bold,
@@ -205,7 +212,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     color: AppColors.getAppBarTextFieldBorderAndLabel(context),
                   ),
                 ),
-                labelText: AppStrings.currentKmLabel,
+                labelText: AppStrings.currentKmLabel(context),
                 labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
               ),
               inputFormatters: [
@@ -214,10 +221,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ThousandSeparatorInputFormatter(),
               ],
               onChanged: (_) {
-                cubit.validateAllLastChangedKilometerFields();
-                cubit.validateAllChangeKilometerFields();
+                consumableCubit.validateAllLastChangedKilometerFields(context);
+                consumableCubit.validateAllChangeKilometerFields(context);
               },
-              onEditingComplete: () => cubit.validateAllChangeKilometerFields(),
+              onEditingComplete: () => consumableCubit.validateAllChangeKilometerFields(context),
               autovalidateMode: AutovalidateMode.always,
             ),
           ],
@@ -241,9 +248,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     Padding buildSaveButton() => Padding(
           padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
           child: CustomButton(
-            text: AppStrings.btnSave.toUpperCase(),
-            btnEnabled: cubit.shouldEnableSaveButton(context),
-            onPressed: () => cubit.writeData(),
+            text: AppStrings.btnSave(context),
+            btnEnabled: consumableCubit.shouldEnableSaveButton(context),
+            onPressed: () => consumableCubit.writeData(context),
           ),
         );
 

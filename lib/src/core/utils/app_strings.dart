@@ -1,29 +1,36 @@
+import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class AppStrings {
-  static const String appName = 'Car Note';
+  static String _translate(BuildContext context, String stringKey) =>
+      AppLocalizations.of(context)!.translate(stringKey)!;
+
+  static String appName(BuildContext context) => _translate(context, "app_name");
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
-  static const String fontFamilyProductSans = 'Product Sans';
-  static const String fontFamilyCursedTimer = 'CursedTimer';
+  static String btnContinue(BuildContext context) =>
+      _translate(context, "btn_continue").toUpperCase();
 
-  static const String btnContinue = 'Continue';
-  static const String btnSave = 'Save';
+  static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
 
-  static const String dataAddedSuccessfully = 'Data added successfully';
-  static const String somethingWentWrong = 'Something went wrong';
+  static String dataAddedSuccessfully(BuildContext context) =>
+      _translate(context, "data_added_successfully");
 
-  static const String carTypeHint = 'Car type. e.g. "Suzuki Maruti"';
-  static const String modelYearHint = 'Model year. e.g. "2014"';
-  static String currentKmHint =
-      'Total distance travelled. e.g. ${NumberFormat.decimalPattern().format(100000)} km';
+  static String somethingWentWrong(BuildContext context) =>
+      _translate(context, "something_went_wrong");
+
+  static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
+
+  static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
+
+  static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
   static List<String> consumables = [
-    'Oil & Oil Filter', // الزيت وفلتر الزيت
-    'Timing Belt', // سير الموتور
+    'Oil', // الزيت
+    'Oil Filter', // فلتر الزيت
+    'Timing Belt', // سير كاتينة
     'Dynamo Belt', // سير الدينامو
     'Fuel Filter', // فلتر البنزين
     'Air Filter', // فلتر الهواء
@@ -35,10 +42,15 @@ class AppStrings {
     'Brake Linings' // تيل الفرامل
   ];
 
-  static const String currentKmLabel = 'Current kilometer';
-  static const String lastChangedAtLabel = 'Last changed at';
-  static const String changeIntervalLabel = 'Change interval';
-  static const String changeKmLabel = 'To be changed at';
+  static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
+
+  static String lastChangedAtLabel(BuildContext context) =>
+      _translate(context, "last_changed_at_label");
+
+  static String changeIntervalLabel(BuildContext context) =>
+      _translate(context, "change_interval_label");
+
+  static String changeKmLabel(BuildContext context) => _translate(context, "change_km_label");
 
   static String getMethodName(Function method) {
     return method
@@ -46,30 +58,39 @@ class AppStrings {
         .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
   }
 
-  static const String requiredField = '*required field';
-  static const String yearMatchesLength = '*year should be 4 digits at least';
-  static const String yearNotValid = '*invalid year';
+  static String requiredField(BuildContext context) => _translate(context, "required_field");
 
-  static const String warningText = 'remaining. You need to change this item soon.';
-  static const String errorText = 'Exceeded by';
-  static const String remaining = 'remaining';
+  static String yearMatchesLength(BuildContext context) =>
+      _translate(context, "year_matches_length");
 
-  static const String km = 'km';
+  static String yearInvalid(BuildContext context) => _translate(context, "year_invalid");
+
+  static String invalidInput(BuildContext context) => _translate(context, "invalid_input");
+
+  static String warningText(BuildContext context) => _translate(context, "warning_text");
+
+  static String errorText(BuildContext context) => _translate(context, "error_text");
+
+  static String remaining(BuildContext context) => _translate(context, "remaining");
+
+  static String km(BuildContext context) => _translate(context, "km");
 
   static const String prefsBoolSeen = 'seen';
   static const String prefsBoolNotif = 'notifications_set';
   static const String prefsBoolVisible = 'visible';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
-  static const String invalidInput = 'invalid input';
+  static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");
 
-  static const String changedDataMsg = "You've changed some data.";
-  static const String sureToExitMsg = 'Are you sure you want to exit the app without saving?';
+  static String sureToExitMsg(BuildContext context) => _translate(context, "sure_to_exit");
 
-  static const String saveData = 'Save data';
-  static const String exitWithoutSaving = 'Exit without saving';
+  static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
 
-  static const String tapBackAgainToExit = 'Tap back again to exit';
+  static String exitWithoutSaving(BuildContext context) =>
+      _translate(context, "exit_without_saving").toUpperCase();
+
+  static String tapBackAgainToExit(BuildContext context) =>
+      _translate(context, "tap_back_again_to_exit");
 
   static const String notifChannelBasicGroupKey = 'basic_channel_group';
   static const String notifChannelBasicGroupName = 'Basic group';
@@ -84,19 +105,38 @@ class AppStrings {
   static const String notifChannelScheduledDescription =
       'Notification channel for scheduled notifications';
 
-  static const String dailyNotificationTitle = "Don't forget to update your data";
-  static const String dailyNotificationBody = 'Have you entered your current kilometer for today?';
-  static const String dailyNotificationTimePickerHelperText =
-      'Schedule a daily notification to remind you of updating your data';
+  static String dailyNotificationTitle(BuildContext context) =>
+      _translate(context, "daily_notif_title");
 
-  static const String detailedModeOn = 'Detailed mode on';
-  static const String detailedModeOff = 'Detailed mode off';
+  static String dailyNotificationBody(BuildContext context) =>
+      _translate(context, "daily_notif_body");
 
-  static String showNotificationTime(TimeOfDay scheduleTime) => 'Daily notification on.\n'
-      'A daily reminder notification is set to be shown every day at '
-      '${scheduleTime.toString().substring(scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'))}';
+  static String dailyNotificationTimePickerHelperText(BuildContext context) =>
+      _translate(context, "daily_notif_time_picker_helper_text");
 
-  static const String dailyNotificationOff = 'Daily notification off';
+  static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
 
-  static const String notificationTimeNotSet = "You didn't set a time for the daily notification.\nNo notification will appear.";
+  static String detailedModeOff(BuildContext context) => _translate(context, "detailed_mode_off");
+
+  static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
+
+  static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
+      scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
+
+  static String dailyNotificationOff(BuildContext context) =>
+      _translate(context, "daily_notif_off");
+
+  static String notificationTimeNotSet(BuildContext context) =>
+      _translate(context, "notif_time_not_set");
+
+  /// error handling
+  static const String cacheFailure = 'Cache Failure';
+  static const String unexpectedError = 'Unexpected Error';
+
+  /// localization
+  static const String locale = 'locale';
+  static const String en = 'en';
+  static const String ar = 'ar';
+
+  static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
 }

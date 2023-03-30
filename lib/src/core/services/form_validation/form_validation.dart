@@ -1,6 +1,6 @@
 import 'package:car_note/src/core/services/form_validation/validation_item.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class FormValidation with ChangeNotifier {
   int currentYear = DateTime.now().year;
@@ -23,9 +23,9 @@ class FormValidation with ChangeNotifier {
 
   bool get isValid => isCarTypeValid && isModelYearValid && isTravelledDistanceValid;
 
-  void validateCarTypeForm(String? value) {
+  void validateCarTypeForm(String? value, BuildContext context) {
     if (value!.isEmpty) {
-      _carType = ValidationItem(null, AppStrings.requiredField);
+      _carType = ValidationItem(null, AppStrings.requiredField(context));
     } else {
       _carType = ValidationItem(value, null);
     }
@@ -33,16 +33,16 @@ class FormValidation with ChangeNotifier {
     notifyListeners();
   }
 
-  void validateModelYearForm(String? value) {
+  void validateModelYearForm(String? value, BuildContext context) {
     final bool matchesLength = value!.length >= 4;
     final bool yearValid = int.parse(value) <= currentYear;
 
     if (value.isEmpty) {
-      _modelYear = ValidationItem(null, AppStrings.requiredField);
+      _modelYear = ValidationItem(null, AppStrings.requiredField(context));
     } else if (!matchesLength) {
-      _modelYear = ValidationItem(null, AppStrings.yearMatchesLength);
+      _modelYear = ValidationItem(null, AppStrings.yearMatchesLength(context));
     } else if (!yearValid) {
-      _modelYear = ValidationItem(null, AppStrings.yearNotValid);
+      _modelYear = ValidationItem(null, AppStrings.yearInvalid(context));
     } else {
       _modelYear = ValidationItem(value, null);
     }
@@ -50,9 +50,9 @@ class FormValidation with ChangeNotifier {
     notifyListeners();
   }
 
-  void validateCurrentKmForm(String? value) {
+  void validateCurrentKmForm(String? value, BuildContext context) {
     if (value!.isEmpty) {
-      _currentKm = ValidationItem(null, AppStrings.requiredField);
+      _currentKm = ValidationItem(null, AppStrings.requiredField(context));
     } else {
       _currentKm = ValidationItem(value, null);
     }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 class AppScrollbarThemes {
   static ScrollbarThemeData scrollbarTheme({required bool isLight}) {
     return ScrollbarThemeData(
-      interactive: true,
       thickness: MaterialStateProperty.all(5),
       thumbVisibility: MaterialStateProperty.all(true),
       trackVisibility: MaterialStateProperty.all(true),
