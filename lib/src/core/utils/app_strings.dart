@@ -30,7 +30,7 @@ class AppStrings {
   static List<String> consumables = [
     'Oil', // الزيت
     'Oil Filter', // فلتر الزيت
-    'Timing Belt', // سير الموتور
+    'Timing Belt', // سير كاتينة
     'Dynamo Belt', // سير الدينامو
     'Fuel Filter', // فلتر البنزين
     'Air Filter', // فلتر الهواء
