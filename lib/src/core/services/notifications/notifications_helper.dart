@@ -32,7 +32,7 @@ class NotificationsHelper {
             .createNotification(
             content: NotificationContent(
               id: 90,
-              category: NotificationCategory.Reminder,
+              category: NotificationCategory.Recommendation,
               backgroundColor: Colors.transparent,
               channelKey: AppStrings.notifChannelScheduledKey,
               title: AppStrings.dailyNotificationTitle(context),
@@ -43,7 +43,6 @@ class NotificationsHelper {
             schedule: NotificationCalendar(
               hour: scheduleTime?.hour ?? 9,
               minute: scheduleTime?.minute ?? 0,
-              preciseAlarm: true,
               allowWhileIdle: true,
             ),
           )
