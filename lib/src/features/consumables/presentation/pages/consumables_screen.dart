@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
-import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -32,7 +31,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
-  String? _scheduleTime;
+  // String? _scheduleTime;
 
   bool _getVisibilityStatus() {
     if (_prefs.getBool(AppStrings.prefsBoolVisible) == null) {
@@ -50,13 +49,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     return notificationsSet;
   }
 
-  String _getNotifScheduleTime() {
-    if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
-      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
-    }
-    String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
-    return scheduleTime;
-  }
+  // String _getNotifScheduleTime() {
+  //   if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
+  //     _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
+  //   }
+  //   String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
+  //   return scheduleTime;
+  // }
 
   @override
   void initState() {
