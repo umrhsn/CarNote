@@ -74,10 +74,14 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Database fields and methods
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
-
   static Box<Consumable> get consumableBox => _consumableBox;
 
+  static final Box<String> _consumables = Hive.box<String>(AppStrings.consumablesListBox);
+  static Box<String> get consumables => _consumables;
+
   void writeData(BuildContext context) {
+    SharedPreferences prefs = di.sl<SharedPreferences>();
+
     CarCubit.carBox.put(
       AppStrings.carBox,
       Car(
@@ -87,6 +91,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
       ),
     );
 
+    bool listAddedForFirstTime = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
     bool isNotNull = true;
 
     for (int index = 0; index < Consumable.getCount(); index++) {
@@ -94,7 +99,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
         index,
         Consumable(
           id: index,
-          name: AppStrings.consumables[index],
+          name: listAddedForFirstTime ? _consumableBox.get(index)!.name : AppStrings.consumables[index],
           lastChangedAt: lastChangedAtControllers[index].text.isNotEmpty
               ? int.parse(lastChangedAtControllers[index].text.removeThousandSeparator())
               : 0,
@@ -106,10 +111,15 @@ class ConsumableCubit extends Cubit<ConsumableState> {
               : 0,
         ),
       );
-      if (_consumableBox.get(index) == null) isNotNull = false;
+      if (_consumableBox.get(index) == null) {
+        isNotNull = false;
+      } else {
+        _consumables.put(index, _consumableBox.get(index)!.name);
+      }
     }
 
     if (isNotNull) {
+      prefs.setBool(AppStrings.prefsBoolListAdded, true);
       BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));

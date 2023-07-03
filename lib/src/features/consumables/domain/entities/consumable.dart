@@ -1,5 +1,9 @@
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 part 'consumable.g.dart';
 
@@ -20,17 +24,16 @@ class Consumable extends HiveObject {
   @HiveField(4)
   final int changeKm;
 
-  static int count = 0;
-
   Consumable({
     required this.id,
     required this.name,
     required this.lastChangedAt,
     required this.changeInterval,
     required this.changeKm,
-  }) {
-    count++;
-  }
+  });
 
-  static int getCount() => count;
+  static int getCount() =>
+      di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
+          ? ConsumableCubit.consumables.length
+          : AppStrings.consumables.length;
 }
