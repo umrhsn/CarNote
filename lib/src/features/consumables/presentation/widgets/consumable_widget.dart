@@ -167,16 +167,17 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           child: Row(
             children: [
               Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const Spacer(),
-              Visibility(
-                visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
-                child: Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
-                  ],
-                ),
-              )
+              // TODO: to be visible when functional
+              // const Spacer(),
+              // Visibility(
+              //   visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
+              //   child: Row(
+              //     children: [
+              //       IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+              //       IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

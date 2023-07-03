@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -155,40 +156,43 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
                   onPressed: () => consumableCubit.changeVisibility(context),
                 ),
-                IconButton(
-                  icon: Column(
-                    children: [
-                      Icon(_getNotificationStatus()
-                          ? Icons.notifications_active
-                          : Icons.notifications_outlined),
-                      Text(
-                        _getNotifScheduleTime(),
-                        style: TextStyle(
-                          fontSize: 8,
-                          height: _getNotifScheduleTime() != '' ? 2 : 0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    NotificationsHelper.requestNotificationsPermission();
-                    if (_getNotificationStatus()) {
-                      NotificationsHelper.cancelNotification(context);
-                      setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
-                      return;
-                    }
-                    setState(() async {
-                      _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
-                      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
-                    });
-                  },
-                ),
+                // FIXME: notification only shows once instead of daily
+                // IconButton(
+                //   icon: Column(
+                //     children: [
+                //       Icon(_getNotificationStatus()
+                //           ? Icons.notifications_active
+                //           : Icons.notifications_outlined),
+                //       Text(
+                //         _getNotifScheduleTime(),
+                //         style: TextStyle(
+                //           fontSize: 8,
+                //           height: _getNotifScheduleTime() != '' ? 2 : 0,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                //   onPressed: () {
+                //     NotificationsHelper.requestNotificationsPermission();
+                //     if (_getNotificationStatus()) {
+                //       NotificationsHelper.cancelNotification(context);
+                //       setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
+                //       return;
+                //     }
+                //     setState(() async {
+                //       _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
+                //       _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
+                //     });
+                //   },
+                // ),
                 IconButton(
                   icon: const Icon(Icons.translate),
-                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                      ? localeCubit.toArabic(context)
-                      : localeCubit.toEnglish(context),
+                  onPressed: () {
+                    AppLocalizations.of(context)!.isEnLocale
+                        ? localeCubit.toArabic(context)
+                        : localeCubit.toEnglish(context);
+                  },
                 ),
               ],
             ),
