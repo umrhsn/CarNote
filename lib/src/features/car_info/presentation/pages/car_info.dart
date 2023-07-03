@@ -75,7 +75,7 @@ class _MyHomePageState extends State<CarInfo> {
           LengthLimitingTextInputFormatter(9),
           FilteringTextInputFormatter.digitsOnly,
         ],
-        hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km}",
+        hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}",
         validationItem: validator.currentKm,
         validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
         onFieldSubmitted: (_) => carCubit.writeDataAndNavigate(context),

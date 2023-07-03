@@ -1,5 +1,7 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 class AppStrings {
   static String _translate(BuildContext context, String stringKey) =>
@@ -29,19 +31,43 @@ class AppStrings {
 
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
-  static List<String> consumables = [
-    'Oil', // الزيت
-    'Oil Filter', // فلتر الزيت
-    'Timing Belt', // سير كاتينة
-    'Dynamo Belt', // سير الدينامو
-    'Fuel Filter', // فلتر البنزين
-    'Air Filter', // فلتر الهواء
-    'AC Filter', // فلتر التكييف
-    'AC belt', // سير التكييف
-    'Gearbox Oil', // زيت الفتيس
-    'Antifreeze Coolant', // مية التبريد
-    'Spark Plugs', // البوجيهات
-    'Brake Linings' // تيل الفرامل
+  static String _savedLang = 'en';
+
+  static List<String> get consumables {
+    di.sl<LocaleCubit>().getSavedLang().then((value) {
+      _savedLang = value;
+    });
+    return _savedLang == 'ar' ? consumablesArabicList : consumablesEnglishList;
+  }
+
+  static List<String> consumablesEnglishList = [
+    'Oil',
+    'Oil Filter',
+    'Timing Belt',
+    'Dynamo Belt',
+    'Fuel Filter',
+    'Air Filter',
+    'AC Filter',
+    'AC belt',
+    'Gearbox Oil',
+    'Antifreeze Coolant',
+    'Spark Plugs',
+    'Brake Linings'
+  ];
+
+  static List<String> consumablesArabicList = [
+    'الزيت',
+    'فلتر الزيت',
+    'سير كاتينة',
+    'سير الدينامو',
+    'فلتر البنزين',
+    'فلتر الهواء',
+    'فلتر التكييف',
+    'سير التكييف',
+    'زيت الفتيس',
+    'مية التبريد',
+    'البوجيهات',
+    'تيل الفرامل'
   ];
 
   static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
@@ -81,7 +107,6 @@ class AppStrings {
   static const String prefsBoolNotif = 'notifications_set';
   static const String prefsBoolVisible = 'visible';
   static const String prefsBoolListAdded = 'list_added';
-  static const String prefsBoolListArabic = 'list_arabic';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");

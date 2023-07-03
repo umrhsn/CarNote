@@ -31,7 +31,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
-  String? _scheduleTime;
+  // String? _scheduleTime;
 
   bool _getVisibilityStatus() {
     if (_prefs.getBool(AppStrings.prefsBoolVisible) == null) {
@@ -49,13 +49,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     return notificationsSet;
   }
 
-  String _getNotifScheduleTime() {
-    if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
-      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
-    }
-    String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
-    return scheduleTime;
-  }
+  // String _getNotifScheduleTime() {
+  //   if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
+  //     _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
+  //   }
+  //   String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
+  //   return scheduleTime;
+  // }
 
   @override
   void initState() {
@@ -155,40 +155,43 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
                   onPressed: () => consumableCubit.changeVisibility(context),
                 ),
-                IconButton(
-                  icon: Column(
-                    children: [
-                      Icon(_getNotificationStatus()
-                          ? Icons.notifications_active
-                          : Icons.notifications_outlined),
-                      Text(
-                        _getNotifScheduleTime(),
-                        style: TextStyle(
-                          fontSize: 8,
-                          height: _getNotifScheduleTime() != '' ? 2 : 0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  onPressed: () {
-                    NotificationsHelper.requestNotificationsPermission();
-                    if (_getNotificationStatus()) {
-                      NotificationsHelper.cancelNotification(context);
-                      setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
-                      return;
-                    }
-                    setState(() async {
-                      _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
-                      _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
-                    });
-                  },
-                ),
+                // FIXME: notification only shows once instead of daily
+                // IconButton(
+                //   icon: Column(
+                //     children: [
+                //       Icon(_getNotificationStatus()
+                //           ? Icons.notifications_active
+                //           : Icons.notifications_outlined),
+                //       Text(
+                //         _getNotifScheduleTime(),
+                //         style: TextStyle(
+                //           fontSize: 8,
+                //           height: _getNotifScheduleTime() != '' ? 2 : 0,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                //   onPressed: () {
+                //     NotificationsHelper.requestNotificationsPermission();
+                //     if (_getNotificationStatus()) {
+                //       NotificationsHelper.cancelNotification(context);
+                //       setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
+                //       return;
+                //     }
+                //     setState(() async {
+                //       _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
+                //       _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
+                //     });
+                //   },
+                // ),
                 IconButton(
                   icon: const Icon(Icons.translate),
-                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                      ? localeCubit.toArabic(context)
-                      : localeCubit.toEnglish(context),
+                  onPressed: () {
+                    AppLocalizations.of(context)!.isEnLocale
+                        ? localeCubit.toArabic(context)
+                        : localeCubit.toEnglish(context);
+                  },
                 ),
               ],
             ),
