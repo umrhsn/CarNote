@@ -17,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  final _splashDelay = 2;
+  final _splashDelay = 0;
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
   @override

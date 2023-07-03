@@ -6,9 +6,11 @@ class AppStrings {
       AppLocalizations.of(context)!.translate(stringKey)!;
 
   static String appName(BuildContext context) => _translate(context, "app_name");
+  static const String fontFamily = 'Product Sans';
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
+  static const String consumablesListBox = 'consumables';
 
   static String btnContinue(BuildContext context) =>
       _translate(context, "btn_continue").toUpperCase();
@@ -78,6 +80,8 @@ class AppStrings {
   static const String prefsBoolSeen = 'seen';
   static const String prefsBoolNotif = 'notifications_set';
   static const String prefsBoolVisible = 'visible';
+  static const String prefsBoolListAdded = 'list_added';
+  static const String prefsBoolListArabic = 'list_arabic';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");

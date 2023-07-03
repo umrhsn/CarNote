@@ -15,16 +15,16 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.5
   equatable: ^2.0.5
-  intl: ^0.17.0
+  intl: ^0.18.0
   font_awesome_flutter: ^10.4.0
   flutter_bloc: ^8.1.2
   provider: ^6.0.5
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  path_provider: ^2.0.13
-  shared_preferences: ^2.0.18
+  path_provider: ^2.0.15
+  shared_preferences: ^2.1.1
   awesome_notifications: ^0.7.4+1
-  get_it: ^7.2.0
+  get_it: ^7.6.0
   bot_toast: ^4.0.3
   admob_flutter: ^3.0.0
   dartz: ^0.10.1
@@ -36,6 +36,11 @@ dev_dependencies:
   hive_generator: ^2.0.0
   build_runner: ^2.3.3
   flutter_launcher_icons: ^0.12.0
+
+dependency_overrides:
+  # Remove when awesome_notifications stops relying on 0.17.0.
+  # https://github.com/firebase/flutterfire/blob/master/packages/firebase_ui_localizations/pubspec.yaml#L18
+  intl: ^0.17.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -61,3 +66,12 @@ flutter:
     - lang/ar.json
     - lang/en.json
     - assets/images/
+
+  fonts:
+    - family: Product Sans
+      fonts:
+        - asset: assets/fonts/Product Sans Bold.ttf
+        - asset: assets/fonts/Product Sans Bold Italic.ttf
+        - asset: assets/fonts/Product Sans Italic.ttf
+        - asset: assets/fonts/Product Sans Regular.ttf
+          style: italic

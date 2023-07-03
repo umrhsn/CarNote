@@ -164,9 +164,21 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       children: [
         Padding(
           padding: const EdgeInsetsDirectional.only(top: 15, bottom: 10, end: 3, start: 3),
-          child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold))),
+          child: Row(
+            children: [
+              Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+              const Spacer(),
+              Visibility(
+                visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
+                child: Row(
+                  children: [
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         Visibility(
           visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
@@ -186,7 +198,10 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         ),
         const SizedBox(height: 10),
         buildChangeKmTextFormField(context),
-        const SizedBox(height: 10),
+        Visibility(
+          visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
+          child: const SizedBox(height: 10),
+        )
       ],
     );
   }
