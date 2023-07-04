@@ -27,6 +27,7 @@ void main() async {
 
   await Hive.openBox<Car>(AppStrings.carBox);
   await Hive.openBox<Consumable>(AppStrings.consumableBox);
+  await Hive.openBox<String>(AppStrings.consumablesListBox);
 
   /// Notifications init
   AwesomeNotifications().initialize(
