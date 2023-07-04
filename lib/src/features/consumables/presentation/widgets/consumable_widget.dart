@@ -143,7 +143,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             enabled: false,
             controller: cubit.changeKmControllers[widget.index],
             textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               labelText: AppStrings.changeKmLabel(context),
               fillColor: AppColors.getChangeKmFillColor(context),

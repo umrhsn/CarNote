@@ -111,6 +111,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
               : 0,
         ),
       );
+      // FIXME: make it saved as a contiguous list
       if (_consumableBox.get(index) == null) {
         isNotNull = false;
       } else {

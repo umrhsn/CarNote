@@ -41,13 +41,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     return visible;
   }
 
-  bool _getNotificationStatus() {
-    if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
-      _prefs.setBool(AppStrings.prefsBoolNotif, false);
-    }
-    bool notificationsSet = _prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
-    return notificationsSet;
-  }
+  // bool _getNotificationStatus() {
+  //   if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
+  //     _prefs.setBool(AppStrings.prefsBoolNotif, false);
+  //   }
+  //   bool notificationsSet = _prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
+  //   return notificationsSet;
+  // }
 
   // String _getNotifScheduleTime() {
   //   if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
@@ -60,8 +60,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   @override
   void initState() {
     _getVisibilityStatus();
-    _getNotificationStatus();
+    // _getNotificationStatus();
     // to be called only once
+    NotificationsHelper.requestNotificationsPermission();
     WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) => NotificationsHelper.showAlarmingNotifications(context));
     Admob.requestTrackingAuthorization();
