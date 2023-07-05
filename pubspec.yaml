@@ -68,6 +68,10 @@ flutter:
     - assets/images/
 
   fonts:
+    - family: ArabicTwo
+      fonts:
+        - asset: assets/fonts/ArabicTwo.ttf
+        - asset: assets/fonts/ArabicTwo Bold.ttf
     - family: Product Sans
       fonts:
         - asset: assets/fonts/Product Sans Bold.ttf

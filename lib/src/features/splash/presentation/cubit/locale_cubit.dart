@@ -19,7 +19,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   /// Easy access object of Cubit
   static LocaleCubit get(BuildContext context) => BlocProvider.of<LocaleCubit>(context);
 
-  String currentLangCode = AppStrings.en;
+  static String currentLangCode = AppStrings.en;
 
   Future<String> getSavedLang() async {
     final response = await getSavedLangUseCase.call(NoParams());
