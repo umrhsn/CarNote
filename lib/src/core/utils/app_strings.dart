@@ -1,14 +1,17 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:car_note/injection_container.dart' as di;
 
 class AppStrings {
   static String _translate(BuildContext context, String stringKey) =>
       AppLocalizations.of(context)!.translate(stringKey)!;
 
   static String appName(BuildContext context) => _translate(context, "app_name");
-  static const String fontFamily = 'Product Sans';
+
+  static const String _fontFamilyEn = 'Product Sans';
+  static const String _fontFamilyAr = 'ArabicTwo';
+
+  static String get fontFamily => LocaleCubit.currentLangCode == en ? _fontFamilyEn : _fontFamilyAr;
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
@@ -31,14 +34,8 @@ class AppStrings {
 
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
-  static String _savedLang = 'en';
-
-  static List<String> get consumables {
-    di.sl<LocaleCubit>().getSavedLang().then((value) {
-      _savedLang = value;
-    });
-    return _savedLang == 'ar' ? consumablesArabicList : consumablesEnglishList;
-  }
+  static List<String> get consumables =>
+      LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
 
   static List<String> consumablesEnglishList = [
     'Oil',
