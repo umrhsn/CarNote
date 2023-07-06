@@ -89,7 +89,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           bool changeIntervalHasValue =
               consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
                   consumable.changeInterval != 0;
-          bool changeKmHasValue = consumableCubit.changeKmControllers[index].text.isNotEmpty ||
+          bool changeKmHasValue = consumableCubit.remainingKmControllers[index].text.isNotEmpty ||
               consumable.changeKm != 0;
 
           bool currentKmMatch = car!.currentKm.toString() ==
@@ -99,7 +99,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           bool changeIntervalMatch = consumable.changeInterval.toString() ==
               consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
           bool changeKmMatch = consumable.changeKm.toString() ==
-              consumableCubit.changeKmControllers[index].text.removeThousandSeparator();
+              consumableCubit.remainingKmControllers[index].text.removeThousandSeparator();
 
           if (currentKmHasValue &&
               lastChangedKmHasValue &&

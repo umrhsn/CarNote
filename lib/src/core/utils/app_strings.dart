@@ -55,15 +55,15 @@ class AppStrings {
   static List<String> consumablesArabicList = [
     'الزيت',
     'فلتر الزيت',
-    'سير كاتينة',
+    'سير الكاتينة',
     'سير الدينامو',
     'فلتر البنزين',
     'فلتر الهواء',
     'فلتر التكييف',
     'سير التكييف',
     'زيت الفتيس',
-    'مية التبريد',
-    'البوجيهات',
+    'مياه التبريد',
+    'البوچيهات',
     'تيل الفرامل'
   ];
 
@@ -75,7 +75,8 @@ class AppStrings {
   static String changeIntervalLabel(BuildContext context) =>
       _translate(context, "change_interval_label");
 
-  static String changeKmLabel(BuildContext context) => _translate(context, "change_km_label");
+  static String remainingKmNormalWarningLabel(BuildContext context) => _translate(context, "remaining_km_normal_warning_label");
+  static String remainingKmErrorLabel(BuildContext context) => _translate(context, "remaining_km_error_label");
 
   static String getMethodName(Function method) {
     return method
@@ -92,7 +93,7 @@ class AppStrings {
 
   static String invalidInput(BuildContext context) => _translate(context, "invalid_input");
 
-  static String warningText(BuildContext context) => _translate(context, "warning_text");
+  static String normalAndWarningText(BuildContext context) => _translate(context, "normal_warning_text");
 
   static String errorText(BuildContext context) => _translate(context, "error_text");
 
