@@ -1,8 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:car_note/injection_container.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,15 +74,19 @@ class NotificationsHelper {
 
     // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
-      if (cubit.getChangeKmValidatingText(context, index).data != '' &&
-          !cubit.isNormalText(index)) {
+      if (cubit.remainingKmControllers[index].text.isNotEmpty && !cubit.isNormalText(index)) {
+        String remainingKm = LocaleCubit.currentLangCode == AppStrings.en
+            ? cubit.remainingKmControllers[index].text
+            : cubit.remainingKmControllers[index].text.toArabicNumerals();
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: index,
             backgroundColor: cubit.getValidatingTextColor(context, index),
             channelKey: AppStrings.notifChannelBasicKey,
             title: AppStrings.consumables[index],
-            body: '${cubit.getChangeKmValidatingText(context, index).data}',
+            body: cubit.isErrorText(index)
+                ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'
+                : '$remainingKm ${AppStrings.km(context)} ${AppStrings.remaining(context)}',
             color: Colors.red,
             badge: 0,
           ),

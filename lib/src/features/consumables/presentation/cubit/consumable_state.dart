@@ -12,7 +12,7 @@ class AppInitial extends ConsumableState {}
 
 class AddingChangeKm extends ConsumableState {}
 
-class AddedChangeKm extends ConsumableState {}
+class AddedRemainingKm extends ConsumableState {}
 
 class ValidatingItem extends ConsumableState {}
 

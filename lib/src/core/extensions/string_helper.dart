@@ -20,3 +20,25 @@ extension StringConverter on int {
     return numberDigits.join();
   }
 }
+
+extension LocalizedNumerals on String {
+  String toArabicNumerals() {
+    const Map<String, String> numbers = {
+      '0': '۰',
+      '1': '۱',
+      '2': '۲',
+      '3': '۳',
+      '4': '٤',
+      '5': '٥',
+      '6': '٦',
+      '7': '۷',
+      '8': '۸',
+      '9': '۹',
+    };
+
+    return replaceAllMapped(
+      RegExp('[0-9]'),
+      (match) => numbers[this[match.start]]!,
+    );
+  }
+}

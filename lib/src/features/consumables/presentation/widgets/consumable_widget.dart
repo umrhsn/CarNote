@@ -35,7 +35,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
     cubit.calculateChangeKmAndCurrentKmDifference(widget.index);
     cubit.calculateWarningDifference(widget.index);
-    cubit.getChangeKilometer(widget.index);
+    cubit.getRemainingKm(widget.index);
 
     Color getLastChangedAndChangeIntervalLabelColor() =>
         cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
@@ -44,8 +44,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
 
-    Color getChangeKmLabelColor() =>
-        cubit.getChangeKmValidatingText(context, widget.index).data != ''
+    Color getRemainingKmLabelColor() =>
+        cubit.getRemainingKmValidatingText(context, widget.index).data != ''
             ? cubit.getValidatingTextColor(context, widget.index)
             : cubit.changeKmFocuses[widget.index].hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
@@ -65,8 +65,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         ? AppColors.getTextFieldBorderAndLabelFocused(context)
         : AppColors.getTextFieldBorderAndLabel(context);
 
-    OutlineInputBorder getChangeKmDisabledBorder() =>
-        cubit.getChangeKmValidatingText(context, widget.index).data != '' &&
+    OutlineInputBorder getRemainingKmDisabledBorder() =>
+        cubit.getRemainingKmValidatingText(context, widget.index).data != '' &&
                 !cubit.isNormalText(widget.index)
             ? cubit.isWarningText(widget.index)
                 ? cubit.getWarningBorder(context)
@@ -83,7 +83,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 controller: cubit.lastChangedAtControllers[widget.index],
                 focusNode: cubit.lastChangedAtFocuses[widget.index],
                 cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-                onChanged: (_) => cubit.getChangeKilometer(widget.index),
+                onChanged: (_) => cubit.getRemainingKm(widget.index),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -117,7 +117,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           controller: cubit.changeIntervalControllers[widget.index],
           focusNode: cubit.changeIntervalFocuses[widget.index],
           cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-          onChanged: (_) => cubit.getChangeKilometer(widget.index),
+          onChanged: (_) => cubit.getRemainingKm(widget.index),
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
@@ -136,25 +136,25 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       );
     }
 
-    Column buildChangeKmTextFormField(BuildContext context) {
+    Column buildRemainingKmTextFormField(BuildContext context) {
       return Column(
         children: [
           TextFormField(
             enabled: false,
-            controller: cubit.changeKmControllers[widget.index],
+            controller: cubit.remainingKmControllers[widget.index],
             textAlign: TextAlign.center,
             style: TextStyle(color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
             decoration: InputDecoration(
-              labelText: AppStrings.changeKmLabel(context),
+              labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index) ? AppStrings.remainingKmNormalWarningLabel(context) : AppStrings.remainingKmErrorLabel(context),
               fillColor: AppColors.getChangeKmFillColor(context),
               floatingLabelStyle:
-                  TextStyle(color: getChangeKmLabelColor(), fontWeight: FontWeight.bold),
-              disabledBorder: getChangeKmDisabledBorder(),
+                  TextStyle(color: getRemainingKmLabelColor(), fontWeight: FontWeight.bold),
+              disabledBorder: getRemainingKmDisabledBorder(),
             ),
           ),
           Align(
             alignment: AlignmentDirectional.centerStart,
-            child: cubit.getChangeKmValidatingText(context, widget.index),
+            child: cubit.getRemainingKmValidatingText(context, widget.index),
           )
         ],
       );
@@ -198,7 +198,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           ),
         ),
         const SizedBox(height: 10),
-        buildChangeKmTextFormField(context),
+        buildRemainingKmTextFormField(context),
         Visibility(
           visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
           child: const SizedBox(height: 10),
