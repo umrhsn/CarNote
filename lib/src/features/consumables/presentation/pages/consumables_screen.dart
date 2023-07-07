@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
-import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
@@ -194,6 +193,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                       ? localeCubit.toArabic(context)
                       : localeCubit.toEnglish(context),
                 ),
+                IconButton(
+                  icon: const Icon(Icons.upload_file_rounded),
+                  onPressed: () {},
+                ),
               ],
             ),
             TextFormField(
@@ -268,7 +271,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               backgroundColor: AppColors.getPrimaryColor(context),
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
-            ).withBottomAdmobBanner(context),
+            )
+            // TODO: add ads to page
+            // .withBottomAdmobBanner(context)
+            ,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(start: 15),
