@@ -143,9 +143,12 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             enabled: false,
             controller: cubit.remainingKmControllers[widget.index],
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
             decoration: InputDecoration(
-              labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index) ? AppStrings.remainingKmNormalWarningLabel(context) : AppStrings.remainingKmErrorLabel(context),
+              labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index)
+                  ? AppStrings.remainingKmNormalWarningLabel(context)
+                  : AppStrings.remainingKmErrorLabel(context),
               fillColor: AppColors.getChangeKmFillColor(context),
               floatingLabelStyle:
                   TextStyle(color: getRemainingKmLabelColor(), fontWeight: FontWeight.bold),
