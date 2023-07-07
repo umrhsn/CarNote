@@ -254,7 +254,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     return 0;
   }
 
-  int calculateChangeKmAndCurrentKmSum(int index) {
+  int _calculateChangeKmAndCurrentKmSum(int index) {
     if (currentKmController.text.isNotEmpty && remainingKmControllers[index].text.isNotEmpty) {
       return int.parse(currentKmController.text.removeThousandSeparator()) +
           int.parse(remainingKmControllers[index].text.removeThousandSeparator());
@@ -302,7 +302,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(ValidatingItem());
     if (isNormalText(index) || isWarningText(index)) {
       emit(ValidatingComplete());
-      return '${AppStrings.normalAndWarningText(context)} ${calculateChangeKmAndCurrentKmSum(index).toThousands()}';
+      return '${AppStrings.normalAndWarningText(context)} ${_calculateChangeKmAndCurrentKmSum(index).toThousands()}';
     }
     if (isErrorText(index)) {
       emit(ValidatingComplete());
