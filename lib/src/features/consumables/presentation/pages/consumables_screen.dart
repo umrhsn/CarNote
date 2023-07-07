@@ -19,6 +19,7 @@ import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dar
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
@@ -31,6 +32,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
+
   // String? _scheduleTime;
 
   bool _getVisibilityStatus() {
@@ -187,12 +189,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 //   },
                 // ),
                 IconButton(
-                  icon: const Icon(Icons.translate),
-                  onPressed: () {
-                    AppLocalizations.of(context)!.isEnLocale
-                        ? localeCubit.toArabic(context)
-                        : localeCubit.toEnglish(context);
-                  },
+                  icon: const FaIcon(FontAwesomeIcons.language),
+                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                      ? localeCubit.toArabic(context)
+                      : localeCubit.toEnglish(context),
                 ),
               ],
             ),

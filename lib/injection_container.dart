@@ -26,7 +26,7 @@ Future<void> init() async {
   // repository
   sl.registerLazySingleton<LangRepository>(() => LangRepositoryImpl(langLocalDataSource: sl()));
 
-  // Data Sources
+  // data Sources
   sl.registerLazySingleton<LangLocalDataSource>(
       () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 
