@@ -15,6 +15,7 @@ import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
@@ -102,7 +103,7 @@ class _MyHomePageState extends State<CarInfo> {
             child: Padding(
               padding: const EdgeInsets.only(top: 20, right: 15),
               child: IconButton(
-                icon: const Icon(Icons.translate),
+                icon: const FaIcon(FontAwesomeIcons.language),
                 onPressed: () => AppLocalizations.of(context)!.isEnLocale
                     ? localeCubit.toArabic(context)
                     : localeCubit.toEnglish(context),
