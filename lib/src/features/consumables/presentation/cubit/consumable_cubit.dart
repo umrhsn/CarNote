@@ -39,8 +39,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
       remainingKmControllers.add(
         TextEditingController(
           text: _consumableBox.get(index) != null
-              ? _consumableBox.get(index)!.changeKm != 0
-                  ? _consumableBox.get(index)!.changeKm.toThousands()
+              ? _consumableBox.get(index)!.remainingKm != 0
+                  ? _consumableBox.get(index)!.remainingKm.toThousands()
                   : ''
               : '',
         ),
@@ -110,7 +110,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
           changeInterval: changeIntervalControllers[index].text.isNotEmpty
               ? int.parse(changeIntervalControllers[index].text.removeThousandSeparator())
               : 0,
-          changeKm: remainingKmControllers[index].text.isNotEmpty
+          remainingKm: remainingKmControllers[index].text.isNotEmpty
               ? int.parse(remainingKmControllers[index].text.removeThousandSeparator())
               : 0,
         ),

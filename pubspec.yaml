@@ -28,6 +28,7 @@ dependencies:
   bot_toast: ^4.0.3
   admob_flutter: ^3.0.0
   dartz: ^0.10.1
+  document_file_save_plus: ^2.0.0
 
 dev_dependencies:
   flutter_test:

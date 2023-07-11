@@ -75,8 +75,11 @@ class AppStrings {
   static String changeIntervalLabel(BuildContext context) =>
       _translate(context, "change_interval_label");
 
-  static String remainingKmNormalWarningLabel(BuildContext context) => _translate(context, "remaining_km_normal_warning_label");
-  static String remainingKmErrorLabel(BuildContext context) => _translate(context, "remaining_km_error_label");
+  static String remainingKmNormalWarningLabel(BuildContext context) =>
+      _translate(context, "remaining_km_normal_warning_label");
+
+  static String remainingKmErrorLabel(BuildContext context) =>
+      _translate(context, "remaining_km_error_label");
 
   static String getMethodName(Function method) {
     return method
@@ -93,7 +96,8 @@ class AppStrings {
 
   static String invalidInput(BuildContext context) => _translate(context, "invalid_input");
 
-  static String normalAndWarningText(BuildContext context) => _translate(context, "normal_warning_text");
+  static String normalAndWarningText(BuildContext context) =>
+      _translate(context, "normal_warning_text");
 
   static String errorText(BuildContext context) => _translate(context, "error_text");
 
@@ -166,4 +170,8 @@ class AppStrings {
   static const String ar = 'ar';
 
   static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
+
+  static String fileCreated(BuildContext context) => _translate(context, "file_created");
+
+  static String fileNotCreated(BuildContext context) => _translate(context, "file_not_created");
 }

@@ -149,7 +149,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index)
                   ? AppStrings.remainingKmNormalWarningLabel(context)
                   : AppStrings.remainingKmErrorLabel(context),
-              fillColor: AppColors.getChangeKmFillColor(context),
+              fillColor: AppColors.getRemainingKmFillColor(context),
               floatingLabelStyle:
                   TextStyle(color: getRemainingKmLabelColor(), fontWeight: FontWeight.bold),
               disabledBorder: getRemainingKmDisabledBorder(),
