@@ -21,7 +21,7 @@ class ConsumableAdapter extends TypeAdapter<Consumable> {
       name: fields[1] as String,
       lastChangedAt: fields[2] as int,
       changeInterval: fields[3] as int,
-      changeKm: fields[4] as int,
+      remainingKm: fields[4] as int,
     );
   }
 
@@ -38,7 +38,7 @@ class ConsumableAdapter extends TypeAdapter<Consumable> {
       ..writeByte(3)
       ..write(obj.changeInterval)
       ..writeByte(4)
-      ..write(obj.changeKm);
+      ..write(obj.remainingKm);
   }
 
   @override

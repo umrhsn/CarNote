@@ -39,5 +39,7 @@
   "notif_time_msg": "تم تفعيل الإشعار اليومي.\nسيتم إظهار إشعار يومي عند الساعة",
   "daily_notif_off": "تم إلغاء تفعيل الإشعار اليومي",
   "notif_time_not_set": "لم تقم بتحديد وقت للإشعار اليومي.\nلن يظهر أي إشعار.",
-  "lang_changed_toast": "Switched to English"
+  "lang_changed_toast": "Switched to English",
+  "file_created": "تم إنشاء الملف",
+  "file_not_created": "لم يتم إنشاء الملف."
 }

@@ -89,7 +89,7 @@ class AppColors {
   static Color getTextFieldBorderAndLabel(BuildContext context) =>
       context.isLight ? hintLight : hintDark;
 
-  static Color getChangeKmFillColor(BuildContext context) =>
+  static Color getRemainingKmFillColor(BuildContext context) =>
       context.isLight ? primaryLight.withAlpha(20) : primaryDark.withAlpha(90);
 
   static Color getWarningColor(BuildContext context) =>
@@ -97,7 +97,8 @@ class AppColors {
 
   static Color getErrorColor(BuildContext context) => Theme.of(context).colorScheme.error;
 
-  static Color getNormalTextColor(BuildContext context) => Theme.of(context).colorScheme.onBackground;
+  static Color getNormalTextColor(BuildContext context) =>
+      Theme.of(context).colorScheme.onBackground;
 
   static Color getHintColor(BuildContext context) => context.isLight ? hintLight : hintDark;
 

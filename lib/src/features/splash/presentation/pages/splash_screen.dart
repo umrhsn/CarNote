@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
-import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
