@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/services/files/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
@@ -91,7 +93,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
                   consumable.changeInterval != 0;
           bool changeKmHasValue = consumableCubit.remainingKmControllers[index].text.isNotEmpty ||
-              consumable.changeKm != 0;
+              consumable.remainingKm != 0;
 
           bool currentKmMatch = car!.currentKm.toString() ==
               consumableCubit.currentKmController.text.removeThousandSeparator();
@@ -99,7 +101,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator();
           bool changeIntervalMatch = consumable.changeInterval.toString() ==
               consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
-          bool changeKmMatch = consumable.changeKm.toString() ==
+          bool changeKmMatch = consumable.remainingKm.toString() ==
               consumableCubit.remainingKmControllers[index].text.removeThousandSeparator();
 
           if (currentKmHasValue &&
@@ -195,7 +197,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.upload_file_rounded),
-                  onPressed: () {},
+                  onPressed: () => FileCreator.writeDataToFile()
+                      .then((value) => BotToast.showText(text: AppStrings.fileCreated(context))),
                 ),
               ],
             ),

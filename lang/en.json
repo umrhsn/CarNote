@@ -39,5 +39,8 @@
   "notif_time_msg": "Daily notification on.\nA daily reminder notification is set to be shown every day at",
   "daily_notif_off": "Daily notification off",
   "notif_time_not_set": "You didn't set a time for the daily notification.\nNo notification will appear.",
-  "lang_changed_toast": "تم التحويل إلى اللغة العربية"
+  "lang_changed_toast": "تم التحويل إلى اللغة العربية",
+  "file_created": "File created",
+  "file_not_created": "File not created.",
+  "grant_storage_permission_toast": "Please grant storage permission."
 }
