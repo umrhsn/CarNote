@@ -11,8 +11,9 @@ import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 class FileCreator {
+  static bool enLocale = LocaleCubit.currentLangCode == AppStrings.en;
+
   static String _createDataForFile() {
-    bool enLocale = LocaleCubit.currentLangCode == AppStrings.en;
     Car? car = CarCubit.carBox.get(AppStrings.carBox);
 
     String data =
@@ -39,7 +40,21 @@ class FileCreator {
   static Future<void> writeDataToFile() {
     String data = _createDataForFile();
 
-    return DocumentFileSavePlus()
-        .saveFile(Uint8List.fromList(utf8.encode(data)), "car_note.txt", "text/plain");
+    DateTime dateTime = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      DateTime.now().hour,
+      DateTime.now().minute,
+      DateTime.now().second,
+    );
+
+    String dateTimeString =
+        "${dateTime.year}${dateTime.month}${dateTime.day}_${dateTime.hour}${dateTime.minute}${dateTime.second}";
+
+    return DocumentFileSavePlus().saveFile(
+        Uint8List.fromList(utf8.encode(data)),
+        "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? dateTimeString : dateTimeString.toArabicNumerals()}.txt",
+        "text/plain");
   }
 }
