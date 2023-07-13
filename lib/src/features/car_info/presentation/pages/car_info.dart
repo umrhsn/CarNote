@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -18,7 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:car_note/src/core/extensions/media_query_values.dart';
 
 class CarInfo extends StatefulWidget {
   const CarInfo({super.key});
@@ -76,7 +73,8 @@ class _MyHomePageState extends State<CarInfo> {
           LengthLimitingTextInputFormatter(9),
           FilteringTextInputFormatter.digitsOnly,
         ],
-        hintText: "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}",
+        hintText:
+            "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}",
         validationItem: validator.currentKm,
         validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
         onFieldSubmitted: (_) => carCubit.writeDataAndNavigate(context),
@@ -138,24 +136,25 @@ class _MyHomePageState extends State<CarInfo> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: AdmobBanner(
-              adUnitId: getBannerAdUnitId(),
-              adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-            ),
-          )
+          // TODO: add ads to page
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: AdmobBanner(
+          //     adUnitId: getBannerAdUnitId(),
+          //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+          //   ),
+          // )
         ],
       ),
     );
   }
 
-  String getBannerAdUnitId() {
-    if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/2934735716';
-    } else if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/6300978111';
-    }
-    return '';
-  }
+// String getBannerAdUnitId() {
+//   if (Platform.isIOS) {
+//     return 'ca-app-pub-3940256099942544/2934735716';
+//   } else if (Platform.isAndroid) {
+//     return 'ca-app-pub-3940256099942544/6300978111';
+//   }
+//   return '';
+// }
 }
