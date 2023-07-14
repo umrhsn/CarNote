@@ -13,13 +13,28 @@ import 'package:car_note/injection_container.dart' as di;
 class FileCreator {
   static bool enLocale = LocaleCubit.currentLangCode == AppStrings.en;
 
-  static String _createDataForFile() {
+  static final DateTime _dateTime = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+    DateTime.now().hour,
+    DateTime.now().minute,
+    DateTime.now().second,
+  );
+
+  static final String _dateTimeString =
+      "${_dateTime.year}${_dateTime.month}${_dateTime.day}_${_dateTime.hour}${_dateTime.minute}${_dateTime.second}";
+
+  static final String _fileName =
+      "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? _dateTimeString : _dateTimeString.toArabicNumerals()}";
+
+  static String _getFileData() {
     Car? car = CarCubit.carBox.get(AppStrings.carBox);
+    ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
     String data =
         '${enLocale ? 'Current kilometer' : 'الكيلومتر الحالي'}: ${enLocale ? car!.currentKm.toThousands() : car!.currentKm.toThousands().toArabicNumerals()}\n';
 
-    ConsumableCubit cubit = di.sl<ConsumableCubit>();
     for (int index = 0; index < Consumable.getCount(); index++) {
       Consumable? item = ConsumableCubit.consumableBox.get(index);
       if (item != null) {
@@ -37,24 +52,6 @@ class FileCreator {
     return data;
   }
 
-  static Future<void> writeDataToFile() {
-    String data = _createDataForFile();
-
-    DateTime dateTime = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      DateTime.now().hour,
-      DateTime.now().minute,
-      DateTime.now().second,
-    );
-
-    String dateTimeString =
-        "${dateTime.year}${dateTime.month}${dateTime.day}_${dateTime.hour}${dateTime.minute}${dateTime.second}";
-
-    return DocumentFileSavePlus().saveFile(
-        Uint8List.fromList(utf8.encode(data)),
-        "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? dateTimeString : dateTimeString.toArabicNumerals()}.txt",
-        "text/plain");
-  }
+  static Future<void> writeDataToFile() => DocumentFileSavePlus()
+      .saveFile(Uint8List.fromList(utf8.encode(_getFileData())), "$_fileName.txt", "text/plain");
 }
