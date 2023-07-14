@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class AnimationHelper {
   static void continuousRepeatableAnimation(
-      AnimationController animationController,
-      Animation<double> animation,
-      ) {
+    AnimationController animationController,
+    Animation<double> animation,
+  ) {
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         animationController.repeat();
@@ -16,9 +16,9 @@ class AnimationHelper {
   }
 
   static void continuousReversibleAnimation(
-      AnimationController animationController,
-      Animation<double> animation,
-      ) {
+    AnimationController animationController,
+    Animation<double> animation,
+  ) {
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         animationController.reverse();

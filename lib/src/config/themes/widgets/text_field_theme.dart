@@ -20,7 +20,8 @@ class AppTextFieldThemes {
         color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
         fontWeight: FontWeight.bold,
       ),
-      focusColor: isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
+      focusColor:
+          isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(

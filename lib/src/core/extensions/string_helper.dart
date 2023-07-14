@@ -8,7 +8,7 @@ extension StringHelper on String {
   String removeThousandSeparator() => replaceAll(',', '');
 }
 
-extension StringConverter on int {
+extension ThousandSeparator on int {
   String toThousands() {
     final numberString = toString();
     final numberDigits = List.from(numberString.split(''));

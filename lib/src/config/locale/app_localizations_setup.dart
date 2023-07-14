@@ -8,8 +8,7 @@ class AppLocalizationsSetup {
     Locale('ar'),
   ];
 
-  static const Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      [
+  static const Iterable<LocalizationsDelegate<dynamic>> localizationsDelegates = [
     AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
@@ -17,8 +16,7 @@ class AppLocalizationsSetup {
     DefaultCupertinoLocalizations.delegate
   ];
 
-  static Locale? localeResolutionCallback(
-      Locale? locale, Iterable<Locale>? supportedLocales) {
+  static Locale? localeResolutionCallback(Locale? locale, Iterable<Locale>? supportedLocales) {
     for (Locale supportedLocale in supportedLocales!) {
       if (supportedLocale.languageCode == locale!.languageCode &&
           supportedLocale.countryCode == locale.countryCode) {

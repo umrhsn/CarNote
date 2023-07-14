@@ -35,13 +35,11 @@ class ConflictException extends ServerException {
 }
 
 class InternalServerErrorException extends ServerException {
-  const InternalServerErrorException([message])
-      : super("Internal Server Error");
+  const InternalServerErrorException([message]) : super("Internal Server Error");
 }
 
 class NoInternetConnectionException extends ServerException {
-  const NoInternetConnectionException([message])
-      : super("No Internet Connection");
+  const NoInternetConnectionException([message]) : super("No Internet Connection");
 }
 
 class CacheException implements Exception {}

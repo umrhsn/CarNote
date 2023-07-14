@@ -47,7 +47,5 @@ class ConsumableAdapter extends TypeAdapter<Consumable> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ConsumableAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      other is ConsumableAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
