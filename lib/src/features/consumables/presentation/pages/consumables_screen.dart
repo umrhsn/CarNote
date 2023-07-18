@@ -197,8 +197,12 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.upload_file_rounded),
-                  onPressed: () => FileCreator.writeDataToFile()
-                      .then((value) => BotToast.showText(text: AppStrings.fileCreated(context))),
+                  onPressed: () => FileCreator.writeDataToFile().then((value) {
+                    return BotToast.showText(
+                        text: value == true
+                            ? AppStrings.fileCreated(context)
+                            : AppStrings.fileNotCreated(context));
+                  }),
                 ),
               ],
             ),
