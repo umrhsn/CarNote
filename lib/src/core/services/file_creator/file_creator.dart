@@ -28,7 +28,7 @@ class FileCreator {
   static final String _fileName =
       "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? _dateTimeString : _dateTimeString.toArabicNumerals()}";
 
-  static String _getFileData() {
+  static String get _fileData {
     Car? car = CarCubit.carBox.get(AppStrings.carBox);
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
@@ -52,6 +52,15 @@ class FileCreator {
     return data;
   }
 
-  static Future<void> writeDataToFile() => DocumentFileSavePlus()
-      .saveFile(Uint8List.fromList(utf8.encode(_getFileData())), "$_fileName.txt", "text/plain");
+  static Future<bool?> writeDataToFile() async {
+    bool? saved;
+    try {
+      DocumentFileSavePlus()
+          .saveFile(Uint8List.fromList(utf8.encode(_fileData)), "$_fileName.txt", "text/plain");
+      saved = true;
+    } catch (e) {
+      saved = false;
+    }
+    return saved;
+  }
 }
