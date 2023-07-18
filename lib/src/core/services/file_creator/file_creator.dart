@@ -55,8 +55,7 @@ class FileCreator {
   static Future<bool?> writeDataToFile() async {
     bool? saved;
     try {
-      DocumentFileSavePlus()
-          .saveFile(Uint8List.fromList(utf8.encode(_fileData)), "$_fileName.txt", "text/plain");
+      DocumentFileSavePlus().saveFile(Uint8List.fromList(utf8.encode(_fileData)), "$_fileName.txt", "text/plain");
       saved = true;
     } catch (e) {
       saved = false;
