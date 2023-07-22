@@ -1,14 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
@@ -20,27 +19,27 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     for (int index = 0; index < Consumable.getCount(); index++) {
       lastChangedAtControllers.add(
         TextEditingController(
-          text: _consumableBox.get(index) != null
-              ? _consumableBox.get(index)!.lastChangedAt != 0
-                  ? _consumableBox.get(index)!.lastChangedAt.toThousands()
+          text: DatabaseHelper.consumableBox.get(index) != null
+              ? DatabaseHelper.consumableBox.get(index)!.lastChangedAt != 0
+                  ? DatabaseHelper.consumableBox.get(index)!.lastChangedAt.toThousands()
                   : ''
               : '',
         ),
       );
       changeIntervalControllers.add(
         TextEditingController(
-          text: _consumableBox.get(index) != null
-              ? _consumableBox.get(index)!.changeInterval != 0
-                  ? _consumableBox.get(index)!.changeInterval.toThousands()
+          text: DatabaseHelper.consumableBox.get(index) != null
+              ? DatabaseHelper.consumableBox.get(index)!.changeInterval != 0
+                  ? DatabaseHelper.consumableBox.get(index)!.changeInterval.toThousands()
                   : ''
               : '',
         ),
       );
       remainingKmControllers.add(
         TextEditingController(
-          text: _consumableBox.get(index) != null
-              ? _consumableBox.get(index)!.remainingKm != 0
-                  ? _consumableBox.get(index)!.remainingKm.toThousands()
+          text: DatabaseHelper.consumableBox.get(index) != null
+              ? DatabaseHelper.consumableBox.get(index)!.remainingKm != 0
+                  ? DatabaseHelper.consumableBox.get(index)!.remainingKm.toThousands()
                   : ''
               : '',
         ),
@@ -71,65 +70,6 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   final List<FocusNode> lastChangedAtFocuses = [];
   final List<FocusNode> changeIntervalFocuses = [];
   final List<FocusNode> changeKmFocuses = [];
-
-  /// Database fields and methods
-  static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
-
-  static Box<Consumable> get consumableBox => _consumableBox;
-
-  static final Box<String> _consumables = Hive.box<String>(AppStrings.consumablesListBox);
-
-  static Box<String> get consumables => _consumables;
-
-  void writeData(BuildContext context) {
-    SharedPreferences prefs = di.sl<SharedPreferences>();
-
-    CarCubit.carBox.put(
-      AppStrings.carBox,
-      Car(
-        type: CarCubit.carBox.get(AppStrings.carBox)!.type,
-        modelYear: CarCubit.carBox.get(AppStrings.carBox)!.modelYear,
-        currentKm: int.parse(currentKmController.text.removeThousandSeparator()),
-      ),
-    );
-
-    bool listAddedForFirstTime = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
-    bool isNotNull = true;
-
-    for (int index = 0; index < Consumable.getCount(); index++) {
-      _consumableBox.put(
-        index,
-        Consumable(
-          id: index,
-          name: listAddedForFirstTime
-              ? _consumableBox.get(index)!.name
-              : AppStrings.consumables[index],
-          lastChangedAt: lastChangedAtControllers[index].text.isNotEmpty
-              ? int.parse(lastChangedAtControllers[index].text.removeThousandSeparator())
-              : 0,
-          changeInterval: changeIntervalControllers[index].text.isNotEmpty
-              ? int.parse(changeIntervalControllers[index].text.removeThousandSeparator())
-              : 0,
-          remainingKm: remainingKmControllers[index].text.isNotEmpty
-              ? int.parse(remainingKmControllers[index].text.removeThousandSeparator())
-              : 0,
-        ),
-      );
-      // FIXME: make it saved as a contiguous list
-      if (_consumableBox.get(index) == null) {
-        isNotNull = false;
-      } else {
-        _consumables.put(index, _consumableBox.get(index)!.name);
-      }
-    }
-
-    if (isNotNull) {
-      prefs.setBool(AppStrings.prefsBoolListAdded, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
-    } else {
-      BotToast.showText(text: AppStrings.somethingWentWrong(context));
-    }
-  }
 
   /// Color controlling methods
   Color getValidatingTextColor(BuildContext context, int index) => isNormalText(index)

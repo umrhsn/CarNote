@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
@@ -81,7 +82,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
         Car? car = CarCubit.carBox.get(AppStrings.carBox);
-        Consumable? consumable = ConsumableCubit.consumableBox.get(index);
+        Consumable? consumable = DatabaseHelper.consumableBox.get(index);
 
         if (consumable != null) {
           bool currentKmHasValue =
@@ -117,7 +118,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   content: Text(AppStrings.sureToExitMsg(context)),
                   actions: [
                     TextButton(
-                      onPressed: () => Future.sync(() => consumableCubit.writeData(context))
+                      onPressed: () => Future.sync(() => DatabaseHelper.writeConsumablesData(context))
                           .then((value) => exit(0)),
                       child: Text(
                         AppStrings.saveData(context),
@@ -264,7 +265,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: CustomButton(
             text: AppStrings.btnSave(context),
             btnEnabled: consumableCubit.shouldEnableSaveButton(context),
-            onPressed: () => consumableCubit.writeData(context),
+            onPressed: () => DatabaseHelper.writeConsumablesData(context),
           ),
         );
 
