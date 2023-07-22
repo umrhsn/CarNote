@@ -3,7 +3,6 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +54,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Main fields
   final TextEditingController currentKmController = TextEditingController(
-      text: CarCubit.carBox.get(AppStrings.carBox) != null
-          ? CarCubit.carBox.get(AppStrings.carBox)!.currentKm != 0
-              ? CarCubit.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
+          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm != 0
+              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
               : ''
           : '');
 

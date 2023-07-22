@@ -15,8 +15,10 @@ class DatabaseHelper {
   static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
   static Box<Car> get carBox => _carBox;
 
-  static void writeCarData(BuildContext context) {
+  static Future<bool> writeCarData(BuildContext context) async {
+    SharedPreferences prefs = di.sl<SharedPreferences>();
     CarCubit carCubit = CarCubit.get(context);
+    bool isNotNull = true;
 
     _carBox.put(
       AppStrings.carBox,
@@ -26,6 +28,17 @@ class DatabaseHelper {
         currentKm: int.parse(carCubit.currentKmController.text.removeThousandSeparator()),
       ),
     );
+
+    if (_carBox.get(AppStrings.carBox) == null) isNotNull = false;
+
+    if (isNotNull) {
+      prefs.setBool(AppStrings.prefsBoolSeen, true);
+      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
+    } else {
+      BotToast.showText(text: AppStrings.somethingWentWrong(context));
+    }
+
+    return prefs.getBool(AppStrings.prefsBoolSeen) ?? false;
   }
 
   /// Consumables
@@ -60,13 +73,16 @@ class DatabaseHelper {
               ? _consumableBox.get(index)!.name
               : AppStrings.consumables[index],
           lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
-              ? int.parse(consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
+              ? int.parse(
+                  consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
               : 0,
           changeInterval: consumableCubit.changeIntervalControllers[index].text.isNotEmpty
-              ? int.parse(consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator())
+              ? int.parse(
+                  consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator())
               : 0,
           remainingKm: consumableCubit.remainingKmControllers[index].text.isNotEmpty
-              ? int.parse(consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
+              ? int.parse(
+                  consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
               : 0,
         ),
       );

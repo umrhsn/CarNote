@@ -13,7 +13,6 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
@@ -81,7 +80,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     // TODO: consider handling if car and consumable are null
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
-        Car? car = CarCubit.carBox.get(AppStrings.carBox);
+        Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
         Consumable? consumable = DatabaseHelper.consumableBox.get(index);
 
         if (consumable != null) {
