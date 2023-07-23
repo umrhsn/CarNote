@@ -49,6 +49,8 @@ class DatabaseHelper {
   static Box<String> get consumables => _consumables;
 
   static void writeConsumablesData(BuildContext context) {
+    debugPrint(writeConsumablesData.getMethodName());
+
     SharedPreferences prefs = di.sl<SharedPreferences>();
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 

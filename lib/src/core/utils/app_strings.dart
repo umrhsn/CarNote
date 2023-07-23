@@ -81,12 +81,6 @@ class AppStrings {
   static String remainingKmErrorLabel(BuildContext context) =>
       _translate(context, "remaining_km_error_label");
 
-  static String getMethodName(Function method) {
-    return method
-        .toString()
-        .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
-  }
-
   static String requiredField(BuildContext context) => _translate(context, "required_field");
 
   static String yearMatchesLength(BuildContext context) =>
