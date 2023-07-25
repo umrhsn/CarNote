@@ -129,7 +129,19 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             showExitDialog();
             return false;
           }
-        } else {
+        }
+
+        if (consumable != null) {
+          if ((consumable.lastChangedAt == 0 &&
+                  consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
+              (consumable.changeInterval == 0 &&
+                  consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
+              (consumable.remainingKm == 0 &&
+                  consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
+            showExitDialog();
+            return false;
+          }
+
           if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
                   consumable.lastChangedAt != 0) ||
               consumableCubit.changeIntervalControllers[index].text.isEmpty &&
@@ -139,6 +151,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             showExitDialog();
             return false;
           }
+
           if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
                   int.parse(consumableCubit.lastChangedAtControllers[index].text
                           .removeThousandSeparator()) !=
