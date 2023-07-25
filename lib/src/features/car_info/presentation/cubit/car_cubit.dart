@@ -1,13 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 part 'car_state.dart';
 
@@ -19,23 +19,23 @@ class CarCubit extends Cubit<CarState> {
 
   /// Main fields
   final TextEditingController carTypeController = TextEditingController(
-      text: _carBox.get(AppStrings.carBox) != null
-          ? _carBox.get(AppStrings.carBox)!.type.isNotEmpty
-              ? _carBox.get(AppStrings.carBox)!.type
+      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
+          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.type.isNotEmpty
+              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.type
               : null
           : null);
 
   final TextEditingController modelYearController = TextEditingController(
-      text: _carBox.get(AppStrings.carBox) != null
-          ? _carBox.get(AppStrings.carBox)!.modelYear != 0
-              ? _carBox.get(AppStrings.carBox)!.modelYear.toString()
+      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
+          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.modelYear != 0
+              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.modelYear.toString()
               : null
           : null);
 
   final TextEditingController currentKmController = TextEditingController(
-      text: _carBox.get(AppStrings.carBox) != null
-          ? _carBox.get(AppStrings.carBox)!.currentKm != 0
-              ? _carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
+          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm != 0
+              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
               : null
           : null);
 
@@ -43,26 +43,10 @@ class CarCubit extends Cubit<CarState> {
   final FocusNode modelYearFocus = FocusNode();
   final FocusNode currentKmFocus = FocusNode();
 
-  /// Database fields and methods
-  static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
+  void navigateToConsumablesScreen(BuildContext context) {
+    SharedPreferences prefs = di.sl<SharedPreferences>();
 
-  static Box<Car> get carBox => _carBox;
-
-  void writeDataAndNavigate(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    _carBox.put(
-      AppStrings.carBox,
-      Car(
-        type: carTypeController.text,
-        modelYear: int.parse(modelYearController.text),
-        currentKm: int.parse(currentKmController.text.removeThousandSeparator()),
-      ),
-    );
-
-    if (_carBox.get(AppStrings.carBox) != null) {
-      await prefs.setBool(AppStrings.prefsBoolSeen, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
+    if (prefs.getBool(AppStrings.prefsBoolSeen) ?? false) {
       Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));

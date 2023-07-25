@@ -1,5 +1,5 @@
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
@@ -33,6 +33,6 @@ class Consumable extends HiveObject {
 
   static int getCount() =>
       di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
-          ? ConsumableCubit.consumables.length
+          ? DatabaseHelper.consumableBox.length
           : AppStrings.consumables.length;
 }

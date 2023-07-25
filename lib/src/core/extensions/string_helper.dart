@@ -1,3 +1,5 @@
+const String thousandSeparator = ',';
+
 extension StringHelper on String {
   String toCapitalised() =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
@@ -5,7 +7,7 @@ extension StringHelper on String {
   String toTitleCase() =>
       replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalised()).join(' ');
 
-  String removeThousandSeparator() => replaceAll(',', '');
+  String removeThousandSeparator() => replaceAll(thousandSeparator, '');
 }
 
 extension ThousandSeparator on int {
@@ -14,7 +16,7 @@ extension ThousandSeparator on int {
     final numberDigits = List.from(numberString.split(''));
     int index = numberDigits.length - 3;
     while (index > 0) {
-      numberDigits.insert(index, ',');
+      numberDigits.insert(index, thousandSeparator);
       index -= 3;
     }
     return numberDigits.join();
@@ -41,4 +43,9 @@ extension LocalizedNumerals on String {
       (match) => numbers[this[match.start]]!,
     );
   }
+}
+
+extension DebuggingInfo on Function {
+  String getMethodName() =>
+      "Called method ==> ${toString().substring(toString().indexOf("'") + 1, toString().lastIndexOf("'"))}";
 }

@@ -1,5 +1,6 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 class CarInfo extends StatefulWidget {
   const CarInfo({super.key});
@@ -77,7 +79,8 @@ class _MyHomePageState extends State<CarInfo> {
             "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}",
         validationItem: validator.currentKm,
         validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
-        onFieldSubmitted: (_) => carCubit.writeDataAndNavigate(context),
+        onFieldSubmitted: (_) => DatabaseHelper.writeCarData(context)
+            .then((value) => carCubit.navigateToConsumablesScreen(context)),
       );
     }
 
@@ -86,9 +89,10 @@ class _MyHomePageState extends State<CarInfo> {
           text: AppStrings.btnContinue(context),
           btnEnabled: validator.isValid,
           onPressed: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setBool(AppStrings.prefsBoolSeen, true);
-            carCubit.writeDataAndNavigate(context);
+            SharedPreferences prefs = di.sl<SharedPreferences>();
+            prefs.setBool(AppStrings.prefsBoolSeen, true);
+            DatabaseHelper.writeCarData(context)
+                .then((value) => carCubit.navigateToConsumablesScreen(context));
           });
     }
 

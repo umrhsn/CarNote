@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
@@ -29,14 +29,14 @@ class FileCreator {
       "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? _dateTimeString : _dateTimeString.toArabicNumerals()}";
 
   static String get _fileData {
-    Car? car = CarCubit.carBox.get(AppStrings.carBox);
+    Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
     String data =
         '${enLocale ? 'Current kilometer' : 'الكيلومتر الحالي'}: ${enLocale ? car!.currentKm.toThousands() : car!.currentKm.toThousands().toArabicNumerals()}\n';
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      Consumable? item = ConsumableCubit.consumableBox.get(index);
+      Consumable? item = DatabaseHelper.consumableBox.get(index);
       if (item != null) {
         if (item.lastChangedAt != 0 || item.changeInterval != 0) {
           data +=

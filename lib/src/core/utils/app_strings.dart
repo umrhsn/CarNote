@@ -15,7 +15,6 @@ class AppStrings {
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
-  static const String consumablesListBox = 'consumables';
 
   static String btnContinue(BuildContext context) =>
       _translate(context, "btn_continue").toUpperCase();
@@ -80,12 +79,6 @@ class AppStrings {
 
   static String remainingKmErrorLabel(BuildContext context) =>
       _translate(context, "remaining_km_error_label");
-
-  static String getMethodName(Function method) {
-    return method
-        .toString()
-        .substring(method.toString().indexOf("'") + 1, method.toString().lastIndexOf("'"));
-  }
 
   static String requiredField(BuildContext context) => _translate(context, "required_field");
 

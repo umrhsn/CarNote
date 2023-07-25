@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:car_note/src/config/routes/app_routes.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/custom_progress_indictor.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   void checkFirstSeen() {
-    if (CarCubit.carBox.get(AppStrings.carBox) != null) {
+    if (DatabaseHelper.carBox.get(AppStrings.carBox) != null) {
       _prefs.setBool(AppStrings.prefsBoolSeen, true);
     }
     navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);

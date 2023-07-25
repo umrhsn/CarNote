@@ -1,8 +1,9 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
@@ -12,7 +13,6 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
@@ -62,6 +62,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
   @override
   void initState() {
+    super.initState();
     _getVisibilityStatus();
     // _getNotificationStatus();
     // to be called only once
@@ -69,7 +70,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) => NotificationsHelper.showAlarmingNotifications(context));
     Admob.requestTrackingAuthorization();
-    super.initState();
   }
 
   @override
@@ -77,71 +77,95 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     LocaleCubit localeCubit = LocaleCubit.get(context);
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    // TODO: consider handling if car and consumable are null
+    void showExitDialog() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+          title: Text(AppStrings.changedDataMsg(context)),
+          content: Text(AppStrings.sureToExitMsg(context)),
+          actions: [
+            TextButton(
+              onPressed: () async => DatabaseHelper.writeConsumablesData(context)
+                  .then((value) => SystemNavigator.pop()),
+              child: Text(
+                AppStrings.saveData(context),
+                style: TextStyle(
+                    color: context.isLight
+                        ? AppColors.primarySwatchLight.shade100
+                        : AppColors.primarySwatchDark.shade500),
+              ),
+            ),
+            TextButton(
+              onPressed: () => SystemNavigator.pop(),
+              child: Text(
+                AppStrings.exitWithoutSaving(context),
+                style: TextStyle(
+                    color: context.isLight
+                        ? AppColors.primarySwatchLight.shade100
+                        : AppColors.primarySwatchDark.shade500),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
-        Car? car = CarCubit.carBox.get(AppStrings.carBox);
-        Consumable? consumable = ConsumableCubit.consumableBox.get(index);
+        Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
+        Consumable? consumable = DatabaseHelper.consumableBox.get(index);
+
+        if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
+            car!.currentKm) {
+          showExitDialog();
+          return false;
+        }
+
+        if (consumable == null) {
+          if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
+              consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
+              consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
+            showExitDialog();
+            return false;
+          }
+        }
 
         if (consumable != null) {
-          bool currentKmHasValue =
-              consumableCubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
-          bool lastChangedKmHasValue =
-              consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
-                  consumable.lastChangedAt != 0;
-          bool changeIntervalHasValue =
-              consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
-                  consumable.changeInterval != 0;
-          bool changeKmHasValue = consumableCubit.remainingKmControllers[index].text.isNotEmpty ||
-              consumable.remainingKm != 0;
+          if ((consumable.lastChangedAt == 0 &&
+                  consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
+              (consumable.changeInterval == 0 &&
+                  consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
+              (consumable.remainingKm == 0 &&
+                  consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
+            showExitDialog();
+            return false;
+          }
 
-          bool currentKmMatch = car!.currentKm.toString() ==
-              consumableCubit.currentKmController.text.removeThousandSeparator();
-          bool lastChangedKmMatch = consumable.lastChangedAt.toString() ==
-              consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator();
-          bool changeIntervalMatch = consumable.changeInterval.toString() ==
-              consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
-          bool changeKmMatch = consumable.remainingKm.toString() ==
-              consumableCubit.remainingKmControllers[index].text.removeThousandSeparator();
+          if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
+                  consumable.lastChangedAt != 0) ||
+              consumableCubit.changeIntervalControllers[index].text.isEmpty &&
+                  consumable.changeInterval != 0 ||
+              consumableCubit.remainingKmControllers[index].text.isEmpty &&
+                  consumable.remainingKm != 0) {
+            showExitDialog();
+            return false;
+          }
 
-          if (currentKmHasValue &&
-              lastChangedKmHasValue &&
-              changeIntervalHasValue &&
-              changeKmHasValue) {
-            if (!currentKmMatch || !lastChangedKmMatch || !changeIntervalMatch || !changeKmMatch) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-                  title: Text(AppStrings.changedDataMsg(context)),
-                  content: Text(AppStrings.sureToExitMsg(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Future.sync(() => consumableCubit.writeData(context))
-                          .then((value) => exit(0)),
-                      child: Text(
-                        AppStrings.saveData(context),
-                        style: TextStyle(
-                            color: context.isLight
-                                ? AppColors.primarySwatchLight.shade100
-                                : AppColors.primarySwatchDark.shade500),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => exit(0),
-                      child: Text(
-                        AppStrings.exitWithoutSaving(context),
-                        style: TextStyle(
-                            color: context.isLight
-                                ? AppColors.primarySwatchLight.shade100
-                                : AppColors.primarySwatchDark.shade500),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-              return false;
-            }
+          if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.lastChangedAtControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.lastChangedAt) ||
+              (consumableCubit.changeIntervalControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.changeIntervalControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.changeInterval) ||
+              (consumableCubit.remainingKmControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.remainingKmControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.remainingKm)) {
+            showExitDialog();
+            return false;
           }
         }
       }
@@ -264,7 +288,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: CustomButton(
             text: AppStrings.btnSave(context),
             btnEnabled: consumableCubit.shouldEnableSaveButton(context),
-            onPressed: () => consumableCubit.writeData(context),
+            onPressed: () => DatabaseHelper.writeConsumablesData(context),
           ),
         );
 
