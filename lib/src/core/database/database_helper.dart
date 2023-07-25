@@ -45,9 +45,6 @@ class DatabaseHelper {
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
   static Box<Consumable> get consumableBox => _consumableBox;
 
-  static final Box<String> _consumables = Hive.box<String>(AppStrings.consumablesListBox);
-  static Box<String> get consumables => _consumables;
-
   static void writeConsumablesData(BuildContext context) {
     debugPrint(writeConsumablesData.getMethodName());
 
@@ -89,11 +86,7 @@ class DatabaseHelper {
         ),
       );
       // FIXME: make it saved as a contiguous list
-      if (_consumableBox.get(index) == null) {
-        isNotNull = false;
-      } else {
-        _consumables.put(index, _consumableBox.get(index)!.name);
-      }
+      if (_consumableBox.get(index) == null) isNotNull = false;
     }
 
     if (isNotNull) {

@@ -33,6 +33,6 @@ class Consumable extends HiveObject {
 
   static int getCount() =>
       di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
-          ? DatabaseHelper.consumables.length
+          ? DatabaseHelper.consumableBox.length
           : AppStrings.consumables.length;
 }
