@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -62,6 +62,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
   @override
   void initState() {
+    super.initState();
     _getVisibilityStatus();
     // _getNotificationStatus();
     // to be called only once
@@ -69,7 +70,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) => NotificationsHelper.showAlarmingNotifications(context));
     Admob.requestTrackingAuthorization();
-    super.initState();
   }
 
   @override
@@ -77,71 +77,82 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     LocaleCubit localeCubit = LocaleCubit.get(context);
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    // TODO: consider handling if car and consumable are null
+    void showExitDialog() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+          title: Text(AppStrings.changedDataMsg(context)),
+          content: Text(AppStrings.sureToExitMsg(context)),
+          actions: [
+            TextButton(
+              onPressed: () async => DatabaseHelper.writeConsumablesData(context)
+                  .then((value) => SystemNavigator.pop()),
+              child: Text(
+                AppStrings.saveData(context),
+                style: TextStyle(
+                    color: context.isLight
+                        ? AppColors.primarySwatchLight.shade100
+                        : AppColors.primarySwatchDark.shade500),
+              ),
+            ),
+            TextButton(
+              onPressed: () => SystemNavigator.pop(),
+              child: Text(
+                AppStrings.exitWithoutSaving(context),
+                style: TextStyle(
+                    color: context.isLight
+                        ? AppColors.primarySwatchLight.shade100
+                        : AppColors.primarySwatchDark.shade500),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     Future<bool> onWillPop() async {
       for (int index = 0; index < Consumable.getCount(); index++) {
         Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
         Consumable? consumable = DatabaseHelper.consumableBox.get(index);
 
-        if (consumable != null) {
-          bool currentKmHasValue =
-              consumableCubit.currentKmController.text.isNotEmpty || car!.currentKm != 0;
-          bool lastChangedKmHasValue =
-              consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
-                  consumable.lastChangedAt != 0;
-          bool changeIntervalHasValue =
+        if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
+            car!.currentKm) {
+          showExitDialog();
+          return false;
+        }
+
+        if (consumable == null) {
+          if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
               consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
-                  consumable.changeInterval != 0;
-          bool changeKmHasValue = consumableCubit.remainingKmControllers[index].text.isNotEmpty ||
-              consumable.remainingKm != 0;
-
-          bool currentKmMatch = car!.currentKm.toString() ==
-              consumableCubit.currentKmController.text.removeThousandSeparator();
-          bool lastChangedKmMatch = consumable.lastChangedAt.toString() ==
-              consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator();
-          bool changeIntervalMatch = consumable.changeInterval.toString() ==
-              consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator();
-          bool changeKmMatch = consumable.remainingKm.toString() ==
-              consumableCubit.remainingKmControllers[index].text.removeThousandSeparator();
-
-          if (currentKmHasValue &&
-              lastChangedKmHasValue &&
-              changeIntervalHasValue &&
-              changeKmHasValue) {
-            if (!currentKmMatch || !lastChangedKmMatch || !changeIntervalMatch || !changeKmMatch) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-                  title: Text(AppStrings.changedDataMsg(context)),
-                  content: Text(AppStrings.sureToExitMsg(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Future.sync(() => DatabaseHelper.writeConsumablesData(context))
-                          .then((value) => exit(0)),
-                      child: Text(
-                        AppStrings.saveData(context),
-                        style: TextStyle(
-                            color: context.isLight
-                                ? AppColors.primarySwatchLight.shade100
-                                : AppColors.primarySwatchDark.shade500),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => exit(0),
-                      child: Text(
-                        AppStrings.exitWithoutSaving(context),
-                        style: TextStyle(
-                            color: context.isLight
-                                ? AppColors.primarySwatchLight.shade100
-                                : AppColors.primarySwatchDark.shade500),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-              return false;
-            }
+              consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
+            showExitDialog();
+            return false;
+          }
+        } else {
+          if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
+                  consumable.lastChangedAt != 0) ||
+              consumableCubit.changeIntervalControllers[index].text.isEmpty &&
+                  consumable.changeInterval != 0 ||
+              consumableCubit.remainingKmControllers[index].text.isEmpty &&
+                  consumable.remainingKm != 0) {
+            showExitDialog();
+            return false;
+          }
+          if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.lastChangedAtControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.lastChangedAt) ||
+              (consumableCubit.changeIntervalControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.changeIntervalControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.changeInterval) ||
+              (consumableCubit.remainingKmControllers[index].text.isNotEmpty &&
+                  int.parse(consumableCubit.remainingKmControllers[index].text
+                          .removeThousandSeparator()) !=
+                      consumable.remainingKm)) {
+            showExitDialog();
+            return false;
           }
         }
       }

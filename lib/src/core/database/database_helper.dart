@@ -45,7 +45,7 @@ class DatabaseHelper {
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
   static Box<Consumable> get consumableBox => _consumableBox;
 
-  static void writeConsumablesData(BuildContext context) {
+  static Future<void> writeConsumablesData(BuildContext context) async {
     debugPrint(writeConsumablesData.getMethodName());
 
     SharedPreferences prefs = di.sl<SharedPreferences>();
