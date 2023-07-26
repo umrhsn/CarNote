@@ -14,7 +14,6 @@ part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
-    // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
       lastChangedAtControllers.add(
         TextEditingController(
