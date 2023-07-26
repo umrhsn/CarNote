@@ -12,6 +12,7 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
+import 'package:car_note/src/core/widgets/custom_icon_button.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -286,12 +287,27 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           ),
         );
 
-    Padding buildSaveButton() => Padding(
+    Padding buildBottomButtons() => Padding(
           padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
-          child: CustomButton(
-            text: AppStrings.btnSave(context),
-            btnEnabled: consumableCubit.shouldEnableSaveButton(context),
-            onPressed: () => DatabaseHelper.writeConsumablesData(context),
+          child: Row(
+            children: [
+              Flexible(
+                flex: 4,
+                child: CustomButton(
+                  text: AppStrings.btnSave(context),
+                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  onPressed: () => DatabaseHelper.writeConsumablesData(context),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: CustomIconButton(
+                  iconData: Icons.add,
+                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  onPressed: () {},
+                ),
+              )
+            ],
           ),
         );
 
@@ -317,7 +333,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   children: [
                     buildConsumablesList(),
                     const Spacer(),
-                    buildSaveButton(),
+                    buildBottomButtons(),
                     const SizedBox(height: 15),
                   ],
                 ),
