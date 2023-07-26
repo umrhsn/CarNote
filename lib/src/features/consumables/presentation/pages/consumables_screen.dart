@@ -275,8 +275,11 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               padding: const EdgeInsetsDirectional.only(end: 15),
               child: ListView.separated(
                 itemCount: Consumable.getCount(),
-                itemBuilder: (context, index) =>
-                    ConsumableWidget(index: index, name: AppStrings.consumables[index]),
+                itemBuilder: (context, index) => ConsumableWidget(
+                    index: index,
+                    name: _prefs.getBool(AppStrings.prefsBoolListAdded) ?? false
+                        ? DatabaseHelper.consumableBox.get(index)!.name
+                        : AppStrings.consumables[index]),
                 separatorBuilder: (context, index) => const Divider(thickness: 2),
               ),
             ),

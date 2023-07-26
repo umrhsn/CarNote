@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
@@ -71,6 +72,8 @@ class NotificationsHelper {
 
   static void showAlarmingNotifications(BuildContext context) {
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
+    SharedPreferences prefs = di.sl<SharedPreferences>();
+    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
 
     // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
@@ -83,7 +86,9 @@ class NotificationsHelper {
             id: index,
             backgroundColor: cubit.getValidatingTextColor(context, index),
             channelKey: AppStrings.notifChannelBasicKey,
-            title: AppStrings.consumables[index],
+            title: listAdded
+                ? DatabaseHelper.consumableBox.get(index)!.name
+                : AppStrings.consumables[index],
             body: cubit.isErrorText(index)
                 ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'
                 : '$remainingKm ${AppStrings.km(context)} ${AppStrings.remaining(context)}',

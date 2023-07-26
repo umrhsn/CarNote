@@ -13,6 +13,7 @@ import 'package:car_note/injection_container.dart' as di;
 class DatabaseHelper {
   /// Car
   static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
+
   static Box<Car> get carBox => _carBox;
 
   static Future<bool> writeCarData(BuildContext context) async {
@@ -43,6 +44,7 @@ class DatabaseHelper {
 
   /// Consumables
   static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+
   static Box<Consumable> get consumableBox => _consumableBox;
 
   static Future<void> writeConsumablesData(BuildContext context) async {
@@ -60,7 +62,7 @@ class DatabaseHelper {
       ),
     );
 
-    bool listAddedForFirstTime = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
+    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
     bool isNotNull = true;
 
     for (int index = 0; index < Consumable.getCount(); index++) {
@@ -68,9 +70,7 @@ class DatabaseHelper {
         index,
         Consumable(
           id: index,
-          name: listAddedForFirstTime
-              ? _consumableBox.get(index)!.name
-              : AppStrings.consumables[index],
+          name: listAdded ? _consumableBox.get(index)!.name : AppStrings.consumables[index],
           lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
               ? int.parse(
                   consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())

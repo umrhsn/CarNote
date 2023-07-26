@@ -9,6 +9,7 @@ import 'package:car_note/src/features/consumables/presentation/cubit/consumable_
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:car_note/injection_container.dart' as di;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FileCreator {
   static bool enLocale = LocaleCubit.currentLangCode == AppStrings.en;
@@ -31,6 +32,8 @@ class FileCreator {
   static String get _fileData {
     Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
+    SharedPreferences prefs = di.sl<SharedPreferences>();
+    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
 
     String data =
         '${enLocale ? 'Current kilometer' : 'الكيلومتر الحالي'}: ${enLocale ? car!.currentKm.toThousands() : car!.currentKm.toThousands().toArabicNumerals()}\n';
@@ -40,7 +43,7 @@ class FileCreator {
       if (item != null) {
         if (item.lastChangedAt != 0 || item.changeInterval != 0) {
           data +=
-              '\n${enLocale ? AppStrings.consumablesEnglishList[index] : AppStrings.consumablesArabicList[index]}:${cubit.isErrorText(index) ? enLocale ? ' (Exceeded)' : ' (تم التجاوز)' : ''}'
+              '\n${listAdded ? DatabaseHelper.consumableBox.get(index)!.name : enLocale ? AppStrings.consumablesEnglishList[index] : AppStrings.consumablesArabicList[index]}:${cubit.isErrorText(index) ? enLocale ? ' (Exceeded)' : ' (تم التجاوز)' : ''}'
               '\n${enLocale ? 'Last changed at' : 'تم التغيير عند'}: ${enLocale ? item.lastChangedAt.toThousands() : item.lastChangedAt.toThousands().toArabicNumerals()}'
               '\n${enLocale ? 'Change interval' : 'يتم التغيير كل'}: ${enLocale ? item.changeInterval.toThousands() : item.changeInterval.toThousands().toArabicNumerals()}'
               '\n${enLocale ? cubit.isErrorText(index) ? 'Exceeded by' : 'Remaining km' : cubit.isErrorText(index) ? 'تم التجاوز بمقدار' : 'الكيلومترات المتبقية'}: ${enLocale ? item.remainingKm < 0 ? (item.remainingKm * -1).toThousands() : item.remainingKm.toThousands() : item.remainingKm < 0 ? (item.remainingKm * -1).toThousands().toArabicNumerals() : item.remainingKm.toThousands().toArabicNumerals()}'
@@ -55,7 +58,8 @@ class FileCreator {
   static Future<bool?> writeDataToFile() async {
     bool? saved;
     try {
-      DocumentFileSavePlus().saveFile(Uint8List.fromList(utf8.encode(_fileData)), "$_fileName.txt", "text/plain");
+      DocumentFileSavePlus()
+          .saveFile(Uint8List.fromList(utf8.encode(_fileData)), "$_fileName.txt", "text/plain");
       saved = true;
     } catch (e) {
       saved = false;
