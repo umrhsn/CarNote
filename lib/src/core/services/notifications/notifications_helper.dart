@@ -87,7 +87,7 @@ class NotificationsHelper {
             backgroundColor: cubit.getValidatingTextColor(context, index),
             channelKey: AppStrings.notifChannelBasicKey,
             title: listAdded
-                ? DatabaseHelper.consumableBox.get(index)!.name
+                ? DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index].name
                 : AppStrings.consumables[index],
             body: cubit.isErrorText(index)
                 ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'

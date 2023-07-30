@@ -22,10 +22,11 @@ void main() async {
   Directory dir = await getApplicationDocumentsDirectory();
   Hive
     ..init(dir.path)
-    ..registerAdapter<Car>(CarAdapter())..registerAdapter<Consumable>(ConsumableAdapter());
+    ..registerAdapter<Car>(CarAdapter())
+    ..registerAdapter<Consumable>(ConsumableAdapter());
 
   await Hive.openBox<Car>(AppStrings.carBox);
-  await Hive.openBox<Consumable>(AppStrings.consumableBox);
+  await Hive.openBox<List>(AppStrings.consumableBox);
 
   /// Notifications init
   AwesomeNotifications().initialize(

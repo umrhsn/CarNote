@@ -31,8 +31,21 @@ class Consumable extends HiveObject {
     required this.remainingKm,
   });
 
-  static int getCount() =>
-      di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
-          ? DatabaseHelper.consumableBox.length
-          : AppStrings.consumables.length;
+  static int count = 0;
+
+  static int getCount() {
+    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumablesKey);
+    List<Consumable> consumablesList = [];
+
+    if (list != null) {
+      for (int index = 0; index < list.length; index++) {
+        consumablesList.add(list[index]);
+        count++;
+      }
+    }
+
+    return di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
+        ? consumablesList.length
+        : AppStrings.consumables.length;
+  }
 }

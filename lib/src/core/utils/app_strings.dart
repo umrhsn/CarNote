@@ -33,6 +33,10 @@ class AppStrings {
 
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
+  static String nameHint(BuildContext context) => _translate(context, "name_hint");
+
+  static const String consumablesKey = "consumables";
+
   static List<String> get consumables =>
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
 

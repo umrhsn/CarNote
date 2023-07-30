@@ -39,11 +39,11 @@ class FileCreator {
         '${enLocale ? 'Current kilometer' : 'الكيلومتر الحالي'}: ${enLocale ? car!.currentKm.toThousands() : car!.currentKm.toThousands().toArabicNumerals()}\n';
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      Consumable? item = DatabaseHelper.consumableBox.get(index);
+      Consumable? item = DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index];
       if (item != null) {
         if (item.lastChangedAt != 0 || item.changeInterval != 0) {
           data +=
-              '\n${listAdded ? DatabaseHelper.consumableBox.get(index)!.name : enLocale ? AppStrings.consumablesEnglishList[index] : AppStrings.consumablesArabicList[index]}:${cubit.isErrorText(index) ? enLocale ? ' (Exceeded)' : ' (تم التجاوز)' : ''}'
+              '\n${listAdded ? DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index].name : enLocale ? AppStrings.consumablesEnglishList[index] : AppStrings.consumablesArabicList[index]}:${cubit.isErrorText(index) ? enLocale ? ' (Exceeded)' : ' (تم التجاوز)' : ''}'
               '\n${enLocale ? 'Last changed at' : 'تم التغيير عند'}: ${enLocale ? item.lastChangedAt.toThousands() : item.lastChangedAt.toThousands().toArabicNumerals()}'
               '\n${enLocale ? 'Change interval' : 'يتم التغيير كل'}: ${enLocale ? item.changeInterval.toThousands() : item.changeInterval.toThousands().toArabicNumerals()}'
               '\n${enLocale ? cubit.isErrorText(index) ? 'Exceeded by' : 'Remaining km' : cubit.isErrorText(index) ? 'تم التجاوز بمقدار' : 'الكيلومترات المتبقية'}: ${enLocale ? item.remainingKm < 0 ? (item.remainingKm * -1).toThousands() : item.remainingKm.toThousands() : item.remainingKm < 0 ? (item.remainingKm * -1).toThousands().toArabicNumerals() : item.remainingKm.toThousands().toArabicNumerals()}'

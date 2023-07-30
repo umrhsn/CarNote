@@ -7,6 +7,7 @@
   "car_type_hint": "Car type. e.g. \"Suzuki Maruti\"",
   "model_year_hint": "Model year. e.g. \"2014\"",
   "current_km_hint": "Total distance travelled. e.g.",
+  "name_hint": "Consumable name",
   "current_km_label": "Current kilometer",
   "last_changed_at_label": "Last changed at",
   "change_interval_label": "Change interval",

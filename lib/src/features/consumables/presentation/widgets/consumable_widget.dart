@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -33,7 +34,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
-    cubit.calculateChangeKmAndCurrentKmDifference(widget.index);
+    cubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
     cubit.calculateWarningDifference(widget.index);
     cubit.getRemainingKm(widget.index);
 
@@ -176,7 +177,9 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                 child: Row(
                   children: [
                     IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+                    IconButton(
+                        onPressed: () => DatabaseHelper.removeConsumable(widget.index),
+                        icon: const Icon(Icons.delete)),
                   ],
                 ),
               ),

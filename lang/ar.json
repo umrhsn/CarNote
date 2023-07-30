@@ -7,6 +7,7 @@
   "car_type_hint": "نوع السيارة. مثال: سوزوكي ماروتي",
   "model_year_hint": "سنة الموديل. مثال: 2014",
   "current_km_hint": "العداد. مثال:",
+  "name_hint": "اسم الغرض",
   "current_km_label": "الكيلومتر الحالي",
   "last_changed_at_label": "تم التغيير عند (كم)",
   "change_interval_label": "يتم التغيير كل (كم)",
