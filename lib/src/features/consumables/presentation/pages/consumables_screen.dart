@@ -1,6 +1,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
@@ -12,7 +13,6 @@ import 'package:car_note/src/core/widgets/custom_icon_button.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
-import 'package:car_note/src/features/consumables/presentation/widgets/dialog_consumable_widget.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -281,11 +281,11 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               padding: const EdgeInsetsDirectional.only(end: 15),
               child: ListView.separated(
                 itemCount: Consumable.getCount(),
-                itemBuilder: (context, index) => ConsumableWidget(
-                    index: index,
-                    name: _prefs.getBool(AppStrings.prefsBoolListAdded) ?? false
-                        ? DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index].name
-                        : AppStrings.consumables[index]),
+                itemBuilder: (context, index) {
+                  Consumable item =
+                      DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+                  return ConsumableWidget(index: index, name: item.name);
+                },
                 separatorBuilder: (context, index) => const Divider(thickness: 2),
               ),
             ),
@@ -309,17 +309,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 child: CustomIconButton(
                   iconData: Icons.add,
                   btnEnabled: consumableCubit.shouldEnableButton(context),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (_) {
-                          return const Dialog(
-                              child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: DialogConsumableWidget(),
-                          ));
-                        });
-                  },
+                  onPressed: () => Navigator.popAndPushNamed(context, Routes.addConsumableRoute),
                 ),
               )
             ],

@@ -10,34 +10,32 @@ import 'package:car_note/src/features/consumables/presentation/cubit/consumable_
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// FIXME: doesn't show invalid text if present
-
-class DialogConsumableWidget extends StatefulWidget {
-  const DialogConsumableWidget({Key? key}) : super(key: key);
+class AddConsumable extends StatefulWidget {
+  const AddConsumable({Key? key}) : super(key: key);
 
   @override
-  State<DialogConsumableWidget> createState() => DialogConsumableWidgetState();
+  State<AddConsumable> createState() => AddConsumableState();
 }
 
-class DialogConsumableWidgetState extends State<DialogConsumableWidget> {
+class AddConsumableState extends State<AddConsumable> {
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
     Color getLastChangedAndChangeIntervalLabelColor() =>
-        cubit.getDialogLastChangedKmValidatingText(context).data != ''
+        cubit.getAddLastChangedKmValidatingText(context).data != ''
             ? AppColors.getErrorColor(context)
             : cubit.lastChangedFocus.hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder() =>
-        cubit.getDialogLastChangedKmValidatingText(context).data != ''
+        cubit.getAddLastChangedKmValidatingText(context).data != ''
             ? cubit.getErrorBorder(context)
             : cubit.getFocusedBorder(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder() =>
-        cubit.getDialogLastChangedKmValidatingText(context).data != ''
+        cubit.getAddLastChangedKmValidatingText(context).data != ''
             ? cubit.getErrorBorder(context)
             : cubit.getDefaultBorder(context);
 
@@ -55,7 +53,7 @@ class DialogConsumableWidgetState extends State<DialogConsumableWidget> {
                 controller: cubit.lastChangedController,
                 focusNode: cubit.lastChangedFocus,
                 cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-                onChanged: (_) => cubit.getDialogLastChangedKmValidatingText(context),
+                onChanged: (_) => cubit.getAddLastChangedKmValidatingText(context),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -76,7 +74,7 @@ class DialogConsumableWidgetState extends State<DialogConsumableWidget> {
             ),
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: cubit.getDialogLastChangedKmValidatingText(context),
+              child: cubit.getAddLastChangedKmValidatingText(context),
             ),
           ],
         ),
@@ -107,35 +105,47 @@ class DialogConsumableWidgetState extends State<DialogConsumableWidget> {
       );
     }
 
-    return IntrinsicHeight(
-      child: Column(
-        children: [
-          const ConsumableNameTextField(),
-          const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildLastChangedTextFormField(),
-              buildChangeIntervalTextFormField(),
-            ],
-          ),
-          const SizedBox(height: 30),
-          CustomButton(
-            text: AppStrings.saveData(context),
-            btnEnabled: cubit.shouldEnableButton(context),
-            onPressed: () {
-              DatabaseHelper.addConsumable(
-                name: cubit.consumableNameController.text,
-                lastChangedAt:
-                    int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
-                changeInterval:
-                    int.parse(cubit.changeIntervalController.text.removeThousandSeparator()),
-              );
-              Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
-            },
-          )
-        ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.getPrimaryColor(context),
+        toolbarHeight: 100,
+        title: Text(
+          AppStrings.addConsumable(context),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const ConsumableNameTextField(),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildLastChangedTextFormField(),
+                buildChangeIntervalTextFormField(),
+              ],
+            ),
+            const Spacer(),
+            CustomButton(
+              text: AppStrings.addConsumable(context).toUpperCase(),
+              btnEnabled: cubit.shouldEnableButton(context),
+              onPressed: () {
+                DatabaseHelper.addConsumable(
+                  context,
+                  name: cubit.consumableNameController.text,
+                  lastChangedAt:
+                      int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
+                  changeInterval:
+                      int.parse(cubit.changeIntervalController.text.removeThousandSeparator()),
+                );
+                Navigator.popAndPushNamed(context, Routes.consumablesRoute);
+              },
+            )
+          ],
+        ),
       ),
     );
   }

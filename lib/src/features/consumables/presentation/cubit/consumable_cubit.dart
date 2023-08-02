@@ -14,43 +14,21 @@ part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
-    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumablesKey);
-    List<Consumable> consumablesList = [];
+    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      if (list != null) consumablesList.add(list[index]);
+      Consumable item = list![index];
 
-      lastChangedAtControllers.add(
-        TextEditingController(
-          text: list != null
-              ? consumablesList[index].lastChangedAt != 0
-                  ? consumablesList[index].lastChangedAt.toThousands()
-                  : ''
-              : '',
-        ),
-      );
-      changeIntervalControllers.add(
-        TextEditingController(
-          text: list != null
-              ? consumablesList[index].changeInterval != 0
-                  ? consumablesList[index].changeInterval.toThousands()
-                  : ''
-              : '',
-        ),
-      );
+      lastChangedAtControllers.add(TextEditingController(
+          text: item.lastChangedAt != 0 ? item.lastChangedAt.toThousands() : ''));
+      changeIntervalControllers.add(TextEditingController(
+          text: item.changeInterval != 0 ? item.changeInterval.toThousands() : ''));
       remainingKmControllers.add(
-        TextEditingController(
-          text: list != null
-              ? consumablesList[index].remainingKm != 0
-                  ? consumablesList[index].remainingKm.toThousands()
-                  : ''
-              : '',
-        ),
-      );
+          TextEditingController(text: item.remainingKm != 0 ? item.remainingKm.toThousands() : ''));
 
       lastChangedAtFocuses.add(FocusNode());
       changeIntervalFocuses.add(FocusNode());
-      changeKmFocuses.add(FocusNode());
+      remainingKmFocuses.add(FocusNode());
     }
   }
 
@@ -73,7 +51,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   final List<FocusNode> lastChangedAtFocuses = [];
   final List<FocusNode> changeIntervalFocuses = [];
-  final List<FocusNode> changeKmFocuses = [];
+  final List<FocusNode> remainingKmFocuses = [];
 
   /// Color controlling methods
   Color getValidatingTextColor(BuildContext context, int index) => isNormalText(index)
@@ -269,23 +247,24 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(VisibilityChanged());
   }
 
-  /// Dialog Consumable Widget
+  /// Add Consumable Widget
   TextEditingController consumableNameController = TextEditingController();
   TextEditingController lastChangedController = TextEditingController();
   TextEditingController changeIntervalController = TextEditingController();
   FocusNode lastChangedFocus = FocusNode();
   FocusNode changeIntervalFocus = FocusNode();
 
-  Text getDialogLastChangedKmValidatingText(BuildContext context) => Text(
-        _validateDialogLastChangedKilometer(context) ?? '',
+  // FIXME
+  Text getAddLastChangedKmValidatingText(BuildContext context) => Text(
+        _validateAddLastChangedKilometer(context) ?? '',
         style: TextStyle(
           color: AppColors.getErrorColor(context),
-          height: _validateDialogLastChangedKilometer(context) != null ? 2 : 0,
+          height: _validateAddLastChangedKilometer(context) != null ? 2 : 0,
           fontSize: 11,
         ),
       );
 
-  String? _validateDialogLastChangedKilometer(BuildContext context) {
+  String? _validateAddLastChangedKilometer(BuildContext context) {
     emit(ValidatingItem());
     if (lastChangedController.text.isNotEmpty && currentKmController.text.isNotEmpty) {
       if (int.parse(lastChangedController.text.removeThousandSeparator()) >

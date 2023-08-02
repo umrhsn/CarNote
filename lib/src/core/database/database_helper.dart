@@ -46,9 +46,6 @@ class DatabaseHelper {
   static Box<List> get consumableBox => _consumableBox;
 
   static Future<void> writeConsumablesData(BuildContext context) async {
-    debugPrint(writeConsumablesData.getMethodName());
-
-    SharedPreferences prefs = di.sl<SharedPreferences>();
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     _carBox.put(
@@ -60,16 +57,12 @@ class DatabaseHelper {
       ),
     );
 
-    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
-
-    List<Consumable> consumablesList = [];
+    List<Consumable> list = [];
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      consumablesList.add(Consumable(
+      _consumableBox.get(AppStrings.consumableBox)![index] = Consumable(
         id: index,
-        name: listAdded
-            ? _consumableBox.get(AppStrings.consumablesKey)![index].name
-            : AppStrings.consumables[index],
+        name: _consumableBox.get(AppStrings.consumableBox)![index].name,
         lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
             ? int.parse(
                 consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
@@ -82,30 +75,61 @@ class DatabaseHelper {
             ? int.parse(
                 consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
             : 0,
-      ));
+      );
+
+      list.add(_consumableBox.get(AppStrings.consumableBox)![index]);
     }
 
-    _consumableBox
-        .put("consumables", consumablesList)
-        .then((value) => prefs.setBool(AppStrings.prefsBoolListAdded, true));
+    _consumableBox.put(AppStrings.consumableBox, list);
+
     BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
   }
 
-  static void addConsumable({
+  static void addConsumable(
+    BuildContext context, {
     required String name,
     required int lastChangedAt,
     required int changeInterval,
-  }) =>
-      _consumableBox.get(AppStrings.consumablesKey)!.add(
-            Consumable(
-              id: _consumableBox.length,
-              name: name,
-              lastChangedAt: lastChangedAt,
-              changeInterval: changeInterval,
-              remainingKm: 0,
-            ),
-          );
+  }) {
+    _consumableBox.get(AppStrings.consumableBox)!.add(
+          Consumable(
+            id: _consumableBox.get(AppStrings.consumableBox)!.length,
+            name: name,
+            lastChangedAt: lastChangedAt,
+            changeInterval: changeInterval,
+            remainingKm: 0,
+          ),
+        );
 
-  static void removeConsumable(int index) =>
-      _consumableBox.get(AppStrings.consumablesKey)!.removeAt(index);
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers
+        .add(TextEditingController(text: lastChangedAt.toThousands()));
+    consumableCubit.changeIntervalControllers
+        .add(TextEditingController(text: changeInterval.toThousands()));
+    consumableCubit.remainingKmControllers.add(TextEditingController());
+
+    consumableCubit.lastChangedAtFocuses.add(FocusNode());
+    consumableCubit.changeIntervalFocuses.add(FocusNode());
+    consumableCubit.remainingKmFocuses.add(FocusNode());
+  }
+
+  static void removeConsumable(int index, BuildContext context) {
+    _consumableBox.get(AppStrings.consumableBox)!.removeAt(index);
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers.removeAt(index);
+    consumableCubit.changeIntervalControllers.removeAt(index);
+    consumableCubit.remainingKmControllers.removeAt(index);
+
+    consumableCubit.lastChangedAtFocuses.removeAt(index);
+    consumableCubit.changeIntervalFocuses.removeAt(index);
+    consumableCubit.remainingKmFocuses.removeAt(index);
+
+    Consumable.count--;
+  }
 }

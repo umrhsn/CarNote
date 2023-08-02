@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 
 class ConsumableNameTextField extends StatefulWidget {
@@ -13,7 +14,10 @@ class ConsumableNameTextField extends StatefulWidget {
 class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
   @override
   Widget build(BuildContext context) {
+    ConsumableCubit cubit = ConsumableCubit.get(context);
+
     return TextField(
+      controller: cubit.consumableNameController,
       decoration: InputDecoration(
         filled: false,
         hintText: AppStrings.nameHint(context),

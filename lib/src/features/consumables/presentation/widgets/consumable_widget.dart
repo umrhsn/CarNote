@@ -48,7 +48,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     Color getRemainingKmLabelColor() =>
         cubit.getRemainingKmValidatingText(context, widget.index).data != ''
             ? cubit.getValidatingTextColor(context, widget.index)
-            : cubit.changeKmFocuses[widget.index].hasFocus
+            : cubit.remainingKmFocuses[widget.index].hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
 
@@ -178,7 +178,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                   children: [
                     IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
                     IconButton(
-                        onPressed: () => DatabaseHelper.removeConsumable(widget.index),
+                        onPressed: () => DatabaseHelper.removeConsumable(widget.index, context),
                         icon: const Icon(Icons.delete)),
                   ],
                 ),

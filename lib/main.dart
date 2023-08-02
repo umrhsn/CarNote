@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:car_note/app.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
@@ -11,6 +12,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/injection_container.dart' as di;
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +29,26 @@ void main() async {
 
   await Hive.openBox<Car>(AppStrings.carBox);
   await Hive.openBox<List>(AppStrings.consumableBox);
+
+  if (di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) == null) {
+    DatabaseHelper.consumableBox.put(AppStrings.consumableBox, []);
+
+    for (int index = 0; index < AppStrings.consumables.length; index++) {
+      DatabaseHelper.consumableBox.get(AppStrings.consumableBox)!.add(
+            Consumable(
+              id: index,
+              name: AppStrings.consumables[index],
+              lastChangedAt: 0,
+              changeInterval: 0,
+              remainingKm: 0,
+            ),
+          );
+    }
+
+    if (DatabaseHelper.consumableBox.get(AppStrings.consumableBox) != null) {
+      di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolListAdded, true);
+    }
+  }
 
   /// Notifications init
   AwesomeNotifications().initialize(

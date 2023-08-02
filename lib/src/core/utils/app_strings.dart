@@ -35,8 +35,6 @@ class AppStrings {
 
   static String nameHint(BuildContext context) => _translate(context, "name_hint");
 
-  static const String consumablesKey = "consumables";
-
   static List<String> get consumables =>
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
 
@@ -113,6 +111,7 @@ class AppStrings {
   static String sureToExitMsg(BuildContext context) => _translate(context, "sure_to_exit");
 
   static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
+  static String addConsumable(BuildContext context) => _translate(context, "add_item");
 
   static String exitWithoutSaving(BuildContext context) =>
       _translate(context, "exit_without_saving").toUpperCase();

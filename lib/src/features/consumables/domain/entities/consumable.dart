@@ -1,8 +1,6 @@
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:car_note/injection_container.dart' as di;
 
 part 'consumable.g.dart';
 
@@ -23,29 +21,17 @@ class Consumable extends HiveObject {
   @HiveField(4)
   final int remainingKm;
 
+  static int count = 0;
+
   Consumable({
     required this.id,
     required this.name,
     required this.lastChangedAt,
     required this.changeInterval,
     required this.remainingKm,
-  });
-
-  static int count = 0;
-
-  static int getCount() {
-    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumablesKey);
-    List<Consumable> consumablesList = [];
-
-    if (list != null) {
-      for (int index = 0; index < list.length; index++) {
-        consumablesList.add(list[index]);
-        count++;
-      }
-    }
-
-    return di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) ?? false
-        ? consumablesList.length
-        : AppStrings.consumables.length;
+  }) {
+    count++;
   }
+
+  static int getCount() => DatabaseHelper.consumableBox.get(AppStrings.consumableBox)!.length;
 }
