@@ -14,37 +14,21 @@ part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
+    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+
     for (int index = 0; index < Consumable.getCount(); index++) {
-      lastChangedAtControllers.add(
-        TextEditingController(
-          text: DatabaseHelper.consumableBox.get(index) != null
-              ? DatabaseHelper.consumableBox.get(index)!.lastChangedAt != 0
-                  ? DatabaseHelper.consumableBox.get(index)!.lastChangedAt.toThousands()
-                  : ''
-              : '',
-        ),
-      );
-      changeIntervalControllers.add(
-        TextEditingController(
-          text: DatabaseHelper.consumableBox.get(index) != null
-              ? DatabaseHelper.consumableBox.get(index)!.changeInterval != 0
-                  ? DatabaseHelper.consumableBox.get(index)!.changeInterval.toThousands()
-                  : ''
-              : '',
-        ),
-      );
+      Consumable item = list![index];
+
+      lastChangedAtControllers.add(TextEditingController(
+          text: item.lastChangedAt != 0 ? item.lastChangedAt.toThousands() : ''));
+      changeIntervalControllers.add(TextEditingController(
+          text: item.changeInterval != 0 ? item.changeInterval.toThousands() : ''));
       remainingKmControllers.add(
-        TextEditingController(
-          text: DatabaseHelper.consumableBox.get(index) != null
-              ? DatabaseHelper.consumableBox.get(index)!.remainingKm != 0
-                  ? DatabaseHelper.consumableBox.get(index)!.remainingKm.toThousands()
-                  : ''
-              : '',
-        ),
-      );
+          TextEditingController(text: item.remainingKm != 0 ? item.remainingKm.toThousands() : ''));
+
       lastChangedAtFocuses.add(FocusNode());
       changeIntervalFocuses.add(FocusNode());
-      changeKmFocuses.add(FocusNode());
+      remainingKmFocuses.add(FocusNode());
     }
   }
 
@@ -67,7 +51,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   final List<FocusNode> lastChangedAtFocuses = [];
   final List<FocusNode> changeIntervalFocuses = [];
-  final List<FocusNode> changeKmFocuses = [];
+  final List<FocusNode> remainingKmFocuses = [];
 
   /// Color controlling methods
   Color getValidatingTextColor(BuildContext context, int index) => isNormalText(index)
@@ -98,7 +82,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   OutlineInputBorder getWarningBorder(BuildContext context) => OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.getWarningColor(context), width: 2));
 
-  bool shouldEnableSaveButton(BuildContext context) {
+  bool shouldEnableButton(BuildContext context) {
     for (int index = 0; index < lastChangedAtControllers.length; index++) {
       if (getLastChangedKmValidatingText(context, index).data != '') {
         return false;
@@ -138,7 +122,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   void getRemainingKm(int index) {
-    emit(AddingChangeKm());
+    emit(AddingRemainingKm());
     remainingKmControllers[index].text = _calculateRemainingKm(
                 lastChangedAtControllers[index], changeIntervalControllers[index]) !=
             0
@@ -157,7 +141,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   void validateAllLastChangedKilometerFields(BuildContext context) {
     emit(ValidatingItem());
-    for (int index = 0; index < remainingKmControllers.length; index++) {
+    // FIXME
+    for (int index = 0; index < Consumable.getCount(); index++) {
       _validateLastChangedKilometer(index, context);
     }
     emit(ValidatingComplete());
@@ -165,7 +150,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   void validateAllChangeKilometerFields(BuildContext context) {
     emit(ValidatingItem());
-    for (int index = 0; index < remainingKmControllers.length; index++) {
+    for (int index = 0; index < Consumable.getCount(); index++) {
       _validateRemainingKilometer(index, context);
     }
     emit(ValidatingComplete());
@@ -184,7 +169,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     return null;
   }
 
-  int calculateChangeKmAndCurrentKmDifference(int index) {
+  int calculateRemainingKmAndCurrentKmDifference(int index) {
     if (currentKmController.text.isNotEmpty && remainingKmControllers[index].text.isNotEmpty) {
       return int.parse(currentKmController.text.removeThousandSeparator()) -
           int.parse(remainingKmControllers[index].text.removeThousandSeparator());
@@ -244,7 +229,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
     if (isErrorText(index)) {
       emit(ValidatingComplete());
-      return '${AppStrings.errorText(context)} ${calculateChangeKmAndCurrentKmDifference(index).toThousands()}';
+      return '${AppStrings.errorText(context)} ${calculateRemainingKmAndCurrentKmDifference(index).toThousands()}';
     }
     emit(ValidatingComplete());
     return null;
@@ -252,13 +237,42 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Control widgets visibility
   void changeVisibility(BuildContext context) {
-    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true;
+    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
     emit(VisibilityChanging());
     visible = !visible;
     visible
         ? BotToast.showText(text: AppStrings.detailedModeOn(context))
         : BotToast.showText(text: AppStrings.detailedModeOff(context));
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolVisible, visible);
+    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolDetailedModeOn, visible);
     emit(VisibilityChanged());
+  }
+
+  /// Add Consumable Widget
+  TextEditingController consumableNameController = TextEditingController();
+  TextEditingController lastChangedController = TextEditingController();
+  TextEditingController changeIntervalController = TextEditingController();
+  FocusNode lastChangedFocus = FocusNode();
+  FocusNode changeIntervalFocus = FocusNode();
+
+  // FIXME
+  Text getAddLastChangedKmValidatingText(BuildContext context) => Text(
+        _validateAddLastChangedKilometer(context) ?? '',
+        style: TextStyle(
+          color: AppColors.getErrorColor(context),
+          height: _validateAddLastChangedKilometer(context) != null ? 2 : 0,
+          fontSize: 11,
+        ),
+      );
+
+  String? _validateAddLastChangedKilometer(BuildContext context) {
+    emit(ValidatingItem());
+    if (lastChangedController.text.isNotEmpty && currentKmController.text.isNotEmpty) {
+      if (int.parse(lastChangedController.text.removeThousandSeparator()) >
+          int.parse(currentKmController.text.removeThousandSeparator())) {
+        return AppStrings.invalidInput(context);
+      }
+    }
+    emit(ValidatingComplete());
+    return null;
   }
 }

@@ -72,11 +72,11 @@ class NotificationsHelper {
 
   static void showAlarmingNotifications(BuildContext context) {
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
-    SharedPreferences prefs = di.sl<SharedPreferences>();
-    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
 
     // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
+      Consumable item = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+
       if (cubit.remainingKmControllers[index].text.isNotEmpty && !cubit.isNormalText(index)) {
         String remainingKm = LocaleCubit.currentLangCode == AppStrings.en
             ? cubit.remainingKmControllers[index].text
@@ -86,9 +86,7 @@ class NotificationsHelper {
             id: index,
             backgroundColor: cubit.getValidatingTextColor(context, index),
             channelKey: AppStrings.notifChannelBasicKey,
-            title: listAdded
-                ? DatabaseHelper.consumableBox.get(index)!.name
-                : AppStrings.consumables[index],
+            title: item.name,
             body: cubit.isErrorText(index)
                 ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'
                 : '$remainingKm ${AppStrings.km(context)} ${AppStrings.remaining(context)}',

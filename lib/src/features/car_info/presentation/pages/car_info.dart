@@ -4,7 +4,6 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
-import 'package:car_note/src/core/services/text_input_formatters/title_case_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/title_text.dart';
@@ -44,7 +43,6 @@ class _MyHomePageState extends State<CarInfo> {
         controller: carCubit.carTypeController,
         focusNode: carCubit.carTypeFocus,
         hintText: AppStrings.carTypeHint(context),
-        inputFormatters: [TitleCaseInputFormatter()],
         validationItem: validator.carType,
         validateItemForm: (value) => validator.validateCarTypeForm(value, context),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, carCubit.modelYearFocus),

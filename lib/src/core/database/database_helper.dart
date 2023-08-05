@@ -34,7 +34,7 @@ class DatabaseHelper {
 
     if (isNotNull) {
       prefs.setBool(AppStrings.prefsBoolSeen, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
+      BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));
     }
@@ -43,14 +43,24 @@ class DatabaseHelper {
   }
 
   /// Consumables
-  static final Box<Consumable> _consumableBox = Hive.box<Consumable>(AppStrings.consumableBox);
+  static final Box<List> _consumableBox = Hive.box<List>(AppStrings.consumableBox);
 
-  static Box<Consumable> get consumableBox => _consumableBox;
+  static Box<List> get consumableBox => _consumableBox;
+
+  static Future<bool> writeConsumableName(BuildContext context, int index) async {
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    if (consumableCubit.consumableNameController.text.isEmpty) {
+      return false;
+    } else {
+      _consumableBox.get(AppStrings.consumableBox)![index].name =
+          consumableCubit.consumableNameController.text;
+      writeConsumablesData(context);
+      return true;
+    }
+  }
 
   static Future<void> writeConsumablesData(BuildContext context) async {
-    debugPrint(writeConsumablesData.getMethodName());
-
-    SharedPreferences prefs = di.sl<SharedPreferences>();
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     _carBox.put(
@@ -62,38 +72,85 @@ class DatabaseHelper {
       ),
     );
 
-    bool listAdded = prefs.getBool(AppStrings.prefsBoolListAdded) ?? false;
-    bool isNotNull = true;
+    List<Consumable> list = [];
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      _consumableBox.put(
-        index,
-        Consumable(
-          id: index,
-          name: listAdded ? _consumableBox.get(index)!.name : AppStrings.consumables[index],
-          lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
-              ? int.parse(
-                  consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
-              : 0,
-          changeInterval: consumableCubit.changeIntervalControllers[index].text.isNotEmpty
-              ? int.parse(
-                  consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator())
-              : 0,
-          remainingKm: consumableCubit.remainingKmControllers[index].text.isNotEmpty
-              ? int.parse(
-                  consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
-              : 0,
-        ),
+      _consumableBox.get(AppStrings.consumableBox)![index] = Consumable(
+        id: index,
+        name: _consumableBox.get(AppStrings.consumableBox)![index].name,
+        lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
+            : 0,
+        changeInterval: consumableCubit.changeIntervalControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator())
+            : 0,
+        remainingKm: consumableCubit.remainingKmControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
+            : 0,
       );
-      // FIXME: make it saved as a contiguous list
-      if (_consumableBox.get(index) == null) isNotNull = false;
+
+      list.add(_consumableBox.get(AppStrings.consumableBox)![index]);
     }
 
-    if (isNotNull) {
-      prefs.setBool(AppStrings.prefsBoolListAdded, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
-    } else {
-      BotToast.showText(text: AppStrings.somethingWentWrong(context));
-    }
+    _consumableBox.put(AppStrings.consumableBox, list);
+
+    BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
+  }
+
+  static Future<bool> addConsumable(
+    BuildContext context, {
+    required String name,
+    required int lastChangedAt,
+    required int changeInterval,
+  }) async {
+    if (name.isEmpty || lastChangedAt == 0 || changeInterval == 0) return false;
+
+    _consumableBox.get(AppStrings.consumableBox)!.add(
+          Consumable(
+            id: _consumableBox.get(AppStrings.consumableBox)!.length,
+            name: name,
+            lastChangedAt: lastChangedAt,
+            changeInterval: changeInterval,
+            remainingKm: 0,
+          ),
+        );
+
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers
+        .add(TextEditingController(text: lastChangedAt.toThousands()));
+    consumableCubit.changeIntervalControllers
+        .add(TextEditingController(text: changeInterval.toThousands()));
+    consumableCubit.remainingKmControllers.add(TextEditingController());
+
+    consumableCubit.lastChangedAtFocuses.add(FocusNode());
+    consumableCubit.changeIntervalFocuses.add(FocusNode());
+    consumableCubit.remainingKmFocuses.add(FocusNode());
+
+    return true;
+  }
+
+  static void removeConsumable(int index, BuildContext context) {
+    _consumableBox.get(AppStrings.consumableBox)!.removeAt(index);
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers.removeAt(index);
+    consumableCubit.changeIntervalControllers.removeAt(index);
+    consumableCubit.remainingKmControllers.removeAt(index);
+
+    consumableCubit.lastChangedAtFocuses.removeAt(index);
+    consumableCubit.changeIntervalFocuses.removeAt(index);
+    consumableCubit.remainingKmFocuses.removeAt(index);
+
+    Consumable.count--;
+
+    BotToast.showText(text: AppStrings.removedItem(context));
   }
 }

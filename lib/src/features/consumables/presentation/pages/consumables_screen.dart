@@ -1,18 +1,15 @@
-import 'dart:async';
-
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/extensions/media_query_values.dart';
-import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
-import 'package:car_note/src/features/car_info/domain/entities/car.dart';
+import 'package:car_note/src/core/widgets/custom_icon_button.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
@@ -37,10 +34,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   // String? _scheduleTime;
 
   bool _getVisibilityStatus() {
-    if (_prefs.getBool(AppStrings.prefsBoolVisible) == null) {
-      _prefs.setBool(AppStrings.prefsBoolVisible, true);
+    if (_prefs.getBool(AppStrings.prefsBoolDetailedModeOn) == null) {
+      _prefs.setBool(AppStrings.prefsBoolDetailedModeOn, true);
     }
-    bool visible = _prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
+    bool visible = _prefs.getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
     return visible;
   }
 
@@ -77,100 +74,109 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     LocaleCubit localeCubit = LocaleCubit.get(context);
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    void showExitDialog() {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-          title: Text(AppStrings.changedDataMsg(context)),
-          content: Text(AppStrings.sureToExitMsg(context)),
-          actions: [
-            TextButton(
-              onPressed: () async => DatabaseHelper.writeConsumablesData(context)
-                  .then((value) => SystemNavigator.pop()),
-              child: Text(
-                AppStrings.saveData(context),
-                style: TextStyle(
-                    color: context.isLight
-                        ? AppColors.primarySwatchLight.shade100
-                        : AppColors.primarySwatchDark.shade500),
-              ),
-            ),
-            TextButton(
-              onPressed: () => SystemNavigator.pop(),
-              child: Text(
-                AppStrings.exitWithoutSaving(context),
-                style: TextStyle(
-                    color: context.isLight
-                        ? AppColors.primarySwatchLight.shade100
-                        : AppColors.primarySwatchDark.shade500),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+    // TODO: uncomment when onWillPop is functional
+    // void showExitDialog() {
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => AlertDialog(
+    //       icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+    //       title: Text(AppStrings.changedDataMsg(context)),
+    //       content: Text(AppStrings.sureToExitMsg(context)),
+    //       actions: [
+    //         TextButton(
+    //           onPressed: () async => DatabaseHelper.writeConsumablesData(context)
+    //               .then((value) => SystemNavigator.pop()),
+    //           child: Text(
+    //             AppStrings.saveData(context),
+    //             style: TextStyle(
+    //                 color: context.isLight
+    //                     ? AppColors.primarySwatchLight.shade100
+    //                     : AppColors.primarySwatchDark.shade500),
+    //           ),
+    //         ),
+    //         TextButton(
+    //           onPressed: () => SystemNavigator.pop(),
+    //           child: Text(
+    //             AppStrings.exitWithoutSaving(context),
+    //             style: TextStyle(
+    //                 color: context.isLight
+    //                     ? AppColors.primarySwatchLight.shade100
+    //                     : AppColors.primarySwatchDark.shade500),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
-    Future<bool> onWillPop() async {
-      for (int index = 0; index < Consumable.getCount(); index++) {
-        Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
-        Consumable? consumable = DatabaseHelper.consumableBox.get(index);
-
-        if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
-            car!.currentKm) {
-          showExitDialog();
-          return false;
-        }
-
-        if (consumable == null) {
-          if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
-              consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
-              consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
-            showExitDialog();
-            return false;
-          }
-        }
-
-        if (consumable != null) {
-          if ((consumable.lastChangedAt == 0 &&
-                  consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
-              (consumable.changeInterval == 0 &&
-                  consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
-              (consumable.remainingKm == 0 &&
-                  consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
-            showExitDialog();
-            return false;
-          }
-
-          if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
-                  consumable.lastChangedAt != 0) ||
-              consumableCubit.changeIntervalControllers[index].text.isEmpty &&
-                  consumable.changeInterval != 0 ||
-              consumableCubit.remainingKmControllers[index].text.isEmpty &&
-                  consumable.remainingKm != 0) {
-            showExitDialog();
-            return false;
-          }
-
-          if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
-                  int.parse(consumableCubit.lastChangedAtControllers[index].text
-                          .removeThousandSeparator()) !=
-                      consumable.lastChangedAt) ||
-              (consumableCubit.changeIntervalControllers[index].text.isNotEmpty &&
-                  int.parse(consumableCubit.changeIntervalControllers[index].text
-                          .removeThousandSeparator()) !=
-                      consumable.changeInterval) ||
-              (consumableCubit.remainingKmControllers[index].text.isNotEmpty &&
-                  int.parse(consumableCubit.remainingKmControllers[index].text
-                          .removeThousandSeparator()) !=
-                      consumable.remainingKm)) {
-            showExitDialog();
-            return false;
-          }
-        }
-      }
-      return true;
-    }
+    // FIXME: malfunctioning
+    // Future<bool> onWillPop() async {
+    //   for (int index = 0; index < Consumable.getCount(); index++) {
+    //     Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
+    //     Consumable? consumable =
+    //         DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index];
+    //
+    //     if (Consumable.count !=
+    //         DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)!.length) {
+    //       showExitDialog();
+    //       return false;
+    //     }
+    //
+    //     if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
+    //         car!.currentKm) {
+    //       showExitDialog();
+    //       return false;
+    //     }
+    //
+    //     if (consumable == null) {
+    //       if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
+    //           consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
+    //           consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
+    //         showExitDialog();
+    //         return false;
+    //       }
+    //     }
+    //
+    //     if (consumable != null) {
+    //       if ((consumable.lastChangedAt == 0 &&
+    //               consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
+    //           (consumable.changeInterval == 0 &&
+    //               consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
+    //           (consumable.remainingKm == 0 &&
+    //               consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
+    //         showExitDialog();
+    //         return false;
+    //       }
+    //
+    //       if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
+    //               consumable.lastChangedAt != 0) ||
+    //           consumableCubit.changeIntervalControllers[index].text.isEmpty &&
+    //               consumable.changeInterval != 0 ||
+    //           consumableCubit.remainingKmControllers[index].text.isEmpty &&
+    //               consumable.remainingKm != 0) {
+    //         showExitDialog();
+    //         return false;
+    //       }
+    //
+    //       if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
+    //               int.parse(consumableCubit.lastChangedAtControllers[index].text
+    //                       .removeThousandSeparator()) !=
+    //                   consumable.lastChangedAt) ||
+    //           (consumableCubit.changeIntervalControllers[index].text.isNotEmpty &&
+    //               int.parse(consumableCubit.changeIntervalControllers[index].text
+    //                       .removeThousandSeparator()) !=
+    //                   consumable.changeInterval) ||
+    //           (consumableCubit.remainingKmControllers[index].text.isNotEmpty &&
+    //               int.parse(consumableCubit.remainingKmControllers[index].text
+    //                       .removeThousandSeparator()) !=
+    //                   consumable.remainingKm)) {
+    //         showExitDialog();
+    //         return false;
+    //       }
+    //     }
+    //   }
+    //   return true;
+    // }
 
     Column buildAppBarWidgets() => Column(
           children: [
@@ -223,6 +229,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   icon: const Icon(Icons.upload_file_rounded),
                   onPressed: () => FileCreator.writeDataToFile().then((value) {
                     return BotToast.showText(
+                        duration: Duration(seconds: value == true ? 7 : 2),
                         text: value == true
                             ? AppStrings.fileCreated(context)
                             : AppStrings.fileNotCreated(context));
@@ -275,52 +282,65 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               padding: const EdgeInsetsDirectional.only(end: 15),
               child: ListView.separated(
                 itemCount: Consumable.getCount(),
-                itemBuilder: (context, index) => ConsumableWidget(
-                    index: index,
-                    name: _prefs.getBool(AppStrings.prefsBoolListAdded) ?? false
-                        ? DatabaseHelper.consumableBox.get(index)!.name
-                        : AppStrings.consumables[index]),
+                itemBuilder: (context, index) {
+                  Consumable item =
+                      DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+                  return ConsumableWidget(index: index, name: item.name);
+                },
                 separatorBuilder: (context, index) => const Divider(thickness: 2),
               ),
             ),
           ),
         );
 
-    Padding buildSaveButton() => Padding(
+    Padding buildBottomButtons() => Padding(
           padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
-          child: CustomButton(
-            text: AppStrings.btnSave(context),
-            btnEnabled: consumableCubit.shouldEnableSaveButton(context),
-            onPressed: () => DatabaseHelper.writeConsumablesData(context),
+          child: Row(
+            children: [
+              Flexible(
+                flex: 4,
+                child: CustomButton(
+                  text: AppStrings.btnSave(context),
+                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  onPressed: () => DatabaseHelper.writeConsumablesData(context),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: CustomIconButton(
+                  iconData: Icons.add,
+                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
+                ),
+              )
+            ],
           ),
         );
 
     return BlocBuilder<ConsumableCubit, ConsumableState>(
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: onWillPop,
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              backgroundColor: AppColors.getPrimaryColor(context),
-              toolbarHeight: 140,
-              title: buildAppBarWidgets(),
-            )
-            // TODO: add ads to page
-            // .withBottomAdmobBanner(context)
-            ,
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildConsumablesList(),
-                    const Spacer(),
-                    buildSaveButton(),
-                    const SizedBox(height: 15),
-                  ],
-                ),
+        // TODO: implement onWillPop, surround by WillPopScope widget
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: AppColors.getPrimaryColor(context),
+            toolbarHeight: 140,
+            title: buildAppBarWidgets(),
+          )
+          // TODO: add ads to page
+          // .withBottomAdmobBanner(context)
+          ,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(start: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildConsumablesList(),
+                  const Spacer(),
+                  buildBottomButtons(),
+                  const SizedBox(height: 15),
+                ],
               ),
             ),
           ),

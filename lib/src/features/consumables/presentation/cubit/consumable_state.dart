@@ -10,7 +10,7 @@ abstract class ConsumableState extends Equatable {
 
 class AppInitial extends ConsumableState {}
 
-class AddingChangeKm extends ConsumableState {}
+class AddingRemainingKm extends ConsumableState {}
 
 class AddedRemainingKm extends ConsumableState {}
 

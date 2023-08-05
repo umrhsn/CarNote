@@ -1,4 +1,6 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +10,10 @@ class AppStrings {
 
   static String appName(BuildContext context) => _translate(context, "app_name");
 
-  static const String _fontFamilyEn = 'Product Sans';
-  static const String _fontFamilyAr = 'ArabicTwo';
+  static const String fontFamilyEn = 'Product Sans';
+  static const String fontFamilyAr = 'ArabicTwo';
 
-  static String get fontFamily => LocaleCubit.currentLangCode == en ? _fontFamilyEn : _fontFamilyAr;
+  static String get fontFamily => LocaleCubit.currentLangCode == en ? fontFamilyEn : fontFamilyAr;
 
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
@@ -21,8 +23,8 @@ class AppStrings {
 
   static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
 
-  static String dataAddedSuccessfully(BuildContext context) =>
-      _translate(context, "data_added_successfully");
+  static String dataSavedSuccessfully(BuildContext context) =>
+      _translate(context, "data_saved_successfully");
 
   static String somethingWentWrong(BuildContext context) =>
       _translate(context, "something_went_wrong");
@@ -32,6 +34,8 @@ class AppStrings {
   static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
 
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
+
+  static String nameHint(BuildContext context) => _translate(context, "name_hint");
 
   static List<String> get consumables =>
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
@@ -100,15 +104,20 @@ class AppStrings {
 
   static const String prefsBoolSeen = 'seen';
   static const String prefsBoolNotif = 'notifications_set';
-  static const String prefsBoolVisible = 'visible';
+  static const String prefsBoolDetailedModeOn = 'detailed_mode_on';
+  static const String prefsBoolEditModeOn = 'edit_mode_on';
   static const String prefsBoolListAdded = 'list_added';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");
 
+  static String sureToDeleteMsg(BuildContext context) => _translate(context, "sure_to_delete");
+
   static String sureToExitMsg(BuildContext context) => _translate(context, "sure_to_exit");
 
   static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
+
+  static String addConsumable(BuildContext context) => _translate(context, "add_item");
 
   static String exitWithoutSaving(BuildContext context) =>
       _translate(context, "exit_without_saving").toUpperCase();
@@ -164,7 +173,22 @@ class AppStrings {
 
   static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
 
-  static String fileCreated(BuildContext context) => _translate(context, "file_created");
+  static String fileCreated(BuildContext context) =>
+      "${_translate(context, "file_named")}\n${FileCreator.fileName}.txt\n${_translate(context, "file_created")}";
 
   static String fileNotCreated(BuildContext context) => _translate(context, "file_not_created");
+
+  static String nameNotEmpty(BuildContext context) => _translate(context, "name_not_empty");
+
+  static String removingItem(BuildContext context, int index) =>
+      "${_translate(context, "removing_item")} '${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
+
+  static String removeItem(BuildContext context) => _translate(context, "remove_item");
+
+  static String cancel(BuildContext context) => _translate(context, "cancel");
+
+  static String removedItem(BuildContext context) =>
+      _translate(context, "removed_item_successfully");
+
+  static String itemAdded(BuildContext context) => _translate(context, "item_added");
 }
