@@ -181,7 +181,7 @@ class AppStrings {
   static String nameNotEmpty(BuildContext context) => _translate(context, "name_not_empty");
 
   static String removingItem(BuildContext context, int index) =>
-      "${_translate(context, "removing_item")} '${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
+      "${_translate(context, "removing_item")}\n'${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
 
   static String removeItem(BuildContext context) => _translate(context, "remove_item");
 
