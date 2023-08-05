@@ -27,6 +27,7 @@ class FileCreator {
 
   static final String _fileName =
       "${enLocale ? 'CarNote' : 'مذكرةالسيارة'}_${enLocale ? _dateTimeString : _dateTimeString.toArabicNumerals()}";
+  static String get fileName => _fileName;
 
   static String get _fileData {
     Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);

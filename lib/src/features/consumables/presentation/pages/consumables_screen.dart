@@ -34,10 +34,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   // String? _scheduleTime;
 
   bool _getVisibilityStatus() {
-    if (_prefs.getBool(AppStrings.prefsBoolVisible) == null) {
-      _prefs.setBool(AppStrings.prefsBoolVisible, true);
+    if (_prefs.getBool(AppStrings.prefsBoolDetailedModeOn) == null) {
+      _prefs.setBool(AppStrings.prefsBoolDetailedModeOn, true);
     }
-    bool visible = _prefs.getBool(AppStrings.prefsBoolVisible) ?? true;
+    bool visible = _prefs.getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
     return visible;
   }
 
@@ -229,6 +229,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   icon: const Icon(Icons.upload_file_rounded),
                   onPressed: () => FileCreator.writeDataToFile().then((value) {
                     return BotToast.showText(
+                        duration: Duration(seconds: value == true ? 7 : 2),
                         text: value == true
                             ? AppStrings.fileCreated(context)
                             : AppStrings.fileNotCreated(context));
@@ -309,7 +310,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 child: CustomIconButton(
                   iconData: Icons.add,
                   btnEnabled: consumableCubit.shouldEnableButton(context),
-                  onPressed: () => Navigator.popAndPushNamed(context, Routes.addConsumableRoute),
+                  onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
                 ),
               )
             ],

@@ -1,8 +1,11 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/widgets/consumable_name_text_field.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +23,8 @@ class ConsumableWidget extends StatefulWidget {
 }
 
 class ConsumableWidgetState extends State<ConsumableWidget> {
+  bool _editing = false;
+
   @override
   void initState() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -33,6 +38,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
+    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
 
     cubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
     cubit.calculateWarningDifference(widget.index);
@@ -167,18 +173,95 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.only(top: 15, bottom: 10, end: 3, start: 3),
+          padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, end: 3, start: 3),
           child: Row(
             children: [
-              Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const Spacer(),
+              !_editing
+                  ? Expanded(flex: 30,
+                    child: Text(
+                      widget.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontFamily: AppStrings.fontFamilyEn,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  )
+                  : Expanded(child: ConsumableNameTextField(index: widget.index)),
+              !_editing ? const Spacer() : const SizedBox(width: 30),
               Visibility(
-                visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
+                visible: visible,
                 child: Row(
                   children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+                    _editing
+                        ? IconButton(
+                            onPressed: () {
+                              DatabaseHelper.writeConsumableName(context, widget.index)
+                                  .then((value) {
+                                if (value) {
+                                  setState(() => _editing = false);
+                                  cubit.consumableNameController.text = '';
+                                } else {
+                                  BotToast.showText(text: AppStrings.nameNotEmpty(context));
+                                }
+                              });
+                            },
+                            icon: const Icon(Icons.check))
+                        : const SizedBox(),
+                    _editing
+                        ? IconButton(
+                            onPressed: () {
+                              cubit.consumableNameController.text = '';
+                              setState(() => _editing = false);
+                            },
+                            icon: const Icon(Icons.close))
+                        : const SizedBox(),
+                    !_editing
+                        ? IconButton(
+                            onPressed: () {
+                              cubit.consumableNameController.text = '';
+                              setState(() => _editing = true);
+                            },
+                            icon: const Icon(Icons.edit))
+                        : const SizedBox(),
                     IconButton(
-                        onPressed: () => DatabaseHelper.removeConsumable(widget.index, context),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+                              title: Text(AppStrings.removingItem(context, widget.index)),
+                              content: Text(AppStrings.sureToDeleteMsg(context)),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    DatabaseHelper.removeConsumable(widget.index, context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    AppStrings.removeItem(context),
+                                    style: TextStyle(
+                                        color: context.isLight
+                                            ? AppColors.primarySwatchLight.shade100
+                                            : AppColors.primarySwatchDark.shade500),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text(
+                                    AppStrings.cancel(context),
+                                    style: TextStyle(
+                                        color: context.isLight
+                                            ? AppColors.primarySwatchLight.shade100
+                                            : AppColors.primarySwatchDark.shade500),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.delete)),
                   ],
                 ),
@@ -187,7 +270,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           ),
         ),
         Visibility(
-          visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
+          visible: visible,
           child: Column(
             children: [
               const SizedBox(height: 10),
@@ -204,11 +287,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         ),
         const SizedBox(height: 10),
         buildRemainingKmTextFormField(context),
-        Visibility(
-          visible: di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true,
-          child: const SizedBox(height: 10),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
       ],
     );
   }

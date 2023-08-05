@@ -13,6 +13,7 @@ import 'package:car_note/injection_container.dart' as di;
 class DatabaseHelper {
   /// Car
   static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
+
   static Box<Car> get carBox => _carBox;
 
   static Future<bool> writeCarData(BuildContext context) async {
@@ -33,7 +34,7 @@ class DatabaseHelper {
 
     if (isNotNull) {
       prefs.setBool(AppStrings.prefsBoolSeen, true);
-      BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
+      BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));
     }
@@ -43,7 +44,21 @@ class DatabaseHelper {
 
   /// Consumables
   static final Box<List> _consumableBox = Hive.box<List>(AppStrings.consumableBox);
+
   static Box<List> get consumableBox => _consumableBox;
+
+  static Future<bool> writeConsumableName(BuildContext context, int index) async {
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    if (consumableCubit.consumableNameController.text.isEmpty) {
+      return false;
+    } else {
+      _consumableBox.get(AppStrings.consumableBox)![index].name =
+          consumableCubit.consumableNameController.text;
+      writeConsumablesData(context);
+      return true;
+    }
+  }
 
   static Future<void> writeConsumablesData(BuildContext context) async {
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
@@ -82,15 +97,17 @@ class DatabaseHelper {
 
     _consumableBox.put(AppStrings.consumableBox, list);
 
-    BotToast.showText(text: AppStrings.dataAddedSuccessfully(context));
+    BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
   }
 
-  static void addConsumable(
+  static Future<bool> addConsumable(
     BuildContext context, {
     required String name,
     required int lastChangedAt,
     required int changeInterval,
-  }) {
+  }) async {
+    if (name.isEmpty || lastChangedAt == 0 || changeInterval == 0) return false;
+
     _consumableBox.get(AppStrings.consumableBox)!.add(
           Consumable(
             id: _consumableBox.get(AppStrings.consumableBox)!.length,
@@ -114,6 +131,8 @@ class DatabaseHelper {
     consumableCubit.lastChangedAtFocuses.add(FocusNode());
     consumableCubit.changeIntervalFocuses.add(FocusNode());
     consumableCubit.remainingKmFocuses.add(FocusNode());
+
+    return true;
   }
 
   static void removeConsumable(int index, BuildContext context) {
@@ -131,5 +150,7 @@ class DatabaseHelper {
     consumableCubit.remainingKmFocuses.removeAt(index);
 
     Consumable.count--;
+
+    BotToast.showText(text: AppStrings.removedItem(context));
   }
 }

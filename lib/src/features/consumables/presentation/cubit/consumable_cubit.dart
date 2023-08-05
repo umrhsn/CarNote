@@ -237,13 +237,13 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Control widgets visibility
   void changeVisibility(BuildContext context) {
-    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolVisible) ?? true;
+    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
     emit(VisibilityChanging());
     visible = !visible;
     visible
         ? BotToast.showText(text: AppStrings.detailedModeOn(context))
         : BotToast.showText(text: AppStrings.detailedModeOff(context));
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolVisible, visible);
+    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolDetailedModeOn, visible);
     emit(VisibilityChanged());
   }
 

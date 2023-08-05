@@ -1,4 +1,4 @@
-import 'package:car_note/src/config/routes/app_routes.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -118,7 +118,7 @@ class AddConsumableState extends State<AddConsumable> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const ConsumableNameTextField(),
+            ConsumableNameTextField(),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -129,20 +129,44 @@ class AddConsumableState extends State<AddConsumable> {
               ],
             ),
             const Spacer(),
-            CustomButton(
-              text: AppStrings.addConsumable(context).toUpperCase(),
-              btnEnabled: cubit.shouldEnableButton(context),
-              onPressed: () {
-                DatabaseHelper.addConsumable(
-                  context,
-                  name: cubit.consumableNameController.text,
-                  lastChangedAt:
-                      int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
-                  changeInterval:
-                      int.parse(cubit.changeIntervalController.text.removeThousandSeparator()),
-                );
-                Navigator.popAndPushNamed(context, Routes.consumablesRoute);
-              },
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: CustomButton(
+                    text: AppStrings.addConsumable(context).toUpperCase(),
+                    btnEnabled: true,
+                    onPressed: () {
+                      DatabaseHelper.addConsumable(
+                        context,
+                        name: cubit.consumableNameController.text,
+                        lastChangedAt: cubit.lastChangedController.text.isEmpty
+                            ? 0
+                            : int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
+                        changeInterval: cubit.changeIntervalController.text.isEmpty
+                            ? 0
+                            : int.parse(
+                                cubit.changeIntervalController.text.removeThousandSeparator()),
+                      ).then((value) {
+                        if (value) {
+                          BotToast.showText(text: AppStrings.itemAdded(context));
+                          Navigator.pop(context);
+                        } else {
+                          BotToast.showText(text: AppStrings.invalidInput(context));
+                        }
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CustomButton(
+                    text: AppStrings.cancel(context).toUpperCase(),
+                    onPressed: () => Navigator.pop(context),
+                    btnEnabled: true,
+                  ),
+                )
+              ],
             )
           ],
         ),

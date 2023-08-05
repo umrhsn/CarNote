@@ -2,7 +2,7 @@
   "app_name": "مذكرة السيارة",
   "btn_continue": "استمرار",
   "btn_save": "حفظ",
-  "data_added_successfully": "أضيفت البيانات",
+  "data_saved_successfully": "تم حفظ البيانات",
   "something_went_wrong": "حدث خطأ ما",
   "car_type_hint": "نوع السيارة. مثال: سوزوكي ماروتي",
   "model_year_hint": "سنة الموديل. مثال: 2014",
@@ -22,6 +22,7 @@
   "remaining": "متبقيًا",
   "km": "كم",
   "changed_data_msg": "لقد قمت بتعديل بعض البيانات.",
+  "sure_to_delete": "أتريد حذف هذا العنصر؟",
   "sure_to_exit": "هل ستخرج دون حفظ البيانات؟",
   "save_data": "حفظ البيانات",
   "add_item": "أضف العنصر",
@@ -42,6 +43,13 @@
   "daily_notif_off": "تم إلغاء تفعيل الإشعار اليومي",
   "notif_time_not_set": "لم تقم بتحديد وقت للإشعار اليومي.\nلن يظهر أي إشعار.",
   "lang_changed_toast": "Switched to English",
-  "file_created": "تم إنشاء الملف",
-  "file_not_created": "لم يتم إنشاء الملف."
+  "file_named": "تم إنشاء ملف باسم",
+  "file_created": "وتم حفظه في مجلد 'Download'",
+  "file_not_created": "لم يتم إنشاء الملف.",
+  "name_not_empty": "الاسم فارغ",
+  "removing_item": "أنت تقوم بحذف",
+  "remove_item": "حذف العنصر",
+  "cancel": "إلغاء",
+  "removed_item_successfully": "تم حذف العنصر",
+  "item_added": "تمت إضافة العنصر"
 }

@@ -10,7 +10,7 @@ class Consumable extends HiveObject {
   final int id;
 
   @HiveField(1)
-  final String name;
+  String name;
 
   @HiveField(2)
   final int lastChangedAt;
