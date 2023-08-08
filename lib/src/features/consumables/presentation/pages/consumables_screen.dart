@@ -300,7 +300,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     );
                   },
                   onReorder: (oldIndex, newIndex) =>
-                      setState(() => DatabaseHelper.changeItemOrder(context, oldIndex, newIndex))),
+                      setState(() => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
             ),
           ),
         );

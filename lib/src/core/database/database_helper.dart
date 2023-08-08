@@ -150,7 +150,7 @@ class DatabaseHelper {
     BotToast.showText(text: AppStrings.removedItem(context));
   }
 
-  static void changeItemOrder(BuildContext context, int oldIndex, int newIndex) {
+  static void changeConsumableOrder(BuildContext context, int oldIndex, int newIndex) {
     if (oldIndex < newIndex) newIndex -= 1;
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
