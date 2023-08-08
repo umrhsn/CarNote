@@ -6,20 +6,11 @@ part 'consumable.g.dart';
 
 @HiveType(typeId: 2)
 class Consumable extends HiveObject {
-  @HiveField(0)
-  final int id;
-
-  @HiveField(1)
-  String name;
-
-  @HiveField(2)
-  final int lastChangedAt;
-
-  @HiveField(3)
-  final int changeInterval;
-
-  @HiveField(4)
-  final int remainingKm;
+  @HiveField(0) int id;
+  @HiveField(1) String name;
+  @HiveField(2) final int lastChangedAt;
+  @HiveField(3) final int changeInterval;
+  @HiveField(4) final int remainingKm;
 
   static int count = 0;
 
