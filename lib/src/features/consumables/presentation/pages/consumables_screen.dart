@@ -284,9 +284,20 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               child: ReorderableListView.builder(
                   itemCount: Consumable.getCount(),
                   itemBuilder: (context, index) {
-                    Consumable item =
-                        DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
-                    return ConsumableWidget(key: ValueKey(index), index: index, name: item.name);
+                    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                    Consumable item = list![index];
+                    return Column(
+                      key: ValueKey(index),
+                      children: [
+                        ConsumableWidget(index: index, name: item.name),
+                        index == list.length - 1
+                            ? const SizedBox()
+                            : Divider(
+                    indent: 20,
+                    endIndent: 20
+                    ,color: AppColors.getHintColor(context), thickness: 2)
+                      ],
+                    );
                   },
                   onReorder: (oldIndex, newIndex) =>
                       setState(() => DatabaseHelper.changeItemOrder(context, oldIndex, newIndex))),
