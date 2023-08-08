@@ -141,10 +141,6 @@ class DatabaseHelper {
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    consumableCubit.lastChangedAtControllers.removeAt(index);
-    consumableCubit.changeIntervalControllers.removeAt(index);
-    consumableCubit.remainingKmControllers.removeAt(index);
-
     consumableCubit.lastChangedAtFocuses.removeAt(index);
     consumableCubit.changeIntervalFocuses.removeAt(index);
     consumableCubit.remainingKmFocuses.removeAt(index);
@@ -152,5 +148,36 @@ class DatabaseHelper {
     Consumable.count--;
 
     BotToast.showText(text: AppStrings.removedItem(context));
+  }
+
+  static void changeItemOrder(BuildContext context, int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) newIndex -= 1;
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    Consumable item = _consumableBox.get(AppStrings.consumableBox)!.removeAt(oldIndex);
+    int lastChangedAt = int.parse(
+        consumableCubit.lastChangedAtControllers.removeAt(oldIndex).text.removeThousandSeparator());
+    int changeInterval = int.parse(consumableCubit.changeIntervalControllers
+        .removeAt(oldIndex)
+        .text
+        .removeThousandSeparator());
+    int remainingKm = int.parse(
+        consumableCubit.remainingKmControllers.removeAt(oldIndex).text.removeThousandSeparator());
+    consumableCubit.lastChangedAtFocuses.removeAt(oldIndex);
+    consumableCubit.changeIntervalFocuses.removeAt(oldIndex);
+    consumableCubit.remainingKmFocuses.removeAt(oldIndex);
+
+    _consumableBox.get(AppStrings.consumableBox)!.insert(newIndex, item);
+    consumableCubit.lastChangedAtControllers
+        .insert(newIndex, TextEditingController(text: lastChangedAt.toThousands()));
+    consumableCubit.changeIntervalControllers
+        .insert(newIndex, TextEditingController(text: changeInterval.toThousands()));
+    consumableCubit.remainingKmControllers
+        .insert(newIndex, TextEditingController(text: remainingKm.toThousands()));
+    consumableCubit.lastChangedAtFocuses.insert(newIndex, FocusNode());
+    consumableCubit.changeIntervalFocuses.insert(newIndex, FocusNode());
+    consumableCubit.remainingKmFocuses.insert(newIndex, FocusNode());
+
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
   }
 }
