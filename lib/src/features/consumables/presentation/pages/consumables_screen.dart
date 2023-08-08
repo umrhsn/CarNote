@@ -280,15 +280,16 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Scrollbar(
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 15),
-              child: ListView.separated(
-                itemCount: Consumable.getCount(),
-                itemBuilder: (context, index) {
-                  Consumable item =
-                      DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
-                  return ConsumableWidget(index: index, name: item.name);
-                },
-                separatorBuilder: (context, index) => const Divider(thickness: 2),
-              ),
+              // separatorBuilder: (context, index) => const Divider(thickness: 2),
+              child: ReorderableListView.builder(
+                  itemCount: Consumable.getCount(),
+                  itemBuilder: (context, index) {
+                    Consumable item =
+                        DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+                    return ConsumableWidget(key: ValueKey(index), index: index, name: item.name);
+                  },
+                  onReorder: (oldIndex, newIndex) =>
+                      setState(() => DatabaseHelper.changeItemOrder(context, oldIndex, newIndex))),
             ),
           ),
         );
