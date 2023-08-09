@@ -145,8 +145,6 @@ class DatabaseHelper {
     consumableCubit.changeIntervalFocuses.removeAt(index);
     consumableCubit.remainingKmFocuses.removeAt(index);
 
-    Consumable.count--;
-
     BotToast.showText(text: AppStrings.removedItem(context));
   }
 

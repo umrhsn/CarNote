@@ -10,6 +10,7 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/core/widgets/custom_icon_button.dart';
+import 'package:car_note/src/core/widgets/dialogs.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
@@ -73,110 +74,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   Widget build(BuildContext context) {
     LocaleCubit localeCubit = LocaleCubit.get(context);
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
-
-    // TODO: uncomment when onWillPop is functional
-    // void showExitDialog() {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(
-    //       icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-    //       title: Text(AppStrings.changedDataMsg(context)),
-    //       content: Text(AppStrings.sureToExitMsg(context)),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () async => DatabaseHelper.writeConsumablesData(context)
-    //               .then((value) => SystemNavigator.pop()),
-    //           child: Text(
-    //             AppStrings.saveData(context),
-    //             style: TextStyle(
-    //                 color: context.isLight
-    //                     ? AppColors.primarySwatchLight.shade100
-    //                     : AppColors.primarySwatchDark.shade500),
-    //           ),
-    //         ),
-    //         TextButton(
-    //           onPressed: () => SystemNavigator.pop(),
-    //           child: Text(
-    //             AppStrings.exitWithoutSaving(context),
-    //             style: TextStyle(
-    //                 color: context.isLight
-    //                     ? AppColors.primarySwatchLight.shade100
-    //                     : AppColors.primarySwatchDark.shade500),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-
-    // FIXME: malfunctioning
-    // Future<bool> onWillPop() async {
-    //   for (int index = 0; index < Consumable.getCount(); index++) {
-    //     Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
-    //     Consumable? consumable =
-    //         DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)![index];
-    //
-    //     if (Consumable.count !=
-    //         DatabaseHelper.consumableBox.get(AppStrings.consumablesKey)!.length) {
-    //       showExitDialog();
-    //       return false;
-    //     }
-    //
-    //     if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
-    //         car!.currentKm) {
-    //       showExitDialog();
-    //       return false;
-    //     }
-    //
-    //     if (consumable == null) {
-    //       if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
-    //           consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
-    //           consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
-    //         showExitDialog();
-    //         return false;
-    //       }
-    //     }
-    //
-    //     if (consumable != null) {
-    //       if ((consumable.lastChangedAt == 0 &&
-    //               consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
-    //           (consumable.changeInterval == 0 &&
-    //               consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
-    //           (consumable.remainingKm == 0 &&
-    //               consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
-    //         showExitDialog();
-    //         return false;
-    //       }
-    //
-    //       if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
-    //               consumable.lastChangedAt != 0) ||
-    //           consumableCubit.changeIntervalControllers[index].text.isEmpty &&
-    //               consumable.changeInterval != 0 ||
-    //           consumableCubit.remainingKmControllers[index].text.isEmpty &&
-    //               consumable.remainingKm != 0) {
-    //         showExitDialog();
-    //         return false;
-    //       }
-    //
-    //       if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
-    //               int.parse(consumableCubit.lastChangedAtControllers[index].text
-    //                       .removeThousandSeparator()) !=
-    //                   consumable.lastChangedAt) ||
-    //           (consumableCubit.changeIntervalControllers[index].text.isNotEmpty &&
-    //               int.parse(consumableCubit.changeIntervalControllers[index].text
-    //                       .removeThousandSeparator()) !=
-    //                   consumable.changeInterval) ||
-    //           (consumableCubit.remainingKmControllers[index].text.isNotEmpty &&
-    //               int.parse(consumableCubit.remainingKmControllers[index].text
-    //                       .removeThousandSeparator()) !=
-    //                   consumable.remainingKm)) {
-    //         showExitDialog();
-    //         return false;
-    //       }
-    //     }
-    //   }
-    //   return true;
-    // }
 
     Column buildAppBarWidgets() => Column(
           children: [
@@ -280,7 +177,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Scrollbar(
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 15),
-              // separatorBuilder: (context, index) => const Divider(thickness: 2),
               child: ReorderableListView.builder(
                   itemCount: Consumable.getCount(),
                   itemBuilder: (context, index) {
@@ -293,14 +189,15 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                         index == list.length - 1
                             ? const SizedBox()
                             : Divider(
-                    indent: 20,
-                    endIndent: 20
-                    ,color: AppColors.getHintColor(context), thickness: 2)
+                                indent: 20,
+                                endIndent: 20,
+                                color: AppColors.getHintColor(context),
+                                thickness: 2)
                       ],
                     );
                   },
-                  onReorder: (oldIndex, newIndex) =>
-                      setState(() => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+                  onReorder: (oldIndex, newIndex) => setState(
+                      () => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
             ),
           ),
         );
@@ -331,28 +228,30 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
     return BlocBuilder<ConsumableCubit, ConsumableState>(
       builder: (context, state) {
-        // TODO: implement onWillPop, surround by WillPopScope widget
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: AppColors.getPrimaryColor(context),
-            toolbarHeight: 140,
-            title: buildAppBarWidgets(),
-          )
-          // TODO: add ads to page
-          // .withBottomAdmobBanner(context)
-          ,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(start: 15),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildConsumablesList(),
-                  const Spacer(),
-                  buildBottomButtons(),
-                  const SizedBox(height: 15),
-                ],
+        return WillPopScope(
+          onWillPop: () => Dialogs.onWillPop(context),
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.getPrimaryColor(context),
+              toolbarHeight: 140,
+              title: buildAppBarWidgets(),
+            )
+            // TODO: add ads to page
+            // .withBottomAdmobBanner(context)
+            ,
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    buildConsumablesList(),
+                    const Spacer(),
+                    buildBottomButtons(),
+                    const SizedBox(height: 15),
+                  ],
+                ),
               ),
             ),
           ),

@@ -12,17 +12,13 @@ class Consumable extends HiveObject {
   @HiveField(3) final int changeInterval;
   @HiveField(4) final int remainingKm;
 
-  static int count = 0;
-
   Consumable({
     required this.id,
     required this.name,
     required this.lastChangedAt,
     required this.changeInterval,
     required this.remainingKm,
-  }) {
-    count++;
-  }
+  });
 
   static int getCount() => DatabaseHelper.consumableBox.get(AppStrings.consumableBox)!.length;
 }
