@@ -37,7 +37,8 @@ void main() async {
       DatabaseHelper.consumableBox.get(AppStrings.consumableBox)!.add(
             Consumable(
               id: index,
-              name: AppStrings.consumables[index],
+              name:
+                  "${AppStrings.consumablesEnglishList[index]}  ${AppStrings.consumablesArabicList[index]}",
               lastChangedAt: 0,
               changeInterval: 0,
               remainingKm: 0,

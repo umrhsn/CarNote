@@ -5,9 +5,7 @@ import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dar
 import 'package:flutter/material.dart';
 
 class AppStrings {
-  static String _translate(BuildContext context, String stringKey) =>
-      AppLocalizations.of(context)!.translate(stringKey)!;
-
+  /// Core
   static String appName(BuildContext context) => _translate(context, "app_name");
 
   static const String fontFamilyEn = 'Product Sans';
@@ -15,31 +13,20 @@ class AppStrings {
 
   static String get fontFamily => LocaleCubit.currentLangCode == en ? fontFamilyEn : fontFamilyAr;
 
+  /// Localization
+  static const String locale = 'locale';
+  static const String en = 'en';
+  static const String ar = 'ar';
+
+  static String _translate(BuildContext context, String stringKey) =>
+      AppLocalizations.of(context)!.translate(stringKey)!;
+
+  /// Database
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
-  static String btnContinue(BuildContext context) =>
-      _translate(context, "btn_continue").toUpperCase();
-
-  static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
-
-  static String dataSavedSuccessfully(BuildContext context) =>
-      _translate(context, "data_saved_successfully");
-
-  static String somethingWentWrong(BuildContext context) =>
-      _translate(context, "something_went_wrong");
-
-  static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
-
-  static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
-
-  static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
-
-  static String nameHint(BuildContext context) => _translate(context, "name_hint");
-
   static List<String> get consumables =>
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
-
   static List<String> consumablesEnglishList = [
     'Oil',
     'Oil Filter',
@@ -54,7 +41,6 @@ class AppStrings {
     'Spark Plugs',
     'Brake Linings'
   ];
-
   static List<String> consumablesArabicList = [
     'الزيت',
     'فلتر الزيت',
@@ -69,9 +55,70 @@ class AppStrings {
     'البوچيهات',
     'تيل الفرامل'
   ];
+  static const String prefsBoolSeen = 'seen';
+  static const String prefsBoolNotif = 'notifications_set';
+  static const String prefsBoolDetailedModeOn = 'detailed_mode_on';
+  static const String prefsBoolEditModeOn = 'edit_mode_on';
+  static const String prefsBoolListAdded = 'list_added';
+  static const String prefsStringNotifScheduleTime = 'schedule_time';
+
+  /// Buttons
+  static String btnContinue(BuildContext context) =>
+      _translate(context, "btn_continue").toUpperCase();
+
+  static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
+
+  /// Toasts
+  static String dataSavedSuccessfully(BuildContext context) =>
+      _translate(context, "data_saved_successfully");
+
+  static String somethingWentWrong(BuildContext context) =>
+      _translate(context, "something_went_wrong");
+
+  static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
+
+  static String detailedModeOff(BuildContext context) => _translate(context, "detailed_mode_off");
+
+  static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
+
+  static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
+      scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
+
+  static String dailyNotificationOff(BuildContext context) =>
+      _translate(context, "daily_notif_off");
+
+  static String notificationTimeNotSet(BuildContext context) =>
+      _translate(context, "notif_time_not_set");
+
+  static String tapBackAgainToExit(BuildContext context) =>
+      _translate(context, "tap_back_again_to_exit");
+
+  static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
+
+  static String fileCreated(BuildContext context) =>
+      "${_translate(context, "file_named")}\n${FileCreator.fileName}.txt\n${_translate(context, "file_created")}";
+
+  static String fileNotCreated(BuildContext context) => _translate(context, "file_not_created");
+
+  static String nameNotEmpty(BuildContext context) => _translate(context, "name_not_empty");
+
+  static String removedItem(BuildContext context) =>
+      _translate(context, "removed_item_successfully");
+
+  static String itemAdded(BuildContext context) => _translate(context, "item_added");
+
+  /// Hints
+  static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
+
+  static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
+
+  static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
+
+  static String nameHint(BuildContext context) => _translate(context, "name_hint");
 
   static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
 
+  /// Labels
   static String lastChangedAtLabel(BuildContext context) =>
       _translate(context, "last_changed_at_label");
 
@@ -84,6 +131,7 @@ class AppStrings {
   static String remainingKmErrorLabel(BuildContext context) =>
       _translate(context, "remaining_km_error_label");
 
+  /// Validators
   static String requiredField(BuildContext context) => _translate(context, "required_field");
 
   static String yearMatchesLength(BuildContext context) =>
@@ -102,13 +150,7 @@ class AppStrings {
 
   static String km(BuildContext context) => _translate(context, "km");
 
-  static const String prefsBoolSeen = 'seen';
-  static const String prefsBoolNotif = 'notifications_set';
-  static const String prefsBoolDetailedModeOn = 'detailed_mode_on';
-  static const String prefsBoolEditModeOn = 'edit_mode_on';
-  static const String prefsBoolListAdded = 'list_added';
-  static const String prefsStringNotifScheduleTime = 'schedule_time';
-
+  /// Dialogs
   static String changedDataMsg(BuildContext context) => _translate(context, "changed_data_msg");
 
   static String sureToDeleteMsg(BuildContext context) => _translate(context, "sure_to_delete");
@@ -117,14 +159,20 @@ class AppStrings {
 
   static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
 
-  static String addConsumable(BuildContext context) => _translate(context, "add_item");
-
   static String exitWithoutSaving(BuildContext context) =>
       _translate(context, "exit_without_saving").toUpperCase();
 
-  static String tapBackAgainToExit(BuildContext context) =>
-      _translate(context, "tap_back_again_to_exit");
+  static String removingItem(BuildContext context, int index) =>
+      "${_translate(context, "removing_item")}\n'${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
 
+  static String removeItem(BuildContext context) => _translate(context, "remove_item");
+
+  static String cancel(BuildContext context) => _translate(context, "cancel");
+
+  /// AppBar titles
+  static String addConsumable(BuildContext context) => _translate(context, "add_item");
+
+  /// Notifications
   static const String notifChannelBasicGroupKey = 'basic_channel_group';
   static const String notifChannelBasicGroupName = 'Basic group';
   static const String notifChannelScheduledGroupKey = 'scheduled_channel_group';
@@ -147,48 +195,7 @@ class AppStrings {
   static String dailyNotificationTimePickerHelperText(BuildContext context) =>
       _translate(context, "daily_notif_time_picker_helper_text");
 
-  static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
-
-  static String detailedModeOff(BuildContext context) => _translate(context, "detailed_mode_off");
-
-  static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
-
-  static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
-      scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
-
-  static String dailyNotificationOff(BuildContext context) =>
-      _translate(context, "daily_notif_off");
-
-  static String notificationTimeNotSet(BuildContext context) =>
-      _translate(context, "notif_time_not_set");
-
-  /// error handling
+  /// Error handling
   static const String cacheFailure = 'Cache Failure';
   static const String unexpectedError = 'Unexpected Error';
-
-  /// localization
-  static const String locale = 'locale';
-  static const String en = 'en';
-  static const String ar = 'ar';
-
-  static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
-
-  static String fileCreated(BuildContext context) =>
-      "${_translate(context, "file_named")}\n${FileCreator.fileName}.txt\n${_translate(context, "file_created")}";
-
-  static String fileNotCreated(BuildContext context) => _translate(context, "file_not_created");
-
-  static String nameNotEmpty(BuildContext context) => _translate(context, "name_not_empty");
-
-  static String removingItem(BuildContext context, int index) =>
-      "${_translate(context, "removing_item")}\n'${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
-
-  static String removeItem(BuildContext context) => _translate(context, "remove_item");
-
-  static String cancel(BuildContext context) => _translate(context, "cancel");
-
-  static String removedItem(BuildContext context) =>
-      _translate(context, "removed_item_successfully");
-
-  static String itemAdded(BuildContext context) => _translate(context, "item_added");
 }
