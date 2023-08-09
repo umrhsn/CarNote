@@ -1,11 +1,11 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/consumable_name_text_field.dart';
+import 'package:car_note/src/core/widgets/dialogs.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -177,18 +177,19 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           child: Row(
             children: [
               !_editing
-                  ? Expanded(flex: 30,
-                    child: Text(
-                      widget.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontFamily: AppStrings.fontFamilyEn,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                  ? Expanded(
+                      flex: 30,
+                      child: Text(
+                        widget.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: AppStrings.fontFamilyEn,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
-                    ),
-                  )
+                    )
                   : Expanded(child: ConsumableNameTextField(index: widget.index)),
               !_editing ? const Spacer() : const SizedBox(width: 30),
               Visibility(
@@ -227,41 +228,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                             icon: const Icon(Icons.edit))
                         : const SizedBox(),
                     IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-                              title: Text(AppStrings.removingItem(context, widget.index)),
-                              content: Text(AppStrings.sureToDeleteMsg(context)),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    DatabaseHelper.removeConsumable(widget.index, context);
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text(
-                                    AppStrings.removeItem(context),
-                                    style: TextStyle(
-                                        color: context.isLight
-                                            ? AppColors.primarySwatchLight.shade100
-                                            : AppColors.primarySwatchDark.shade500),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text(
-                                    AppStrings.cancel(context),
-                                    style: TextStyle(
-                                        color: context.isLight
-                                            ? AppColors.primarySwatchLight.shade100
-                                            : AppColors.primarySwatchDark.shade500),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                        onPressed: () =>
+                            Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
                         icon: const Icon(Icons.delete)),
                   ],
                 ),
