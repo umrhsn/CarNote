@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
@@ -19,8 +20,10 @@ class Dialogs {
         content: Text(AppStrings.sureToExitMsg(context)),
         actions: [
           TextButton(
-            onPressed: () =>
-                DatabaseHelper.writeConsumablesData(context).then((value) => SystemNavigator.pop()),
+            onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) {
+              BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
+              SystemNavigator.pop();
+            }),
             child: Text(
               AppStrings.saveData(context),
               style: TextStyle(

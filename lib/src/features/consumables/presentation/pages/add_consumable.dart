@@ -9,6 +9,7 @@ import 'package:car_note/src/core/widgets/custom_button.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddConsumable extends StatefulWidget {
   const AddConsumable({Key? key}) : super(key: key);
@@ -105,72 +106,78 @@ class AddConsumableState extends State<AddConsumable> {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.getPrimaryColor(context),
-        toolbarHeight: 100,
-        title: Text(
-          AppStrings.addConsumable(context),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            ConsumableNameTextField(),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildLastChangedTextFormField(),
-                buildChangeIntervalTextFormField(),
-              ],
+    return BlocBuilder<ConsumableCubit, ConsumableState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColors.getPrimaryColor(context),
+            toolbarHeight: 100,
+            title: Text(
+              AppStrings.addConsumable(context),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const Spacer(),
-            Row(
+          ),
+          body: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 15),
+            child: Column(
               children: [
-                Expanded(
-                  flex: 2,
-                  child: CustomButton(
-                    text: AppStrings.addConsumable(context).toUpperCase(),
-                    btnEnabled: true,
-                    onPressed: () {
-                      DatabaseHelper.addConsumable(
-                        context,
-                        name: cubit.consumableNameController.text,
-                        lastChangedAt: cubit.lastChangedController.text.isEmpty
-                            ? 0
-                            : int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
-                        changeInterval: cubit.changeIntervalController.text.isEmpty
-                            ? 0
-                            : int.parse(
-                                cubit.changeIntervalController.text.removeThousandSeparator()),
-                      ).then((value) {
-                        if (value) {
-                          BotToast.showText(text: AppStrings.itemAdded(context));
-                          Navigator.pop(context);
-                        } else {
-                          BotToast.showText(text: AppStrings.invalidInput(context));
-                        }
-                      });
-                    },
-                  ),
+                const Spacer(),
+                ConsumableNameTextField(),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildLastChangedTextFormField(),
+                    buildChangeIntervalTextFormField(),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: CustomButton(
-                    text: AppStrings.cancel(context).toUpperCase(),
-                    onPressed: () => Navigator.pop(context),
-                    btnEnabled: true,
-                  ),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: CustomButton(
+                        text: AppStrings.addConsumable(context).toUpperCase(),
+                        btnEnabled: cubit.shouldEnableAddButton(context),
+                        onPressed: () {
+                          DatabaseHelper.addConsumable(
+                            context,
+                            name: cubit.consumableNameController.text,
+                            lastChangedAt: cubit.lastChangedController.text.isEmpty
+                                ? 0
+                                : int.parse(
+                                    cubit.lastChangedController.text.removeThousandSeparator()),
+                            changeInterval: cubit.changeIntervalController.text.isEmpty
+                                ? 0
+                                : int.parse(
+                                    cubit.changeIntervalController.text.removeThousandSeparator()),
+                          ).then((value) {
+                            if (value) {
+                              BotToast.showText(text: AppStrings.itemAdded(context));
+                              Navigator.pop(context);
+                            } else {
+                              BotToast.showText(text: AppStrings.invalidInput(context));
+                            }
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: CustomButton(
+                        text: AppStrings.cancel(context).toUpperCase(),
+                        onPressed: () => Navigator.pop(context),
+                        btnEnabled: true,
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

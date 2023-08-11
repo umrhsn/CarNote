@@ -19,41 +19,66 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
-    return SizedBox(
-      height: 48,
-      child: TextField(
-        controller: cubit.consumableNameController,
-        decoration: InputDecoration(
-          filled: false,
-          hintText: widget.index == null ? AppStrings.nameHint(context) : DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![widget.index!].name,
-          hintStyle: TextStyle(
-            fontFamily: AppStrings.fontFamilyEn,
-            fontWeight: FontWeight.normal,
-            color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
-          ),
-          labelStyle: TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
-          focusColor: context.isLight
-              ? AppColors.appBarFocusedPrimaryLight
-              : AppColors.appBarFocusedPrimaryDark,
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
+    return Column(
+      children: [
+        TextFormField(
+          controller: cubit.consumableNameController,
+          decoration: InputDecoration(
+            filled: false,
+            hintText: widget.index == null
+                ? AppStrings.nameHint(context)
+                : DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![widget.index!].name,
+            hintStyle: TextStyle(
+              fontFamily: AppStrings.fontFamilyEn,
+              fontWeight: FontWeight.normal,
               color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
-              width: 1.2,
-              strokeAlign: 0,
+            ),
+            labelStyle:
+                TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
+            focusColor: context.isLight
+                ? AppColors.appBarFocusedPrimaryLight
+                : AppColors.appBarFocusedPrimaryDark,
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
+                width: 1.2,
+                strokeAlign: 0,
+              ),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
+                width: 1.2,
+                strokeAlign: 0,
+              ),
+            ),
+            disabledBorder: null,
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: context.isLight ? AppColors.errorLight : AppColors.errorDark,
+                width: 1.2,
+                strokeAlign: 0,
+              ),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                color: context.isLight
+                    ? AppColors.appBarFocusedPrimaryLight
+                    : AppColors.appBarFocusedPrimaryDark,
+                strokeAlign: 0,
+                width: 1.2,
+              ),
             ),
           ),
-          disabledBorder: null,
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: context.isLight
-                  ? AppColors.appBarFocusedPrimaryLight
-                  : AppColors.appBarFocusedPrimaryDark,
-              strokeAlign: 0,
-              width: 1.2,
-            ),
-          ),
+          validator: (value) {
+            if (cubit.consumableNameController.text.isEmpty) {
+              return AppStrings.nameNotEmpty(context);
+            }
+            return null;
+          },
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
-      ),
+      ],
     );
   }
 }

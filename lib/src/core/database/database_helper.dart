@@ -55,7 +55,8 @@ class DatabaseHelper {
     } else {
       _consumableBox.get(AppStrings.consumableBox)![index].name =
           consumableCubit.consumableNameController.text;
-      writeConsumablesData(context);
+      writeConsumablesData(context)
+          .then((value) => BotToast.showText(text: AppStrings.dataSavedSuccessfully(context)));
       return true;
     }
   }
@@ -96,8 +97,6 @@ class DatabaseHelper {
     }
 
     _consumableBox.put(AppStrings.consumableBox, list);
-
-    BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
   }
 
   static Future<bool> addConsumable(

@@ -19,13 +19,15 @@ class CustomIconButton extends StatelessWidget {
       onPressed: btnEnabled ? onPressed : null,
       style: !btnEnabled
           ? ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
               elevation: MaterialStateProperty.all(0),
               foregroundColor:
                   MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
               backgroundColor:
                   MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
             )
-          : const ButtonStyle(),
+          :  ButtonStyle(
+        padding: MaterialStateProperty.all(EdgeInsets.zero),),
       child: Icon(iconData),
     );
   }

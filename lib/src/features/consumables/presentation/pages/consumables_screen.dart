@@ -85,6 +85,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 IconButton(
                   icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
                   onPressed: () => consumableCubit.changeVisibility(context),
+                  tooltip: AppStrings.toggleModeTooltip(context),
                 ),
                 // FIXME: notification only shows once instead of daily
                 // IconButton(
@@ -121,16 +122,18 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () => AppLocalizations.of(context)!.isEnLocale
                       ? localeCubit.toArabic(context)
                       : localeCubit.toEnglish(context),
+                  tooltip: AppStrings.switchLangTooltip(context),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.upload_file_rounded),
-                  onPressed: () => FileCreator.writeDataToFile().then((value) {
-                    return BotToast.showText(
-                        duration: Duration(seconds: value == true ? 7 : 2),
-                        text: value == true
-                            ? AppStrings.fileCreated(context)
-                            : AppStrings.fileNotCreated(context));
-                  }),
+                  icon: const Icon(Icons.file_copy),
+                  onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
+                      FileCreator.writeDataToFile().then((value) => BotToast.showText(
+                          duration: Duration(seconds: value == true ? 7 : 2),
+                          text: value == true
+                              ? AppStrings.fileCreated(context)
+                              : AppStrings.fileNotCreated(context),
+                          textStyle: const TextStyle(fontFamily: AppStrings.fontFamilyEn)))),
+                  tooltip: AppStrings.createFileTooltip(context),
                 ),
               ],
             ),
@@ -176,7 +179,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           flex: 1000,
           child: Scrollbar(
             child: Padding(
-              padding: const EdgeInsetsDirectional.only(end: 15),
+              padding: const EdgeInsetsDirectional.only(end: 10),
               child: ReorderableListView.builder(
                   itemCount: Consumable.getCount(),
                   itemBuilder: (context, index) {
@@ -203,7 +206,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         );
 
     Padding buildBottomButtons() => Padding(
-          padding: const EdgeInsetsDirectional.only(top: 10, end: 15),
+          padding: const EdgeInsetsDirectional.only(end: 10),
           child: Row(
             children: [
               Flexible(
@@ -211,7 +214,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 child: CustomButton(
                   text: AppStrings.btnSave(context),
                   btnEnabled: consumableCubit.shouldEnableButton(context),
-                  onPressed: () => DatabaseHelper.writeConsumablesData(context),
+                  onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
+                      BotToast.showText(text: AppStrings.dataSavedSuccessfully(context))),
                 ),
               ),
               const SizedBox(width: 10),
@@ -221,7 +225,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   btnEnabled: consumableCubit.shouldEnableButton(context),
                   onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
                 ),
-              )
+              ),
             ],
           ),
         );
@@ -242,7 +246,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             ,
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 15),
+                padding: const EdgeInsetsDirectional.only(start: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
