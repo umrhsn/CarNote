@@ -173,7 +173,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, end: 3, start: 3),
+          padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, start: 10),
           child: Row(
             children: [
               !_editing
@@ -239,22 +239,28 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
         ),
         Visibility(
           visible: visible,
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildLastChangedTextFormField(),
-                  buildChangeIntervalTextFormField(),
-                ],
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildLastChangedTextFormField(),
+                    buildChangeIntervalTextFormField(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 10),
-        buildRemainingKmTextFormField(context),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: buildRemainingKmTextFormField(context),
+        ),
         const SizedBox(height: 20),
       ],
     );

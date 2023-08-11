@@ -254,7 +254,6 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   FocusNode lastChangedFocus = FocusNode();
   FocusNode changeIntervalFocus = FocusNode();
 
-  // FIXME
   Text getAddLastChangedKmValidatingText(BuildContext context) => Text(
         _validateAddLastChangedKilometer(context) ?? '',
         style: TextStyle(
@@ -266,7 +265,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   String? _validateAddLastChangedKilometer(BuildContext context) {
     emit(ValidatingItem());
-    if (lastChangedController.text.isNotEmpty && currentKmController.text.isNotEmpty) {
+    if (lastChangedController.text.isNotEmpty) {
       if (int.parse(lastChangedController.text.removeThousandSeparator()) >
           int.parse(currentKmController.text.removeThousandSeparator())) {
         return AppStrings.invalidInput(context);
@@ -274,5 +273,15 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     }
     emit(ValidatingComplete());
     return null;
+  }
+
+  bool shouldEnableAddButton(BuildContext context) {
+    if (consumableNameController.text.isEmpty ||
+        lastChangedController.text.isEmpty ||
+        changeIntervalController.text.isEmpty) return false;
+
+    if (_validateAddLastChangedKilometer(context) != null) return false;
+
+    return true;
   }
 }

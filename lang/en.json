@@ -51,5 +51,8 @@
   "remove_item": "Remove item",
   "cancel": "Cancel",
   "removed_item_successfully": "Removed item successfully",
-  "item_added": "Item added"
+  "item_added": "Item added",
+  "toggle_mode_tooltip": "toggle detailed mode",
+  "switch_language_tooltip": "switch language",
+  "create_file_tooltip": "create file"
 }

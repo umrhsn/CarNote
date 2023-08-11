@@ -51,5 +51,8 @@
   "remove_item": "حذف العنصر",
   "cancel": "إلغاء",
   "removed_item_successfully": "تم حذف العنصر",
-  "item_added": "تمت إضافة العنصر"
+  "item_added": "تمت إضافة العنصر",
+  "toggle_mode_tooltip": "تبديل الواجهة",
+  "switch_language_tooltip": "تبديل اللغة",
+  "create_file_tooltip": "إنشاء ملف"
 }

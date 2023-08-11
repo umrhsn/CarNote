@@ -195,6 +195,16 @@ class AppStrings {
   static String dailyNotificationTimePickerHelperText(BuildContext context) =>
       _translate(context, "daily_notif_time_picker_helper_text");
 
+  /// Tooltips
+  static String toggleModeTooltip(BuildContext context) =>
+      _translate(context, "toggle_mode_tooltip");
+
+  static String switchLangTooltip(BuildContext context) =>
+      _translate(context, "switch_language_tooltip");
+
+  static String createFileTooltip(BuildContext context) =>
+      _translate(context, "create_file_tooltip");
+
   /// Error handling
   static const String cacheFailure = 'Cache Failure';
   static const String unexpectedError = 'Unexpected Error';
