@@ -21,7 +21,7 @@ dependencies:
   provider: ^6.0.5
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  path_provider: ^2.0.15
+  path_provider: ^2.1.0
   shared_preferences: ^2.2.0
   awesome_notifications: ^0.7.4+1
   get_it: ^7.6.0
@@ -29,6 +29,8 @@ dependencies:
   admob_flutter: ^3.0.0
   dartz: ^0.10.1
   document_file_save_plus: ^2.0.0
+  cron: ^0.5.1
+  flutter_background_service: ^5.0.0
 
 dev_dependencies:
   flutter_test:

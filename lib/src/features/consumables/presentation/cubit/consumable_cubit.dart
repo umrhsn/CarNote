@@ -82,7 +82,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   OutlineInputBorder getWarningBorder(BuildContext context) => OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.getWarningColor(context), width: 2));
 
-  bool shouldEnableButton(BuildContext context) {
+  bool shouldEnableButtons(BuildContext context) {
     for (int index = 0; index < lastChangedAtControllers.length; index++) {
       if (getLastChangedKmValidatingText(context, index).data != '') {
         return false;

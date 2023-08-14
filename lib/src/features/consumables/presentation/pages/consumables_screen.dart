@@ -3,6 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -15,8 +16,10 @@ import 'package:car_note/src/features/consumables/domain/entities/consumable.dar
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_widget.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,8 +35,6 @@ class ConsumablesScreen extends StatefulWidget {
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
-  // String? _scheduleTime;
-
   bool _getVisibilityStatus() {
     if (_prefs.getBool(AppStrings.prefsBoolDetailedModeOn) == null) {
       _prefs.setBool(AppStrings.prefsBoolDetailedModeOn, true);
@@ -42,31 +43,25 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     return visible;
   }
 
-  // bool _getNotificationStatus() {
-  //   if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
-  //     _prefs.setBool(AppStrings.prefsBoolNotif, false);
-  //   }
-  //   bool notificationsSet = _prefs.getBool(AppStrings.prefsBoolNotif) ?? false;
-  //   return notificationsSet;
-  // }
-
-  // String _getNotifScheduleTime() {
-  //   if (_prefs.getString(AppStrings.prefsStringNotifScheduleTime) == null) {
-  //     _prefs.setString(AppStrings.prefsStringNotifScheduleTime, '');
-  //   }
-  //   String scheduleTime = _prefs.getString(AppStrings.prefsStringNotifScheduleTime) ?? '';
-  //   return scheduleTime;
-  // }
+  void _scheduleDailyNotification() {
+    if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
+      Cron().schedule(
+          Schedule.parse('0 9 * * *'), () => NotificationsHelper.showDailyNotification(context));
+      Cron().schedule(
+          Schedule.parse('0 21 * * *'), () => NotificationsHelper.showDailyNotification(context));
+      _prefs.setBool(AppStrings.prefsBoolNotif, true);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _getVisibilityStatus();
-    // _getNotificationStatus();
-    // to be called only once
     NotificationsHelper.requestNotificationsPermission();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (timeStamp) => NotificationsHelper.showAlarmingNotifications(context));
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _scheduleDailyNotification();
+      NotificationsHelper.showAlarmingNotifications(context);
+    });
     Admob.requestTrackingAuthorization();
   }
 
@@ -87,36 +82,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   onPressed: () => consumableCubit.changeVisibility(context),
                   tooltip: AppStrings.toggleModeTooltip(context),
                 ),
-                // FIXME: notification only shows once instead of daily
-                // IconButton(
-                //   icon: Column(
-                //     children: [
-                //       Icon(_getNotificationStatus()
-                //           ? Icons.notifications_active
-                //           : Icons.notifications_outlined),
-                //       Text(
-                //         _getNotifScheduleTime(),
-                //         style: TextStyle(
-                //           fontSize: 8,
-                //           height: _getNotifScheduleTime() != '' ? 2 : 0,
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                //   onPressed: () {
-                //     NotificationsHelper.requestNotificationsPermission();
-                //     if (_getNotificationStatus()) {
-                //       NotificationsHelper.cancelNotification(context);
-                //       setState(() => _prefs.setString(AppStrings.prefsStringNotifScheduleTime, ''));
-                //       return;
-                //     }
-                //     setState(() async {
-                //       _scheduleTime = await NotificationsHelper.scheduleDailyNotification(context);
-                //       _prefs.setString(AppStrings.prefsStringNotifScheduleTime, _scheduleTime!);
-                //     });
-                //   },
-                // ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.language),
                   onPressed: () => AppLocalizations.of(context)!.isEnLocale
@@ -132,7 +97,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                           text: value == true
                               ? AppStrings.fileCreated(context)
                               : AppStrings.fileNotCreated(context),
-                          textStyle: const TextStyle(fontFamily: AppStrings.fontFamilyEn)))),
+                          textStyle: const TextStyle(
+                              color: Colors.white, fontFamily: AppStrings.fontFamilyEn)))),
                   tooltip: AppStrings.createFileTooltip(context),
                 ),
               ],
@@ -213,7 +179,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 flex: 4,
                 child: CustomButton(
                   text: AppStrings.btnSave(context),
-                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  btnEnabled: consumableCubit.shouldEnableButtons(context),
                   onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
                       BotToast.showText(text: AppStrings.dataSavedSuccessfully(context))),
                 ),
@@ -222,7 +188,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               Flexible(
                 child: CustomIconButton(
                   iconData: Icons.add,
-                  btnEnabled: consumableCubit.shouldEnableButton(context),
+                  btnEnabled: consumableCubit.shouldEnableButtons(context),
                   onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
                 ),
               ),
