@@ -1,5 +1,4 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -8,7 +7,6 @@ import 'package:car_note/src/features/consumables/presentation/cubit/consumable_
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:car_note/injection_container.dart' as di;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsHelper {
   static void requestNotificationsPermission() {
@@ -17,57 +15,19 @@ class NotificationsHelper {
     });
   }
 
-  static Future<String> scheduleDailyNotification(BuildContext context) async {
-    TimeOfDay? scheduleTime;
-
-    await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute),
-            helpText: AppStrings.dailyNotificationTimePickerHelperText(context))
-        .then((value) => scheduleTime = value);
-
-    scheduleTime == null
-        ? BotToast.showText(
-            text: AppStrings.notificationTimeNotSet(context),
-            duration: const Duration(seconds: 5),
-          )
-        : await AwesomeNotifications()
-            .createNotification(
-            content: NotificationContent(
-              id: 90,
-              category: NotificationCategory.Recommendation,
-              backgroundColor: Colors.transparent,
-              channelKey: AppStrings.notifChannelScheduledKey,
-              title: AppStrings.dailyNotificationTitle(context),
-              body: AppStrings.dailyNotificationBody(context),
-              autoDismissible: false,
-              badge: 0,
-            ),
-            schedule: NotificationCalendar(
-              hour: scheduleTime?.hour ?? 9,
-              minute: scheduleTime?.minute ?? 0,
-              allowWhileIdle: true,
-            ),
-          )
-            .then(
-            (value) {
-              BotToast.showText(
-                text:
-                    "${AppStrings.notifTimeMsg(context)} ${AppStrings.getNotifTime(scheduleTime!)}",
-                duration: const Duration(seconds: 5),
-              );
-              return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, true);
-            },
-          );
-    return scheduleTime.toString().substring(
-        scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
-  }
-
-  static void cancelNotification(BuildContext context) async {
-    await AwesomeNotifications().cancel(90).then((value) {
-      BotToast.showText(text: AppStrings.dailyNotificationOff(context));
-      return di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolNotif, false);
-    });
+  static Future<bool> showDailyNotification(BuildContext context) {
+    return AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 90,
+        category: NotificationCategory.Recommendation,
+        backgroundColor: Colors.transparent,
+        channelKey: AppStrings.notifChannelScheduledKey,
+        title: AppStrings.dailyNotificationTitle(context),
+        body: AppStrings.dailyNotificationBody(context),
+        autoDismissible: false,
+        badge: 0,
+      ),
+    );
   }
 
   static void showAlarmingNotifications(BuildContext context) {
