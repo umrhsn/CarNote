@@ -65,9 +65,6 @@ class AppColors {
   static const Color warningLight = Color(0xffd4ad00);
   static const Color warningDark = Color(0xfffff694);
 
-  static const Color cardLight = Color(0xffffd2ba);
-  static const Color cardDark = Color(0xff442919);
-
   static Color getPrimaryColor(BuildContext context) =>
       context.isLight ? AppColors.primaryLight : AppColors.primaryDark;
 
@@ -109,5 +106,5 @@ class AppColors {
       context.isLight ? scaffoldBackgroundLight : scaffoldBackgroundLight.withAlpha(60);
 
   static Color getBtnDisabledBackground(BuildContext context) =>
-      context.isLight ? btnDisabledLight : btnDisabledDark;
+      context.isLight ? AppColors.btnDisabledLight : AppColors.btnDisabledDark;
 }
