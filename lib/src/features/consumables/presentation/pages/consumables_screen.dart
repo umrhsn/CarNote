@@ -3,7 +3,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -19,7 +18,6 @@ import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dar
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,13 +42,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   }
 
   void _scheduleDailyNotification() {
-    if (_prefs.getBool(AppStrings.prefsBoolNotif) == null) {
-      Cron().schedule(
-          Schedule.parse('0 9 * * *'), () => NotificationsHelper.showDailyNotification(context));
-      Cron().schedule(
-          Schedule.parse('0 21 * * *'), () => NotificationsHelper.showDailyNotification(context));
-      _prefs.setBool(AppStrings.prefsBoolNotif, true);
-    }
+    Cron().schedule(
+        Schedule.parse('0 9 * * *'), () => NotificationsHelper.showDailyNotification(context));
+    Cron().schedule(
+        Schedule.parse('0 21 * * *'), () => NotificationsHelper.showDailyNotification(context));
   }
 
   @override
@@ -101,6 +96,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                               color: Colors.white, fontFamily: AppStrings.fontFamilyEn)))),
                   tooltip: AppStrings.createFileTooltip(context),
                 ),
+                IconButton(
+                  onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
+                  icon: const Icon(Icons.car_crash),
+                )
               ],
             ),
             TextFormField(
@@ -161,7 +160,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                                 indent: 20,
                                 endIndent: 20,
                                 color: AppColors.getHintColor(context),
-                                thickness: 2)
+                                thickness: 1.5)
                       ],
                     );
                   },
