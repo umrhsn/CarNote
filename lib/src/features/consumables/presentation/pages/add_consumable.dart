@@ -111,7 +111,7 @@ class AddConsumableState extends State<AddConsumable> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.getPrimaryColor(context),
-            toolbarHeight: 100,
+            toolbarHeight: 80,
             title: Text(
               AppStrings.addConsumable(context),
               style: const TextStyle(fontWeight: FontWeight.bold),
