@@ -20,7 +20,6 @@ class AppThemes {
       scrollbarTheme: AppScrollbarThemes.scrollbarTheme(isLight: isLight),
       fontFamily: AppStrings.fontFamily,
       useMaterial3: true,
-      cardTheme: CardTheme(color: isLight ? AppColors.cardLight : AppColors.cardDark),
     );
   }
 }

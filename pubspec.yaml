@@ -31,7 +31,6 @@ dependencies:
   document_file_save_plus: ^2.0.0
   cron: ^0.5.1
   flutter_background_service: ^5.0.0
-  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -70,10 +69,6 @@ flutter:
     - lang/ar.json
     - lang/en.json
     - assets/images/
-    - assets/images/dashboard_lights/
-    - assets/images/dashboard_lights/warning/
-    - assets/images/dashboard_lights/advisory/
-    - assets/images/dashboard_lights/info/
 
   fonts:
     - family: ArabicTwo
