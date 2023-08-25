@@ -13,20 +13,20 @@ class AppTextFieldThemes {
 
     return InputDecorationTheme(
       filled: true,
-      fillColor: isLight
-          ? AppColors.btnDisabledLight.withAlpha(20)
-          : AppColors.btnDisabledDark.withAlpha(30),
+      // fillColor: isLight
+      //     ? AppColors.btnDisabledLight.withAlpha(20)
+      //     : AppColors.btnDisabledDark.withAlpha(30),
       floatingLabelStyle: TextStyle(
-        color: isLight ? AppColors.primaryLight : AppColors.floatingLabelDark,
+        color: isLight ? AppColors.hintLight : AppColors.hintDark,
         fontWeight: FontWeight.bold,
       ),
       focusColor:
-          isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
+          isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
             color:
-                isLight ? AppColors.appBarFocusedPrimaryLight : AppColors.appBarFocusedPrimaryDark,
+                isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
             strokeAlign: 0,
             width: 1.2),
       ),

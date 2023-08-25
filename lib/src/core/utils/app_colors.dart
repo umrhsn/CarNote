@@ -3,20 +3,27 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color scaffoldBackgroundLight = Color(0xffffffff);
-  static const Color scaffoldBackgroundDark = Color(0xff000000);
+  static const Color scaffoldBackgroundDark = Color(0xff0D1117);
 
-  static const Color primaryLight = Color(0xffff9559);
-  static const Color primaryDark = Color(0xff331e12);
+  static const Color primaryLight = Color(0xff1F883D);
+  static const Color primaryDark = Color(0xff238636);
+
+  static const Color iconLight = Color(0xff54AEFF);
+  static const Color iconDark = Color(0xff7D8590);
+
+  static const Color disabledTextFieldLight = Color(0xffF6F8FA);
+  static const Color disabledTextFieldDark = Color(0xff21262D);
 
   static Color appBarTextFieldFillLight = Colors.white.withAlpha(40);
   static Color appBarTextFieldFillDark = Colors.white.withAlpha(30);
 
-  static Color appBarFocusedPrimaryLight = Colors.orange.shade900;
-  static Color appBarFocusedPrimaryDark = Colors.white70;
-  static Color appBarPrimaryLight = primarySwatchLight.shade400;
-  static Color appBarPrimaryDark = primarySwatchDark.shade300;
+  static Color textFieldFocusedLight = Colors.orange.shade900;
+  static Color textFieldFocusedDark = Colors.white70;
 
-  static Color floatingLabelDark = primarySwatchDark.shade200;
+  // static Color appBarPrimaryLight = primarySwatchLight.shade400;
+  // static Color appBarPrimaryDark = primarySwatchDark.shade300;
+
+  // static Color floatingLabelDark = primarySwatchDark.shade200;
 
   static MaterialColor primarySwatchLight = MaterialColor(
     primaryLight.value, //0%
@@ -50,8 +57,11 @@ class AppColors {
     },
   );
 
-  static const Color hintLight = Color(0xff9c9c9c);
-  static Color hintDark = const Color(0xffffffff).withAlpha(70);
+  static const Color hintLight = Color(0xff656D76); // 0xff656D76
+  static Color hintDark = const Color(0xff7C848F);
+
+  static Color textBtnLight = iconLight;
+  static Color textBtnDark = iconDark;
 
   static Color btnDisabledLight = primaryDark.withAlpha(60);
   static Color btnDisabledDark = Colors.white.withAlpha(70);
@@ -65,8 +75,8 @@ class AppColors {
   static const Color warningLight = Color(0xffd4ad00);
   static const Color warningDark = Color(0xfffff694);
 
-  static const Color cardLight = Color(0xffffd2ba);
-  static const Color cardDark = Color(0xff442919);
+  static const Color cardLight = Color(0xffF6F8FA);
+  static const Color cardDark = Color(0xff21262D);
 
   static Color getPrimaryColor(BuildContext context) =>
       context.isLight ? AppColors.primaryLight : AppColors.primaryDark;
@@ -81,19 +91,19 @@ class AppColors {
       context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);
 
   static Color getAppBarTextFieldBorderAndLabelFocused(BuildContext context) =>
-      context.isLight ? appBarFocusedPrimaryLight : appBarFocusedPrimaryDark;
+      context.isLight ? textFieldFocusedLight : textFieldFocusedDark;
 
-  static Color getAppBarTextFieldBorderAndLabel(BuildContext context) =>
-      context.isLight ? appBarPrimaryLight : appBarPrimaryDark;
+  // static Color getAppBarTextFieldBorderAndLabel(BuildContext context) =>
+  //     context.isLight ? appBarPrimaryLight : appBarPrimaryDark;
 
   static Color getTextFieldBorderAndLabelFocused(BuildContext context) =>
-      context.isLight ? appBarFocusedPrimaryLight : appBarFocusedPrimaryDark;
+      context.isLight ? textFieldFocusedLight : textFieldFocusedDark;
 
   static Color getTextFieldBorderAndLabel(BuildContext context) =>
       context.isLight ? hintLight : hintDark;
 
-  static Color getRemainingKmFillColor(BuildContext context) =>
-      context.isLight ? primaryLight.withAlpha(20) : primaryDark.withAlpha(90);
+  static Color getDisabledTextFieldFill(BuildContext context) =>
+      context.isLight ? disabledTextFieldLight : disabledTextFieldDark;
 
   static Color getWarningColor(BuildContext context) =>
       context.isLight ? warningLight : warningDark;
@@ -110,4 +120,7 @@ class AppColors {
 
   static Color getBtnDisabledBackground(BuildContext context) =>
       context.isLight ? btnDisabledLight : btnDisabledDark;
+
+  static Color getTextBtnColor(BuildContext context) =>
+      context.isLight ? textBtnLight : textBtnDark;
 }

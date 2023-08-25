@@ -36,8 +36,8 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
             labelStyle:
                 TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
             focusColor: context.isLight
-                ? AppColors.appBarFocusedPrimaryLight
-                : AppColors.appBarFocusedPrimaryDark,
+                ? AppColors.textFieldFocusedLight
+                : AppColors.textFieldFocusedDark,
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
@@ -63,8 +63,8 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: context.isLight
-                    ? AppColors.appBarFocusedPrimaryLight
-                    : AppColors.appBarFocusedPrimaryDark,
+                    ? AppColors.textFieldFocusedLight
+                    : AppColors.textFieldFocusedDark,
                 strokeAlign: 0,
                 width: 1.2,
               ),

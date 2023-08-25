@@ -156,7 +156,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index)
                   ? AppStrings.remainingKmNormalWarningLabel(context)
                   : AppStrings.remainingKmErrorLabel(context),
-              fillColor: AppColors.getRemainingKmFillColor(context),
+              fillColor: AppColors.getDisabledTextFieldFill(context),
               floatingLabelStyle:
                   TextStyle(color: getRemainingKmLabelColor(), fontWeight: FontWeight.bold),
               disabledBorder: getRemainingKmDisabledBorder(),
@@ -170,99 +170,104 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       );
     }
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, start: 10),
-          child: Row(
-            children: [
-              !_editing
-                  ? Expanded(
-                      flex: 30,
-                      child: Text(
-                        widget.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontFamily: AppStrings.fontFamilyEn,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    )
-                  : Expanded(child: ConsumableNameTextField(index: widget.index)),
-              !_editing ? const Spacer() : const SizedBox(width: 30),
-              Visibility(
-                visible: visible,
-                child: Row(
-                  children: [
-                    _editing
-                        ? IconButton(
-                            onPressed: () {
-                              DatabaseHelper.writeConsumableName(context, widget.index)
-                                  .then((value) {
-                                if (value) {
-                                  setState(() => _editing = false);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, start: 10),
+              child: Row(
+                children: [
+                  !_editing
+                      ? Expanded(
+                          flex: 30,
+                          child: Text(
+                            widget.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontFamily: AppStrings.fontFamilyEn,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      : Expanded(child: ConsumableNameTextField(index: widget.index)),
+                  !_editing ? const Spacer() : const SizedBox(width: 30),
+                  Visibility(
+                    visible: visible,
+                    child: Row(
+                      children: [
+                        _editing
+                            ? IconButton(
+                                onPressed: () {
+                                  DatabaseHelper.writeConsumableName(context, widget.index)
+                                      .then((value) {
+                                    if (value) {
+                                      setState(() => _editing = false);
+                                      cubit.consumableNameController.text = '';
+                                    } else {
+                                      BotToast.showText(text: AppStrings.nameNotEmpty(context));
+                                    }
+                                  });
+                                },
+                                icon: const Icon(Icons.check))
+                            : const SizedBox(),
+                        _editing
+                            ? IconButton(
+                                onPressed: () {
                                   cubit.consumableNameController.text = '';
-                                } else {
-                                  BotToast.showText(text: AppStrings.nameNotEmpty(context));
-                                }
-                              });
-                            },
-                            icon: const Icon(Icons.check))
-                        : const SizedBox(),
-                    _editing
-                        ? IconButton(
-                            onPressed: () {
-                              cubit.consumableNameController.text = '';
-                              setState(() => _editing = false);
-                            },
-                            icon: const Icon(Icons.close))
-                        : const SizedBox(),
-                    !_editing
-                        ? IconButton(
-                            onPressed: () {
-                              cubit.consumableNameController.text = '';
-                              setState(() => _editing = true);
-                            },
-                            icon: const Icon(Icons.edit))
-                        : const SizedBox(),
-                    IconButton(
-                        onPressed: () =>
-                            Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
-                        icon: const Icon(Icons.delete)),
+                                  setState(() => _editing = false);
+                                },
+                                icon: const Icon(Icons.close))
+                            : const SizedBox(),
+                        !_editing
+                            ? IconButton(
+                                onPressed: () {
+                                  cubit.consumableNameController.text = '';
+                                  setState(() => _editing = true);
+                                },
+                                icon: const Icon(Icons.edit))
+                            : const SizedBox(),
+                        IconButton(
+                            onPressed: () =>
+                                Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
+                            icon: const Icon(Icons.delete)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Visibility(
+              visible: visible,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        buildLastChangedTextFormField(),
+                        buildChangeIntervalTextFormField(),
+                      ],
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-        Visibility(
-          visible: visible,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildLastChangedTextFormField(),
-                    buildChangeIntervalTextFormField(),
-                  ],
-                ),
-              ],
             ),
-          ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: buildRemainingKmTextFormField(context),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: buildRemainingKmTextFormField(context),
-        ),
-        const SizedBox(height: 20),
-      ],
+      ),
     );
   }
 }

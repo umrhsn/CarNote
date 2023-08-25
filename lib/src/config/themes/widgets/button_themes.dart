@@ -9,7 +9,7 @@ class AppButtonThemes {
         elevation: MaterialStateProperty.all(3),
         textStyle: MaterialStateProperty.all(
             const TextStyle(fontFamily: AppStrings.fontFamilyEn, fontWeight: FontWeight.bold)),
-        foregroundColor: MaterialStateProperty.all(isLight ? Colors.black : Colors.white),
+        foregroundColor: MaterialStateProperty.all(Colors.white),
         backgroundColor:
             MaterialStateProperty.all(isLight ? AppColors.primaryLight : AppColors.primaryDark),
         fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, 60)),

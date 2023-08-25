@@ -19,6 +19,7 @@ import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
@@ -67,7 +68,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
     Column buildAppBarWidgets() => Column(
           children: [
-            // TODO: add granular visibility to consumable widget
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -104,22 +104,21 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
             ),
             TextFormField(
               focusNode: consumableCubit.currentKmFocus,
-              cursorColor: AppColors.getAppBarTextFieldBorderAndLabelFocused(context),
+              cursorColor: AppColors.getTextFieldBorderAndLabel(context),
               controller: consumableCubit.currentKmController,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               style: const TextStyle(fontWeight: FontWeight.bold),
               decoration: InputDecoration(
-                fillColor: AppColors.getAppBarTextFieldFill(context),
                 floatingLabelStyle: TextStyle(
                   color: consumableCubit.currentKmFocus.hasFocus
-                      ? AppColors.getAppBarTextFieldBorderAndLabelFocused(context)
-                      : AppColors.getAppBarTextFieldBorderAndLabel(context),
+                      ? AppColors.getTextFieldBorderAndLabelFocused(context)
+                      : AppColors.getTextFieldBorderAndLabel(context),
                   fontWeight: FontWeight.bold,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: AppColors.getAppBarTextFieldBorderAndLabel(context),
+                    color: AppColors.getTextFieldBorderAndLabel(context),
                   ),
                 ),
                 labelText: AppStrings.currentKmLabel(context),
@@ -144,28 +143,28 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           flex: 1000,
           child: Scrollbar(
             child: Padding(
-              padding: const EdgeInsetsDirectional.only(end: 10),
-              child: ReorderableListView.builder(
-                  itemCount: Consumable.getCount(),
-                  itemBuilder: (context, index) {
-                    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
-                    Consumable item = list![index];
-                    return Column(
-                      key: ValueKey(index),
-                      children: [
-                        ConsumableWidget(index: index, name: item.name),
-                        index == list.length - 1
-                            ? const SizedBox()
-                            : Divider(
-                                indent: 20,
-                                endIndent: 20,
-                                color: AppColors.getHintColor(context),
-                                thickness: 1.5)
-                      ],
-                    );
-                  },
-                  onReorder: (oldIndex, newIndex) => setState(
-                      () => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+              padding: const EdgeInsetsDirectional.only(bottom: 15, end: 11),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                child: ReorderableListView.builder(
+                    itemCount: Consumable.getCount(),
+                    itemBuilder: (context, index) {
+                      List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                      Consumable item = list![index];
+                      return AnimationConfiguration.staggeredList(
+                        key: ValueKey(index),
+                        position: index,
+                        duration: const Duration(milliseconds: 375),
+                        child: SlideAnimation(
+                          child: FadeInAnimation(
+                            child: ConsumableWidget(index: index, name: item.name),
+                          ),
+                        ),
+                      );
+                    },
+                    onReorder: (oldIndex, newIndex) => setState(
+                        () => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+              ),
             ),
           ),
         );
@@ -202,7 +201,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              backgroundColor: AppColors.getPrimaryColor(context),
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
             )
