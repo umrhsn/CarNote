@@ -145,7 +145,7 @@ class AddConsumableState extends State<AddConsumable> {
                     Expanded(
                       flex: 2,
                       child: CustomButton(
-                        text: AppStrings.addConsumable(context).toUpperCase(),
+                        text: AppStrings.btnAddItem(context).toUpperCase(),
                         btnEnabled: cubit.shouldEnableAddButton(context),
                         onPressed: () {
                           DatabaseHelper.addConsumable(

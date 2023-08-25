@@ -13,7 +13,7 @@ class InfoScreen extends StatefulWidget {
 
 class _InfoScreenState extends State<InfoScreen> {
   static const int _gridColumnsCount = 5;
-  bool _switchToDetailedView = false;
+  bool _switchToListView = false;
   int? _selectedIndex;
 
   @override
@@ -30,27 +30,29 @@ class _InfoScreenState extends State<InfoScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.sort_rounded),
+                  icon: Icon(_switchToListView ? Icons.grid_view_outlined : Icons.sort_rounded),
                   onPressed: () => setState(() {
                     _selectedIndex = null;
-                    _switchToDetailedView = !_switchToDetailedView;
+                    _switchToListView = !_switchToListView;
                   }),
-                  tooltip: AppStrings.toggleModeTooltip(context),
+                  tooltip: _switchToListView
+                      ? AppStrings.switchToGridView(context)
+                      : AppStrings.switchToListView(context),
                 ),
                 IconButton(
                   icon: const Icon(Icons.sort_by_alpha_rounded),
                   onPressed: () => setState(() => InfoItemStrings.sortAlphabetically()),
-                  tooltip: AppStrings.toggleModeTooltip(context),
+                  tooltip: AppStrings.sortByAlphaTooltip(context),
                 ),
                 IconButton(
                   icon: const Icon(Icons.category_outlined),
                   onPressed: () => setState(() => InfoItemStrings.sortCategories()),
-                  tooltip: AppStrings.toggleModeTooltip(context),
+                  tooltip: AppStrings.sortByCategoryTooltip(context),
                 ),
                 IconButton(
                   icon: const Icon(Icons.warning_amber_rounded),
                   onPressed: () => setState(() => InfoItemStrings.sortSeverities()),
-                  tooltip: AppStrings.toggleModeTooltip(context),
+                  tooltip: AppStrings.sortBySeverityTooltip(context),
                 ),
               ],
             ),
@@ -87,7 +89,7 @@ class _InfoScreenState extends State<InfoScreen> {
             child: FadeInAnimation(
               child: WarningSymbolsCard(
                 onTap: () => setState(() => _selectedIndex = index),
-                detailed: _switchToDetailedView,
+                detailed: _switchToListView,
                 reverseDirection: index % 2 == 0 ? false : true,
                 image: InfoItemStrings.infoItems[index].image,
                 title: InfoItemStrings.infoItems[index].title,
@@ -111,7 +113,7 @@ class _InfoScreenState extends State<InfoScreen> {
           child: SlideAnimation(
             child: FadeInAnimation(
               child: WarningSymbolsCard(
-                detailed: _switchToDetailedView,
+                detailed: _switchToListView,
                 reverseDirection: index % 2 == 0 ? false : true,
                 image: InfoItemStrings.infoItems[index].image,
                 title: InfoItemStrings.infoItems[index].title,
@@ -135,7 +137,7 @@ class _InfoScreenState extends State<InfoScreen> {
         child: Padding(
           padding: const EdgeInsetsDirectional.only(end: 5),
           child: AnimationLimiter(
-            child: !_switchToDetailedView ? buildGrid() : buildList(),
+            child: !_switchToListView ? buildGrid() : buildList(),
           ),
         ),
       ),

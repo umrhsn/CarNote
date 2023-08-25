@@ -25,7 +25,8 @@
   "sure_to_delete": "Are you sure you want to remove this item?",
   "sure_to_exit": "Are you sure you want to exit the app without saving?",
   "save_data": "Save data",
-  "add_item": "Add an item",
+  "add_an_item": "Add an item",
+  "add_item": "Add item",
   "exit_without_saving": "Exit without saving",
   "tap_back_again_to_exit": "Tap back again to exit",
   "notif_channel_basic_group_name": "Basic group",
@@ -54,5 +55,11 @@
   "item_added": "Item added",
   "toggle_mode_tooltip": "toggle detailed mode",
   "switch_language_tooltip": "switch language",
-  "create_file_tooltip": "create file"
+  "create_file_tooltip": "create file",
+  "info_tooltip": "info",
+  "switch_to_grid_view": "switch to grid view",
+  "switch_to_list_view": "switch to list view",
+  "sort_by_alpha_tooltip": "sort alphabetically",
+  "sort_by_category_tooltip": "sort by category",
+  "sort_by_severity_tooltip": "sort by severity"
 }
