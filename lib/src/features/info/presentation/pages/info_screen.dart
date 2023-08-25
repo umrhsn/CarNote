@@ -1,4 +1,3 @@
-import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/info/data/info_item_strings.dart';
 import 'package:car_note/src/features/info/presentation/widgets/warning_symbols_card.dart';
@@ -109,7 +108,7 @@ class _InfoScreenState extends State<InfoScreen> {
         itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
           position: index,
           duration: const Duration(milliseconds: 375),
-          child: ScaleAnimation(
+          child: SlideAnimation(
             child: FadeInAnimation(
               child: WarningSymbolsCard(
                 detailed: _switchToDetailedView,
@@ -127,14 +126,18 @@ class _InfoScreenState extends State<InfoScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.getPrimaryColor(context),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: _selectedIndex == null ? 60 : 400,
         title: buildAppBarWidgets(),
       ),
-      body: AnimationLimiter(
-        child: !_switchToDetailedView ? buildGrid() : buildList(),
+      body: Scrollbar(
+        child: Padding(
+          padding: const EdgeInsetsDirectional.only(end: 5),
+          child: AnimationLimiter(
+            child: !_switchToDetailedView ? buildGrid() : buildList(),
+          ),
+        ),
       ),
     );
   }

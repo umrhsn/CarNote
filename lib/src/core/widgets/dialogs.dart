@@ -24,23 +24,11 @@ class Dialogs {
               BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
               SystemNavigator.pop();
             }),
-            child: Text(
-              AppStrings.saveData(context),
-              style: TextStyle(
-                  color: context.isLight
-                      ? AppColors.primarySwatchLight.shade100
-                      : AppColors.primarySwatchDark.shade500),
-            ),
+            child: Text(AppStrings.saveData(context)),
           ),
           TextButton(
             onPressed: () => SystemNavigator.pop(),
-            child: Text(
-              AppStrings.exitWithoutSaving(context),
-              style: TextStyle(
-                  color: context.isLight
-                      ? AppColors.primarySwatchLight.shade100
-                      : AppColors.primarySwatchDark.shade500),
-            ),
+            child: Text(AppStrings.exitWithoutSaving(context)),
           ),
         ],
       ),
@@ -156,23 +144,11 @@ class Dialogs {
               DatabaseHelper.removeConsumable(index, context);
               Navigator.pop(context);
             },
-            child: Text(
-              AppStrings.removeItem(context),
-              style: TextStyle(
-                  color: context.isLight
-                      ? AppColors.primarySwatchLight.shade100
-                      : AppColors.primarySwatchDark.shade500),
-            ),
+            child: Text(AppStrings.removeItem(context)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(
-              AppStrings.cancel(context),
-              style: TextStyle(
-                  color: context.isLight
-                      ? AppColors.primarySwatchLight.shade100
-                      : AppColors.primarySwatchDark.shade500),
-            ),
+            child: Text(AppStrings.cancel(context)),
           ),
         ],
       ),

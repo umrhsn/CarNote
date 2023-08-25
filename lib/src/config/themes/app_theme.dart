@@ -21,6 +21,20 @@ class AppThemes {
       fontFamily: AppStrings.fontFamily,
       useMaterial3: true,
       cardTheme: CardTheme(color: isLight ? AppColors.cardLight : AppColors.cardDark),
+      dialogBackgroundColor: isLight ? AppColors.cardLight : AppColors.cardDark,
+      iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+              foregroundColor:
+                  MaterialStateProperty.all(isLight ? AppColors.iconLight : AppColors.iconDark))),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor:
+              MaterialStateProperty.all(isLight ? AppColors.primaryLight : AppColors.primaryDark),
+          textStyle: MaterialStateProperty.all(
+            const TextStyle(fontWeight: FontWeight.bold, fontFamily: AppStrings.fontFamilyEn),
+          ),
+        ),
+      ),
     );
   }
 }

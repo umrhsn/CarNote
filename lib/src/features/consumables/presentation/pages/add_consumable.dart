@@ -110,7 +110,6 @@ class AddConsumableState extends State<AddConsumable> {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: AppColors.getPrimaryColor(context),
             toolbarHeight: 80,
             title: Text(
               AppStrings.addConsumable(context),
@@ -121,18 +120,26 @@ class AddConsumableState extends State<AddConsumable> {
             padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 15),
             child: Column(
               children: [
-                const Spacer(),
-                ConsumableNameTextField(),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildLastChangedTextFormField(),
-                    buildChangeIntervalTextFormField(),
-                  ],
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        ConsumableNameTextField(),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildLastChangedTextFormField(),
+                            buildChangeIntervalTextFormField(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                const Spacer(),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Expanded(

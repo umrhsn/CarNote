@@ -42,7 +42,6 @@ class _WarningSymbolsCardState extends State<WarningSymbolsCard> {
       onTap: widget.onTap,
       child: !widget.detailed
           ? Card(
-        elevation: 0,
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Image.asset(widget.image),
@@ -51,7 +50,6 @@ class _WarningSymbolsCardState extends State<WarningSymbolsCard> {
           : Directionality(
               textDirection: widget.reverseDirection ? _directionReversed : _direction,
               child: Card(
-                elevation: 0,
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Row(
