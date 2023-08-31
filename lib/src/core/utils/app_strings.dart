@@ -211,17 +211,6 @@ class AppStrings {
 
   static String sortBySeverityTooltip(context) => _translate(context, "sort_by_severity_tooltip");
 
-  /// Lists
-  static List<String?> warningTitles(context) {
-    List<String?> list = [];
-    for (int index = 0; index < 25; index++) {
-      String? item = _translateNullable(context, "warning_titles"[index]);
-      debugPrint(item);
-      list.add(item);
-    }
-    return list;
-  }
-
   /// Error handling
   static const String cacheFailure = 'Cache Failure';
   static const String unexpectedError = 'Unexpected Error';
