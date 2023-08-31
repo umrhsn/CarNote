@@ -1,5 +1,7 @@
+import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/info_item.dart';
+import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 
 class InfoItemStrings {
   static List<InfoItem> infoItems = List.generate(
@@ -7,10 +9,10 @@ class InfoItemStrings {
         (index) => InfoItem(
           category: 1,
           image: AssetManager.warningSymbols[index],
-          title: InfoItemStrings.warningTitles[index],
-          description: InfoItemStrings.warningDescriptions[index],
-          advice: InfoItemStrings.warningAdvices[index],
-          severity: InfoItemStrings.warningSeverities[index],
+          title: warningTitles[index],
+          description: warningDescriptions[index],
+          advice: warningAdvices[index],
+          severity: _warningSeverities[index],
         ),
       ) +
       List.generate(
@@ -18,10 +20,10 @@ class InfoItemStrings {
         (index) => InfoItem(
           category: 2,
           image: AssetManager.advisorySymbols[index],
-          title: InfoItemStrings.advisoryTitles[index],
-          description: InfoItemStrings.advisoryDescriptions[index],
-          advice: InfoItemStrings.advisoryAdvices[index],
-          severity: InfoItemStrings.advisorySeverities[index],
+          title: advisoryTitles[index],
+          description: advisoryDescriptions[index],
+          advice: advisoryAdvices[index],
+          severity: _advisorySeverities[index],
         ),
       ) +
       List.generate(
@@ -29,19 +31,48 @@ class InfoItemStrings {
         (index) => InfoItem(
           category: 3,
           image: AssetManager.infoSymbols[index],
-          title: InfoItemStrings.infoTitles[index],
-          description: InfoItemStrings.infoDescriptions[index],
-          advice: InfoItemStrings.infoAdvices[index],
-          severity: InfoItemStrings.infoSeverities[index],
+          title: infoTitles[index],
+          description: infoDescriptions[index],
+          advice: infoAdvices[index],
+          severity: _infoSeverities[index],
         ),
       );
 
-  static List<String> warningTitles = [
+  static List<String> get warningTitles =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _warningTitlesEn : _warningTitlesAr;
+
+  static List<String> get advisoryTitles =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _advisoryTitlesEn : _advisoryTitlesAr;
+
+  static List<String> get infoTitles =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _infoTitlesEn : _infoTitlesAr;
+
+  static List<String?> get warningDescriptions => LocaleCubit.currentLangCode == AppStrings.en
+      ? _warningDescriptionsEn
+      : _warningDescriptionsAr;
+
+  static List<String> get advisoryDescriptions => LocaleCubit.currentLangCode == AppStrings.en
+      ? _advisoryDescriptionsEn
+      : _advisoryDescriptionsAr;
+
+  static List<String> get infoDescriptions =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _infoDescriptionsEn : _infoDescriptionsAr;
+
+  static List<String?> get warningAdvices =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _warningAdvicesEn : _warningAdvicesAr;
+
+  static List<String> get advisoryAdvices =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _advisoryAdvicesEn : _advisoryAdvicesAr;
+
+  static List<String> get infoAdvices =>
+      LocaleCubit.currentLangCode == AppStrings.en ? _infoAdvicesEn : _infoAdvicesAr;
+
+  static final List<String> _warningTitlesEn = [
     "Airbag System Fault",
     "Airbag Off",
     "Airbag Warning",
-    "A/T Oil Temp",
-    "A/T P",
+    "Automatic Transmission Oil Temperature",
+    "Automatic Transmission Park",
     "Battery Fault",
     "Battery Fault",
     "Bonnet Open",
@@ -51,25 +82,24 @@ class InfoItemStrings {
     "Brake Warning",
     "Brake Warning",
     "Brake Warning",
-    "Security",
+    "Key",
     "Car Lock",
     "Door(s) Open",
     "Engine Temperature Warning",
     "Handbrake / Park Brake",
     "Hazard Lights",
-    "Locked",
+    "Car Lock",
     "Low Oil Level",
     "Low Oil Pressure",
     "Power Steering",
     "Seatbelt",
-    "SRS",
+    "Supplementary Restraint System (SRS)",
     "Transmission Temperature High",
     "Transmission Fault",
     "Warning"
   ];
-
-  static List<String> advisoryTitles = [
-    "4WD",
+  static final List<String> _advisoryTitlesEn = [
+    "4-Wheel Drive (4WD)",
     "4x2",
     "4x4 Auto",
     "4x4 High",
@@ -80,7 +110,7 @@ class InfoItemStrings {
     "Brake Warning",
     "Brake Warning",
     "Key",
-    "Centre Differential Lock",
+    "Differential Lock: Center",
     "Charging",
     "Cruise Control",
     "Differential Lock",
@@ -99,31 +129,30 @@ class InfoItemStrings {
     "Washer Fluid",
     "Oil Level",
     "Parking Sensor",
-    "PCS",
+    "Pre-Collision System (PCS)",
     "Power Limitation Indicator",
     "Press Brake Pedal",
     "RBS Warning",
-    "Rear Differential Lock",
-    "Rear Differential Lock",
+    "Differential Lock: Rear",
+    "Differential Lock: Rear",
     "Regenerative Brake Force",
     "Service",
     "Side Airbag",
     "Start / Stop",
-    "TCS OFF",
-    "TCS",
-    "TCS",
-    "TCS",
+    "Traction Control System (TCS) OFF",
+    "Traction Control System (TCS)",
+    "Traction Control System (TCS)",
+    "Traction Control System (TCS)",
     "Trailer",
-    "TPMS",
-    "TPMS",
-    "Traction Control Fault Light",
+    "Tyre Pressure Monitoring System (TPMS)",
+    "Tyre Pressure Monitoring System (TPMS)",
+    "Traction Control Fault",
     "Transmission",
     "Warning",
     "Warning",
     "Water in Fuel"
   ];
-
-  static List<String> infoTitles = [
+  static final List<String> _infoTitlesEn = [
     "Airflow Lower",
     "Recirculate",
     "Airflow Upper and Lower",
@@ -137,7 +166,7 @@ class InfoItemStrings {
     "Directional Headlights",
     "Eco Mode",
     "Eco Mode",
-    "Engine Stop",
+    "Engine A-Stop",
     "EV",
     "Fan",
     "Fog Light",
@@ -156,13 +185,13 @@ class InfoItemStrings {
     "Rear Window Defrost",
     "Screen Wash",
     "Self-levelling Headlights",
-    "Shift light",
+    "Gear Shift",
     "Side Lights",
     "Side Lights",
     "Window Wiper"
   ];
 
-  static List<String?> warningDescriptions = [
+  static final List<String?> _warningDescriptionsEn = [
     "Indicates a fault with the airbag system.",
     "Indicates that an airbag has been switched off manually.",
     "Indicates a fault with the airbag system.",
@@ -193,8 +222,7 @@ class InfoItemStrings {
     "Indicates a fault with the transmission / gearbox.",
     "Indicates a general warning"
   ];
-
-  static List<String> advisoryDescriptions = [
+  static final List<String> _advisoryDescriptionsEn = [
     "Indicates the vehicle is in 4WD mode.",
     "Indicates that a 4WD capable vehicle is in 4x2 mode (2WD).",
     "Indicates the vehicle is in automatic 4WD mode.",
@@ -248,8 +276,7 @@ class InfoItemStrings {
     "Indicates a warning.",
     "Indicates water in the fuel."
   ];
-
-  static List<String> infoDescriptions = [
+  static final List<String> _infoDescriptionsEn = [
     "Indicates direction of airflow inside the vehicle, lower airflow blows air from lower air vents within footwell to feet.",
     "Indicates that the vehicles ventilation system is recirculating air from within the vehicle, suitable when particularly cold outside.",
     "Indicates direction of airflow inside the vehicle, even distribution to upper and lower air vents.",
@@ -264,7 +291,7 @@ class InfoItemStrings {
     "Indicates the vehicle is in Eco mode.",
     "Indicates the vehicle is in Eco mode",
     "Indicates the engine start / stop function is in operation.",
-    "Indicates the vehicle is is EV (electric vehicle) mode.",
+    "Indicates the vehicle is in EV (electric vehicle) mode.",
     "Indicates that the internal ventilation / fan is in operation.",
     "Indicates the fog lights are on.",
     "Indicates that the vehicles fog light(s) is on.",
@@ -288,18 +315,18 @@ class InfoItemStrings {
     "Indicates the windscreen wipers are in operation."
   ];
 
-  static List<String?> warningAdvices = [
-    "Seek assistance / diagnosis at the earliest opportunity",
-    "When travelling with baby seats in the front passenger seat of a vehicle, the airbag for the passenger should be disabled, ensure you re-enable it when the child is not travelling in the front seat.",
+  static final List<String?> _warningAdvicesEn = [
     "Seek assistance / diagnosis at the earliest opportunity.",
-    "You should stop the vehicle when safe to do so and seek assistance / diagnosis as could cause significant damage to the gearbox.",
-    "Seek assistance / diagnosis, ensure hand / parking brake is applied securely in case of fauly with park gear.",
+    "When travelling with baby seats in the front passenger seat of a vehicle, the airbag for the passenger should be disabled. Ensure you re-enable it when the child is not travelling in the front seat.",
+    "Seek assistance / diagnosis at the earliest opportunity.",
+    "You should stop the vehicle when safe to do so and seek assistance / diagnosis as it could cause significant damage to the gearbox.",
+    "Seek assistance / diagnosis, ensure hand / parking brake is applied securely in case of fault with park gear.",
     "Re-charge / replace battery if confirmed that battery is faulty / beyond its design life.",
     "Re-charge / replace battery if confirmed that battery is faulty / beyond its design life.",
     "Ensure bonnet is securely closed.",
     "Ensure boot / trunk is securely closed before setting off.",
     "Stop the vehicle when safe to do and seek assistance / diagnosis. If possible, top up brake fluid using correct specification fluid to required level.",
-    "Check brake pad wear and have replaced at earliest opportunity.",
+    "Check the brake pad wear and have it replaced at earliest opportunity.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis for immediate repair.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis for immediate repair.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis for immediate repair.",
@@ -317,10 +344,9 @@ class InfoItemStrings {
     "Seek immediate assistance / diagnosis. The SRS is an essential part of the cars safety devices in the event of a crash.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis.",
-    "Navigate the cars onboard computer / information system to identify the fault and address accordingly."
+    "Navigate the car's onboard computer / information system to identify the fault and address accordingly."
   ];
-
-  static List<String> advisoryAdvices = [
+  static final List<String> _advisoryAdvicesEn = [
     "No action required.",
     "No action required.",
     "No action required.",
@@ -349,7 +375,7 @@ class InfoItemStrings {
     "Check engine oil level and top up with correct specification oil as required. Running the engine with low engine oil can cause significant damage to the engine.",
     "Visit your nearest petrol station and re-fuel. The vehicle range on low fuel ranges from 10-50 miles typically.",
     "Top up screen wash as soon as possible to maintain ability to keep windscreen clear.",
-    "Check engine oil level manually, if low, top up with correct specification oil to correct level, if high seem assistance to have drained.",
+    "Check engine oil level manually, if low, top up with the correct specification oil to the correct level, if high, seek assistance to have it drained.",
     "Take note of parking sensor frequency to avoid collision when parking / reversing. A solid tone means the proximity to an external object is critical.",
     "Stop the car when safe to do and seek breakdown assistance / diagnosis.",
     "If warning light shows unexpectedly, schedule maintenance to have the electric / hybrid system inspected.",
@@ -368,14 +394,13 @@ class InfoItemStrings {
     "Take extra care when towing.",
     "Stop the vehicle when safe to do so and check tyre pressures or for signs of puncture / foreign object in tyre. Fit spare / deploy tyre repair system if confident to do so or seek assistance.",
     "Stop the vehicle when safe to do so and check tyre pressures or for signs of puncture / foreign object in tyre. Fit spare / deploy tyre repair system if confident to do so or seek assistance.",
-    "Schedule maintenance to diagnose / recitfy fault, drive with caution in the interim.",
+    "Schedule maintenance to diagnose / rectify fault, drive with caution in the interim.",
     "Stop the vehicle when safe to do so and seek assistance / diagnosis.",
     "Navigate the cars onboard computer / information system to identify the fault and address accordingly.",
     "Navigate the cars onboard computer / information system to identify the fault and address accordingly.",
     "Diesel vehicles are equipped with separators that remove water from the fuel, this symbol could indicate a fault with the separator or indicate contaminated fuel."
   ];
-
-  static List<String> infoAdvices = [
+  static final List<String> _infoAdvicesEn = [
     "Redirect airflow as required.",
     "Switch to fresh air ventilation when appropriate.",
     "Redirect airflow as required.",
@@ -392,7 +417,7 @@ class InfoItemStrings {
     "Continue as normal, the engine will restart automatically when required.",
     "No action required.",
     "Use internal ventilation / fan system to suit requirements.",
-    "Ensure fog lights are switched off when conditions improve as foglights can dazzle other road users.",
+    "Ensure fog lights are switched off when conditions improve as fog lights can dazzle other road users.",
     "Use fog lights when conditions require. Ensure you switch off fog lights when no longer required to avoid dazzling other road users.",
     "Use fresh air when need to warm air quickly is not required.",
     "Only use full / main beam lights when required taking care not to dazzle oncoming traffic.",
@@ -402,8 +427,8 @@ class InfoItemStrings {
     "Ensure interior lights are switched off when not required to avoid a flat battery.",
     "Ensure interior lights are switched off when not required to avoid a flat battery.",
     "Only use full / main beam lights when required taking care not to dazzle oncoming traffic.",
-    "Check relevant function is no longer required.",
-    "Check relevant function is no longer required.",
+    "Check if relevant function is required.",
+    "Check if relevant function is no longer required.",
     "Take note of parking sensor frequency to avoid collision when parking / reversing. A solid tone means the proximity to an external object is critical.",
     "Turn off rear window defrost / heater when no longer required.",
     "Use screen wash regularly to ensure a clear view of the road ahead (and behind).",
@@ -414,7 +439,379 @@ class InfoItemStrings {
     "Use the correct window wiper setting to suit the conditions."
   ];
 
-  static List<int> warningSeverities = [
+  static final List<String> _warningTitlesAr = [
+    "الوسادة الهوائية: خلل",
+    "الوسادة الهوائية: إيقاف التشغيل",
+    "الوسادة الهوائية: تحذير",
+    "الفتيس (ناقل السرعات): إنذار حرارة الزيت",
+    "الفتيس (ناقل السرعات): وضع إيقاف السيارة",
+    "البطارية: خلل",
+    "البطارية الرئيسية: خلل",
+    "الكبوت (غطاء محرك السيارة) مفتوح",
+    "الشنطة (الصندوق الخلفي) مفتوحة",
+    "الفرامل: الزيت",
+    "الفرامل: بطانة الفرامل",
+    "الفرامل: تحذير",
+    "الفرامل: تحذير",
+    "الفرامل: تحذير",
+    "نظام الحماية",
+    "السيارة مقفلة",
+    "باب أو عدة أبواب مفتوحة",
+    "المحرك: درجة الحرارة عالية",
+    "الفرامل: فرامل اليد",
+    "المصابيح التحذيرية مفعلة",
+    "السيارة مقفلة",
+    "زيت المحرك: مستوى الزيت منخفض",
+    "زيت المحرك: ضغط الزيت منخفض",
+    "الدركسيون (نظام التوجيه)",
+    "حزام الأمان",
+    "الوسادة الهوائية: خلل في نظام الحماية الإضافية",
+    "الفتيس (ناقل السرعات): درجة الحرارة عالية",
+    "الفتيس (ناقل السرعات): خلل",
+    "تحذير"
+  ];
+  static final List<String> _advisoryTitlesAr = [
+    "الدفع الرباعي",
+    "الدفع الثنائي",
+    "الدفع الرباعي الأوتوماتيكي",
+    "الدفع الرباعي (ترس النقل عالٍ)",
+    "الدفع الرباعي (ترس النقل منخفض)",
+    "نظام منع انغلاق الفرامل: تحذير",
+    "الفتيس (ناقل السرعات): درجة حرارة الزيت",
+    "الفرامل: بطانة الفرامل",
+    "الفرامل: تحذير",
+    "الفرامل: تحذير",
+    "مفتاح السيارة",
+    "الدفلوك (نظام توزيع الحمل على الإطارات): المركز",
+    "يتم الشحن",
+    "نظام تثبيت السرعة",
+    "الدفلوك (نظام توزيع الحمل على الإطارات)",
+    "فلتر جسيمات الديزل",
+    "شحن كهربي",
+    "تفَقَّد المحرك",
+    "تفَقَّد المحرك",
+    "نظام الثبات الإلكتروني: تحذير",
+    "مصابيح الضباب",
+    "البوچيهات (شمعات التوهج)",
+    "معلومات",
+    "كوريك (رافعة أرضية)",
+    "مساعد الحفاظ على المسار",
+    "مستوى زيت المحرك منخفض",
+    "مستوى الوقود منخفض",
+    "ماء ماسحات الزجاج: كمية منخفضة",
+    "مستوى زيت المحرك",
+    "مستشعر وقوف السيارة",
+    "نظام تجنب الصدمات",
+    "مؤشر الافتقار للطاقة",
+    "اضغط على دواسة الفرامل",
+    "نظام استعادة الطاقة من الفرامل",
+    "الدفلوك (نظام توزيع الحمل على الإطارات): الخلفي",
+    "الدفلوك (نظام توزيع الحمل على الإطارات): الخلفي",
+    "نظام استعادة الطاقة من الفرامل",
+    "إنذار الصيانة الروتينية",
+    "الوسادة الهوائية الجانبية",
+    "تشغيل / إيقاف",
+    "نظام التحكم في الجر قيد الإيقاف",
+    "نظام التحكم في الجر قيد التشغيل",
+    "نظام التحكم في الجر قيد التشغيل",
+    "نظام التحكم في الجر قيد التشغيل",
+    "مقطورة",
+    "نظام مراقبة ضغط الإطارات",
+    "نظام مراقبة ضغط الإطارات",
+    "نظام التحكم في الجر: خلل",
+    "الفتيس (ناقل السرعات): خلل",
+    "تحذير",
+    "تحذير",
+    "ماء في الوقود"
+  ];
+  static final List<String> _infoTitlesAr = [
+    "تهوية سفلية",
+    "توزيع الهواء الداخلي",
+    "تهوية علوية وسفلية",
+    "تهوية علوية",
+    "الفرامل: فرامل التوقف الأوتوماتيكية",
+    "يتم الشحن",
+    "مفتاح السيارة",
+    "نظام الحماية",
+    "نظام التبريد",
+    "الأضواء: المصباح الرئيسي",
+    "الأضواء: المصابيح الأمامية الموجهة",
+    "الوضع الاقتصادي أو الصديق للبيئة",
+    "الوضع الاقتصادي أو الصديق للبيئة",
+    "تشغيل/إيقاف المحرك",
+    "سيارة كهربية",
+    "المروحة",
+    "الأضواء: مصابيح الضباب",
+    "الأضواء: مصابيح الضباب",
+    "التهوية بالهواء الخارجي",
+    "مصابيح الطريق",
+    "مصابيح الطريق",
+    "مؤشر اتجاه الحركة",
+    "مؤشر اتجاه الحركة",
+    "المصباح الداخلي",
+    "المصباح الداخلي",
+    "مصابيح الطريق",
+    "إيقاف التشغيل",
+    "قيد التشغيل",
+    "مستشعر توقف السيارة",
+    "مذيب صقيع النافذة الخلفية",
+    "غسيل النافذة",
+    "المصابيح الأمامية ذاتية التسوية",
+    "مرشد نقلات تروس الفتيس",
+    "المصابيح الجانبية",
+    "المصابيح الجانبية",
+    "ماسح النوافذ"
+  ];
+
+  static final List<String?> _warningDescriptionsAr = [
+    "خلل في نظام الوسادة الهوائية.",
+    "تم إيقاف تشغيل الوسادة الهوائية يدويًّا.",
+    "يوجد خلل ما في نظام الوسادة الهوائية.",
+    "درجة حرارة زيت الفتيس (ناقل السرعات) عالية.",
+    "نظام الدفع الرباعي في وضع المحايد. يمكن أن يدل أيضًا على وجود خلل في الإيقاف في نظام الفتيس (ناقل السرعات).",
+    "إذا لم يذهب هذا الضوء بعد تشغيل السيارة، يدل هذا على مشكلة في البطارية، غالبًا الشحن منخفض.",
+    "إذا لم يذهب هذا الضوء بعد تشغيل السيارة، يدل هذا على مشكلة في البطارية الرئيسية، غالبًا الشحن منخفض.",
+    "يدل على أن غطاء محرك السيارة مفتوح أو غير مقفل بإحكام وقد يُفتح أثناء القيادة.",
+    "يدل على أن غطاء الصندوق الخلفي للسيارة مفتوح أو غير مقفل بإحكام وقد يُفتح أثناء القيادة.",
+    "مستوى زيت الفرامل منخفض.",
+    "يوجد خلل في بطانة الفرامل، غالبًا يكون الخلل تآكلها والحاجة لاستبدالها.",
+    "يدل على وجود خلل في في نظام الفرامل.",
+    "يدل على وجود خلل في في نظام الفرامل.",
+    "يدل على وجود خلل في في نظام الفرامل.",
+    "يجب إدخال مفتاح السيارة، أو يوجد خلل في نظام أمان السيارة.",
+    "يدل على أن السيارة مقفلة.",
+    "يوجد باب أو عدة أبواب في السيارة مفتوحة أو غير مغلقة بإحكام.",
+    null,
+    "فرامل اليد مرفوعة.",
+    "المصابيح التحذيرية مفعلة.",
+    "السيارة مقفلة.",
+    "مستوى زيت المحرك منخفض.",
+    "مستوى ضغط زيت المحرك منخفض.",
+    "يوجد خلل في نظام التوجيه.",
+    "يوجد على الأقل راكب واحد لا يضع حزام الأمان.",
+    "يوجد خلل في نظام الحماية الإضافية.",
+    "درجة حرارة زيت الفتيس (ناقل السرعات) عالية.",
+    "خلل في الفتيس (ناقل السرعات).",
+    "يدل على وجود تحذير بشكل عام."
+  ];
+  static final List<String> _advisoryDescriptionsAr = [
+    "السيارة في وضع الدفع الرباعي.",
+    "يظهر هذا التنبيه في سيارات الدفع الرباعي ويوضح أن السيارة في وضع الدفع الثنائي فقط.",
+    "السيارة في وضع الدفع الرباعي الأوتوماتيكي.",
+    "السيارة في وضع الدفع الرباعي وترس النقل في الفتيس (ناقل السرعات) على الوضع العالي.",
+    "السيارة في وضع الدفع الرباعي وترس النقل في الفتيس (ناقل السرعات) على الوضع المنخفض.",
+    "يوجد خلل ما في نظام الكبح ضد القفل.",
+    "يدل على أن درجة حرارة زيت الفتيس (ناقل السرعات) الأوتوماتيكي عالية.",
+    "يدل على وجود خطب ما فقي بطانة الفرامل، غالبًا تآكلها.",
+    "يدل على وجود خلل في الفرامل.",
+    "يدل على وجود خلل في الفرامل.",
+    "يدل على الحاجة لإدخال مفتاح السيارة أو وجود خلل ما في نظام حماية السيارة.",
+    "توزيع الحمل على الإطارات مركزي (دفع رباعي مع ترس نقل عالٍ/منخفض).",
+    "السيارة موصلة بوحدة شحن كهربي.",
+    "نظام تثبيت السرعة قيد التشغيل.",
+    "مؤشر نظام توزيع الحمل على الإطارات.",
+    "يدل على وجود خطب ما بفلتر جسيمات الديزل.",
+    "السيارة موصلة بوحدة شحن كهربي.",
+    "يوجد خطب ما بالمحرك.",
+    "يوجد خطب ما بالمحرك.",
+    "يوجد خطب ما بنظام الثبات الإلكتروني.",
+    "مصابيح الضباب مشغلة.",
+    "شمعات التوهج مشغلة (شمعات التوهج توجد في سيارات الديزل فقط، وهي غير شمعات الإشعال، وكلهن يطلق عليهن لفظ بوچيهات).",
+    "يوجد خطب ما بحاجة لاهتمام المستخدم.",
+    "السيارة مرفوعة بواسطة كوريك (رافعة أرضية).",
+    "مساعد الحفاظ على المسار مشغل.",
+    "مستوى زيت المحرك منخفض.",
+    "مستوى البنزين منخفض.",
+    "توجد كمية منخفضة من ماء ماسحات الزجاج.",
+    "مستوى زيت المحرك يخالف المطلوب.",
+    "مستشعر وقوف السيارة (الأمامي أو الخلفي) مشغل.",
+    "يوجد خطب ما بنظام تجنب الصدمات.",
+    "الطاقة الكهربية منخفضة. (يظهر هذا التنبيه فقط في السيارات الكهربية أو الهجينة).",
+    "اضغط على دواسة الفرامل لتشغيل المحرك.",
+    "يوجد خطب ما بنظام استعادة طاقة الكبح. (في السيارات الكهربية فقط).",
+    "مؤشر توزيع الحمل خلفيًّا على الإطارات.",
+    "مؤشر توزيع الحمل خلفيًّا على الإطارات.",
+    "يظهر عند فشل الفرامل في استعادة الطاقة.",
+    "السيارة بحاجة للصيانة الروتينية.",
+    "يوجد خطب ما بالوسادة الهوائية الجانبية.",
+    "التشغيل / الإيقاف التلقائي قيد العمل.",
+    "نظام التحكم في الجر قيد الإيقاف.",
+    "نظام التحكم في الجر قيد التشغيل.",
+    "نظام التحكم في الجر قيد التشغيل.",
+    "نظام التحكم في الجر قيد التشغيل.",
+    "وصلة القَطْر الخاصة بالسيارة مفتوحة.",
+    "تم كشف اختلاف في ضغط إطار أو أكثر.",
+    "تم كشف اختلاف في ضغط إطار أو أكثر.",
+    "يوجد خطب ما بنظام التحكم في الجر.",
+    "يوجد خطب ما بالفتيس (ناقل السرعات).",
+    "تحذير.",
+    "تحذير.",
+    "يوجد ماء في الوقود."
+  ];
+  static final List<String> _infoDescriptionsAr = [
+    "اتجاه تدفق الهواء في السيارة من فتحات التهوية السفلية.",
+    "نظام التهوية يدوِّر الهواء الداخلي. هذا الوضع مناسب في حال كون الجو باردًا خارج السيارة.",
+    "اتجاه تدفق الهواء في السيارة من فتحات التهوية العلوية والسفلية.",
+    "نظام التهوية يدفق الهواء من الأعلى باتجاه الوجه والجسم.",
+    "فرامل التوقف الأوتوماتيكية قيد التشغيل.",
+    "السيارة موصلة بوحدة شحن كهربي.",
+    "مفتاح السيارة موصل.",
+    "مفتاح السيارة مطلوب أو يوجد خطب ما بنظام حماية السيارة.",
+    "درجة حرارة نظام التبريد في السيارة منخفضة جدًّا.",
+    "مصباح السيارة الرئيسي مشغل.",
+    "المصابيح الأمامية الموجهة مشغلة.",
+    "الوضع الاقتصادي أو الصديق للبيئة مشغل.",
+    "الوضع الاقتصادي أو الصديق للبيئة مشغل.",
+    "وضع تشغيل/إيقاف المحرك مفعل.",
+    "السيارة في وضع السيارة الكهربية.",
+    "التهوية الداخلية (المروحة الداخلية) مشغلة.",
+    "مصابيح الضباب مضاءة.",
+    "مصابيح الضباب مضاءة.",
+    "نظام التهوية يستخدم الهواء الخارجي.",
+    "مصابيح الطريق مشغلة.",
+    "مصابيح الطريق مشغلة.",
+    "مؤشرات التجاه الحركة (يمين أو يسار).",
+    "مؤشرات التجاه الحركة (يمين أو يسار).",
+    "المصباح الداخلي مضاء.",
+    "المصباح الداخلي مضاء.",
+    "مصابيح الطريق مشغلة.",
+    "الوظيفة موقفة.",
+    "الوظيفة مشغلة.",
+    "مستشعر توقف السيارة مشغل.",
+    "مذيب صقيع النافذة الخلفية مشغل.",
+    "وظيفة غسيل النافذة مفعلة.",
+    "المصابيح الأمامية ذاتية التسوية مشغلة.",
+    "يرجح نقلة الفتيس المثلى لتوفير الوقود.",
+    "المصابيح الجانبية مضاءة.",
+    "المصابيح الجانبية مضاءة.",
+    "ماسحات النوافذ مشغلة."
+  ];
+
+  static final List<String?> _warningAdvicesAr = [
+    "افحص المشكلة عند مختص في أقرب فرصة.",
+    "عند قيادة السيارة وبجانبك طفلك في مقعد الأطفال، يجب تعطيل الوسادة الهوائية الجانبية. تأكد من إعادة تشغيلها مرة أخرى عند غياب الطفل في رحلتك.",
+    "افحص المشكلة عند مختص في أقرب فرصة.",
+    "أوقف السيارة في أقرب فرصة وافحص المشكلة عند مختص، حيث إن هذا قد يضر الفتيس ضررًا بالغًا.",
+    "افحص المشكلة عند مختص. تأكد أن فرامل اليد مثبتة جيدًا في حال وجود خطب ما بنقلات الفتيس.",
+    "أعد شحن البطارية أو استبدلها إذا تأكد وجود خلل فيها أو انتهت صلاحيتها.",
+    "أعد شحن البطارية أو استبدلها إذا تأكد وجود خلل فيها أو انتهت صلاحيتها.",
+    "أحكم إغلاق الغطاء.",
+    "أحكم إغلاق الصندوق الخلفي.",
+    "أوقف السيارة في أقرب فرصة وافحص المشكلة عند مختص. إذا أمكن، أضف زيت الفرامل حتى يصل إلى المستوى الطبيعي.",
+    "تفقد بطانة الفرامل المتآكلة واستبدلها في أقرب فرصة.",
+    "أوقف السيارة بشكل آمن وافحص المشكلة عند مختص لإصلاحها فورًا.",
+    "أوقف السيارة بشكل آمن وافحص المشكلة عند مختص لإصلاحها فورًا.",
+    "أوقف السيارة بشكل آمن وافحص المشكلة عند مختص لإصلاحها فورًا.",
+    "أدخل المفتاح لبدء تشغيل السيارة.",
+    "ألغِ قفل السيارة عند الحاجة.",
+    "تأكد من إقفال جميع الأبواب قبل التحرك.",
+    null,
+    "أرسل فرامل اليد قبل التحرك.",
+    "أغلق المصابيح عند انقضاء الحاجة إليها.",
+    "ألغ قفل السيارة عند الحاجة.",
+    "أوقف السيارة بشكل آمن. أضف الزيت للوصول إلى المستوى المطلوب أو اطلب المساعدة. إن القيادة بمستوى زيت منخفض قد يسبب ضررًا بالغًا للمحرك.",
+    "أوقف السيارة بشكل آمن واطلب مساعدة المختص. إن القيادة بضغط زيت منخفض قد يسبب ضررًا بالغًا للمحرك.",
+    "أوقف السيارة بشكل آمن واطلب مساعدة المختص. وجود خلل في نظام التوجيه قد يتسبب في حادث تصادم.",
+    "تفقد راكبي السيارة وتأكد من وضعهم لأحزمة الأمان قبل التحرك.",
+    "اطلب المساعدة عند مختص. نظام الحماية الإضافية مهم لسلامة راكب السيارة في حال حدوث حادث تصادم.",
+    "أوقف السيارة بشكل آمن وافحص المشكلة عند مختص.",
+    "أوقف السيارة بشكل آمن وافحص المشكلة عند مختص.",
+    "تفقد نظام المعلومات الخاص بالسيارة لمعرفة المشكلة والتصرف تبعًا لها."
+  ];
+  static final List<String> _advisoryAdvicesAr = [
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "أوقف السيارة بشكل آمن واطلب المساعدة عند مختص. نظام منع انغلاق الفرامل سمة مهمة في نظام سلامة السيارة.",
+    "اطلب المساعدة عند مختص في أقرب فرصة، فهذا قد يتسبب في ضرر بالغ لناقل السرعات.",
+    "افحص الفرامل عند مختص واستبدلها إن كانت هناك حاجة لذلك.",
+    "أوقف السيارة بشكل آمن وافحص السيارة عند مختص للتأكد من كون نظام الفرامل يعمل جيدا.",
+    "أوقف السيارة بشكل آمن وافحص السيارة عند مختص للتأكد من كون نظام الفرامل يعمل جيدا.",
+    "أدخل مفتاح السيارة، أو يوجد خطب ما بنظام حماية السيارة.",
+    "لا حاجة لفعل شيء.",
+    "افصل وحدة الشحن عند عدم الحاجة إليها.",
+    "لا حاجة لفعل شيء. نظام تثبيت السرعة سيتوقف عند تعشيق خانق الهواء (الثروتل) / الفرامل / الدبرياج (الكلتش).",
+    "لا حاجة لفعل شيء.",
+    "افحص الفلتر عند مختص واستبدله إن كانت هناك حاجة إلى ذلك. إن فلتر الجسيمات ضروري لمنع خروج الانبعاثات الضارة.",
+    "افصل وحدة الشحن عند عدم الحاجة إليها.",
+    "أوقف السيارة بشكل آمن وافحصها عند مختص.",
+    "أوقف السيارة بشكل آمن وافحصها عند مختص.",
+    "أوقف السيارة بشكل آمن وافحصها عند مختص. إن نظام الثبات الإلكتروني سمة مهمة في نظام سلامة السيارة.",
+    "أوقف تشغيلها عند تحسن الظروف المحيطة حيث إنها قد تؤثر على رؤية السائقين الآخرين.",
+    "محركات الديزل تحتاج تدفئة الوقود قبل التشغيل. إذا استمر ظهور هذا التنبيه دل ذلك على وجود خطب ما بالبوچيهات وقد تحتاج لاستبدالها.",
+    "تفقد نظام معلومات السيارة لتعيين المشكلة والتصرف تبعًا لها.",
+    "لا حاجة لفعل شيء.",
+    "استمر بالتركيز أثناء القيادة، إذا أحسست بالتعب توقف لترتاح قليلًا.",
+    "تفقد مستوى زيت المحرك وعَبِّئه للمستوى المطلوب. إن تشغيل المحرك بمستوى زيت منخفض قد يتسبب في أضرار بالغة.",
+    "زُر أقرب محطة وقود وأعد التعبئة. تستطيع السيارة غالبًا التحرك مسافة ١٠ إلى ٥٠ ميلًا بمستوى وقود منخفض.",
+    "أعد التعبئة في أقرب فرصة للحفاظ على نظافة النوافذ.",
+    "تفقد مستوى زيت المحرك؛ إذا وجدته منخفضًا أعد التعبئة للحد المطلوب بالزيت المناسب لسيارتك، إذا وجدته زائدًا عن الحد اطلب المساعدة في تفريغه.",
+    "انتبه جيدًا لوميض المستشعر لتفادي الاصطدام عند إيقاف السيارة. إضاءة مستمرة تعني أنك ملاصق لشيء ما قد تصطدم به.",
+    "أوقف السيارة بشكل آمن وافحصها عند مختص.",
+    "إذا ظهر هذا التنبيه بشكل غير متوقع، افحص نظام السيارة الكهربي / الهجين عند مختص.",
+    "اضغط على دواسة الفرامل لبدء تشغيل المحرك (في السيارات الأوتوماتيكية فقط).",
+    "افحص السيارة عند مختص.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "افحص السيارة عند مختص.",
+    "افحص السيارة عند المختص.",
+    "افحص السيارة عند مختص حيث إن نظام الوسائد الهوائية سمة مهمة في نظام سلامة السيارة.",
+    "لا حاجة لفعل شيء. استمر في القيادة بشكل طبيعي والمحرك سيبدل بين التشغيل والإيقاف تلقائيًا لتقليل الانبعاثات.",
+    "أعد تشغيله إذا كان مناسبًا حيث إنه سمة مهمة في نظام سلامة السيارة.",
+    "عدل أسلوب القيادة لتناسب الظروف. إذا استمر هذا الضوء في الظهور افحص السيارة عند مختص لاحتمال وجود خطب ما بالنظام.",
+    "عدل أسلوب القيادة لتناسب الظروف.",
+    "عدل أسلوب القيادة لتناسب الظروف.",
+    "انتبه جيدا أثناء سحب السيارة.",
+    "أوقف السيارة بشكل آمن وافحص ضغط الإطارات / وجود علامات خرق / وجود أجسام غريبة بها. استبدل الإطار المعطوب أو أصلحه بما يتناسب مع حاله واطلب مساعدة المختص حسب المشكلة.",
+    "أوقف السيارة بشكل آمن وافحص ضغط الإطارات / وجود علامات خرق / وجود أجسام غريبة بها. استبدل الإطار المعطوب أو أصلحه بما يتناسب مع حاله واطلب مساعدة المختص حسب المشكلة.",
+    "افحص المشكلة عند مختص وقد بحذر إلى حين الفحص.",
+    "أوقف السيارة بشكل آمن واطلب المساعدة عند مختص.",
+    "تفقد نظام معلومات السيارة لتعيين المشكلة والتصرف تبعًا لها.",
+    "تفقد نظام معلومات السيارة لتعيين المشكلة والتصرف تبعًا لها.",
+    "سيارات الديزل مزودة بفواصل تزيل الماء من الوقود. ظهور هذه العلامة يعني وجود خلل في الفواصل أو أن الوقود اختلط بالماء."
+  ];
+  static final List<String> _infoAdvicesAr = [
+    "أعد توجيه الهواء وفقًا للمطلوب.",
+    "بدل إلى الهواء النقي عند الحاجة.",
+    "أعد توجيه الهواء وفقًا للمطلوب.",
+    "أعد توجيه الهواء وفقًا للمطلوب.",
+    "استمر بالقيادة بشكل طبيعي وستُرسَل الفرامل تلقائيًّا عند الحاجة.",
+    "افصل وحدة الشحن عند عدم الحاجة إليها.",
+    "أزل المفتاح عند ترك / إقفال السيارة.",
+    "أدخل المفتاح لبدء تشغيل السيارة.",
+    "افحص السيارة عند مختص للتأكد من عمل نظام التبريد بكفاءة. أيضًا افحص مستوى ماء التبريد.",
+    "استعمل المصابيح الرئيسية عند الحاجة فقط وتأكد ألا تؤثر على رؤية السائقين القادمين في الاتجاه المعاكس.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "لا حاجة لفعل شيء.",
+    "استمر كما أنت، سيعاد تشغيل المحرك تلقائيًّا عند الحاجة.",
+    "لا حاجة لفعل شيء.",
+    "استخدم نظام التهوية الداخلية عند الحاجة.",
+    "استخدم مصابيح الضياب عند الحاجة وتأكد من إغلاقها عند تحسن الظروف المحيطة حيث إنها قد تؤثر على رؤية السائقين الآخرين.",
+    "استخدم مصابيح الضياب عند الحاجة وتأكد من إغلاقها عند تحسن الظروف المحيطة حيث إنها قد تؤثر على رؤية السائقين الآخرين.",
+    "استخدم الهواء الخارجي عند عدم الحاجة لتدفئة الهواء بداخل السيارة.",
+    "استعمل مصابيح الطريق عند الحاجة فقط وتأكد ألا تؤثر على رؤية السائقين القادمين في الاتجاه المعاكس.",
+    "استعمل مصابيح الطريق عند الحاجة فقط وتأكد ألا تؤثر على رؤية السائقين القادمين في الاتجاه المعاكس.",
+    "استخدم المؤشر المناسب لتوضيح الاتجاه الذي ستحررك فيه السيارة.",
+    "استخدم المؤشر المناسب لتوضيح الاتجاه الذي ستحررك فيه السيارة.",
+    "تأكد من إغلاق المصباح الداخلي عند عدم الحاجة لئلا تفرغ البطارية.",
+    "تأكد من إغلاق المصباح الداخلي عند عدم الحاجة لئلا تفرغ البطارية.",
+    "استعمل مصابيح الطريق عند الحاجة فقط وتأكد ألا تؤثر على رؤية السائقين القادمين في الاتجاه المعاكس.",
+    "تفقد ما إذا كانت الوظيفة مطلوبة الآن.",
+    "تفقد ما إذا لم تكن هناك حاجة الآن لتلك الوظيفة.",
+    "انتبه جيدًا لوميض المستشعر لتفادي الاصطدام عند إيقاف السيارة. إضاءة مستمرة تعني أنك ملاصق لشيء ما قد تصطدم به.",
+    "أوقف تشغيل مذيب الصقيع عند الفراغ من الحاجة إليه.",
+    "اغسل النوافذ بالنتظام لرؤية جيدة للطريق (من الأمام والخلف).",
+    "لا حاجة لفعل شيء.",
+    "استعمل النقلة المثلى وارفع الفتيس للأعلى أو أهبطه للأسفل حسب الحاجة.",
+    "استعمل وضع الإضاءة المناسب للظروف المحيطة.",
+    "استعمل وضع الإضاءة المناسب للظروف المحيطة.",
+    "استعمل الماسحات حسب الحاجة."
+  ];
+
+  static final List<int> _warningSeverities = [
     9,
     8,
     9,
@@ -445,8 +842,7 @@ class InfoItemStrings {
     7,
     9
   ];
-
-  static List<int> advisorySeverities = [
+  static final List<int> _advisorySeverities = [
     1,
     1,
     1,
@@ -500,8 +896,7 @@ class InfoItemStrings {
     7,
     6
   ];
-
-  static List<int> infoSeverities = [
+  static final List<int> _infoSeverities = [
     1,
     2,
     1,

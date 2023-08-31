@@ -21,12 +21,16 @@ class AppStrings {
   static String _translate(context, String stringKey) =>
       AppLocalizations.of(context)!.translate(stringKey)!;
 
+  static String? _translateNullable(context, String stringKey) =>
+      AppLocalizations.of(context)!.translate(stringKey);
+
   /// Database
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
   static List<String> get consumables =>
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
+
   static List<String> consumablesEnglishList = [
     'Oil',
     'Oil Filter',
@@ -41,6 +45,7 @@ class AppStrings {
     'Spark Plugs',
     'Brake Linings'
   ];
+
   static List<String> consumablesArabicList = [
     'الزيت',
     'فلتر الزيت',
@@ -120,6 +125,10 @@ class AppStrings {
 
   static String remainingKmNormalWarningLabel(context) =>
       _translate(context, "remaining_km_normal_warning_label");
+
+  static String advice(context) => _translate(context, "advice");
+
+  static String severity(context) => _translate(context, "severity");
 
   static String remainingKmErrorLabel(context) => _translate(context, "remaining_km_error_label");
 
@@ -201,6 +210,17 @@ class AppStrings {
   static String sortByCategoryTooltip(context) => _translate(context, "sort_by_category_tooltip");
 
   static String sortBySeverityTooltip(context) => _translate(context, "sort_by_severity_tooltip");
+
+  /// Lists
+  static List<String?> warningTitles(context) {
+    List<String?> list = [];
+    for (int index = 0; index < 25; index++) {
+      String? item = _translateNullable(context, "warning_titles"[index]);
+      debugPrint(item);
+      list.add(item);
+    }
+    return list;
+  }
 
   /// Error handling
   static const String cacheFailure = 'Cache Failure';

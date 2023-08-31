@@ -75,27 +75,33 @@ class _InfoScreenState extends State<InfoScreen> {
       );
     }
 
-    GridView buildGrid() {
-      return GridView.builder(
-        padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-        itemCount: InfoItemStrings.infoItems.length,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
-        itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
-          position: index,
-          duration: const Duration(milliseconds: 375),
-          columnCount: _gridColumnsCount,
-          child: ScaleAnimation(
-            child: FadeInAnimation(
-              child: WarningSymbolsCard(
-                onTap: () => setState(() => _selectedIndex = index),
-                detailed: _switchToListView,
-                reverseDirection: index % 2 == 0 ? false : true,
-                image: InfoItemStrings.infoItems[index].image,
-                title: InfoItemStrings.infoItems[index].title,
-                description: InfoItemStrings.infoItems[index].description,
-                advice: InfoItemStrings.infoItems[index].advice,
-                severity: InfoItemStrings.infoItems[index].severity,
+    ClipRRect buildGrid() {
+      return ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: GridView.builder(
+          padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+          itemCount: InfoItemStrings.infoItems.length,
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
+          itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            columnCount: _gridColumnsCount,
+            child: ScaleAnimation(
+              child: FadeInAnimation(
+                child: WarningSymbolsCard(
+                  onTap: () => setState(() => _selectedIndex = index),
+                  detailed: _switchToListView,
+                  reverseDirection: index % 2 == 0 ? false : true,
+                  image: InfoItemStrings.infoItems[index].image,
+                  title: InfoItemStrings.infoItems[index].title,
+                  description: InfoItemStrings.infoItems[index].description,
+                  advice: InfoItemStrings.infoItems[index].advice,
+                  severity: InfoItemStrings.infoItems[index].severity,
+                ),
               ),
             ),
           ),
@@ -103,23 +109,29 @@ class _InfoScreenState extends State<InfoScreen> {
       );
     }
 
-    ListView buildList() {
-      return ListView.builder(
-        padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-        itemCount: InfoItemStrings.infoItems.length,
-        itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
-          position: index,
-          duration: const Duration(milliseconds: 375),
-          child: SlideAnimation(
-            child: FadeInAnimation(
-              child: WarningSymbolsCard(
-                detailed: _switchToListView,
-                reverseDirection: index % 2 == 0 ? false : true,
-                image: InfoItemStrings.infoItems[index].image,
-                title: InfoItemStrings.infoItems[index].title,
-                description: InfoItemStrings.infoItems[index].description,
-                advice: InfoItemStrings.infoItems[index].advice,
-                severity: InfoItemStrings.infoItems[index].severity,
+    ClipRRect buildList() {
+      return ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        child: ListView.builder(
+          padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+          itemCount: InfoItemStrings.infoItems.length,
+          itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            child: SlideAnimation(
+              child: FadeInAnimation(
+                child: WarningSymbolsCard(
+                  detailed: _switchToListView,
+                  reverseDirection: index % 2 == 0 ? false : true,
+                  image: InfoItemStrings.infoItems[index].image,
+                  title: InfoItemStrings.infoItems[index].title,
+                  description: InfoItemStrings.infoItems[index].description,
+                  advice: InfoItemStrings.infoItems[index].advice,
+                  severity: InfoItemStrings.infoItems[index].severity,
+                ),
               ),
             ),
           ),
