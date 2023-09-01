@@ -1,5 +1,4 @@
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/info/data/info_item_strings.dart';
 import 'package:car_note/src/features/info/presentation/widgets/warning_symbols_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -41,17 +40,17 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.sort_by_alpha_rounded),
-                  onPressed: () => setState(() => InfoItemStrings.sortAlphabetically()),
+                  onPressed: () => setState(() => AppStrings.sortAlphabetically(context)),
                   tooltip: AppStrings.sortByAlphaTooltip(context),
                 ),
                 IconButton(
                   icon: const Icon(Icons.category_outlined),
-                  onPressed: () => setState(() => InfoItemStrings.sortCategories()),
+                  onPressed: () => setState(() => AppStrings.sortCategories(context)),
                   tooltip: AppStrings.sortByCategoryTooltip(context),
                 ),
                 IconButton(
                   icon: const Icon(Icons.warning_amber_rounded),
-                  onPressed: () => setState(() => InfoItemStrings.sortSeverities()),
+                  onPressed: () => setState(() => AppStrings.sortSeverities(context)),
                   tooltip: AppStrings.sortBySeverityTooltip(context),
                 ),
               ],
@@ -63,11 +62,11 @@ class _InfoScreenState extends State<InfoScreen> {
                     detailed: true,
                     onTap: () => setState(() => _selectedIndex = null),
                     reverseDirection: false,
-                    image: InfoItemStrings.infoItems[_selectedIndex!].image,
-                    title: InfoItemStrings.infoItems[_selectedIndex!].title,
-                    description: InfoItemStrings.infoItems[_selectedIndex!].description,
-                    advice: InfoItemStrings.infoItems[_selectedIndex!].advice,
-                    severity: InfoItemStrings.infoItems[_selectedIndex!].severity,
+                    image: AppStrings.infoItems(context)[_selectedIndex!].image,
+                    title: AppStrings.infoItems(context)[_selectedIndex!].title,
+                    description: AppStrings.infoItems(context)[_selectedIndex!].description,
+                    advice: AppStrings.infoItems(context)[_selectedIndex!].advice,
+                    severity: AppStrings.infoItems(context)[_selectedIndex!].severity,
                   ),
             const Spacer(),
           ],
@@ -83,7 +82,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         child: GridView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: InfoItemStrings.infoItems.length,
+          itemCount: AppStrings.infoItems(context).length,
           gridDelegate:
               const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
           itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
@@ -96,11 +95,11 @@ class _InfoScreenState extends State<InfoScreen> {
                   onTap: () => setState(() => _selectedIndex = index),
                   detailed: _switchToListView,
                   reverseDirection: index % 2 == 0 ? false : true,
-                  image: InfoItemStrings.infoItems[index].image,
-                  title: InfoItemStrings.infoItems[index].title,
-                  description: InfoItemStrings.infoItems[index].description,
-                  advice: InfoItemStrings.infoItems[index].advice,
-                  severity: InfoItemStrings.infoItems[index].severity,
+                  image: AppStrings.infoItems(context)[index].image,
+                  title: AppStrings.infoItems(context)[index].title,
+                  description: AppStrings.infoItems(context)[index].description,
+                  advice: AppStrings.infoItems(context)[index].advice,
+                  severity: AppStrings.infoItems(context)[index].severity,
                 ),
               ),
             ),
@@ -117,7 +116,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         child: ListView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: InfoItemStrings.infoItems.length,
+          itemCount: AppStrings.infoItems(context).length,
           itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
             position: index,
             duration: const Duration(milliseconds: 375),
@@ -126,11 +125,11 @@ class _InfoScreenState extends State<InfoScreen> {
                 child: WarningSymbolsCard(
                   detailed: _switchToListView,
                   reverseDirection: index % 2 == 0 ? false : true,
-                  image: InfoItemStrings.infoItems[index].image,
-                  title: InfoItemStrings.infoItems[index].title,
-                  description: InfoItemStrings.infoItems[index].description,
-                  advice: InfoItemStrings.infoItems[index].advice,
-                  severity: InfoItemStrings.infoItems[index].severity,
+                  image: AppStrings.infoItems(context)[index].image,
+                  title: AppStrings.infoItems(context)[index].title,
+                  description: AppStrings.infoItems(context)[index].description,
+                  advice: AppStrings.infoItems(context)[index].advice,
+                  severity: AppStrings.infoItems(context)[index].severity,
                 ),
               ),
             ),
