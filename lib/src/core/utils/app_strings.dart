@@ -2,7 +2,7 @@ import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/features/info/domain/entities/info_item.dart';
+import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -214,10 +214,10 @@ class AppStrings {
   static String sortBySeverityTooltip(context) => _translate(context, "sort_by_severity_tooltip");
 
   /// Lists
-  static List<InfoItem> infoItems(BuildContext context) =>
+  static List<DashboardItem> dashboardItems(BuildContext context) =>
       List.generate(
         AssetManager.warningSymbols.length,
-        (index) => InfoItem(
+        (index) => DashboardItem(
           category: 1,
           image: AssetManager.warningSymbols[index],
           title: _warningTitles(context)[index],
@@ -228,7 +228,7 @@ class AppStrings {
       ) +
       List.generate(
         AssetManager.advisorySymbols.length,
-        (index) => InfoItem(
+        (index) => DashboardItem(
           category: 2,
           image: AssetManager.advisorySymbols[index],
           title: _advisoryTitles(context)[index],
@@ -239,7 +239,7 @@ class AppStrings {
       ) +
       List.generate(
         AssetManager.infoSymbols.length,
-        (index) => InfoItem(
+        (index) => DashboardItem(
           category: 3,
           image: AssetManager.infoSymbols[index],
           title: _infoTitles(context)[index],
@@ -399,16 +399,16 @@ class AppStrings {
   ];
 
   static void sortAlphabetically(BuildContext context) =>
-      infoItems(context).sort((a, b) => a.title.compareTo(b.title));
+      dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
 
   static void sortCategories(BuildContext context) {
     sortAlphabetically(context);
-    infoItems(context).sort((a, b) => a.category.compareTo(b.category));
+    dashboardItems(context).sort((a, b) => a.category.compareTo(b.category));
   }
 
   static void sortSeverities(BuildContext context) {
     sortCategories(context);
-    infoItems(context).sort((a, b) => b.severity.compareTo(a.severity));
+    dashboardItems(context).sort((a, b) => b.severity.compareTo(a.severity));
   }
 
   /// Error handling

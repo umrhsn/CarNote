@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class InfoItem extends Equatable {
+class DashboardItem extends Equatable {
   final int category;
   final String image;
   final String title;
@@ -8,7 +8,7 @@ class InfoItem extends Equatable {
   final String? advice;
   final int severity;
 
-  const InfoItem({
+  const DashboardItem({
     required this.category,
     required this.image,
     required this.title,

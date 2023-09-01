@@ -3,14 +3,14 @@ import 'package:car_note/src/features/info/presentation/widgets/warning_symbols_
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
 
   @override
-  State<InfoScreen> createState() => _InfoScreenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _InfoScreenState extends State<InfoScreen> {
+class _DashboardScreenState extends State<DashboardScreen> {
   static const int _gridColumnsCount = 5;
   bool _switchToListView = false;
   int? _selectedIndex;
@@ -62,11 +62,11 @@ class _InfoScreenState extends State<InfoScreen> {
                     detailed: true,
                     onTap: () => setState(() => _selectedIndex = null),
                     reverseDirection: false,
-                    image: AppStrings.infoItems(context)[_selectedIndex!].image,
-                    title: AppStrings.infoItems(context)[_selectedIndex!].title,
-                    description: AppStrings.infoItems(context)[_selectedIndex!].description,
-                    advice: AppStrings.infoItems(context)[_selectedIndex!].advice,
-                    severity: AppStrings.infoItems(context)[_selectedIndex!].severity,
+                    image: AppStrings.dashboardItems(context)[_selectedIndex!].image,
+                    title: AppStrings.dashboardItems(context)[_selectedIndex!].title,
+                    description: AppStrings.dashboardItems(context)[_selectedIndex!].description,
+                    advice: AppStrings.dashboardItems(context)[_selectedIndex!].advice,
+                    severity: AppStrings.dashboardItems(context)[_selectedIndex!].severity,
                   ),
             const Spacer(),
           ],
@@ -82,7 +82,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         child: GridView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: AppStrings.infoItems(context).length,
+          itemCount: AppStrings.dashboardItems(context).length,
           gridDelegate:
               const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
           itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
@@ -95,11 +95,11 @@ class _InfoScreenState extends State<InfoScreen> {
                   onTap: () => setState(() => _selectedIndex = index),
                   detailed: _switchToListView,
                   reverseDirection: index % 2 == 0 ? false : true,
-                  image: AppStrings.infoItems(context)[index].image,
-                  title: AppStrings.infoItems(context)[index].title,
-                  description: AppStrings.infoItems(context)[index].description,
-                  advice: AppStrings.infoItems(context)[index].advice,
-                  severity: AppStrings.infoItems(context)[index].severity,
+                  image: AppStrings.dashboardItems(context)[index].image,
+                  title: AppStrings.dashboardItems(context)[index].title,
+                  description: AppStrings.dashboardItems(context)[index].description,
+                  advice: AppStrings.dashboardItems(context)[index].advice,
+                  severity: AppStrings.dashboardItems(context)[index].severity,
                 ),
               ),
             ),
@@ -116,7 +116,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         child: ListView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: AppStrings.infoItems(context).length,
+          itemCount: AppStrings.dashboardItems(context).length,
           itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
             position: index,
             duration: const Duration(milliseconds: 375),
@@ -125,11 +125,11 @@ class _InfoScreenState extends State<InfoScreen> {
                 child: WarningSymbolsCard(
                   detailed: _switchToListView,
                   reverseDirection: index % 2 == 0 ? false : true,
-                  image: AppStrings.infoItems(context)[index].image,
-                  title: AppStrings.infoItems(context)[index].title,
-                  description: AppStrings.infoItems(context)[index].description,
-                  advice: AppStrings.infoItems(context)[index].advice,
-                  severity: AppStrings.infoItems(context)[index].severity,
+                  image: AppStrings.dashboardItems(context)[index].image,
+                  title: AppStrings.dashboardItems(context)[index].title,
+                  description: AppStrings.dashboardItems(context)[index].description,
+                  advice: AppStrings.dashboardItems(context)[index].advice,
+                  severity: AppStrings.dashboardItems(context)[index].severity,
                 ),
               ),
             ),

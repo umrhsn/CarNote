@@ -1,7 +1,7 @@
 import 'package:car_note/src/features/car_info/presentation/pages/car_info.dart';
 import 'package:car_note/src/features/consumables/presentation/pages/add_consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/pages/consumables_screen.dart';
-import 'package:car_note/src/features/info/presentation/pages/info_screen.dart';
+import 'package:car_note/src/features/info/presentation/pages/dashboard_screen.dart';
 import 'package:car_note/src/features/splash/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class AppRoutes {
       case Routes.addConsumableRoute:
         return MaterialPageRoute(builder: ((context) => const AddConsumable()));
       case Routes.infoRoute:
-        return MaterialPageRoute(builder: ((context) => const InfoScreen()));
+        return MaterialPageRoute(builder: ((context) => const DashboardScreen()));
       default:
         return undefinedRoute();
     }
