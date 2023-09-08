@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color scaffoldBackgroundLight = Color(0xffffffff);
-  static const Color scaffoldBackgroundDark = Color(0xff0D1117);
+  static const Color scaffoldBackgroundDark = Color(0xff000000); // 0xff0D1117
 
   static const Color primaryLight = Color(0xff1F883D);
   static const Color primaryDark = Color(0xff238636);
@@ -63,7 +63,7 @@ class AppColors {
   static Color textBtnLight = iconLight;
   static Color textBtnDark = iconDark;
 
-  static Color btnDisabledLight = primaryDark.withAlpha(60);
+  static Color btnDisabledLight = Colors.grey.withAlpha(100);
   static Color btnDisabledDark = Colors.white.withAlpha(70);
 
   static Color textDisabledLight = Colors.grey.shade200;

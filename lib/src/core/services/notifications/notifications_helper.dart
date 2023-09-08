@@ -37,10 +37,18 @@ class NotificationsHelper {
     for (int index = 0; index < Consumable.getCount(); index++) {
       Consumable item = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
 
-      if (cubit.remainingKmControllers[index].text.isNotEmpty && !cubit.isNormalText(index)) {
+      if (cubit.lastChangedAtControllers[index].text.isNotEmpty &&
+              cubit.changeIntervalControllers[index].text.isNotEmpty &&
+              cubit.remainingKmControllers[index].text.isNotEmpty &&
+              !cubit.isNormalText(index) ||
+          cubit.isConsiderText(index)) {
         String remainingKm = LocaleCubit.currentLangCode == AppStrings.en
-            ? cubit.remainingKmControllers[index].text
-            : cubit.remainingKmControllers[index].text.toArabicNumerals();
+            ? cubit.remainingKmControllers[index].text != ''
+                ? cubit.remainingKmControllers[index].text
+                : '0'
+            : cubit.remainingKmControllers[index].text != ''
+                ? cubit.remainingKmControllers[index].text.toArabicNumerals()
+                : '0'.toArabicNumerals();
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: index,

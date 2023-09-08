@@ -140,6 +140,10 @@ class DatabaseHelper {
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
+    consumableCubit.lastChangedAtControllers.removeAt(index);
+    consumableCubit.changeIntervalControllers.removeAt(index);
+    consumableCubit.remainingKmControllers.removeAt(index);
+
     consumableCubit.lastChangedAtFocuses.removeAt(index);
     consumableCubit.changeIntervalFocuses.removeAt(index);
     consumableCubit.remainingKmFocuses.removeAt(index);

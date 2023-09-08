@@ -99,6 +99,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 IconButton(
                   onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
                   icon: const Icon(Icons.car_crash),
+                  tooltip: AppStrings.infoTooltip(context),
                 )
               ],
             ),

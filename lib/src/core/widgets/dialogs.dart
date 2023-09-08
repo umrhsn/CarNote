@@ -1,8 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
-import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';

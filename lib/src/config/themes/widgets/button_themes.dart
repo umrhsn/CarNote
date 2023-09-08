@@ -14,7 +14,7 @@ class AppButtonThemes {
             MaterialStateProperty.all(isLight ? AppColors.primaryLight : AppColors.primaryDark),
         fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, 60)),
         shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
