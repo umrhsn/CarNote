@@ -87,3 +87,6 @@ flutter:
         - asset: assets/fonts/Product Sans Italic.ttf
         - asset: assets/fonts/Product Sans Regular.ttf
           style: italic
+    - family: DIN Next
+      fonts:
+        - asset: assets/fonts/DIN Next Rounded LT W01 Regular.ttf

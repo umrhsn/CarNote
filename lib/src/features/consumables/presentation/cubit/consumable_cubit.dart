@@ -23,8 +23,13 @@ class ConsumableCubit extends Cubit<ConsumableState> {
           text: item.lastChangedAt != 0 ? item.lastChangedAt.toThousands() : ''));
       changeIntervalControllers.add(TextEditingController(
           text: item.changeInterval != 0 ? item.changeInterval.toThousands() : ''));
-      remainingKmControllers.add(
-          TextEditingController(text: item.remainingKm != 0 ? item.remainingKm.toThousands() : ''));
+      remainingKmControllers.add(TextEditingController(
+          text: item.remainingKm != 0
+              ? item.remainingKm.toThousands()
+              : lastChangedAtControllers[index].text.isNotEmpty &&
+                      changeIntervalControllers[index].text.isNotEmpty
+                  ? ''
+                  : '0'));
 
       lastChangedAtFocuses.add(FocusNode());
       changeIntervalFocuses.add(FocusNode());
@@ -135,7 +140,10 @@ class ConsumableCubit extends Cubit<ConsumableState> {
             : _calculateRemainingKm(
                     lastChangedAtControllers[index], changeIntervalControllers[index])
                 .toThousands()
-        : '';
+        : lastChangedAtControllers[index].text.isNotEmpty &&
+                changeIntervalControllers[index].text.isNotEmpty
+            ? '0'
+            : '';
     emit(AddedRemainingKm());
   }
 
@@ -203,6 +211,15 @@ class ConsumableCubit extends Cubit<ConsumableState> {
         -500;
   }
 
+  bool isConsiderText(int index) {
+    emit(Calculating());
+    return _calculateRemainingKm(
+                lastChangedAtControllers[index], changeIntervalControllers[index]) ==
+            0 &&
+        lastChangedAtControllers[index].text.isNotEmpty &&
+        changeIntervalControllers[index].text.isNotEmpty;
+  }
+
   bool isWarningText(int index) {
     emit(Calculating());
     return _calculateRemainingKm(
@@ -226,6 +243,10 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     if (isNormalText(index) || isWarningText(index)) {
       emit(ValidatingComplete());
       return '${AppStrings.normalAndWarningText(context)} ${_calculateChangeKmAndCurrentKmSum(index).toThousands()}';
+    }
+    if (isConsiderText(index)) {
+      emit(ValidatingComplete());
+      return AppStrings.considerText(context);
     }
     if (isErrorText(index)) {
       emit(ValidatingComplete());

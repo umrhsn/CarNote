@@ -153,9 +153,9 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             style: TextStyle(
                 color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
             decoration: InputDecoration(
-              labelText: cubit.isNormalText(widget.index) || cubit.isWarningText(widget.index)
-                  ? AppStrings.remainingKmNormalWarningLabel(context)
-                  : AppStrings.remainingKmErrorLabel(context),
+              labelText: cubit.isErrorText(widget.index)
+                  ? AppStrings.remainingKmErrorLabel(context)
+                  : AppStrings.remainingKmNormalWarningLabel(context),
               fillColor: AppColors.getDisabledTextFieldFill(context),
               floatingLabelStyle:
                   TextStyle(color: getRemainingKmLabelColor(), fontWeight: FontWeight.bold),
@@ -231,8 +231,8 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                                 icon: const Icon(Icons.edit))
                             : const SizedBox(),
                         IconButton(
-                            onPressed: () =>
-                                Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
+                            onPressed: () => Dialogs.showRemoveConsumableConfirmationDialog(
+                                context, widget.index),
                             icon: const Icon(Icons.delete)),
                       ],
                     ),

@@ -4,7 +4,7 @@ import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 
-class WarningSymbolsCard extends StatelessWidget {
+class DashboardSymbolsCard extends StatelessWidget {
   final void Function()? onTap;
   final bool detailed;
   final bool reverseDirection;
@@ -14,7 +14,7 @@ class WarningSymbolsCard extends StatelessWidget {
   final String? advice;
   final int severity;
 
-  WarningSymbolsCard({
+  DashboardSymbolsCard({
     super.key,
     this.onTap,
     required this.detailed,
