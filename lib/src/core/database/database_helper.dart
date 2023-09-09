@@ -151,6 +151,23 @@ class DatabaseHelper {
     BotToast.showText(text: AppStrings.removedItem(context));
   }
 
+  static void removeAllData(BuildContext context) {
+    _consumableBox.get(AppStrings.consumableBox)!.clear();
+    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers.clear();
+    consumableCubit.changeIntervalControllers.clear();
+    consumableCubit.remainingKmControllers.clear();
+
+    consumableCubit.lastChangedAtFocuses.clear();
+    consumableCubit.changeIntervalFocuses.clear();
+    consumableCubit.remainingKmFocuses.clear();
+
+    BotToast.showText(text: AppStrings.removedAllData(context));
+  }
+
   static void changeConsumableOrder(BuildContext context, int oldIndex, int newIndex) {
     if (oldIndex < newIndex) newIndex -= 1;
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);

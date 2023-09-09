@@ -76,18 +76,19 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomIconButton(
-                  btnEnabled: _list!.isNotEmpty,
-                  icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
-                  onPressed: () => consumableCubit.changeVisibility(context),
-                  tooltip: AppStrings.toggleModeTooltip(context),
-                ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.language),
                   onPressed: () => AppLocalizations.of(context)!.isEnLocale
                       ? localeCubit.toArabic(context)
                       : localeCubit.toEnglish(context),
                   tooltip: AppStrings.switchLangTooltip(context),
+                ),
+                const Spacer(),
+                CustomIconButton(
+                  btnEnabled: _list!.isNotEmpty,
+                  icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
+                  onPressed: () => consumableCubit.changeVisibility(context),
+                  tooltip: AppStrings.toggleModeTooltip(context),
                 ),
                 CustomIconButton(
                   btnEnabled: _list!.isNotEmpty,
@@ -102,11 +103,18 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                               color: Colors.white, fontFamily: AppStrings.fontFamilyEn)))),
                   tooltip: AppStrings.createFileTooltip(context),
                 ),
+                CustomIconButton(
+                  btnEnabled: _list!.isNotEmpty,
+                  icon: Icons.delete_forever,
+                  onPressed: () => Dialogs.showRemoveAllDataConfirmationDialog(context),
+                  tooltip: AppStrings.eraseDataTooltip(context),
+                ),
+                const Spacer(),
                 IconButton(
                   onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
-                  icon: const Icon(Icons.car_crash),
+                  icon: const Icon(Icons.info),
                   tooltip: AppStrings.infoTooltip(context),
-                )
+                ),
               ],
             ),
             TextFormField(
@@ -178,8 +186,11 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         child: _list != null && _list!.isEmpty
             ? buildEmptyListWidget(context)
             : Scrollbar(
+                interactive: true,
+                thumbVisibility: false,
+                trackVisibility: false,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 15, end: 11),
+                  padding: const EdgeInsetsDirectional.only(bottom: 15, end: 10),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: ReorderableListView.builder(

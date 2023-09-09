@@ -114,6 +114,8 @@ class AppStrings {
   static String removedItem(BuildContext context) =>
       _translate(context, "removed_item_successfully");
 
+  static String removedAllData(BuildContext context) => _translate(context, "removed_all_data");
+
   static String itemAdded(BuildContext context) => _translate(context, "item_added");
 
   /// Hints
@@ -184,6 +186,22 @@ class AppStrings {
 
   static String cancel(BuildContext context) => _translate(context, "cancel");
 
+  static String removeAllDataConfirmationDialogTitle(BuildContext context) =>
+      _translate(context, "remove_all_data_confirmation_dialog_title");
+
+  static String removeAllDataConfirmationDialogContent(BuildContext context) =>
+      _translate(context, "remove_all_data_confirmation_dialog_content");
+
+  static String proceed(BuildContext context) => _translate(context, "proceed");
+
+  static String removeAllDataAssuringDialogTitle(BuildContext context) =>
+      _translate(context, "remove_all_data_assuring_dialog_title");
+
+  static String removeAllDataAssuringDialogContent(BuildContext context) =>
+      _translate(context, "remove_all_data_assuring_dialog_content");
+
+  static String eraseData(BuildContext context) => _translate(context, "erase_data");
+
   /// AppBar titles
   static String addConsumable(BuildContext context) => _translate(context, "add_an_item");
 
@@ -228,6 +246,12 @@ class AppStrings {
   static String switchToListView(BuildContext context) =>
       _translate(context, "switch_to_list_view");
 
+  static String switchedToGridView(BuildContext context) =>
+      _translate(context, "switched_to_grid_view");
+
+  static String switchedToListView(BuildContext context) =>
+      _translate(context, "switched_to_list_view");
+
   static String sortByAlphaTooltip(BuildContext context) =>
       _translate(context, "sort_by_alpha_tooltip");
 
@@ -236,6 +260,8 @@ class AppStrings {
 
   static String sortBySeverityTooltip(BuildContext context) =>
       _translate(context, "sort_by_severity_tooltip");
+
+  static String eraseDataTooltip(BuildContext context) => _translate(context, "erase_data_tooltip");
 
   /// Lists
   static List<DashboardItem> dashboardItems(BuildContext context) =>

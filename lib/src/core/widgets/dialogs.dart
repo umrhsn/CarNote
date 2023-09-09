@@ -7,28 +7,35 @@ import 'package:car_note/src/features/consumables/domain/entities/consumable.dar
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Dialogs {
   static void _showExitDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-        title: Text(AppStrings.changedDataMsg(context)),
-        content: Text(AppStrings.sureToExitMsg(context)),
-        actions: [
-          TextButton(
-            onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) {
-              BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
-              SystemNavigator.pop();
-            }),
-            child: Text(AppStrings.saveData(context)),
+      builder: (context) => AnimationConfiguration.synchronized(
+        child: SlideAnimation(
+          child: FadeInAnimation(
+            child: AlertDialog(
+              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+              title: Text(AppStrings.changedDataMsg(context)),
+              content: Text(AppStrings.sureToExitMsg(context)),
+              actions: [
+                TextButton(
+                  onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) {
+                    BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
+                    SystemNavigator.pop();
+                  }),
+                  child: Text(AppStrings.saveData(context)),
+                ),
+                TextButton(
+                  onPressed: () => SystemNavigator.pop(),
+                  child: Text(AppStrings.exitWithoutSaving(context)),
+                ),
+              ],
+            ),
           ),
-          TextButton(
-            onPressed: () => SystemNavigator.pop(),
-            child: Text(AppStrings.exitWithoutSaving(context)),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -132,23 +139,88 @@ class Dialogs {
   static void showRemoveConsumableConfirmationDialog(BuildContext context, int index) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
-        title: Text(AppStrings.removingItem(context, index)),
-        content: Text(AppStrings.sureToDeleteMsg(context)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              DatabaseHelper.removeConsumable(index, context);
-              Navigator.pop(context);
-            },
-            child: Text(AppStrings.removeItem(context)),
+      builder: (context) => AnimationConfiguration.synchronized(
+        child: SlideAnimation(
+          child: FadeInAnimation(
+            child: AlertDialog(
+              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+              title: Text(AppStrings.removingItem(context, index)),
+              content: Text(AppStrings.sureToDeleteMsg(context)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    DatabaseHelper.removeConsumable(index, context);
+                    Navigator.pop(context);
+                  },
+                  child: Text(AppStrings.removeItem(context)),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(AppStrings.cancel(context)),
+                ),
+              ],
+            ),
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(AppStrings.cancel(context)),
+        ),
+      ),
+    );
+  }
+
+  static void showRemoveAllDataConfirmationDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AnimationConfiguration.synchronized(
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: AlertDialog(
+                    icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+                    title: Text(AppStrings.removeAllDataConfirmationDialogTitle(context)),
+                    content: Text(AppStrings.removeAllDataConfirmationDialogContent(context)),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          showRemoveAllDataAssuringDialog(context);
+                        },
+                        child: Text(AppStrings.proceed(context).toUpperCase()),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text(AppStrings.cancel(context).toUpperCase()),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ));
+  }
+
+  static void showRemoveAllDataAssuringDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AnimationConfiguration.synchronized(
+        child: SlideAnimation(
+          child: FadeInAnimation(
+            child: AlertDialog(
+              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+              title: Text(AppStrings.removeAllDataAssuringDialogTitle(context).toUpperCase()),
+              content: Text(AppStrings.removeAllDataAssuringDialogContent(context)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    DatabaseHelper.removeAllData(context);
+                    Navigator.pop(context);
+                  },
+                  child: Text(AppStrings.eraseData(context).toUpperCase()),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(AppStrings.cancel(context).toUpperCase()),
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
