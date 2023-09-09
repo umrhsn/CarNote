@@ -3,12 +3,15 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/custom_button.dart';
+import 'package:car_note/src/core/widgets/custom_button_with_icon.dart';
 import 'package:car_note/src/core/widgets/custom_icon_button.dart';
 import 'package:car_note/src/core/widgets/dialogs.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
@@ -33,6 +36,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
+  final List? _list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
 
   bool _getVisibilityStatus() {
     if (_prefs.getBool(AppStrings.prefsBoolDetailedModeOn) == null) {
@@ -72,8 +76,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  icon: Icon(_getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined),
+                CustomIconButton(
+                  btnEnabled: _list!.isNotEmpty,
+                  icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
                   onPressed: () => consumableCubit.changeVisibility(context),
                   tooltip: AppStrings.toggleModeTooltip(context),
                 ),
@@ -84,8 +89,9 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                       : localeCubit.toEnglish(context),
                   tooltip: AppStrings.switchLangTooltip(context),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.file_copy),
+                CustomIconButton(
+                  btnEnabled: _list!.isNotEmpty,
+                  icon: Icons.file_copy,
                   onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
                       FileCreator.writeDataToFile().then((value) => BotToast.showText(
                           duration: Duration(seconds: value == true ? 7 : 2),
@@ -140,35 +146,64 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           ],
         );
 
-    Expanded buildConsumablesList() => Expanded(
-          flex: 1000,
-          child: Scrollbar(
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 15, end: 11),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                child: ReorderableListView.builder(
-                    itemCount: Consumable.getCount(),
-                    itemBuilder: (context, index) {
-                      List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
-                      Consumable item = list![index];
-                      return AnimationConfiguration.staggeredList(
-                        key: ValueKey(index),
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                          child: FadeInAnimation(
-                            child: ConsumableWidget(index: index, name: item.name),
-                          ),
-                        ),
-                      );
-                    },
-                    onReorder: (oldIndex, newIndex) => setState(
-                        () => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
-              ),
+    Column buildEmptyListWidget(BuildContext context) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(AssetManager.nothingHere, height: context.height / 5),
+          const SizedBox(height: 15),
+          Text(
+            AppStrings.nothingHere(context),
+            style: TextStyle(
+              fontFamily: AppStrings.fontFamilyEn,
+              fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        );
+          const SizedBox(height: 10),
+          Text(
+            AppStrings.tryToAddItems(context),
+            style: TextStyle(
+                color: AppColors.getHintColor(context), fontFamily: AppStrings.fontFamilyEn),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      );
+    }
+
+    Expanded buildConsumablesList() {
+      return Expanded(
+        flex: 1000,
+        child: _list != null && _list!.isEmpty
+            ? buildEmptyListWidget(context)
+            : Scrollbar(
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(bottom: 15, end: 11),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    child: ReorderableListView.builder(
+                        itemCount: Consumable.getCount(),
+                        itemBuilder: (context, index) {
+                          Consumable item = _list![index];
+                          return AnimationConfiguration.staggeredList(
+                            key: ValueKey(index),
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              child: FadeInAnimation(
+                                child: ConsumableWidget(index: index, name: item.name),
+                              ),
+                            ),
+                          );
+                        },
+                        onReorder: (oldIndex, newIndex) => setState(() =>
+                            DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+                  ),
+                ),
+              ),
+      );
+    }
 
     Padding buildBottomButtons() => Padding(
           padding: const EdgeInsetsDirectional.only(end: 10),
@@ -178,14 +213,14 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 flex: 4,
                 child: CustomButton(
                   text: AppStrings.btnSave(context),
-                  btnEnabled: consumableCubit.shouldEnableButtons(context),
+                  btnEnabled: consumableCubit.shouldEnableButtons(context) && _list!.isNotEmpty,
                   onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
                       BotToast.showText(text: AppStrings.dataSavedSuccessfully(context))),
                 ),
               ),
               const SizedBox(width: 10),
               Flexible(
-                child: CustomIconButton(
+                child: CustomButtonWithIcon(
                   iconData: Icons.add,
                   btnEnabled: consumableCubit.shouldEnableButtons(context),
                   onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),

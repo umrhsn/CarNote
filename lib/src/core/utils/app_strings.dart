@@ -431,6 +431,10 @@ class AppStrings {
     dashboardItems(context).sort((a, b) => b.severity.compareTo(a.severity));
   }
 
+  static String nothingHere(BuildContext context) => _translate(context, "nothing_here");
+
+  static String tryToAddItems(BuildContext context) => _translate(context, "try_to_add_items");
+
   /// Error handling
   static const String cacheFailure = 'Cache Failure';
   static const String unexpectedError = 'Unexpected Error';

@@ -12,6 +12,8 @@ class AssetManager {
 
   static Image splashImage() => Image.asset(icon, height: 150);
 
+  static const String nothingHere = '$imgPath/nothing_here.png';
+
   static List<String> warningSymbols = [
     '$warningPath/air_bad_symbol_in_red.png',
     '$warningPath/airbag_warning_symbol_in_red.png',

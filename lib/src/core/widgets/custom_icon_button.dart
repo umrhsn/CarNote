@@ -1,34 +1,34 @@
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-  final IconData iconData;
+  final IconData icon;
   bool btnEnabled;
   final void Function()? onPressed;
+  String? tooltip;
 
   CustomIconButton({
     Key? key,
-    required this.iconData,
+    required this.icon,
     required this.btnEnabled,
     required this.onPressed,
+    this.tooltip,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return IconButton(
       onPressed: btnEnabled ? onPressed : null,
       style: !btnEnabled
           ? ButtonStyle(
-        padding: MaterialStateProperty.all(EdgeInsets.zero),
-              elevation: MaterialStateProperty.all(0),
               foregroundColor:
-                  MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
-              backgroundColor:
-                  MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
-            )
-          :  ButtonStyle(
-        padding: MaterialStateProperty.all(EdgeInsets.zero),),
-      child: Icon(iconData),
+                  MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)))
+          : ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(
+                  context.isLight ? AppColors.iconLight : AppColors.iconDark)),
+      icon: Icon(icon),
+      tooltip: tooltip,
     );
   }
 }
