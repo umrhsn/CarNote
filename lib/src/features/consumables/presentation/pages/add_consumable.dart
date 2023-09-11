@@ -53,10 +53,8 @@ class AddConsumableState extends State<AddConsumable> {
               child: TextFormField(
                 controller: cubit.lastChangedController,
                 focusNode: cubit.lastChangedFocus,
-                cursorColor:
-                    AppColors.getTextFieldBorderAndLabelFocused(context),
-                onChanged: (_) =>
-                    cubit.getAddLastChangedKmValidatingText(context),
+                cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
+                onChanged: (_) => cubit.getAddLastChangedKmValidatingText(context),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -119,8 +117,7 @@ class AddConsumableState extends State<AddConsumable> {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsetsDirectional.only(
-                start: 10, end: 10, bottom: 15),
+            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 15),
             child: Column(
               children: [
                 const Spacer(),
@@ -155,24 +152,20 @@ class AddConsumableState extends State<AddConsumable> {
                           DatabaseHelper.addConsumable(
                             context,
                             name: cubit.consumableNameController.text,
-                            lastChangedAt:
-                                cubit.lastChangedController.text.isEmpty
-                                    ? 0
-                                    : int.parse(cubit.lastChangedController.text
-                                        .removeThousandSeparator()),
-                            changeInterval: cubit
-                                    .changeIntervalController.text.isEmpty
+                            lastChangedAt: cubit.lastChangedController.text.isEmpty
                                 ? 0
-                                : int.parse(cubit.changeIntervalController.text
-                                    .removeThousandSeparator()),
+                                : int.parse(
+                                    cubit.lastChangedController.text.removeThousandSeparator()),
+                            changeInterval: cubit.changeIntervalController.text.isEmpty
+                                ? 0
+                                : int.parse(
+                                    cubit.changeIntervalController.text.removeThousandSeparator()),
                           ).then((value) {
                             if (value) {
-                              BotToast.showText(
-                                  text: AppStrings.itemAdded(context));
+                              BotToast.showText(text: AppStrings.itemAdded(context));
                               Navigator.pop(context);
                             } else {
-                              BotToast.showText(
-                                  text: AppStrings.invalidInput(context));
+                              BotToast.showText(text: AppStrings.invalidInput(context));
                             }
                           });
                         },

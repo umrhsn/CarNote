@@ -53,8 +53,10 @@ class DatabaseHelper {
     if (consumableCubit.consumableNameController.text.isEmpty) {
       return false;
     } else {
-      _consumableBox.get(AppStrings.consumableBox)![index].name = consumableCubit.consumableNameController.text;
-      writeConsumablesData(context).then((value) => BotToast.showText(text: AppStrings.dataSavedSuccessfully(context)));
+      _consumableBox.get(AppStrings.consumableBox)![index].name =
+          consumableCubit.consumableNameController.text;
+      writeConsumablesData(context)
+          .then((value) => BotToast.showText(text: AppStrings.dataSavedSuccessfully(context)));
       return true;
     }
   }
@@ -77,9 +79,18 @@ class DatabaseHelper {
       _consumableBox.get(AppStrings.consumableBox)![index] = Consumable(
         id: index,
         name: _consumableBox.get(AppStrings.consumableBox)![index].name,
-        lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ? int.parse(consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator()) : 0,
-        changeInterval: consumableCubit.changeIntervalControllers[index].text.isNotEmpty ? int.parse(consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator()) : 0,
-        remainingKm: consumableCubit.remainingKmControllers[index].text.isNotEmpty ? int.parse(consumableCubit.remainingKmControllers[index].text.removeThousandSeparator()) : 0,
+        lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
+            : 0,
+        changeInterval: consumableCubit.changeIntervalControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.changeIntervalControllers[index].text.removeThousandSeparator())
+            : 0,
+        remainingKm: consumableCubit.remainingKmControllers[index].text.isNotEmpty
+            ? int.parse(
+                consumableCubit.remainingKmControllers[index].text.removeThousandSeparator())
+            : 0,
       );
 
       list.add(_consumableBox.get(AppStrings.consumableBox)![index]);
@@ -110,8 +121,10 @@ class DatabaseHelper {
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    consumableCubit.lastChangedAtControllers.add(TextEditingController(text: lastChangedAt.toThousands()));
-    consumableCubit.changeIntervalControllers.add(TextEditingController(text: changeInterval.toThousands()));
+    consumableCubit.lastChangedAtControllers
+        .add(TextEditingController(text: lastChangedAt.toThousands()));
+    consumableCubit.changeIntervalControllers
+        .add(TextEditingController(text: changeInterval.toThousands()));
     consumableCubit.remainingKmControllers.add(TextEditingController());
 
     consumableCubit.lastChangedAtFocuses.add(FocusNode());
@@ -160,17 +173,25 @@ class DatabaseHelper {
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     Consumable item = _consumableBox.get(AppStrings.consumableBox)!.removeAt(oldIndex);
-    int lastChangedAt = int.parse(consumableCubit.lastChangedAtControllers.removeAt(oldIndex).text.removeThousandSeparator());
-    int changeInterval = int.parse(consumableCubit.changeIntervalControllers.removeAt(oldIndex).text.removeThousandSeparator());
-    int remainingKm = int.parse(consumableCubit.remainingKmControllers.removeAt(oldIndex).text.removeThousandSeparator());
+    int lastChangedAt = int.parse(
+        consumableCubit.lastChangedAtControllers.removeAt(oldIndex).text.removeThousandSeparator());
+    int changeInterval = int.parse(consumableCubit.changeIntervalControllers
+        .removeAt(oldIndex)
+        .text
+        .removeThousandSeparator());
+    int remainingKm = int.parse(
+        consumableCubit.remainingKmControllers.removeAt(oldIndex).text.removeThousandSeparator());
     consumableCubit.lastChangedAtFocuses.removeAt(oldIndex);
     consumableCubit.changeIntervalFocuses.removeAt(oldIndex);
     consumableCubit.remainingKmFocuses.removeAt(oldIndex);
 
     _consumableBox.get(AppStrings.consumableBox)!.insert(newIndex, item);
-    consumableCubit.lastChangedAtControllers.insert(newIndex, TextEditingController(text: lastChangedAt.toThousands()));
-    consumableCubit.changeIntervalControllers.insert(newIndex, TextEditingController(text: changeInterval.toThousands()));
-    consumableCubit.remainingKmControllers.insert(newIndex, TextEditingController(text: remainingKm.toThousands()));
+    consumableCubit.lastChangedAtControllers
+        .insert(newIndex, TextEditingController(text: lastChangedAt.toThousands()));
+    consumableCubit.changeIntervalControllers
+        .insert(newIndex, TextEditingController(text: changeInterval.toThousands()));
+    consumableCubit.remainingKmControllers
+        .insert(newIndex, TextEditingController(text: remainingKm.toThousands()));
     consumableCubit.lastChangedAtFocuses.insert(newIndex, FocusNode());
     consumableCubit.changeIntervalFocuses.insert(newIndex, FocusNode());
     consumableCubit.remainingKmFocuses.insert(newIndex, FocusNode());
