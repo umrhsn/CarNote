@@ -196,7 +196,8 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                     child: ReorderableListView.builder(
                         itemCount: Consumable.getCount(),
                         itemBuilder: (context, index) {
-                          Consumable item = _list![index];
+                          List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                          Consumable item = list![index];
                           return AnimationConfiguration.staggeredList(
                             key: ValueKey(index),
                             position: index,
