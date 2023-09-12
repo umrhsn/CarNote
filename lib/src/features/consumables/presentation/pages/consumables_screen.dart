@@ -3,6 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
@@ -252,10 +253,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               automaticallyImplyLeading: false,
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
-            )
-            // TODO: add ads to page
-            // .withBottomAdmobBanner(context)
-            ,
+            ).withBottomAdmobBanner(context),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(start: 10),

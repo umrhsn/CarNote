@@ -1,5 +1,8 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/services/ads/ad_services.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/info/presentation/widgets/dashboard_symbols_card.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
@@ -184,21 +187,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
           ),
+          AdmobBanner(
+            adUnitId: AdServices.getBannerAdUnitId(),
+            adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+          ),
         ],
       ),
     );
   }
 }
-// Column(
-//   children: List.generate(
-//     InfoItemStrings.infoItems.length,
-//     (index) => WarningSymbolsCard(
-//       reverseDirection: index % 2 == 0 ? false : true,
-//       image: InfoItemStrings.infoItems[index].image,
-//       title: InfoItemStrings.infoItems[index].title,
-//       description: InfoItemStrings.infoItems[index].description,
-//       advice: InfoItemStrings.infoItems[index].advice,
-//       severity: InfoItemStrings.infoItems[index].severity,
-//     ),
-//   ),
-// ),

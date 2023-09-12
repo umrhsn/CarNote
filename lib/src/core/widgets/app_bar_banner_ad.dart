@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:car_note/src/core/services/ads/ad_services.dart';
 import 'package:flutter/material.dart';
 
 class AppBarBannerAd extends StatelessWidget implements PreferredSizeWidget {
@@ -28,7 +29,7 @@ class AppBarBannerAd extends StatelessWidget implements PreferredSizeWidget {
           width: size.width,
           height: height,
           child: AdmobBanner(
-            adUnitId: getBannerAdUnitId() ?? '',
+            adUnitId: AdServices.getBannerAdUnitId(),
             adSize: AdmobBannerSize.ADAPTIVE_BANNER(
               width: size.width.toInt(),
             ),
@@ -36,14 +37,5 @@ class AppBarBannerAd extends StatelessWidget implements PreferredSizeWidget {
         )
       ],
     );
-  }
-
-  String? getBannerAdUnitId() {
-    if (Platform.isIOS) {
-      return 'ca-app-pub-3940256099942544/2934735716';
-    } else if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/6300978111';
-    }
-    return null;
   }
 }

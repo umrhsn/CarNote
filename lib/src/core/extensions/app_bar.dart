@@ -1,4 +1,4 @@
-import 'package:car_note/src/core/services/ads/app_bar_banner_ad.dart';
+import 'package:car_note/src/core/widgets/app_bar_banner_ad.dart';
 import 'package:flutter/material.dart';
 
 extension AppBarAdmobX on AppBar {

@@ -33,7 +33,6 @@ class NotificationsHelper {
   static void showAlarmingNotifications(BuildContext context) {
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
-    // TODO: depend on _consumableBox.length
     for (int index = 0; index < Consumable.getCount(); index++) {
       Consumable item = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
 
