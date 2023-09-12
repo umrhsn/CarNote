@@ -46,6 +46,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     return visible;
   }
 
+  // FIXME: works only if app is minimized, not closed
   void _scheduleDailyNotification() {
     Cron().schedule(
         Schedule.parse('0 9 * * *'), () => NotificationsHelper.showDailyNotification(context));
