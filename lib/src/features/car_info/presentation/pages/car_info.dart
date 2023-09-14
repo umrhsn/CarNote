@@ -32,8 +32,8 @@ class CarInfo extends StatefulWidget {
 class _MyHomePageState extends State<CarInfo> {
   @override
   void initState() {
-    Admob.requestTrackingAuthorization();
     super.initState();
+    Admob.requestTrackingAuthorization();
   }
 
   @override
@@ -142,13 +142,13 @@ class _MyHomePageState extends State<CarInfo> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: AdmobBanner(
-              adUnitId: AdServices.getBannerAdUnitId(),
-              adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-            ),
-          )
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: AdmobBanner(
+          //     adUnitId: AdServices.getBannerAdUnitId(),
+          //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+          //   ),
+          // )
         ],
       ),
     );

@@ -23,6 +23,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int? _selectedIndex;
 
   @override
+  void initState() {
+    super.initState();
+    Admob.requestTrackingAuthorization();
+  }
+
+  @override
   Widget build(BuildContext context) {
     LocaleCubit localeCubit = LocaleCubit.get(context);
 
@@ -109,10 +115,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     ClipRRect buildGrid() {
       return ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
+        borderRadius:
+            const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         child: GridView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
           itemCount: AppStrings.dashboardItems(context).length,
@@ -143,10 +147,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     ClipRRect buildList() {
       return ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
+        borderRadius:
+            const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
         child: ListView.builder(
           padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
           itemCount: AppStrings.dashboardItems(context).length,
@@ -187,10 +189,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
           ),
-          AdmobBanner(
-            adUnitId: AdServices.getBannerAdUnitId(),
-            adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-          ),
+          // AdmobBanner(
+          //   adUnitId: AdServices.getBannerAdUnitId(),
+          //   adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+          // ),
         ],
       ),
     );

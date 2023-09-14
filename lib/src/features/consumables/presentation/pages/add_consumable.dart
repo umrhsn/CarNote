@@ -1,6 +1,9 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/services/ads/ad_services.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -116,12 +119,12 @@ class AddConsumableState extends State<AddConsumable> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 15),
-            child: Column(
-              children: [
-                const Spacer(),
-                Card(
+          body: Column(
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
@@ -140,11 +143,13 @@ class AddConsumableState extends State<AddConsumable> {
                     ),
                   ),
                 ),
-                const Spacer(),
-                Row(
+              ),
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
                       child: CustomButton(
                         text: AppStrings.btnAddItem(context).toUpperCase(),
                         btnEnabled: cubit.shouldEnableAddButton(context),
@@ -178,11 +183,19 @@ class AddConsumableState extends State<AddConsumable> {
                         onPressed: () => Navigator.pop(context),
                         btnEnabled: true,
                       ),
-                    )
+                    ),
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 15),
+              //   child: AdmobBanner(
+              //     adUnitId: AdServices.getBannerAdUnitId(),
+              //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+              //   ),
+              // ),
+            ],
           ),
         );
       },

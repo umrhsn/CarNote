@@ -17,15 +17,14 @@ class CustomButton extends StatefulWidget {
   State<CustomButton> createState() => _CustomButtonState();
 }
 
-class _CustomButtonState extends State<CustomButton>
-    with SingleTickerProviderStateMixin {
+class _CustomButtonState extends State<CustomButton> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 150));
+    _animationController =
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
   }
 
   @override
@@ -36,20 +35,23 @@ class _CustomButtonState extends State<CustomButton>
         onPressed: widget.btnEnabled
             ? () {
                 _animationController.forward();
-                Future.delayed(const Duration(milliseconds: 200),
-                    () => _animationController.reverse());
+                Future.delayed(
+                    const Duration(milliseconds: 200), () => _animationController.reverse());
                 widget.onPressed!();
               }
             : null,
         style: !widget.btnEnabled
             ? ButtonStyle(
                 elevation: MaterialStateProperty.all(0),
-                foregroundColor: MaterialStateProperty.all(
-                    AppColors.getBtnDisabledForeground(context)),
-                backgroundColor: MaterialStateProperty.all(
-                    AppColors.getBtnDisabledBackground(context)),
+                foregroundColor:
+                    MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
+                backgroundColor:
+                    MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
+                fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, 60)),
               )
-            : const ButtonStyle(),
+            : ButtonStyle(
+                fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, 60)),
+              ),
         child: Text(widget.text),
       ),
     );

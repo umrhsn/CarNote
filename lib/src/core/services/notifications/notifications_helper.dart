@@ -57,7 +57,7 @@ class NotificationsHelper {
             body: cubit.isErrorText(index)
                 ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'
                 : '$remainingKm ${AppStrings.km(context)} ${AppStrings.remaining(context)}',
-            color: Colors.red,
+            color: cubit.getValidatingTextColor(context, index),
             badge: 0,
           ),
         );

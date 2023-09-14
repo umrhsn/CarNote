@@ -5,6 +5,7 @@ import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/app_bar.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/services/ads/ad_services.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -192,7 +193,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 thumbVisibility: false,
                 trackVisibility: false,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(bottom: 15, end: 10),
+                  padding: const EdgeInsetsDirectional.only(start: 10, bottom: 15, end: 10),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: ReorderableListView.builder(
@@ -220,11 +221,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     }
 
     Padding buildBottomButtons() => Padding(
-          padding: const EdgeInsetsDirectional.only(end: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              Flexible(
-                flex: 4,
+              Expanded(
                 child: CustomButton(
                   text: AppStrings.btnSave(context),
                   btnEnabled: consumableCubit.shouldEnableButtons(context) && _list!.isNotEmpty,
@@ -233,12 +233,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              Flexible(
-                child: CustomButtonWithIcon(
-                  iconData: Icons.add,
-                  btnEnabled: consumableCubit.shouldEnableButtons(context),
-                  onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
-                ),
+              CustomButtonWithIcon(
+                iconData: Icons.add,
+                btnEnabled: consumableCubit.shouldEnableButtons(context),
+                onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
               ),
             ],
           ),
@@ -253,19 +251,23 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               automaticallyImplyLeading: false,
               toolbarHeight: 140,
               title: buildAppBarWidgets(),
-            ).withBottomAdmobBanner(context),
+            ),
             body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    buildConsumablesList(),
-                    const Spacer(),
-                    buildBottomButtons(),
-                    const SizedBox(height: 15),
-                  ],
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildConsumablesList(),
+                  const Spacer(),
+                  buildBottomButtons(),
+                  const SizedBox(height: 15),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 15),
+                  //   child: AdmobBanner(
+                  //     adUnitId: AdServices.getBannerAdUnitId(),
+                  //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ),
