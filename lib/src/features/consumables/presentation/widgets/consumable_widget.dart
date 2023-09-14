@@ -107,6 +107,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                   FilteringTextInputFormatter.digitsOnly,
                   ThousandSeparatorInputFormatter(),
                 ],
+                style: TextStyle(fontFamily: AppStrings.fontFamily),
               ),
             ),
             Align(
@@ -139,6 +140,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             FilteringTextInputFormatter.digitsOnly,
             ThousandSeparatorInputFormatter(),
           ],
+          style: TextStyle(fontFamily: AppStrings.fontFamily),
         ),
       );
     }
@@ -151,7 +153,10 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             controller: cubit.remainingKmControllers[widget.index],
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: AppColors.getNormalTextColor(context), fontWeight: FontWeight.bold),
+              color: AppColors.getNormalTextColor(context),
+              fontFamily: AppStrings.fontFamily,
+              fontWeight: FontWeight.bold,
+            ),
             decoration: InputDecoration(
               labelText: cubit.isErrorText(widget.index)
                   ? AppStrings.remainingKmErrorLabel(context)
@@ -186,11 +191,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                             widget.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontFamily: AppStrings.fontFamilyEn,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                         )
                       : Expanded(child: ConsumableNameTextField(index: widget.index)),

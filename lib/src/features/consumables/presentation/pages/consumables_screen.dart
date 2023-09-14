@@ -102,8 +102,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                           text: value == true
                               ? AppStrings.fileCreated(context)
                               : AppStrings.fileNotCreated(context),
-                          textStyle: const TextStyle(
-                              color: Colors.white, fontFamily: AppStrings.fontFamilyEn)))),
+                          textStyle: const TextStyle(color: Colors.white)))),
                   tooltip: AppStrings.createFileTooltip(context),
                 ),
                 CustomIconButton(
@@ -126,7 +125,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               controller: consumableCubit.currentKmController,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontFamily: AppStrings.fontFamily, fontWeight: FontWeight.bold),
               decoration: InputDecoration(
                 floatingLabelStyle: TextStyle(
                   color: consumableCubit.currentKmFocus.hasFocus
@@ -167,7 +166,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           Text(
             AppStrings.nothingHere(context),
             style: TextStyle(
-              fontFamily: AppStrings.fontFamilyEn,
               fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
               fontWeight: FontWeight.bold,
             ),
@@ -175,8 +173,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           const SizedBox(height: 10),
           Text(
             AppStrings.tryToAddItems(context),
-            style: TextStyle(
-                color: AppColors.getHintColor(context), fontFamily: AppStrings.fontFamilyEn),
+            style: TextStyle(color: AppColors.getHintColor(context)),
             textAlign: TextAlign.center,
           ),
         ],

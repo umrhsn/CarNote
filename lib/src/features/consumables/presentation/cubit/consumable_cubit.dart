@@ -109,6 +109,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   Text getRemainingKmValidatingText(BuildContext context, int index) => Text(
         _validateRemainingKilometer(index, context) ?? '',
         style: TextStyle(
+          fontFamily: AppStrings.fontFamily,
           color: getValidatingTextColor(context, index),
           height: _validateRemainingKilometer(index, context) != '' ? 2 : 0,
           fontSize: 11,

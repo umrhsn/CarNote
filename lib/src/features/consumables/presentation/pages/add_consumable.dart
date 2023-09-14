@@ -22,6 +22,13 @@ class AddConsumable extends StatefulWidget {
 }
 
 class AddConsumableState extends State<AddConsumable> {
+  void _resetControllersValues() {
+    ConsumableCubit cubit = ConsumableCubit.get(context);
+    cubit.consumableNameController.text = '';
+    cubit.lastChangedController.text = '';
+    cubit.changeIntervalController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
@@ -74,6 +81,7 @@ class AddConsumableState extends State<AddConsumable> {
                   FilteringTextInputFormatter.digitsOnly,
                   ThousandSeparatorInputFormatter(),
                 ],
+                style: TextStyle(fontFamily: AppStrings.fontFamily),
               ),
             ),
             Align(
@@ -105,97 +113,108 @@ class AddConsumableState extends State<AddConsumable> {
             FilteringTextInputFormatter.digitsOnly,
             ThousandSeparatorInputFormatter(),
           ],
+          style: TextStyle(fontFamily: AppStrings.fontFamily),
         ),
       );
     }
 
     return BlocBuilder<ConsumableCubit, ConsumableState>(
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 80,
-            title: Text(
-              AppStrings.addConsumable(context),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+        return WillPopScope(
+          onWillPop: () async {
+            _resetControllersValues();
+            return true;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 80,
+              title: Text(
+                AppStrings.addConsumable(context),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          body: Column(
-            children: [
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        ConsumableNameTextField(),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            buildLastChangedTextFormField(),
-                            buildChangeIntervalTextFormField(),
-                          ],
-                        ),
-                      ],
+            body: Column(
+              children: [
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          ConsumableNameTextField(),
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildLastChangedTextFormField(),
+                              buildChangeIntervalTextFormField(),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        text: AppStrings.btnAddItem(context).toUpperCase(),
-                        btnEnabled: cubit.shouldEnableAddButton(context),
-                        onPressed: () {
-                          DatabaseHelper.addConsumable(
-                            context,
-                            name: cubit.consumableNameController.text,
-                            lastChangedAt: cubit.lastChangedController.text.isEmpty
-                                ? 0
-                                : int.parse(
-                                    cubit.lastChangedController.text.removeThousandSeparator()),
-                            changeInterval: cubit.changeIntervalController.text.isEmpty
-                                ? 0
-                                : int.parse(
-                                    cubit.changeIntervalController.text.removeThousandSeparator()),
-                          ).then((value) {
-                            if (value) {
-                              BotToast.showText(text: AppStrings.itemAdded(context));
-                              Navigator.pop(context);
-                            } else {
-                              BotToast.showText(text: AppStrings.invalidInput(context));
-                            }
-                          });
-                        },
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          text: AppStrings.btnAddItem(context).toUpperCase(),
+                          btnEnabled: cubit.shouldEnableAddButton(context),
+                          onPressed: () {
+                            DatabaseHelper.addConsumable(
+                              context,
+                              name: cubit.consumableNameController.text,
+                              lastChangedAt: cubit.lastChangedController.text.isEmpty
+                                  ? 0
+                                  : int.parse(
+                                      cubit.lastChangedController.text.removeThousandSeparator()),
+                              changeInterval: cubit.changeIntervalController.text.isEmpty
+                                  ? 0
+                                  : int.parse(cubit.changeIntervalController.text
+                                      .removeThousandSeparator()),
+                            ).then((value) {
+                              if (value) {
+                                BotToast.showText(text: AppStrings.itemAdded(context));
+                                Navigator.pop(context);
+                              } else {
+                                BotToast.showText(text: AppStrings.invalidInput(context));
+                              }
+                              _resetControllersValues();
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: CustomButton(
-                        text: AppStrings.cancel(context).toUpperCase(),
-                        onPressed: () => Navigator.pop(context),
-                        btnEnabled: true,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: CustomButton(
+                          text: AppStrings.cancel(context).toUpperCase(),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _resetControllersValues();
+                          },
+                          btnEnabled: true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 15),
-              //   child: AdmobBanner(
-              //     adUnitId: AdServices.getBannerAdUnitId(),
-              //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-              //   ),
-              // ),
-            ],
+                const SizedBox(height: 15),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 15),
+                //   child: AdmobBanner(
+                //     adUnitId: AdServices.getBannerAdUnitId(),
+                //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         );
       },

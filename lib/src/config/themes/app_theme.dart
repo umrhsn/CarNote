@@ -18,7 +18,7 @@ class AppThemes {
       elevatedButtonTheme: AppButtonThemes.elevatedButtonTheme(isLight: isLight),
       inputDecorationTheme: AppTextFieldThemes.inputDecorationTheme(isLight: isLight),
       scrollbarTheme: AppScrollbarThemes.scrollbarTheme(isLight: isLight),
-      fontFamily: AppStrings.fontFamily,
+      fontFamily: AppStrings.fontFamilyEn,
       useMaterial3: true,
       cardTheme: CardTheme(color: isLight ? AppColors.cardLight : AppColors.cardDark),
       dialogBackgroundColor: isLight ? AppColors.cardLight : AppColors.cardDark,
@@ -30,9 +30,7 @@ class AppThemes {
         style: ButtonStyle(
           foregroundColor:
               MaterialStateProperty.all(isLight ? AppColors.primaryLight : AppColors.primaryDark),
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(fontWeight: FontWeight.bold, fontFamily: AppStrings.fontFamilyEn),
-          ),
+          textStyle: MaterialStateProperty.all(const TextStyle(fontWeight: FontWeight.bold)),
         ),
       ),
     );

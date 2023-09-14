@@ -29,15 +29,13 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
                 ? AppStrings.nameHint(context)
                 : DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![widget.index!].name,
             hintStyle: TextStyle(
-              fontFamily: AppStrings.fontFamilyEn,
               fontWeight: FontWeight.normal,
               color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
             ),
             labelStyle:
                 TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
-            focusColor: context.isLight
-                ? AppColors.textFieldFocusedLight
-                : AppColors.textFieldFocusedDark,
+            focusColor:
+                context.isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: context.isLight ? AppColors.hintLight : AppColors.hintDark,

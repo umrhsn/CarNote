@@ -46,9 +46,9 @@ class DashboardSymbolsCard extends StatelessWidget {
               ),
             )
           : AnimationConfiguration.synchronized(
-            child: ScaleAnimation(
-              child: FadeInAnimation(
-                child: Directionality(
+              child: ScaleAnimation(
+                child: FadeInAnimation(
+                  child: Directionality(
                     textDirection: reverseDirection ? _directionReversed : _direction,
                     child: Card(
                       child: Padding(
@@ -69,7 +69,6 @@ class DashboardSymbolsCard extends StatelessWidget {
                                       title,
                                       softWrap: true,
                                       style: TextStyle(
-                                        fontFamily: AppStrings.fontFamilyEn,
                                         fontWeight: FontWeight.bold,
                                         fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                                       ),
@@ -85,7 +84,6 @@ class DashboardSymbolsCard extends StatelessWidget {
                                                   description ?? '',
                                                   softWrap: true,
                                                   style: TextStyle(
-                                                    fontFamily: AppStrings.fontFamilyEn,
                                                     color: AppColors.getHintColor(context),
                                                   ),
                                                 ),
@@ -96,9 +94,8 @@ class DashboardSymbolsCard extends StatelessWidget {
                                               ? const SizedBox()
                                               : Text(
                                                   '${AppStrings.advice(context)}:',
-                                                  style: const TextStyle(
-                                                      fontFamily: AppStrings.fontFamilyEn,
-                                                      fontWeight: FontWeight.bold),
+                                                  style:
+                                                      const TextStyle(fontWeight: FontWeight.bold),
                                                 ),
                                           advice == null
                                               ? const SizedBox()
@@ -106,27 +103,23 @@ class DashboardSymbolsCard extends StatelessWidget {
                                                   advice ?? '',
                                                   softWrap: true,
                                                   style: TextStyle(
-                                                    fontFamily: AppStrings.fontFamilyEn,
                                                     color: AppColors.getHintColor(context),
                                                   ),
                                                 ),
-                                          advice == null ? const SizedBox() : const SizedBox(height: 10),
+                                          advice == null
+                                              ? const SizedBox()
+                                              : const SizedBox(height: 10),
                                           Text(
                                             '${AppStrings.severity(context)}:',
-                                            style: const TextStyle(
-                                              fontFamily: AppStrings.fontFamilyEn,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                            style: const TextStyle(fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             LocaleCubit.currentLangCode == AppStrings.en
                                                 ? '$severity / 10'
                                                 : '$severity / 10'.toArabicNumerals(),
                                             softWrap: true,
-                                            style: TextStyle(
-                                              fontFamily: AppStrings.fontFamilyEn,
-                                              color: AppColors.getHintColor(context),
-                                            ),
+                                            style:
+                                                TextStyle(color: AppColors.getHintColor(context)),
                                           ),
                                         ],
                                       ),
@@ -140,9 +133,9 @@ class DashboardSymbolsCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
               ),
             ),
-          ),
     );
   }
 }
