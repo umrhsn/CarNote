@@ -42,6 +42,8 @@ class Dialogs {
 
   static Future<bool> onWillPop(BuildContext context) async {
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+    if (consumableCubit.shouldEnableAddButton(context) == false) return true;
+
     String debugMsg = "onWillPop\n\n";
 
     for (int index = 0; index < Consumable.getCount(); index++) {
@@ -143,7 +145,7 @@ class Dialogs {
         child: SlideAnimation(
           child: FadeInAnimation(
             child: AlertDialog(
-              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+              icon: const Icon(Icons.warning_rounded, size: 50),
               title: Text(AppStrings.removingItem(context, index)),
               content: Text(AppStrings.sureToDeleteMsg(context)),
               actions: [
@@ -173,7 +175,7 @@ class Dialogs {
               child: SlideAnimation(
                 child: FadeInAnimation(
                   child: AlertDialog(
-                    icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+                    icon: const Icon(Icons.warning_rounded, size: 50),
                     title: Text(AppStrings.removeAllDataConfirmationDialogTitle(context)),
                     content: Text(AppStrings.removeAllDataConfirmationDialogContent(context)),
                     actions: [
@@ -202,7 +204,7 @@ class Dialogs {
         child: SlideAnimation(
           child: FadeInAnimation(
             child: AlertDialog(
-              icon: const Icon(Icons.warning_rounded, color: Colors.red, size: 50),
+              icon: const Icon(Icons.warning_rounded, size: 50),
               title: Text(AppStrings.removeAllDataAssuringDialogTitle(context).toUpperCase()),
               content: Text(AppStrings.removeAllDataAssuringDialogContent(context)),
               actions: [

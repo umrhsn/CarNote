@@ -73,147 +73,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
 
     Column buildAppBarWidgets() => Column(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const FaIcon(FontAwesomeIcons.language),
-                  onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                      ? localeCubit.toArabic(context)
-                      : localeCubit.toEnglish(context),
-                  tooltip: AppStrings.switchLangTooltip(context),
-                ),
-                const Spacer(),
-                CustomIconButton(
-                  btnEnabled: _list!.isNotEmpty,
-                  icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
-                  onPressed: () => consumableCubit.changeVisibility(context),
-                  tooltip: AppStrings.toggleModeTooltip(context),
-                ),
-                CustomIconButton(
-                  btnEnabled: _list!.isNotEmpty,
-                  icon: Icons.file_copy,
-                  onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
-                      FileCreator.writeDataToFile().then((value) => BotToast.showText(
-                          duration: Duration(seconds: value == true ? 7 : 2),
-                          text: value == true
-                              ? AppStrings.fileCreated(context)
-                              : AppStrings.fileNotCreated(context),
-                          textStyle: const TextStyle(color: Colors.white)))),
-                  tooltip: AppStrings.createFileTooltip(context),
-                ),
-                CustomIconButton(
-                  btnEnabled: _list!.isNotEmpty,
-                  icon: Icons.delete_forever,
-                  onPressed: () => Dialogs.showRemoveAllDataConfirmationDialog(context),
-                  tooltip: AppStrings.eraseDataTooltip(context),
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
-                  icon: const Icon(Icons.info),
-                  tooltip: AppStrings.infoTooltip(context),
-                ),
-              ],
-            ),
-            TextFormField(
-              focusNode: consumableCubit.currentKmFocus,
-              cursorColor: AppColors.getTextFieldBorderAndLabel(context),
-              controller: consumableCubit.currentKmController,
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: AppStrings.fontFamily, fontWeight: FontWeight.bold),
-              decoration: InputDecoration(
-                floatingLabelStyle: TextStyle(
-                  color: consumableCubit.currentKmFocus.hasFocus
-                      ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                      : AppColors.getTextFieldBorderAndLabel(context),
-                  fontWeight: FontWeight.bold,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppColors.getTextFieldBorderAndLabel(context),
-                  ),
-                ),
-                labelText: AppStrings.currentKmLabel(context),
-                labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
-              ),
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(9),
-                FilteringTextInputFormatter.digitsOnly,
-                ThousandSeparatorInputFormatter(),
-              ],
-              onChanged: (_) {
-                consumableCubit.validateAllLastChangedKilometerFields(context);
-                consumableCubit.validateAllChangeKilometerFields(context);
-              },
-              onEditingComplete: () => consumableCubit.validateAllChangeKilometerFields(context),
-              autovalidateMode: AutovalidateMode.always,
-            ),
+            _buildAppBarIconButtonsRow(context, localeCubit, consumableCubit),
+            _buildAppBarCurrentKmTextField(consumableCubit, context),
           ],
         );
-
-    Column buildEmptyListWidget(BuildContext context) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(AssetManager.nothingHere, height: context.height / 5),
-          const SizedBox(height: 15),
-          Text(
-            AppStrings.nothingHere(context),
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            AppStrings.tryToAddItems(context),
-            style: TextStyle(color: AppColors.getHintColor(context)),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      );
-    }
-
-    Expanded buildConsumablesList() {
-      return Expanded(
-        flex: 1000,
-        child: _list != null && _list!.isEmpty
-            ? buildEmptyListWidget(context)
-            : Scrollbar(
-                interactive: true,
-                thumbVisibility: false,
-                trackVisibility: false,
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 10, bottom: 15, end: 10),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    child: ReorderableListView.builder(
-                        itemCount: Consumable.getCount(),
-                        itemBuilder: (context, index) {
-                          List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
-                          Consumable item = list![index];
-                          return AnimationConfiguration.staggeredList(
-                            key: ValueKey(index),
-                            position: index,
-                            duration: const Duration(milliseconds: 375),
-                            child: SlideAnimation(
-                              child: FadeInAnimation(
-                                child: ConsumableWidget(index: index, name: item.name),
-                              ),
-                            ),
-                          );
-                        },
-                        onReorder: (oldIndex, newIndex) => setState(() =>
-                            DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
-                  ),
-                ),
-              ),
-      );
-    }
 
     Padding buildBottomButtons() => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -251,7 +114,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildConsumablesList(),
+                  _buildConsumablesList(),
                   const Spacer(),
                   buildBottomButtons(),
                   const SizedBox(height: 15),
@@ -268,6 +131,149 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           ),
         );
       },
+    );
+  }
+
+      Column _buildEmptyListWidget(BuildContext context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(AssetManager.nothingHere, height: context.height / 5),
+            const SizedBox(height: 15),
+            Text(
+              AppStrings.nothingHere(context),
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              AppStrings.tryToAddItems(context),
+              style: TextStyle(color: AppColors.getHintColor(context)),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        );
+
+    Expanded _buildConsumablesList() => Expanded(
+          flex: 1000,
+          child: _list != null && _list!.isEmpty
+              ? _buildEmptyListWidget(context)
+              : Scrollbar(
+                  interactive: true,
+                  thumbVisibility: false,
+                  trackVisibility: false,
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.only(start: 10, bottom: 15, end: 10),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      child: ReorderableListView.builder(
+                          itemCount: Consumable.getCount(),
+                          itemBuilder: (context, index) {
+                            List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                            Consumable item = list![index];
+                            return AnimationConfiguration.staggeredList(
+                              key: ValueKey(index),
+                              position: index,
+                              duration: const Duration(milliseconds: 375),
+                              child: SlideAnimation(
+                                child: FadeInAnimation(
+                                  child: ConsumableWidget(index: index, name: item.name),
+                                ),
+                              ),
+                            );
+                          },
+                          onReorder: (oldIndex, newIndex) => setState(() =>
+                              DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+                    ),
+                  ),
+                ),
+        );
+
+  TextFormField _buildAppBarCurrentKmTextField(
+      ConsumableCubit consumableCubit, BuildContext context) {
+    return TextFormField(
+      focusNode: consumableCubit.currentKmFocus,
+      cursorColor: AppColors.getTextFieldBorderAndLabel(context),
+      controller: consumableCubit.currentKmController,
+      keyboardType: TextInputType.number,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontFamily: AppStrings.fontFamily, fontWeight: FontWeight.bold),
+      decoration: InputDecoration(
+        floatingLabelStyle: TextStyle(
+          color: consumableCubit.currentKmFocus.hasFocus
+              ? AppColors.getTextFieldBorderAndLabelFocused(context)
+              : AppColors.getTextFieldBorderAndLabel(context),
+          fontWeight: FontWeight.bold,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.getTextFieldBorderAndLabel(context),
+          ),
+        ),
+        labelText: AppStrings.currentKmLabel(context),
+        labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
+      ),
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(9),
+        FilteringTextInputFormatter.digitsOnly,
+        ThousandSeparatorInputFormatter(),
+      ],
+      onChanged: (_) {
+        consumableCubit.validateAllLastChangedKilometerFields(context);
+        consumableCubit.validateAllChangeKilometerFields(context);
+      },
+      onEditingComplete: () => consumableCubit.validateAllChangeKilometerFields(context),
+      autovalidateMode: AutovalidateMode.always,
+    );
+  }
+
+  Row _buildAppBarIconButtonsRow(
+      BuildContext context, LocaleCubit localeCubit, ConsumableCubit consumableCubit) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: const FaIcon(FontAwesomeIcons.language),
+          onPressed: () => AppLocalizations.of(context)!.isEnLocale
+              ? localeCubit.toArabic(context)
+              : localeCubit.toEnglish(context),
+          tooltip: AppStrings.switchLangTooltip(context),
+        ),
+        const Spacer(),
+        CustomIconButton(
+          btnEnabled: _list!.isNotEmpty,
+          icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
+          onPressed: () => consumableCubit.changeVisibility(context),
+          tooltip: AppStrings.toggleModeTooltip(context),
+        ),
+        CustomIconButton(
+          btnEnabled: _list!.isNotEmpty,
+          icon: Icons.file_copy,
+          onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
+              FileCreator.writeDataToFile().then((value) => BotToast.showText(
+                  duration: Duration(seconds: value == true ? 7 : 2),
+                  text: value == true
+                      ? AppStrings.fileCreated(context)
+                      : AppStrings.fileNotCreated(context),
+                  textStyle: const TextStyle(color: Colors.white)))),
+          tooltip: AppStrings.createFileTooltip(context),
+        ),
+        CustomIconButton(
+          btnEnabled: _list!.isNotEmpty,
+          icon: Icons.delete_forever,
+          onPressed: () => Dialogs.showRemoveAllDataConfirmationDialog(context),
+          tooltip: AppStrings.eraseDataTooltip(context),
+        ),
+        const Spacer(),
+        IconButton(
+          onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
+          icon: const Icon(Icons.info),
+          tooltip: AppStrings.infoTooltip(context),
+        ),
+      ],
     );
   }
 }
