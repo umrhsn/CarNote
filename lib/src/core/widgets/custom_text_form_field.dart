@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final ValidationItem? validationItem;
   final void Function(String? value)? validateItemForm;
   final void Function(String)? onFieldSubmitted;
+  final TextStyle? style;
 
   const CustomTextFormField({
     Key? key,
@@ -24,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validationItem,
     this.validateItemForm,
     this.onFieldSubmitted,
+    this.style,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,7 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(hintText: hintText, errorText: validationItem!.error),
         onChanged: (String? value) => validateItemForm!(value),
         onFieldSubmitted: onFieldSubmitted,
+        style: style,
       ),
     );
   }

@@ -56,6 +56,7 @@ class _MyHomePageState extends State<CarInfo> {
         keyboardType: TextInputType.number,
         hintText: AppStrings.modelYearHint(context),
         inputFormatters: [LengthLimitingTextInputFormatter(4)],
+        style: TextStyle(fontFamily: AppStrings.fontFamily),
         validationItem: validator.modelYear,
         validateItemForm: (value) => validator.validateModelYearForm(value, context),
         onFieldSubmitted: (_) => CustomTextFormField.requestFocus(context, carCubit.currentKmFocus),
@@ -69,10 +70,11 @@ class _MyHomePageState extends State<CarInfo> {
         textInputAction: TextInputAction.done,
         keyboardType: TextInputType.number,
         inputFormatters: [
-          ThousandSeparatorInputFormatter(),
           LengthLimitingTextInputFormatter(9),
           FilteringTextInputFormatter.digitsOnly,
+          ThousandSeparatorInputFormatter(),
         ],
+        style: TextStyle(fontFamily: AppStrings.fontFamily),
         hintText:
             "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}",
         validationItem: validator.currentKm,
