@@ -55,7 +55,10 @@ class _MyHomePageState extends State<CarInfo> {
         focusNode: carCubit.modelYearFocus,
         keyboardType: TextInputType.number,
         hintText: AppStrings.modelYearHint(context),
-        inputFormatters: [LengthLimitingTextInputFormatter(4)],
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(4),
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         style: TextStyle(fontFamily: AppStrings.fontFamily),
         validationItem: validator.modelYear,
         validateItemForm: (value) => validator.validateModelYearForm(value, context),
