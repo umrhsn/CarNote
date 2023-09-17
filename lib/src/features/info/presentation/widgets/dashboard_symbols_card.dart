@@ -4,7 +4,6 @@ import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class DashboardSymbolsCard extends StatelessWidget {
   final void Function()? onTap;
