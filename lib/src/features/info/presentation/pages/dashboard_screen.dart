@@ -173,25 +173,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          buildAppBarWidgets(),
-          Expanded(
-            child: Scrollbar(
-              interactive: true,
-              thumbVisibility: false,
-              trackVisibility: false,
-              child: AnimationLimiter(
-                child: !_switchToListView ? buildGrid() : buildList(),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildAppBarWidgets(),
+            Expanded(
+              child: Scrollbar(
+                interactive: true,
+                thumbVisibility: false,
+                trackVisibility: false,
+                child: AnimationLimiter(
+                  child: !_switchToListView ? buildGrid() : buildList(),
+                ),
               ),
             ),
-          ),
-          // AdmobBanner(
-          //   adUnitId: AdServices.getBannerAdUnitId(),
-          //   adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-          // ),
-        ],
+            // AdmobBanner(
+            //   adUnitId: AdServices.getBannerAdUnitId(),
+            //   adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
+            // ),
+          ],
+        ),
       ),
     );
   }
