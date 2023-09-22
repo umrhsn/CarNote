@@ -1,6 +1,7 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -87,6 +88,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 8),
               child: TextFormField(
+                key: widget.index == 0 ? AppTourService.keyTextFieldLastChanged : null,
                 controller: cubit.lastChangedAtControllers[widget.index],
                 focusNode: cubit.lastChangedAtFocuses[widget.index],
                 cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
@@ -122,6 +124,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
     Expanded buildChangeIntervalTextFormField() {
       return Expanded(
         child: TextFormField(
+          key: widget.index == 0 ? AppTourService.keyTextFieldChangeInterval : null,
           controller: cubit.changeIntervalControllers[widget.index],
           focusNode: cubit.changeIntervalFocuses[widget.index],
           cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
@@ -149,6 +152,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       return Column(
         children: [
           TextFormField(
+            key: widget.index == 0 ? AppTourService.keyTextFieldRemaining : null,
             enabled: false,
             controller: cubit.remainingKmControllers[widget.index],
             textAlign: TextAlign.center,
@@ -229,12 +233,17 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                                   cubit.consumableNameController.text = '';
                                   setState(() => _editing = true);
                                 },
-                                icon: const Icon(Icons.edit))
+                                icon: Icon(Icons.edit,
+                                    key: widget.index == 0 ? AppTourService.keyEditName : null))
                             : const SizedBox(),
                         IconButton(
-                            onPressed: () => Dialogs.showRemoveConsumableConfirmationDialog(
-                                context, widget.index),
-                            icon: const Icon(Icons.delete)),
+                          onPressed: () =>
+                              Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
+                          icon: Icon(
+                            Icons.delete,
+                            key: widget.index == 0 ? AppTourService.keyDeleteCard : null,
+                          ),
+                        ),
                       ],
                     ),
                   ),

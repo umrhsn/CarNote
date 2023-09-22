@@ -68,6 +68,9 @@ class AppStrings {
   static const String prefsBoolEditModeOn = 'edit_mode_on';
   static const String prefsBoolListAdded = 'list_added';
   static const String prefsStringNotifScheduleTime = 'schedule_time';
+  static const String prefsBoolBeginCarInfoScreenTour = 'begin_car_info_screen_tour';
+  static const String prefsBoolBeginConsumablesScreenTour = 'begin_consumables_screen_tour';
+  static const String prefsBoolBeginDashboardScreenTour = 'begin_dashboard_screen_tour';
 
   /// Buttons
   static String btnContinue(BuildContext context) =>
@@ -139,12 +142,14 @@ class AppStrings {
   static String remainingKmNormalWarningLabel(BuildContext context) =>
       _translate(context, "remaining_km_normal_warning_label");
 
+  static String remainingKmErrorLabel(BuildContext context) =>
+      _translate(context, "remaining_km_error_label");
+
   static String advice(BuildContext context) => _translate(context, "advice");
 
   static String severity(BuildContext context) => _translate(context, "severity");
 
-  static String remainingKmErrorLabel(BuildContext context) =>
-      _translate(context, "remaining_km_error_label");
+  static String skip(BuildContext context) => _translate(context, "skip");
 
   /// Validators
   static String requiredField(BuildContext context) => _translate(context, "required_field");
@@ -460,6 +465,58 @@ class AppStrings {
   static String nothingHere(BuildContext context) => _translate(context, "nothing_here");
 
   static String tryToAddItems(BuildContext context) => _translate(context, "try_to_add_items");
+
+  /// App Tour
+  static String tourTargetAppBarTextField(BuildContext context) =>
+      _translate(context, "tour_target_app_bar_text_field");
+
+  static String tourTargetList(BuildContext context) => _translate(context, "tour_target_list");
+
+  static String tourTargetCard(BuildContext context) => _translate(context, "tour_target_card");
+
+  static String tourTargetEditName(BuildContext context) =>
+      _translate(context, "tour_target_edit_name");
+
+  static String tourTargetDeleteCard(BuildContext context) =>
+      _translate(context, "tour_target_delete_card");
+
+  static String tourTargetTextFieldLastChanged(BuildContext context) =>
+      _translate(context, "tour_target_text_field_last_changed");
+
+  static String tourTargetTextFieldChangeInterval(BuildContext context) =>
+      _translate(context, "tour_target_text_field_change_interval");
+
+  static String tourTargetTextFieldRemaining(BuildContext context) =>
+      _translate(context, "tour_target_text_field_remaining");
+
+  static String tourTargetCardReorder(BuildContext context) =>
+      _translate(context, "tour_target_card_reorder");
+
+  static String tourTargetSaveData(BuildContext context) =>
+      _translate(context, "tour_target_save_data");
+
+  static String tourTargetAddItem(BuildContext context) =>
+      _translate(context, "tour_target_add_item");
+
+  static String tourTargetSwitchLang(BuildContext context) =>
+      _translate(context, "tour_target_switch_lang");
+
+  static String tourTargetToggleDetailedMode(BuildContext context) =>
+      _translate(context, "tour_target_toggle_detailed_mode");
+
+  static String tourTargetSaveToFile(BuildContext context) =>
+      _translate(context, "tour_target_save_to_file");
+
+  static String tourTargetDeleteAll(BuildContext context) =>
+      _translate(context, "tour_target_delete_all");
+
+  static String tourTargetInfo(BuildContext context) => _translate(context, "tour_target_info");
+
+  static String tourTargetGridItem(BuildContext context) =>
+      _translate(context, "tour_target_grid_item");
+
+  static String tourTargetSwitchListGrid(BuildContext context) =>
+      _translate(context, "tour_target_switch_list_grid");
 
   /// Error handling
   static const String cacheFailure = 'Cache Failure';

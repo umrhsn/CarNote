@@ -1,6 +1,7 @@
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/info/presentation/widgets/dashboard_symbols_card.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
@@ -23,6 +24,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    if (AppTourService.shouldBeginTour(
+        prefsBoolKey: AppStrings.prefsBoolBeginDashboardScreenTour)) {
+      AppTourService.beginDashboardScreenTour(context);
+    }
     Admob.requestTrackingAuthorization();
   }
 
@@ -39,6 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back)),
             IconButton(
+              key: AppTourService.keySwitchLangDashboardScreen,
               icon: const FaIcon(FontAwesomeIcons.language),
               onPressed: () => AppLocalizations.of(context)!.isEnLocale
                   ? localeCubit.toArabic(context)
@@ -46,6 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               tooltip: AppStrings.switchLangTooltip(context),
             ),
             IconButton(
+              key: AppTourService.keySwitchListGrid,
               icon: Icon(_switchToListView ? Icons.grid_view_rounded : Icons.sort_rounded),
               onPressed: () {
                 setState(() {
@@ -127,6 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: ScaleAnimation(
               child: FadeInAnimation(
                 child: DashboardSymbolsCard(
+                  key: index == 0 ? AppTourService.keyGridItem : null,
                   onTap: () => setState(() => _selectedIndex = index),
                   detailed: _switchToListView,
                   reverseDirection: index % 2 == 0 ? false : true,

@@ -2,6 +2,7 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -29,6 +30,9 @@ class _MyHomePageState extends State<CarInfo> {
   @override
   void initState() {
     super.initState();
+    if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginCarInfoScreenTour)) {
+      AppTourService.beginCarInfoScreenTour(context);
+    }
     Admob.requestTrackingAuthorization();
   }
 
@@ -108,6 +112,7 @@ class _MyHomePageState extends State<CarInfo> {
             child: Padding(
               padding: const EdgeInsets.only(top: 20, right: 15),
               child: IconButton(
+                key: AppTourService.keySwitchLangCarInfoScreen,
                 icon: const FaIcon(FontAwesomeIcons.language),
                 onPressed: () => AppLocalizations.of(context)!.isEnLocale
                     ? localeCubit.toArabic(context)

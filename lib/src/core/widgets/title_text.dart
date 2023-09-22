@@ -8,15 +8,12 @@ class TitleText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 130,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: context.isLight ? Colors.black.withAlpha(950) : Colors.white.withAlpha(950),
-          fontSize: 40,
-          fontWeight: FontWeight.bold,
-        ),
+    return Text(
+      text,
+      style: TextStyle(
+        color: context.isLight ? Colors.black.withAlpha(950) : Colors.white.withAlpha(950),
+        fontSize: 40,
+        fontWeight: FontWeight.bold,
       ),
     );
   }

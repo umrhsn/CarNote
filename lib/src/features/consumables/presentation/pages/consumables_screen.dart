@@ -4,6 +4,7 @@ import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
@@ -63,6 +64,10 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       _scheduleDailyNotification();
       NotificationsHelper.showAlarmingNotifications(context);
     });
+    if (AppTourService.shouldBeginTour(
+        prefsBoolKey: AppStrings.prefsBoolBeginConsumablesScreenTour)) {
+      AppTourService.beginConsumablesScreenTour(context);
+    }
     Admob.requestTrackingAuthorization();
   }
 
@@ -83,6 +88,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Row(
             children: [
               Expanded(
+                key: AppTourService.keySaveData,
                 child: CustomButton(
                   text: AppStrings.btnSave(context),
                   btnEnabled: consumableCubit.shouldEnableButtons(context) && _list!.isNotEmpty,
@@ -92,6 +98,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               ),
               const SizedBox(width: 10),
               CustomButtonWithIcon(
+                key: AppTourService.keyAddItem,
                 iconData: Icons.add,
                 btnEnabled: consumableCubit.shouldEnableButtons(context),
                 onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),
@@ -134,66 +141,71 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
     );
   }
 
-      Column _buildEmptyListWidget(BuildContext context) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(AssetManager.nothingHere, height: context.height / 5),
-            const SizedBox(height: 15),
-            Text(
-              AppStrings.nothingHere(context),
-              style: TextStyle(
-                fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
-                fontWeight: FontWeight.bold,
-              ),
+  Column _buildEmptyListWidget(BuildContext context) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(AssetManager.nothingHere, height: context.height / 5),
+          const SizedBox(height: 15),
+          Text(
+            AppStrings.nothingHere(context),
+            style: TextStyle(
+              fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 10),
-            Text(
-              AppStrings.tryToAddItems(context),
-              style: TextStyle(color: AppColors.getHintColor(context)),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        );
+          ),
+          const SizedBox(height: 10),
+          Text(
+            AppStrings.tryToAddItems(context),
+            style: TextStyle(color: AppColors.getHintColor(context)),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      );
 
-    Expanded _buildConsumablesList() => Expanded(
-          flex: 1000,
-          child: _list != null && _list!.isEmpty
-              ? _buildEmptyListWidget(context)
-              : Scrollbar(
-                  interactive: true,
-                  thumbVisibility: false,
-                  trackVisibility: false,
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 10, bottom: 15, end: 10),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      child: ReorderableListView.builder(
-                          itemCount: Consumable.getCount(),
-                          itemBuilder: (context, index) {
-                            List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
-                            Consumable item = list![index];
-                            return AnimationConfiguration.staggeredList(
-                              key: ValueKey(index),
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                child: FadeInAnimation(
-                                  child: ConsumableWidget(index: index, name: item.name),
-                                ),
+  Expanded _buildConsumablesList() => Expanded(
+        flex: 1000,
+        child: _list != null && _list!.isEmpty
+            ? _buildEmptyListWidget(context)
+            : Scrollbar(
+                interactive: true,
+                thumbVisibility: false,
+                trackVisibility: false,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 10, bottom: 15, end: 10),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    child: ReorderableListView.builder(
+                        key: AppTourService.keyList,
+                        itemCount: Consumable.getCount(),
+                        itemBuilder: (context, index) {
+                          List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                          Consumable item = list![index];
+                          return AnimationConfiguration.staggeredList(
+                            key: ValueKey(index),
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              child: FadeInAnimation(
+                                child: ConsumableWidget(
+                                    key: index == 0 ? AppTourService.keyCard : null,
+                                    index: index,
+                                    name: item.name),
                               ),
-                            );
-                          },
-                          onReorder: (oldIndex, newIndex) => setState(() =>
-                              DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
-                    ),
+                            ),
+                          );
+                        },
+                        onReorder: (oldIndex, newIndex) => setState(() =>
+                            DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
                   ),
                 ),
-        );
+              ),
+      );
 
   TextFormField _buildAppBarCurrentKmTextField(
       ConsumableCubit consumableCubit, BuildContext context) {
     return TextFormField(
+      key: AppTourService.keyAppBarTextField,
       focusNode: consumableCubit.currentKmFocus,
       cursorColor: AppColors.getTextFieldBorderAndLabel(context),
       controller: consumableCubit.currentKmController,
@@ -236,6 +248,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
+          key: AppTourService.keySwitchLangConsumalbesScreen,
           icon: const FaIcon(FontAwesomeIcons.language),
           onPressed: () => AppLocalizations.of(context)!.isEnLocale
               ? localeCubit.toArabic(context)
@@ -244,12 +257,14 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         ),
         const Spacer(),
         CustomIconButton(
+          key: AppTourService.keyToggleDetailedMode,
           btnEnabled: _list!.isNotEmpty,
           icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
           onPressed: () => consumableCubit.changeVisibility(context),
           tooltip: AppStrings.toggleModeTooltip(context),
         ),
         CustomIconButton(
+          key: AppTourService.keySaveToFile,
           btnEnabled: _list!.isNotEmpty,
           icon: Icons.file_copy,
           onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
@@ -262,6 +277,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           tooltip: AppStrings.createFileTooltip(context),
         ),
         CustomIconButton(
+          key: AppTourService.keyDeleteAll,
           btnEnabled: _list!.isNotEmpty,
           icon: Icons.delete_forever,
           onPressed: () => Dialogs.showRemoveAllDataConfirmationDialog(context),
@@ -269,6 +285,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         ),
         const Spacer(),
         IconButton(
+          key: AppTourService.keyInfo,
           onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
           icon: const Icon(Icons.info),
           tooltip: AppStrings.infoTooltip(context),
