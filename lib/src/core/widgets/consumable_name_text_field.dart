@@ -5,6 +5,7 @@ import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ConsumableNameTextField extends StatefulWidget {
   int? index;
 

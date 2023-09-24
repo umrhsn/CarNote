@@ -34,8 +34,8 @@ class AppStrings {
       LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
 
   static List<String> consumablesEnglishList = [
-    'Oil',
-    'Oil Filter',
+    'Engine Oil',
+    'Engine Oil Filter',
     'Timing Belt',
     'Dynamo Belt',
     'Fuel Filter',
@@ -49,8 +49,8 @@ class AppStrings {
   ];
 
   static List<String> consumablesArabicList = [
-    'الزيت',
-    'فلتر الزيت',
+    'زيت المحرك',
+    'فلتر زيت المحرك',
     'سير الكاتينة',
     'سير الدينامو',
     'فلتر البنزين',
@@ -206,6 +206,18 @@ class AppStrings {
       _translate(context, "remove_all_data_assuring_dialog_content");
 
   static String eraseData(BuildContext context) => _translate(context, "erase_data");
+
+  static String invalidDataDialogTitle(BuildContext context) =>
+      _translate(context, "invalid_data_dialog_title");
+
+  static String invalidDataDialogContent(BuildContext context) =>
+      _translate(context, "invalid_data_dialog_content");
+
+  static String invalidDataDialogPositiveText(BuildContext context) =>
+      _translate(context, "invalid_data_dialog_positive_text");
+
+  static String invalidDataDialogNegativeText(BuildContext context) =>
+      _translate(context, "invalid_data_dialog_negative_text");
 
   /// AppBar titles
   static String addConsumable(BuildContext context) => _translate(context, "add_an_item");

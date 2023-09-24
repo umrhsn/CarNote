@@ -18,13 +18,13 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
-        return MaterialPageRoute(builder: ((context) => const SplashScreen())); // DashboardScreen
+        return MaterialPageRoute(builder: ((context) => const SplashScreen()));
       case Routes.carInfoRoute:
         return MaterialPageRoute(builder: ((context) => const CarInfo()));
       case Routes.consumablesRoute:
         return MaterialPageRoute(builder: ((context) => const ConsumablesScreen()));
       case Routes.addConsumableRoute:
-        return MaterialPageRoute(builder: ((context) => const AddConsumable()));
+        return MaterialPageRoute(builder: ((context) => const AddConsumableScreen()));
       case Routes.infoRoute:
         return MaterialPageRoute(builder: ((context) => const DashboardScreen()));
       default:

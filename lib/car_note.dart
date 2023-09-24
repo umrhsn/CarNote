@@ -7,23 +7,12 @@ import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'src/config/routes/app_routes.dart';
 import 'src/config/themes/app_theme.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 class CarNote extends StatelessWidget {
   const CarNote({super.key});
-
-  Future<String> checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool seen = (prefs.getBool('seen') ?? false);
-    if (seen) {
-      return Routes.consumablesRoute;
-    } else {
-      return Routes.initialRoute;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +22,7 @@ class CarNote extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => di.sl<LocaleCubit>()..getSavedLang()),
           BlocProvider(create: (context) => di.sl<CarCubit>()),
-          BlocProvider(create: (context) => di.sl<ConsumableCubit>())
+          BlocProvider(create: (context) => di.sl<ConsumableCubit>()),
         ],
         child: BlocBuilder<LocaleCubit, LocaleState>(
           buildWhen: (previousState, currentState) => previousState != currentState,

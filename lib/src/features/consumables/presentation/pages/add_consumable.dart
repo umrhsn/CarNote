@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddConsumable extends StatefulWidget {
-  const AddConsumable({Key? key}) : super(key: key);
+class AddConsumableScreen extends StatefulWidget {
+  const AddConsumableScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddConsumable> createState() => AddConsumableState();
+  State<AddConsumableScreen> createState() => AddConsumableScreenState();
 }
 
-class AddConsumableState extends State<AddConsumable> {
+class AddConsumableScreenState extends State<AddConsumableScreen> {
   void _resetControllersValues() {
     ConsumableCubit cubit = ConsumableCubit.get(context);
     cubit.consumableNameController.text = '';

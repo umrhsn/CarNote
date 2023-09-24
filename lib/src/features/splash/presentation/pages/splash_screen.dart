@@ -29,17 +29,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   _loadWidget() async {
     var duration = Duration(seconds: _splashDelay);
-    return Timer(duration, checkFirstSeen);
+    return Timer(duration, _checkFirstSeen);
   }
 
-  void checkFirstSeen() {
+  void _checkFirstSeen() {
     if (DatabaseHelper.carBox.get(AppStrings.carBox) != null) {
       _prefs.setBool(AppStrings.prefsBoolSeen, true);
     }
-    navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
+    _navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
   }
 
-  void navigate(bool seen) => seen
+  void _navigate(bool seen) => seen
       ? Navigator.pushReplacementNamed(context, Routes.consumablesRoute)
       : Navigator.pushReplacementNamed(context, Routes.carInfoRoute);
 

@@ -6,12 +6,12 @@ import 'package:car_note/src/core/services/text_input_formatters/thousand_separa
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/consumable_name_text_field.dart';
-import 'package:car_note/src/core/widgets/dialogs.dart';
+import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:car_note/injection_container.dart' as di;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:car_note/injection_container.dart' as di;
 
 class ConsumableWidget extends StatefulWidget {
   final int index;
@@ -24,10 +24,12 @@ class ConsumableWidget extends StatefulWidget {
 }
 
 class ConsumableWidgetState extends State<ConsumableWidget> {
+  late ConsumableCubit _cubit;
   bool _editing = false;
 
   @override
   void initState() {
+    _cubit = ConsumableCubit.get(context);
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (isAllowed) {
         AwesomeNotifications().requestPermissionToSendNotifications();
@@ -38,48 +40,47 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
 
   @override
   Widget build(BuildContext context) {
-    ConsumableCubit cubit = ConsumableCubit.get(context);
     bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
 
-    cubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
-    cubit.calculateWarningDifference(widget.index);
-    cubit.getRemainingKm(widget.index);
+    _cubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
+    _cubit.calculateWarningDifference(widget.index);
+    _cubit.getRemainingKm(widget.index);
 
     Color getLastChangedAndChangeIntervalLabelColor() =>
-        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+        _cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
             ? AppColors.getErrorColor(context)
-            : cubit.lastChangedAtFocuses[widget.index].hasFocus
+            : _cubit.lastChangedAtFocuses[widget.index].hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
 
     Color getRemainingKmLabelColor() =>
-        cubit.getRemainingKmValidatingText(context, widget.index).data != ''
-            ? cubit.getValidatingTextColor(context, widget.index)
-            : cubit.remainingKmFocuses[widget.index].hasFocus
+        _cubit.getRemainingKmValidatingText(context, widget.index).data != ''
+            ? _cubit.getValidatingTextColor(context, widget.index)
+            : _cubit.remainingKmFocuses[widget.index].hasFocus
                 ? AppColors.getTextFieldBorderAndLabelFocused(context)
                 : AppColors.getTextFieldBorderAndLabel(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder() =>
-        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-            ? cubit.getErrorBorder(context)
-            : cubit.getFocusedBorder(context);
+        _cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+            ? _cubit.getErrorBorder(context)
+            : _cubit.getFocusedBorder(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder() =>
-        cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
-            ? cubit.getErrorBorder(context)
-            : cubit.getDefaultBorder(context);
+        _cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+            ? _cubit.getErrorBorder(context)
+            : _cubit.getDefaultBorder(context);
 
-    Color getChangeIntervalLabelColor() => cubit.changeIntervalFocuses[widget.index].hasFocus
+    Color getChangeIntervalLabelColor() => _cubit.changeIntervalFocuses[widget.index].hasFocus
         ? AppColors.getTextFieldBorderAndLabelFocused(context)
         : AppColors.getTextFieldBorderAndLabel(context);
 
     OutlineInputBorder getRemainingKmDisabledBorder() =>
-        cubit.getRemainingKmValidatingText(context, widget.index).data != '' &&
-                !cubit.isNormalText(widget.index)
-            ? cubit.isWarningText(widget.index)
-                ? cubit.getWarningBorder(context)
-                : cubit.getErrorBorder(context)
-            : cubit.getDefaultBorder(context);
+        _cubit.getRemainingKmValidatingText(context, widget.index).data != '' &&
+                !_cubit.isNormalText(widget.index)
+            ? _cubit.isWarningText(widget.index)
+                ? _cubit.getWarningBorder(context)
+                : _cubit.getErrorBorder(context)
+            : _cubit.getDefaultBorder(context);
 
     Expanded buildLastChangedTextFormField() {
       return Expanded(
@@ -89,10 +90,10 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               padding: const EdgeInsetsDirectional.only(end: 8),
               child: TextFormField(
                 key: widget.index == 0 ? AppTourService.keyTextFieldLastChanged : null,
-                controller: cubit.lastChangedAtControllers[widget.index],
-                focusNode: cubit.lastChangedAtFocuses[widget.index],
+                controller: _cubit.lastChangedAtControllers[widget.index],
+                focusNode: _cubit.lastChangedAtFocuses[widget.index],
                 cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-                onChanged: (_) => cubit.getRemainingKm(widget.index),
+                onChanged: (_) => _cubit.getRemainingKm(widget.index),
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
@@ -114,7 +115,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
             ),
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: cubit.getLastChangedKmValidatingText(context, widget.index),
+              child: _cubit.getLastChangedKmValidatingText(context, widget.index),
             ),
           ],
         ),
@@ -125,10 +126,10 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
       return Expanded(
         child: TextFormField(
           key: widget.index == 0 ? AppTourService.keyTextFieldChangeInterval : null,
-          controller: cubit.changeIntervalControllers[widget.index],
-          focusNode: cubit.changeIntervalFocuses[widget.index],
+          controller: _cubit.changeIntervalControllers[widget.index],
+          focusNode: _cubit.changeIntervalFocuses[widget.index],
           cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
-          onChanged: (_) => cubit.getRemainingKm(widget.index),
+          onChanged: (_) => _cubit.getRemainingKm(widget.index),
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.done,
           decoration: InputDecoration(
@@ -154,7 +155,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           TextFormField(
             key: widget.index == 0 ? AppTourService.keyTextFieldRemaining : null,
             enabled: false,
-            controller: cubit.remainingKmControllers[widget.index],
+            controller: _cubit.remainingKmControllers[widget.index],
             textAlign: TextAlign.center,
             style: TextStyle(
               color: AppColors.getNormalTextColor(context),
@@ -162,7 +163,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
               fontWeight: FontWeight.bold,
             ),
             decoration: InputDecoration(
-              labelText: cubit.isErrorText(widget.index)
+              labelText: _cubit.isErrorText(widget.index)
                   ? AppStrings.remainingKmErrorLabel(context)
                   : AppStrings.remainingKmNormalWarningLabel(context),
               fillColor: AppColors.getDisabledTextFieldFill(context),
@@ -173,7 +174,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
           ),
           Align(
             alignment: AlignmentDirectional.centerStart,
-            child: cubit.getRemainingKmValidatingText(context, widget.index),
+            child: _cubit.getRemainingKmValidatingText(context, widget.index),
           )
         ],
       );
@@ -211,7 +212,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                                       .then((value) {
                                     if (value) {
                                       setState(() => _editing = false);
-                                      cubit.consumableNameController.text = '';
+                                      _cubit.consumableNameController.text = '';
                                     } else {
                                       BotToast.showText(text: AppStrings.nameNotEmpty(context));
                                     }
@@ -222,7 +223,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                         _editing
                             ? IconButton(
                                 onPressed: () {
-                                  cubit.consumableNameController.text = '';
+                                  _cubit.consumableNameController.text = '';
                                   setState(() => _editing = false);
                                 },
                                 icon: const Icon(Icons.close))
@@ -230,7 +231,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                         !_editing
                             ? IconButton(
                                 onPressed: () {
-                                  cubit.consumableNameController.text = '';
+                                  _cubit.consumableNameController.text = '';
                                   setState(() => _editing = true);
                                 },
                                 icon: Icon(Icons.edit,
@@ -238,7 +239,7 @@ class ConsumableWidgetState extends State<ConsumableWidget> {
                             : const SizedBox(),
                         IconButton(
                           onPressed: () =>
-                              Dialogs.showRemoveConsumableConfirmationDialog(context, widget.index),
+                              DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
                           icon: Icon(
                             Icons.delete,
                             key: widget.index == 0 ? AppTourService.keyDeleteCard : null,
