@@ -3,7 +3,7 @@ import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/widgets/custom_text_form_field.dart';
+import 'package:car_note/src/core/widgets/text_fields/custom_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

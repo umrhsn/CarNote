@@ -188,6 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
+            // const BannerAdWidget()
           ],
         ),
       ),

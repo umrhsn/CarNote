@@ -3,8 +3,8 @@ import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/widgets/custom_button.dart';
-import 'package:car_note/src/core/widgets/custom_button_with_icon.dart';
+import 'package:car_note/src/core/widgets/buttons/custom_button.dart';
+import 'package:car_note/src/core/widgets/buttons/custom_button_with_icon.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 
