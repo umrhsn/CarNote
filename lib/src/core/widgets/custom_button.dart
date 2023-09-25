@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomButton extends StatefulWidget {
   final String text;
   bool btnEnabled;

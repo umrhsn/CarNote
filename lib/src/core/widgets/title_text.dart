@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class TitleText extends StatelessWidget {
   String text;
 

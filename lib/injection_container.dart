@@ -23,10 +23,10 @@ Future<void> init() async {
   sl.registerLazySingleton<GetSavedLangUseCase>(() => GetSavedLangUseCase(langRepository: sl()));
   sl.registerLazySingleton<ChangeLangUseCase>(() => ChangeLangUseCase(langRepository: sl()));
 
-  // repository
+  // repositories
   sl.registerLazySingleton<LangRepository>(() => LangRepositoryImpl(langLocalDataSource: sl()));
 
-  // data Sources
+  // data sources
   sl.registerLazySingleton<LangLocalDataSource>(
       () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 

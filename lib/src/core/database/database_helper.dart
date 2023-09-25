@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -7,10 +9,43 @@ import 'package:car_note/src/features/consumables/domain/entities/consumable.dar
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 class DatabaseHelper {
+  init() async {
+    Directory dir = await getApplicationDocumentsDirectory();
+    Hive
+      ..init(dir.path)
+      ..registerAdapter<Car>(CarAdapter())
+      ..registerAdapter<Consumable>(ConsumableAdapter());
+
+    await Hive.openBox<Car>(AppStrings.carBox);
+    await Hive.openBox<List>(AppStrings.consumableBox);
+
+    if (di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) == null) {
+      _consumableBox.put(AppStrings.consumableBox, []);
+
+      for (int index = 0; index < AppStrings.consumables.length; index++) {
+        _consumableBox.get(AppStrings.consumableBox)!.add(
+              Consumable(
+                id: index,
+                name:
+                    "${AppStrings.consumablesEnglishList[index]}  ${AppStrings.consumablesArabicList[index]}",
+                lastChangedAt: 0,
+                changeInterval: 0,
+                remainingKm: 0,
+              ),
+            );
+      }
+
+      if (_consumableBox.get(AppStrings.consumableBox) != null) {
+        di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolListAdded, true);
+      }
+    }
+  }
+
   /// Car
   static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
 

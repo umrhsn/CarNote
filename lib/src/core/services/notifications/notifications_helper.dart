@@ -1,21 +1,64 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 class NotificationsHelper {
+  init() {
+    AwesomeNotifications().initialize(
+      'resource://drawable/icon',
+      [
+        NotificationChannel(
+          channelKey: AppStrings.notifChannelBasicKey,
+          channelName: AppStrings.notifChannelBasicName,
+          channelDescription: AppStrings.notifChannelBasicDescription,
+          ledColor: AppColors.primaryLight,
+          importance: NotificationImportance.High,
+        ),
+        NotificationChannel(
+          channelKey: AppStrings.notifChannelScheduledKey,
+          channelName: AppStrings.notifChannelScheduledName,
+          channelDescription: AppStrings.notifChannelScheduledDescription,
+          ledColor: AppColors.primaryLight,
+          importance: NotificationImportance.High,
+        ),
+      ],
+      // Channel groups are only visual and are not required
+      channelGroups: [
+        NotificationChannelGroup(
+          channelGroupKey: AppStrings.notifChannelBasicGroupKey,
+          channelGroupName: AppStrings.notifChannelBasicGroupName,
+        ),
+        NotificationChannelGroup(
+          channelGroupKey: AppStrings.notifChannelScheduledGroupKey,
+          channelGroupName: AppStrings.notifChannelScheduledGroupName,
+        ),
+      ],
+    );
+  }
+
   static void requestNotificationsPermission() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) AwesomeNotifications().requestPermissionToSendNotifications();
     });
   }
 
-  static Future<bool> showDailyNotification(BuildContext context) {
+  // FIXME: works only if app is minimized, not closed
+  static void scheduleDailyNotification(BuildContext context) {
+    Cron().schedule(
+        Schedule.parse('0 9 * * *'), () => NotificationsHelper._showDailyNotification(context));
+    Cron().schedule(
+        Schedule.parse('0 21 * * *'), () => NotificationsHelper._showDailyNotification(context));
+  }
+
+  static Future<bool> _showDailyNotification(BuildContext context) {
     return AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: 90,

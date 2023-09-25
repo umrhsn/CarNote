@@ -11,8 +11,8 @@ class DashboardSymbolsCard extends StatelessWidget {
   final bool reverseDirection;
   final String image;
   final String title;
-  final String? description;
-  final String? advice;
+  final String description;
+  final String advice;
   final int severity;
 
   DashboardSymbolsCard({
@@ -78,37 +78,26 @@ class DashboardSymbolsCard extends StatelessWidget {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          description == null
-                                              ? const SizedBox()
-                                              : Text(
-                                                  description ?? '',
-                                                  softWrap: true,
-                                                  style: TextStyle(
-                                                    color: AppColors.getHintColor(context),
-                                                  ),
-                                                ),
-                                          description == null
-                                              ? const SizedBox()
-                                              : const SizedBox(height: 10),
-                                          advice == null
-                                              ? const SizedBox()
-                                              : Text(
-                                                  '${AppStrings.advice(context)}:',
-                                                  style:
-                                                      const TextStyle(fontWeight: FontWeight.bold),
-                                                ),
-                                          advice == null
-                                              ? const SizedBox()
-                                              : Text(
-                                                  advice ?? '',
-                                                  softWrap: true,
-                                                  style: TextStyle(
-                                                    color: AppColors.getHintColor(context),
-                                                  ),
-                                                ),
-                                          advice == null
-                                              ? const SizedBox()
-                                              : const SizedBox(height: 10),
+                                          Text(
+                                            description,
+                                            softWrap: true,
+                                            style: TextStyle(
+                                              color: AppColors.getHintColor(context),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            '${AppStrings.advice(context)}:',
+                                            style: const TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            advice,
+                                            softWrap: true,
+                                            style: TextStyle(
+                                              color: AppColors.getHintColor(context),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
                                           Text(
                                             '${AppStrings.severity(context)}:',
                                             style: const TextStyle(fontWeight: FontWeight.bold),

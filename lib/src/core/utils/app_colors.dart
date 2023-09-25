@@ -1,4 +1,5 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -56,6 +57,7 @@ class AppColors {
 
   static Color appBarTextFieldFillLight = Colors.white.withAlpha(40);
   static Color appBarTextFieldFillDark = Colors.white.withAlpha(30);
+
   static Color getAppBarTextFieldFill(BuildContext context) =>
       context.isLight ? AppColors.appBarTextFieldFillLight : AppColors.appBarTextFieldFillDark;
 
@@ -72,11 +74,53 @@ class AppColors {
   static const Color disabledTextFieldDark = Color(0xff21262D);
   static Color textFieldFocusedLight = Colors.orange.shade900;
   static Color textFieldFocusedDark = Colors.white70;
+
   static Color getTextFieldBorderAndLabel(BuildContext context) =>
       context.isLight ? hintLight : hintDark;
 
   static Color getDisabledTextFieldFill(BuildContext context) =>
       context.isLight ? disabledTextFieldLight : disabledTextFieldDark;
+
+  static Color getLastChangedAndChangeIntervalLabelColor(
+          BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.getLastChangedKmValidatingText(context, index).data != ''
+          ? AppColors.getErrorColor(context)
+          : cubit.lastChangedAtFocuses[index].hasFocus
+              ? AppColors.getTextFieldBorderAndLabelFocused(context)
+              : AppColors.getTextFieldBorderAndLabel(context);
+
+  static Color getRemainingKmLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.getRemainingKmValidatingText(context, index).data != ''
+          ? cubit.getValidatingTextColor(context, index)
+          : cubit.remainingKmFocuses[index].hasFocus
+              ? AppColors.getTextFieldBorderAndLabelFocused(context)
+              : AppColors.getTextFieldBorderAndLabel(context);
+
+  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(
+          BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.getLastChangedKmValidatingText(context, index).data != ''
+          ? cubit.getErrorBorder(context)
+          : cubit.getFocusedBorder(context);
+
+  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder(
+          BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.getLastChangedKmValidatingText(context, index).data != ''
+          ? cubit.getErrorBorder(context)
+          : cubit.getDefaultBorder(context);
+
+  static Color getChangeIntervalLabelColor(
+          BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.changeIntervalFocuses[index].hasFocus
+          ? AppColors.getTextFieldBorderAndLabelFocused(context)
+          : AppColors.getTextFieldBorderAndLabel(context);
+
+  static OutlineInputBorder getRemainingKmDisabledBorder(
+          BuildContext context, int index, ConsumableCubit cubit) =>
+      cubit.getRemainingKmValidatingText(context, index).data != '' && !cubit.isNormalText(index)
+          ? cubit.isWarningText(index)
+              ? cubit.getWarningBorder(context)
+              : cubit.getErrorBorder(context)
+          : cubit.getDefaultBorder(context);
 
   /// Buttons
   static Color textBtnLight = iconLight;
