@@ -89,7 +89,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   bool shouldEnableButtons(BuildContext context) {
     for (int index = 0; index < lastChangedAtControllers.length; index++) {
-      if (getLastChangedKmValidatingText(context, index).data != '') {
+      if (currentKmController.text.isEmpty ||
+          getLastChangedKmValidatingText(context, index).data != '') {
         return false;
       }
     }
@@ -97,6 +98,15 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   /// Error and warning Text widgets
+  Text getCurrentKmValidatingText(BuildContext context) => Text(
+        _validateCurrentKilometer(context) ?? '',
+        style: TextStyle(
+          color: AppColors.getErrorColor(context),
+          height: _validateCurrentKilometer(context) != null ? 2 : 0,
+          fontSize: 11,
+        ),
+      );
+
   Text getLastChangedKmValidatingText(BuildContext context, int index) => Text(
         _validateLastChangedKilometer(index, context) ?? '',
         style: TextStyle(
@@ -119,7 +129,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   /// Calculation and validation methods
   int _calculateRemainingKm(TextEditingController lastChangedAtKmController,
       TextEditingController changeIntervalController) {
-    if (lastChangedAtKmController.text.isNotEmpty && changeIntervalController.text.isNotEmpty) {
+    if (currentKmController.text.isNotEmpty &&
+        lastChangedAtKmController.text.isNotEmpty &&
+        changeIntervalController.text.isNotEmpty) {
       int changeKm = int.parse(lastChangedAtKmController.text.removeThousandSeparator()) +
           int.parse(changeIntervalController.text.removeThousandSeparator());
       return int.parse(currentKmController.text.removeThousandSeparator()) - changeKm;
@@ -129,22 +141,25 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   void getRemainingKm(int index) {
     emit(AddingRemainingKm());
-    remainingKmControllers[index].text = _calculateRemainingKm(
-                lastChangedAtControllers[index], changeIntervalControllers[index]) !=
-            0
-        ? _calculateRemainingKm(lastChangedAtControllers[index], changeIntervalControllers[index]) <
+    remainingKmControllers[index].text = currentKmController.text.isNotEmpty
+        ? _calculateRemainingKm(
+                    lastChangedAtControllers[index], changeIntervalControllers[index]) !=
                 0
-            ? (_calculateRemainingKm(
-                        lastChangedAtControllers[index], changeIntervalControllers[index]) *
-                    -1)
-                .toThousands()
-            : _calculateRemainingKm(
-                    lastChangedAtControllers[index], changeIntervalControllers[index])
-                .toThousands()
-        : lastChangedAtControllers[index].text.isNotEmpty &&
-                changeIntervalControllers[index].text.isNotEmpty
-            ? '0'
-            : '';
+            ? _calculateRemainingKm(
+                        lastChangedAtControllers[index], changeIntervalControllers[index]) <
+                    0
+                ? (_calculateRemainingKm(
+                            lastChangedAtControllers[index], changeIntervalControllers[index]) *
+                        -1)
+                    .toThousands()
+                : _calculateRemainingKm(
+                        lastChangedAtControllers[index], changeIntervalControllers[index])
+                    .toThousands()
+            : lastChangedAtControllers[index].text.isNotEmpty &&
+                    changeIntervalControllers[index].text.isNotEmpty
+                ? '0'
+                : ''
+        : '';
     emit(AddedRemainingKm());
   }
 
@@ -163,6 +178,14 @@ class ConsumableCubit extends Cubit<ConsumableState> {
       _validateRemainingKilometer(index, context);
     }
     emit(ValidatingComplete());
+  }
+
+  // current kilometer should not be empty
+  String? _validateCurrentKilometer(BuildContext context) {
+    emit(ValidatingItem());
+    if (currentKmController.text.isEmpty) return AppStrings.invalidInput(context);
+    emit(ValidatingComplete());
+    return null;
   }
 
   // last changed kilometer should not exceed current kilometer
@@ -207,15 +230,15 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   bool isNormalText(int index) {
     emit(Calculating());
-    return _calculateRemainingKm(
-            lastChangedAtControllers[index], changeIntervalControllers[index]) <
-        -500;
+    return currentKmController.text.isNotEmpty &&
+        _calculateRemainingKm(lastChangedAtControllers[index], changeIntervalControllers[index]) <
+            -500;
   }
 
   bool isConsiderText(int index) {
     emit(Calculating());
-    return _calculateRemainingKm(
-                lastChangedAtControllers[index], changeIntervalControllers[index]) ==
+    return currentKmController.text.isNotEmpty &&
+        _calculateRemainingKm(lastChangedAtControllers[index], changeIntervalControllers[index]) ==
             0 &&
         lastChangedAtControllers[index].text.isNotEmpty &&
         changeIntervalControllers[index].text.isNotEmpty;
@@ -223,8 +246,8 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   bool isWarningText(int index) {
     emit(Calculating());
-    return _calculateRemainingKm(
-                lastChangedAtControllers[index], changeIntervalControllers[index]) >=
+    return currentKmController.text.isNotEmpty &&
+        _calculateRemainingKm(lastChangedAtControllers[index], changeIntervalControllers[index]) >=
             -500 &&
         _calculateRemainingKm(lastChangedAtControllers[index], changeIntervalControllers[index]) <
             0;
