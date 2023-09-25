@@ -4,8 +4,8 @@ class DashboardItem extends Equatable {
   final int category;
   final String image;
   final String title;
-  final String? description;
-  final String? advice;
+  final String description;
+  final String advice;
   final int severity;
 
   const DashboardItem({

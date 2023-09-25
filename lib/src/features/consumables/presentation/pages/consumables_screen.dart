@@ -1,4 +1,3 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
@@ -27,7 +26,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
   @override
   void initState() {
     super.initState();
-    Admob.requestTrackingAuthorization();
     NotificationsHelper.requestNotificationsPermission();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       NotificationsHelper.scheduleDailyNotification(context);
@@ -67,13 +65,6 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
                   const SizedBox(height: 15),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 15),
-                  //   child: AdmobBanner(
-                  //     adUnitId: AdServices.getBannerAdUnitId(),
-                  //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

@@ -1,4 +1,3 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
@@ -28,7 +27,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         prefsBoolKey: AppStrings.prefsBoolBeginDashboardScreenTour)) {
       AppTourService.beginDashboardScreenTour(context);
     }
-    Admob.requestTrackingAuthorization();
   }
 
   @override
@@ -89,95 +87,89 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
     }
 
-    IntrinsicHeight buildAppBarWidgets() {
-      return IntrinsicHeight(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              buildAppBarIcons(),
-              _selectedIndex == null
-                  ? const SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: DashboardSymbolsCard(
-                        detailed: true,
-                        onTap: () => setState(() => _selectedIndex = null),
-                        reverseDirection: false,
-                        image: AppStrings.dashboardItems(context)[_selectedIndex!].image,
-                        title: AppStrings.dashboardItems(context)[_selectedIndex!].title,
-                        description:
-                            AppStrings.dashboardItems(context)[_selectedIndex!].description,
-                        advice: AppStrings.dashboardItems(context)[_selectedIndex!].advice,
-                        severity: AppStrings.dashboardItems(context)[_selectedIndex!].severity,
+    IntrinsicHeight buildAppBarWidgets() => IntrinsicHeight(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              children: [
+                buildAppBarIcons(),
+                _selectedIndex == null
+                    ? const SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: DashboardSymbolsCard(
+                          detailed: true,
+                          onTap: () => setState(() => _selectedIndex = null),
+                          reverseDirection: false,
+                          image: AppStrings.dashboardItems(context)[_selectedIndex!].image,
+                          title: AppStrings.dashboardItems(context)[_selectedIndex!].title,
+                          description:
+                              AppStrings.dashboardItems(context)[_selectedIndex!].description,
+                          advice: AppStrings.dashboardItems(context)[_selectedIndex!].advice,
+                          severity: AppStrings.dashboardItems(context)[_selectedIndex!].severity,
+                        ),
                       ),
-                    ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    }
+        );
 
-    ClipRRect buildGrid() {
-      return ClipRRect(
-        borderRadius:
-            const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        child: GridView.builder(
-          padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: AppStrings.dashboardItems(context).length,
-          gridDelegate:
-              const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
-          itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
-            position: index,
-            duration: const Duration(milliseconds: 375),
-            columnCount: _gridColumnsCount,
-            child: ScaleAnimation(
-              child: FadeInAnimation(
-                child: DashboardSymbolsCard(
-                  key: index == 0 ? AppTourService.keyGridItem : null,
-                  onTap: () => setState(() => _selectedIndex = index),
-                  detailed: _switchToListView,
-                  reverseDirection: index % 2 == 0 ? false : true,
-                  image: AppStrings.dashboardItems(context)[index].image,
-                  title: AppStrings.dashboardItems(context)[index].title,
-                  description: AppStrings.dashboardItems(context)[index].description,
-                  advice: AppStrings.dashboardItems(context)[index].advice,
-                  severity: AppStrings.dashboardItems(context)[index].severity,
+    ClipRRect buildGrid() => ClipRRect(
+          borderRadius:
+              const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          child: GridView.builder(
+            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+            itemCount: AppStrings.dashboardItems(context).length,
+            gridDelegate:
+                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
+            itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              columnCount: _gridColumnsCount,
+              child: ScaleAnimation(
+                child: FadeInAnimation(
+                  child: DashboardSymbolsCard(
+                    key: index == 0 ? AppTourService.keyGridItem : null,
+                    onTap: () => setState(() => _selectedIndex = index),
+                    detailed: _switchToListView,
+                    reverseDirection: index % 2 == 0 ? false : true,
+                    image: AppStrings.dashboardItems(context)[index].image,
+                    title: AppStrings.dashboardItems(context)[index].title,
+                    description: AppStrings.dashboardItems(context)[index].description,
+                    advice: AppStrings.dashboardItems(context)[index].advice,
+                    severity: AppStrings.dashboardItems(context)[index].severity,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    }
+        );
 
-    ClipRRect buildList() {
-      return ClipRRect(
-        borderRadius:
-            const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-        child: ListView.builder(
-          padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
-          itemCount: AppStrings.dashboardItems(context).length,
-          itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
-            position: index,
-            duration: const Duration(milliseconds: 375),
-            child: SlideAnimation(
-              child: FadeInAnimation(
-                child: DashboardSymbolsCard(
-                  detailed: _switchToListView,
-                  reverseDirection: index % 2 == 0 ? false : true,
-                  image: AppStrings.dashboardItems(context)[index].image,
-                  title: AppStrings.dashboardItems(context)[index].title,
-                  description: AppStrings.dashboardItems(context)[index].description,
-                  advice: AppStrings.dashboardItems(context)[index].advice,
-                  severity: AppStrings.dashboardItems(context)[index].severity,
+    ClipRRect buildList() => ClipRRect(
+          borderRadius:
+              const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          child: ListView.builder(
+            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+            itemCount: AppStrings.dashboardItems(context).length,
+            itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: DashboardSymbolsCard(
+                    detailed: _switchToListView,
+                    reverseDirection: index % 2 == 0 ? false : true,
+                    image: AppStrings.dashboardItems(context)[index].image,
+                    title: AppStrings.dashboardItems(context)[index].title,
+                    description: AppStrings.dashboardItems(context)[index].description,
+                    advice: AppStrings.dashboardItems(context)[index].advice,
+                    severity: AppStrings.dashboardItems(context)[index].severity,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    }
+        );
 
     return Scaffold(
       appBar: AppBar(),
@@ -196,10 +188,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            // AdmobBanner(
-            //   adUnitId: AdServices.getBannerAdUnitId(),
-            //   adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-            // ),
           ],
         ),
       ),

@@ -1,4 +1,3 @@
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
@@ -29,7 +28,6 @@ class _MyHomePageState extends State<CarInfoScreen> {
     if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginCarInfoScreenTour)) {
       AppTourService.beginCarInfoScreenTour(context);
     }
-    Admob.requestTrackingAuthorization();
   }
 
   @override
@@ -83,13 +81,6 @@ class _MyHomePageState extends State<CarInfoScreen> {
               ),
             ),
           ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: AdmobBanner(
-          //     adUnitId: AdServices.getBannerAdUnitId(),
-          //     adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: context.width.toInt()),
-          //   ),
-          // )
         ],
       ),
     );

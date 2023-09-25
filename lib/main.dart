@@ -3,7 +3,6 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:admob_flutter/admob_flutter.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 void main() async {
@@ -12,7 +11,6 @@ void main() async {
   await di.init();
   await DatabaseHelper().init();
   NotificationsHelper().init();
-  Admob.initialize();
 
   runApp(const CarNote());
 }
