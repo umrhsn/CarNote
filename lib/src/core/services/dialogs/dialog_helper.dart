@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/widgets/warning_dialog.dart';
+import 'package:car_note/src/core/widgets/dialogs/warning_dialog.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';

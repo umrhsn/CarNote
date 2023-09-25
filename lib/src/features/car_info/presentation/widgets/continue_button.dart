@@ -1,7 +1,7 @@
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/widgets/custom_button.dart';
+import 'package:car_note/src/core/widgets/buttons/custom_button.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

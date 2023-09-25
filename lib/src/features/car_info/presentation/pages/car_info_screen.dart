@@ -3,7 +3,7 @@ import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/core/widgets/title_text.dart';
+import 'package:car_note/src/core/widgets/texts/title_text.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/car_type_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/continue_button.dart';
@@ -81,6 +81,7 @@ class _MyHomePageState extends State<CarInfoScreen> {
               ),
             ),
           ),
+          // const BannerAdWidget(),
         ],
       ),
     );

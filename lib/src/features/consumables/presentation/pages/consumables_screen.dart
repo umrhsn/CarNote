@@ -65,6 +65,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
                   const SizedBox(height: 15),
+                  // const BannerAdWidget()
                 ],
               ),
             ),
