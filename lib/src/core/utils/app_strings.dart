@@ -217,12 +217,6 @@ class AppStrings {
   static String invalidDataDialogContent(BuildContext context) =>
       _translate(context, "invalid_data_dialog_content");
 
-  static String invalidDataDialogPositiveText(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_positive_text");
-
-  static String invalidDataDialogNegativeText(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_negative_text");
-
   /// AppBar titles
   static String addConsumable(BuildContext context) => _translate(context, "add_an_item");
 

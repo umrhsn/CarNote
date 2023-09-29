@@ -11,7 +11,7 @@ class AppColors {
   static const Color primaryLight = Color(0xff1F883D);
   static const Color primaryDark = Color(0xff238636);
 
-  static MaterialColor primarySwatchLight = MaterialColor(
+  static final MaterialColor _primarySwatchLight = MaterialColor(
     primaryLight.value, //0%
     const <int, Color>{
       50: Color(0xff1f883d), //10%
@@ -27,7 +27,7 @@ class AppColors {
     },
   );
 
-  static MaterialColor primarySwatchDark = MaterialColor(
+  static final MaterialColor _primarySwatchDark = MaterialColor(
     primaryDark.value, //0%
     const <int, Color>{
       50: Color(0xff359450), //10%
@@ -44,34 +44,24 @@ class AppColors {
   );
 
   static Color getPrimaryColor(BuildContext context) =>
-      context.isLight ? AppColors.primaryLight : AppColors.primaryDark;
+      context.isLight ? primaryLight : primaryDark;
 
-  static Color getPrimarySwatchColor(BuildContext context) =>
-      context.isLight ? AppColors.primarySwatchLight : AppColors.primarySwatchDark;
+  static MaterialColor getPrimarySwatchColor({required bool isLight}) =>
+      isLight ? _primarySwatchLight : _primarySwatchDark;
 
   /// Icons
   static const Color iconLight = Color(0xff54AEFF);
   static const Color iconDark = Color(0xff7D8590);
 
   /// TextFields
-
-  static Color appBarTextFieldFillLight = Colors.white.withAlpha(40);
-  static Color appBarTextFieldFillDark = Colors.white.withAlpha(30);
-
-  static Color getAppBarTextFieldFill(BuildContext context) =>
-      context.isLight ? AppColors.appBarTextFieldFillLight : AppColors.appBarTextFieldFillDark;
-
   static Color getAppBarTextFieldLabel(BuildContext context) =>
       context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);
-
-  static Color getAppBarTextFieldBorderAndLabelFocused(BuildContext context) =>
-      context.isLight ? textFieldFocusedLight : textFieldFocusedDark;
 
   static Color getTextFieldBorderAndLabelFocused(BuildContext context) =>
       context.isLight ? textFieldFocusedLight : textFieldFocusedDark;
 
-  static const Color disabledTextFieldLight = Color(0xffF6F8FA);
-  static const Color disabledTextFieldDark = Color(0xff21262D);
+  static const Color _disabledTextFieldLight = Color(0xffF6F8FA);
+  static const Color _disabledTextFieldDark = Color(0xff21262D);
   static Color textFieldFocusedLight = Colors.orange.shade900;
   static Color textFieldFocusedDark = Colors.white70;
 
@@ -79,22 +69,22 @@ class AppColors {
       context.isLight ? hintLight : hintDark;
 
   static Color getDisabledTextFieldFill(BuildContext context) =>
-      context.isLight ? disabledTextFieldLight : disabledTextFieldDark;
+      context.isLight ? _disabledTextFieldLight : _disabledTextFieldDark;
 
   static Color getLastChangedAndChangeIntervalLabelColor(
           BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != ''
-          ? AppColors.getErrorColor(context)
+          ? getErrorColor(context)
           : cubit.lastChangedAtFocuses[index].hasFocus
-              ? AppColors.getTextFieldBorderAndLabelFocused(context)
-              : AppColors.getTextFieldBorderAndLabel(context);
+              ? getTextFieldBorderAndLabelFocused(context)
+              : getTextFieldBorderAndLabel(context);
 
   static Color getRemainingKmLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getRemainingKmValidatingText(context, index).data != ''
           ? cubit.getValidatingTextColor(context, index)
           : cubit.remainingKmFocuses[index].hasFocus
-              ? AppColors.getTextFieldBorderAndLabelFocused(context)
-              : AppColors.getTextFieldBorderAndLabel(context);
+              ? getTextFieldBorderAndLabelFocused(context)
+              : getTextFieldBorderAndLabel(context);
 
   static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(
           BuildContext context, int index, ConsumableCubit cubit) =>
@@ -111,8 +101,8 @@ class AppColors {
   static Color getChangeIntervalLabelColor(
           BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.changeIntervalFocuses[index].hasFocus
-          ? AppColors.getTextFieldBorderAndLabelFocused(context)
-          : AppColors.getTextFieldBorderAndLabel(context);
+          ? getTextFieldBorderAndLabelFocused(context)
+          : getTextFieldBorderAndLabel(context);
 
   static OutlineInputBorder getRemainingKmDisabledBorder(
           BuildContext context, int index, ConsumableCubit cubit) =>
@@ -123,38 +113,29 @@ class AppColors {
           : cubit.getDefaultBorder(context);
 
   /// Buttons
-  static Color textBtnLight = iconLight;
-  static Color textBtnDark = iconDark;
-
-  static Color btnDisabledLight = Colors.grey.withAlpha(100);
-  static Color btnDisabledDark = Colors.white.withAlpha(70);
+  static final Color _btnDisabledLight = Colors.grey.withAlpha(100);
+  static final Color _btnDisabledDark = Colors.white.withAlpha(70);
 
   static Color getBtnDisabledForeground(BuildContext context) =>
       context.isLight ? scaffoldBackgroundLight : scaffoldBackgroundLight.withAlpha(60);
 
   static Color getBtnDisabledBackground(BuildContext context) =>
-      context.isLight ? btnDisabledLight : btnDisabledDark;
-
-  static Color getTextBtnColor(BuildContext context) =>
-      context.isLight ? textBtnLight : textBtnDark;
+      context.isLight ? _btnDisabledLight : _btnDisabledDark;
 
   /// Texts
-  static Color textDisabledLight = Colors.grey.shade200;
-  static Color textDisabledDark = Colors.grey.shade600;
+  static const Color errorLight = Color(0xffb00020);
+  static const Color errorDark = Color(0xffcf6679);
 
-  static const Color errorLight = Color(0xffd40000);
-  static const Color errorDark = Color(0xffff9494);
-
-  static const Color warningLight = Color(0xffd4ad00);
-  static const Color warningDark = Color(0xfffff694);
+  static const Color _warningLight = Color(0xffd4ad00); // old: 0xffd40000
+  static const Color _warningDark = Color(0xfffff694); // old: 0xffff9494
 
   static const Color hintLight = Color(0xff656D76); // 0xff656D76
   static Color hintDark = const Color(0xff7C848F);
 
   static Color getWarningColor(BuildContext context) =>
-      context.isLight ? warningLight : warningDark;
+      context.isLight ? _warningLight : _warningDark;
 
-  static Color getErrorColor(BuildContext context) => Theme.of(context).colorScheme.error;
+  static Color getErrorColor(BuildContext context) => context.isLight ? errorLight : errorDark;
 
   static Color getNormalTextColor(BuildContext context) =>
       Theme.of(context).colorScheme.onBackground;
@@ -164,4 +145,43 @@ class AppColors {
   /// Cards
   static const Color cardLight = Color(0xffF6F8FA);
   static const Color cardDark = Color(0xff21262D);
+
+  static const Color _cardErrorLight = Color(0xfffff3f5);
+  static const Color _cardErrorDark = Color(0xff2c161c);
+
+  static const Color _cardWarningLight = Color(0xfffffae9);
+  static const Color _cardWarningDark = Color(0xff2f2e1b);
+
+  static Color _getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
+
+  static Color getCardErrorColor(BuildContext context) =>
+      context.isLight ? _cardErrorLight : _cardErrorDark;
+
+  static Color getCardConsumableItemColor(BuildContext context,
+          {required ConsumableCubit cubit, required int index}) =>
+      cubit.isNormalText(index)
+          ? _getCardNormalColor(context)
+          : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
+
+  static Color _getCardConsumableItemAbnormalColor(BuildContext context,
+          {required ConsumableCubit cubit, required int index}) =>
+      cubit.isErrorText(index) || cubit.isConsiderText(index)
+          ? _getCardConsumableItemErrorColor(context, cubit: cubit, index: index)
+          : _getCardWarningColor(context, cubit: cubit, index: index);
+
+  static Color _getCardConsumableItemErrorColor(BuildContext context,
+          {required ConsumableCubit cubit, required int index}) =>
+      cubit.isErrorText(index) || cubit.isConsiderText(index)
+          ? context.isLight
+              ? _cardErrorLight
+              : _cardErrorDark
+          : _getCardNormalColor(context);
+
+  static Color _getCardWarningColor(BuildContext context,
+          {required ConsumableCubit cubit, required int index}) =>
+      cubit.isWarningText(index)
+          ? context.isLight
+              ? _cardWarningLight
+              : _cardWarningDark
+          : _getCardNormalColor(context);
 }

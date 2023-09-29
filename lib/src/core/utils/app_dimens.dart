@@ -42,6 +42,9 @@ class AppDimens {
   /// Font Sizes
   static double fontSize15 = 15;
 
+  /// Icon Sizes
+  static double iconSize50 = 50;
+
   /// TextFields
   static double textFieldWidth(BuildContext context) => context.isTablet ? 270.w : double.infinity;
 

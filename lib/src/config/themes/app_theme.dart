@@ -14,7 +14,7 @@ class AppThemes {
       fontFamily: AppStrings.fontFamilyEn,
       useMaterial3: true,
       primaryColor: isLight ? AppColors.primaryLight : AppColors.primaryDark,
-      primarySwatch: isLight ? AppColors.primarySwatchLight : AppColors.primarySwatchDark,
+      primarySwatch: AppColors.getPrimarySwatchColor(isLight: isLight),
       scaffoldBackgroundColor:
           isLight ? AppColors.scaffoldBackgroundLight : AppColors.scaffoldBackgroundDark,
       brightness: isLight ? Brightness.light : Brightness.dark,

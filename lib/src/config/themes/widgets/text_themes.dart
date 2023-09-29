@@ -1,5 +1,5 @@
-import 'package:car_note/src/core/utils/app_dimens.dart';
-import 'package:flutter/material.dart';
+// import 'package:car_note/src/core/utils/app_dimens.dart';
+// import 'package:flutter/material.dart';
 
 class AppTextThemes {
   static textTheme() {

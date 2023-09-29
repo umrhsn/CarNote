@@ -65,8 +65,6 @@
   "erase_data": "إزالة البيانات",
   "invalid_data_dialog_title": "لقد أدخلت بيانات خاطئة",
   "invalid_data_dialog_content": "اضفط (رجوع) لتعديل البيانات أو (خروج) لتجاهل التغييرات والخروج من التطبيق.",
-  "invalid_data_dialog_positive_text": "رجوع",
-  "invalid_data_dialog_negative_text": "خروج",
   "item_added": "تمت إضافة العنصر",
   "toggle_mode_tooltip": "تبديل الواجهة",
   "switch_language_tooltip": "تبديل اللغة",

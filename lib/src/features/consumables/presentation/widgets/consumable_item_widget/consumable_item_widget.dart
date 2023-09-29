@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
+import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/consumable_name_text_field.dart';
@@ -42,6 +43,9 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
     _cubit.getRemainingKm(widget.index);
 
     return Card(
+      color: _cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+          ? AppColors.getCardErrorColor(context)
+          : AppColors.getCardConsumableItemColor(context, cubit: _cubit, index: widget.index),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
         child: Column(

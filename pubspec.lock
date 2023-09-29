@@ -45,10 +45,10 @@ packages:
     dependency: "direct main"
     description:
       name: awesome_notifications
-      sha256: "38119f3d79cbbce304445cb5aca2d8fd55feff3cd4a0303418bf549fa1d37bf3"
+      sha256: "327162c36a1476978f89638741da618cac42356aabc39a5035b6c206d8fca978"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.6"
+    version: "0.7.7"
   bloc:
     dependency: transitive
     description:
