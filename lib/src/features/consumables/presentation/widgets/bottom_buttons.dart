@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/buttons/custom_button.dart';
 import 'package:car_note/src/core/widgets/buttons/custom_button_with_icon.dart';
@@ -23,7 +24,7 @@ class BottomButtons extends StatelessWidget {
     _list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
       child: Row(
         children: [
           Expanded(
@@ -35,7 +36,7 @@ class BottomButtons extends StatelessWidget {
                   (value) => BotToast.showText(text: AppStrings.dataSavedSuccessfully(context))),
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: AppDimens.sizedBox10),
           CustomButtonWithIcon(
             key: AppTourService.keyAddItem,
             iconData: Icons.add,

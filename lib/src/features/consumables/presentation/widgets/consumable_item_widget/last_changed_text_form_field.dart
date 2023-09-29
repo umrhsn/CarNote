@@ -1,6 +1,8 @@
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class LastChangedTextFormField extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.only(end: 8),
+            padding: EdgeInsetsDirectional.only(end: AppDimens.edge8),
             child: TextFormField(
               key: index == 0 ? AppTourService.keyTextFieldLastChanged : null,
               controller: cubit.lastChangedAtControllers[index],
@@ -43,7 +45,7 @@ class LastChangedTextFormField extends StatelessWidget {
                     AppColors.getLastChangedAndChangeIntervalEnabledBorder(context, index, cubit),
               ),
               inputFormatters: [
-                LengthLimitingTextInputFormatter(9),
+                LengthLimitingTextInputFormatter(AppNums.lengthLimit9),
                 FilteringTextInputFormatter.digitsOnly,
                 ThousandSeparatorInputFormatter(),
               ],

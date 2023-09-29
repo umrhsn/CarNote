@@ -1,5 +1,6 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
@@ -125,6 +126,9 @@ class AppStrings {
   static String carTypeHint(BuildContext context) => _translate(context, "car_type_hint");
 
   static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
+
+  static String currentKmCarInfoScreenHint(BuildContext context) =>
+      "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}";
 
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 

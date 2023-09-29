@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class ChangeIntervalTextFormField extends StatelessWidget {
           ),
         ),
         inputFormatters: [
-          LengthLimitingTextInputFormatter(7),
+          LengthLimitingTextInputFormatter(AppNums.lengthLimit7),
           FilteringTextInputFormatter.digitsOnly,
           ThousandSeparatorInputFormatter(),
         ],

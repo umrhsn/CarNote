@@ -1,10 +1,13 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/info/presentation/widgets/dashboard_symbols_card.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -35,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     Padding buildAppBarIcons() {
       return Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(top: AppDimens.edge10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -89,14 +92,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     IntrinsicHeight buildAppBarWidgets() => IntrinsicHeight(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
             child: Column(
               children: [
                 buildAppBarIcons(),
                 _selectedIndex == null
                     ? const SizedBox()
                     : Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: AppDimens.edge10.w),
                         child: DashboardSymbolsCard(
                           detailed: true,
                           onTap: () => setState(() => _selectedIndex = null),
@@ -115,16 +118,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
 
     ClipRRect buildGrid() => ClipRRect(
-          borderRadius:
-              const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppDimens.borderRadius30),
+              topRight: Radius.circular(AppDimens.borderRadius30)),
           child: GridView.builder(
-            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+            padding: EdgeInsetsDirectional.only(
+                start: AppDimens.edge10.w, end: AppDimens.edge10.w, bottom: AppDimens.edge10.h),
             itemCount: AppStrings.dashboardItems(context).length,
             gridDelegate:
                 const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
             itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
               position: index,
-              duration: const Duration(milliseconds: 375),
+              duration: const Duration(milliseconds: AppNums.durationCardAnimation),
               columnCount: _gridColumnsCount,
               child: ScaleAnimation(
                 child: FadeInAnimation(
@@ -146,14 +151,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
 
     ClipRRect buildList() => ClipRRect(
-          borderRadius:
-              const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(AppDimens.borderRadius30),
+              topRight: Radius.circular(AppDimens.borderRadius30)),
           child: ListView.builder(
-            padding: const EdgeInsetsDirectional.only(start: 10, end: 10, bottom: 10),
+            padding: EdgeInsetsDirectional.only(
+                start: AppDimens.edge10, end: AppDimens.edge10, bottom: AppDimens.edge10),
             itemCount: AppStrings.dashboardItems(context).length,
             itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
               position: index,
-              duration: const Duration(milliseconds: 375),
+              duration: const Duration(milliseconds: AppNums.durationCardAnimation),
               child: SlideAnimation(
                 child: FadeInAnimation(
                   child: DashboardSymbolsCard(

@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -49,7 +50,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              toolbarHeight: 140,
+              toolbarHeight: AppDimens.appBarHeight140,
               title: Column(
                 children: [
                   AppBarIconButtonsRow(localeCubit: localeCubit, consumableCubit: consumableCubit),
@@ -64,7 +65,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   ConsumablesListWidget(list: _list),
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
-                  const SizedBox(height: 15),
+                  SizedBox(height: AppDimens.sizedBox15),
                   // const BannerAdWidget()
                 ],
               ),

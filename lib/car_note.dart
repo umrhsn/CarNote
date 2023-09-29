@@ -6,6 +6,7 @@ import 'package:car_note/src/features/consumables/presentation/cubit/consumable_
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'src/config/routes/app_routes.dart';
 import 'src/config/themes/app_theme.dart';
@@ -27,17 +28,21 @@ class CarNote extends StatelessWidget {
         child: BlocBuilder<LocaleCubit, LocaleState>(
           buildWhen: (previousState, currentState) => previousState != currentState,
           builder: (context, state) {
-            return MaterialApp(
-              builder: BotToastInit(),
-              navigatorObservers: [BotToastNavigatorObserver()],
-              theme: AppThemes.appTheme(isLight: true),
-              darkTheme: AppThemes.appTheme(isLight: false),
-              onGenerateRoute: AppRoutes.onGenerateRoute,
-              debugShowCheckedModeBanner: false,
-              locale: state.locale,
-              supportedLocales: AppLocalizationsSetup.supportedLocales,
-              localeResolutionCallback: AppLocalizationsSetup.localeResolutionCallback,
-              localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
+            return ScreenUtilInit(
+              builder: (context, child) {
+                return MaterialApp(
+                  builder: BotToastInit(),
+                  navigatorObservers: [BotToastNavigatorObserver()],
+                  theme: AppThemes.appTheme(isLight: true),
+                  darkTheme: AppThemes.appTheme(isLight: false),
+                  onGenerateRoute: AppRoutes.onGenerateRoute,
+                  debugShowCheckedModeBanner: false,
+                  locale: state.locale,
+                  supportedLocales: AppLocalizationsSetup.supportedLocales,
+                  localeResolutionCallback: AppLocalizationsSetup.localeResolutionCallback,
+                  localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
+                );
+              },
             );
           },
         ),
