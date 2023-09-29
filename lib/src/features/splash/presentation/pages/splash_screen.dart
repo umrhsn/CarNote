@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/indicators/custom_progress_indictor.dart';
@@ -17,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  final _splashDelay = 0;
+  final _splashDelay = AppNums.durationSplashDelay;
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
   @override
@@ -55,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void _fadeInOutAnimation() {
     _animationController =
         AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: 1.0, end: 0.2).animate(_animationController);
+    _animation = Tween<double>(begin: AppNums.animationSplashBegin, end: AppNums.animationSplashEnd)
+        .animate(_animationController);
     AnimationHelper.continuousReversibleAnimation(_animationController, _animation);
   }
 

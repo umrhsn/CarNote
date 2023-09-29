@@ -1,6 +1,7 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/texts/title_text.dart';
@@ -43,7 +44,7 @@ class _MyHomePageState extends State<CarInfoScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.only(top: 20, right: 15),
+              padding: EdgeInsets.only(top: AppDimens.edge20, right: AppDimens.edge15),
               child: IconButton(
                 key: AppTourService.keySwitchLangCarInfoScreen,
                 icon: const FaIcon(FontAwesomeIcons.language),
@@ -57,23 +58,23 @@ class _MyHomePageState extends State<CarInfoScreen> {
             child: SingleChildScrollView(
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(AppDimens.edge20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AssetManager.icon, height: 100),
-                          const SizedBox(width: 10),
+                          Image.asset(AssetManager.icon, height: AppDimens.imageHeight100),
+                          SizedBox(width: AppDimens.sizedBox10),
                           TitleText(text: AppStrings.appName(context).toUpperCase()),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: AppDimens.sizedBox20),
                       CarTypeTextFormField(carCubit: carCubit, validator: validator),
                       ModelYearTextFormField(carCubit: carCubit, validator: validator),
                       CurrentKilometerTextFormField(carCubit: carCubit, validator: validator),
-                      const SizedBox(height: 15),
+                      SizedBox(height: AppDimens.sizedBox15),
                       ContinueButton(validator: validator, carCubit: carCubit),
                     ],
                   ),

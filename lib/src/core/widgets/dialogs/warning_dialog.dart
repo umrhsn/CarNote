@@ -1,3 +1,4 @@
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -30,7 +31,7 @@ class WarningDialog extends StatelessWidget {
       child: SlideAnimation(
         child: FadeInAnimation(
           child: AlertDialog(
-            icon: const Icon(Icons.warning_rounded, size: 50),
+            icon: Icon(Icons.warning_rounded, size: AppDimens.iconSize50),
             title: Text(title),
             content: Text(content),
             actions: [

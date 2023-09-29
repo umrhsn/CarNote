@@ -3,6 +3,8 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/consumable_name_text_field.dart';
 import 'package:car_note/src/core/widgets/buttons/custom_button.dart';
@@ -56,7 +58,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.only(end: 8),
+              padding: EdgeInsetsDirectional.only(end: AppDimens.edge8),
               child: TextFormField(
                 controller: cubit.lastChangedController,
                 focusNode: cubit.lastChangedFocus,
@@ -74,7 +76,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                   enabledBorder: getLastChangedAndChangeIntervalEnabledBorder(),
                 ),
                 inputFormatters: [
-                  LengthLimitingTextInputFormatter(9),
+                  LengthLimitingTextInputFormatter(AppNums.lengthLimit9),
                   FilteringTextInputFormatter.digitsOnly,
                   ThousandSeparatorInputFormatter(),
                 ],
@@ -106,7 +108,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
             ),
           ),
           inputFormatters: [
-            LengthLimitingTextInputFormatter(7),
+            LengthLimitingTextInputFormatter(AppNums.lengthLimit7),
             FilteringTextInputFormatter.digitsOnly,
             ThousandSeparatorInputFormatter(),
           ],
@@ -124,7 +126,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
           },
           child: Scaffold(
             appBar: AppBar(
-              toolbarHeight: 80,
+              toolbarHeight: AppDimens.appBarHeight80,
               title: Text(
                 AppStrings.addConsumable(context),
                 style: const TextStyle(fontWeight: FontWeight.bold),
@@ -135,14 +137,14 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                 children: [
                   const Spacer(),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                     child: Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: EdgeInsets.all(AppDimens.edge20),
                         child: Column(
                           children: [
                             ConsumableNameTextField(),
-                            const SizedBox(height: 20),
+                            SizedBox(height: AppDimens.sizedBox20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +160,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                   ),
                   const Spacer(),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                     child: Row(
                       children: [
                         Expanded(
@@ -189,7 +191,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                             },
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: AppDimens.sizedBox10),
                         Expanded(
                           child: CustomButton(
                             text: AppStrings.cancel(context).toUpperCase(),
@@ -203,7 +205,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: AppDimens.sizedBox15),
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 15),
                   //   child: AdmobBanner(

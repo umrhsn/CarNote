@@ -4,6 +4,7 @@ import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
 import 'package:car_note/src/core/widgets/buttons/custom_icon_button.dart';
@@ -23,7 +24,6 @@ class AppBarIconButtonsRow extends StatelessWidget {
 
   final LocaleCubit localeCubit;
   final ConsumableCubit consumableCubit;
-
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
   bool _getVisibilityStatus() {
@@ -64,7 +64,9 @@ class AppBarIconButtonsRow extends StatelessWidget {
           icon: Icons.file_copy,
           onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
               FileCreator.writeDataToFile().then((value) => BotToast.showText(
-                  duration: Duration(seconds: value == true ? 7 : 2),
+                  duration: Duration(
+                      seconds:
+                          value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
                   text: value == true
                       ? AppStrings.fileCreated(context)
                       : AppStrings.fileNotCreated(context),

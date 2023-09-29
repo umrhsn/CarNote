@@ -1,5 +1,6 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
+import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
@@ -126,6 +127,9 @@ class AppStrings {
 
   static String modelYearHint(BuildContext context) => _translate(context, "model_year_hint");
 
+  static String currentKmCarInfoScreenHint(BuildContext context) =>
+      "${AppStrings.currentKmHint(context)} ${100000.toThousands()} ${AppStrings.km(context)}";
+
   static String currentKmHint(BuildContext context) => _translate(context, "current_km_hint");
 
   static String nameHint(BuildContext context) => _translate(context, "name_hint");
@@ -212,12 +216,6 @@ class AppStrings {
 
   static String invalidDataDialogContent(BuildContext context) =>
       _translate(context, "invalid_data_dialog_content");
-
-  static String invalidDataDialogPositiveText(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_positive_text");
-
-  static String invalidDataDialogNegativeText(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_negative_text");
 
   /// AppBar titles
   static String addConsumable(BuildContext context) => _translate(context, "add_an_item");

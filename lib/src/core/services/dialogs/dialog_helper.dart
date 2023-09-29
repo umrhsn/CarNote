@@ -11,35 +11,46 @@ import 'package:flutter/services.dart';
 
 class DialogHelper {
   static Future<bool> showOnWillPopDialogs(BuildContext context) async {
+    bool canExit = true;
     String debugMsg = "onWillPop\n\n";
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
+    /// Main Case
+    //
     if (consumableCubit.shouldEnableButtons(context) == false && Consumable.getCount() != 0) {
       debugMsg += "${consumableCubit.shouldEnableButtons(context)}";
       _showOnWillPopInvalidDataDialog(context);
-      return false;
+      canExit = false;
+      debugPrint("canExit => $canExit");
+      return canExit;
     }
 
     for (int index = 0; index < Consumable.getCount(); index++) {
       Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
       Consumable? consumable = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
 
+      /// Case 1
+      // Current kilometer doesn't match the database value
       if (int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) !=
           car!.currentKm) {
         debugMsg += "Case 1\n";
         debugMsg +=
-            "int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()) ==> ${int.parse(consumableCubit.currentKmController.text.removeThousandSeparator())}\n";
-        debugMsg += "car!.currentKm ==> ${car.currentKm}\n";
+            "consumableCubit.currentKmController.text ==> ${int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()).toThousands()}\n";
+        debugMsg += "car.currentKm ==> ${car.currentKm.toThousands()}\n";
         debugMsg += "\n";
         _showOnWillPopChangedDataDialog(context);
         debugPrint(debugMsg);
-        return false;
+        canExit = false;
+        debugPrint("canExit => $canExit");
+        return canExit;
       }
 
+      /// Case 2
       if (consumable == null) {
         debugMsg += "Case 2\n"
             "consumable == null ==> ${consumable == null}\n\n";
+        // Consumable item has not yet been saved to database but controller has a value
         if (consumableCubit.lastChangedAtControllers[index].text.isNotEmpty ||
             consumableCubit.changeIntervalControllers[index].text.isNotEmpty ||
             consumableCubit.remainingKmControllers[index].text.isNotEmpty) {
@@ -49,30 +60,41 @@ class DialogHelper {
               "consumableCubit.remainingKmControllers[$index].text.isNotEmpty ==> ${consumableCubit.remainingKmControllers[index].text.isNotEmpty}\n\n";
           _showOnWillPopChangedDataDialog(context);
           debugPrint(debugMsg);
-          return false;
+          canExit = false;
+          debugPrint("canExit => $canExit");
+          return canExit;
         }
       }
 
+      /// Case 3
+      // Consumable item has been saved to database
       if (consumable != null) {
         debugMsg += "Case 3\n"
             // ignore: unnecessary_null_comparison
             "consumable != null ==> ${consumable != null}\n\n";
 
+        /// Case 3.1
+        // Controller has a value but the database value is 0
         if ((consumable.lastChangedAt == 0 &&
                 consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ||
             (consumable.changeInterval == 0 &&
-                consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ||
-            (consumable.remainingKm == 0 &&
-                consumableCubit.remainingKmControllers[index].text.isNotEmpty)) {
+                consumableCubit.changeIntervalControllers[index].text.isNotEmpty)) {
           debugMsg += "Case 3.1\n"
-              "(consumable.lastChangedAt == 0 && consumableCubit.lastChangedAtControllers[$index].text.isNotEmpty) ==> ${(consumable.lastChangedAt == 0 && consumableCubit.lastChangedAtControllers[index].text.isNotEmpty)}\n"
-              "(consumable.changeInterval == 0 && consumableCubit.changeIntervalControllers[$index].text.isNotEmpty) ==> ${(consumable.changeInterval == 0 && consumableCubit.changeIntervalControllers[index].text.isNotEmpty)}\n"
-              "(consumable.remainingKm == 0 && consumableCubit.remainingKmControllers[$index].text.isNotEmpty) ==> ${(consumable.remainingKm == 0 && consumableCubit.remainingKmControllers[index].text.isNotEmpty)}\n\n";
+              "consumable.lastChangedAt[$index] == 0 ==> ${consumable.lastChangedAt == 0}\n"
+              "consumable.changeInterval[$index] == 0 ==> ${consumable.changeInterval == 0}\n"
+              "consumableCubit.lastChangedAtControllers[$index].text.isNotEmpty ==> ${consumableCubit.lastChangedAtControllers[index].text.isNotEmpty}\n"
+              "consumableCubit.changeIntervalControllers[$index].text.isNotEmpty ==> ${consumableCubit.changeIntervalControllers[index].text.isNotEmpty}\n"
+              "(consumable.lastChangedAt == 0 && consumableCubit.lastChangedAtControllers[index].text.isNotEmpty) ==> ${(consumable.lastChangedAt == 0 && consumableCubit.lastChangedAtControllers[index].text.isNotEmpty)}\n"
+              "(consumable.changeInterval == 0 && consumableCubit.changeIntervalControllers[index].text.isNotEmpty) ==> ${(consumable.changeInterval == 0 && consumableCubit.changeIntervalControllers[index].text.isNotEmpty)}\n\n";
           _showOnWillPopChangedDataDialog(context);
           debugPrint(debugMsg);
-          return false;
+          canExit = false;
+          debugPrint("canExit => $canExit");
+          return canExit;
         }
 
+        /// Case 3.2
+        // Controller is empty but the database value is not 0
         if ((consumableCubit.lastChangedAtControllers[index].text.isEmpty &&
                 consumable.lastChangedAt != 0) ||
             (consumableCubit.changeIntervalControllers[index].text.isEmpty &&
@@ -85,9 +107,13 @@ class DialogHelper {
               "(consumableCubit.remainingKmControllers[$index].text.isEmpty && consumable.remainingKm != 0) ==> ${(consumableCubit.remainingKmControllers[index].text.isEmpty && consumable.remainingKm != 0)}\n\n";
           _showOnWillPopChangedDataDialog(context);
           debugPrint(debugMsg);
-          return false;
+          canExit = false;
+          debugPrint("canExit => $canExit");
+          return canExit;
         }
 
+        /// Case 3.3
+        // Controller has a value but doesn't match the database value
         if ((consumableCubit.lastChangedAtControllers[index].text.isNotEmpty &&
                 int.parse(consumableCubit.lastChangedAtControllers[index].text
                         .removeThousandSeparator()) !=
@@ -106,12 +132,15 @@ class DialogHelper {
               "(consumableCubit.remainingKmControllers[$index].text.isNotEmpty && int.parse(consumableCubit.remainingKmControllers[$index].text.removeThousandSeparator()) != consumable.remainingKm) ==> ${(consumableCubit.remainingKmControllers[index].text.isNotEmpty && int.parse(consumableCubit.remainingKmControllers[index].text.removeThousandSeparator()) != consumable.remainingKm)}\n\n";
           _showOnWillPopChangedDataDialog(context);
           debugPrint(debugMsg);
-          return false;
+          canExit = false;
+          debugPrint("canExit => $canExit");
+          return canExit;
         }
       }
     }
     debugPrint(debugMsg);
-    return true;
+    debugPrint("canExit => $canExit");
+    return canExit;
   }
 
   static void _showOnWillPopChangedDataDialog(BuildContext context) => showDialog(
@@ -136,10 +165,10 @@ class DialogHelper {
       builder: (context) => WarningDialog(
             title: AppStrings.invalidDataDialogTitle(context),
             content: AppStrings.invalidDataDialogContent(context),
-            positiveAction: () => Navigator.pop(context),
-            positiveText: AppStrings.invalidDataDialogPositiveText(context),
-            negativeAction: () => SystemNavigator.pop(),
-            negativeText: AppStrings.invalidDataDialogNegativeText(context),
+            positiveAction: () => SystemNavigator.pop(),
+            positiveText: AppStrings.exitWithoutSaving(context),
+            negativeAction: () => Navigator.pop(context),
+            negativeText: AppStrings.cancel(context),
           ));
 
   static void showRemoveConsumableConfirmationDialog(BuildContext context, int index) => showDialog(

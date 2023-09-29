@@ -1,8 +1,10 @@
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class DashboardSymbolsCard extends StatelessWidget {
@@ -35,96 +37,99 @@ class DashboardSymbolsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(15),
-      onTap: onTap,
-      child: !detailed
-          ? Card(
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Image.asset(image),
-              ),
-            )
-          : AnimationConfiguration.synchronized(
-              child: ScaleAnimation(
-                child: FadeInAnimation(
-                  child: Directionality(
-                    textDirection: reverseDirection ? _directionReversed : _direction,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Flexible(child: Image.asset(image)),
-                            const SizedBox(width: 20),
-                            Expanded(
-                              flex: 6,
-                              child: Directionality(
-                                textDirection: _direction,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      title,
-                                      softWrap: true,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+    return Padding(
+      padding: EdgeInsets.all(1.w),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppDimens.borderRadius15),
+        onTap: onTap,
+        child: !detailed
+            ? Card(
+                child: Padding(
+                  padding: EdgeInsets.all(15.w),
+                  child: Image.asset(image),
+                ),
+              )
+            : AnimationConfiguration.synchronized(
+                child: ScaleAnimation(
+                  child: FadeInAnimation(
+                    child: Directionality(
+                      textDirection: reverseDirection ? _directionReversed : _direction,
+                      child: Card(
+                        child: Padding(
+                          padding: EdgeInsets.all(20.w),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(child: Image.asset(image)),
+                              SizedBox(width: 20.w),
+                              Expanded(
+                                flex: 6,
+                                child: Directionality(
+                                  textDirection: _direction,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        title,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                                        ),
                                       ),
-                                    ),
-                                    Directionality(
-                                      textDirection: _direction,
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            description,
-                                            softWrap: true,
-                                            style: TextStyle(
-                                              color: AppColors.getHintColor(context),
+                                      Directionality(
+                                        textDirection: _direction,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              description,
+                                              softWrap: true,
+                                              style: TextStyle(
+                                                color: AppColors.getHintColor(context),
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            '${AppStrings.advice(context)}:',
-                                            style: const TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            advice,
-                                            softWrap: true,
-                                            style: TextStyle(
-                                              color: AppColors.getHintColor(context),
+                                            SizedBox(height: 10.h),
+                                            Text(
+                                              '${AppStrings.advice(context)}:',
+                                              style: const TextStyle(fontWeight: FontWeight.bold),
                                             ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            '${AppStrings.severity(context)}:',
-                                            style: const TextStyle(fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(
-                                            LocaleCubit.currentLangCode == AppStrings.en
-                                                ? '$severity / 10'
-                                                : '$severity / 10'.toArabicNumerals(),
-                                            softWrap: true,
-                                            style:
-                                                TextStyle(color: AppColors.getHintColor(context)),
-                                          ),
-                                        ],
+                                            Text(
+                                              advice,
+                                              softWrap: true,
+                                              style: TextStyle(
+                                                color: AppColors.getHintColor(context),
+                                              ),
+                                            ),
+                                            SizedBox(height: 10.h),
+                                            Text(
+                                              '${AppStrings.severity(context)}:',
+                                              style: const TextStyle(fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                              LocaleCubit.currentLangCode == AppStrings.en
+                                                  ? '$severity / 10'
+                                                  : '$severity / 10'.toArabicNumerals(),
+                                              softWrap: true,
+                                              style:
+                                                  TextStyle(color: AppColors.getHintColor(context)),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }

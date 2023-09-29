@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
+import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/consumable_name_text_field.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
@@ -41,26 +43,31 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
     _cubit.getRemainingKm(widget.index);
 
     return Card(
+      color: _cubit.getLastChangedKmValidatingText(context, widget.index).data != ''
+          ? AppColors.getCardErrorColor(context)
+          : AppColors.getCardConsumableItemColor(context, cubit: _cubit, index: widget.index),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, start: 10),
+              padding: EdgeInsetsDirectional.only(
+                  top: AppDimens.edge20, bottom: AppDimens.edge10, start: AppDimens.edge10),
               child: Row(
                 children: [
                   !_editing
                       ? Expanded(
-                          flex: 30,
+                          flex: AppDimens.flex30,
                           child: Text(
                             widget.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: AppDimens.fontSize15),
                           ),
                         )
                       : Expanded(child: ConsumableNameTextField(index: widget.index)),
-                  !_editing ? const Spacer() : const SizedBox(width: 30),
+                  !_editing ? const Spacer() : SizedBox(width: AppDimens.sizedBox30),
                   Visibility(
                     visible: visible,
                     child: Row(
@@ -114,10 +121,10 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
             Visibility(
               visible: visible,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                 child: Column(
                   children: [
-                    const SizedBox(height: 10),
+                    SizedBox(height: AppDimens.sizedBox10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,12 +137,12 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: AppDimens.sizedBox10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
               child: RemainingKilometerTextFormField(cubit: _cubit, index: widget.index),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: AppDimens.sizedBox20),
           ],
         ),
       ),
