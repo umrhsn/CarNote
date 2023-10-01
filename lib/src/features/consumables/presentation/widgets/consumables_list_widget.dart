@@ -31,10 +31,9 @@ class _ConsumablesListWidgetState extends State<ConsumablesListWidget> {
               thumbVisibility: false,
               trackVisibility: false,
               child: Padding(
-                padding: EdgeInsetsDirectional.only(
-                    start: AppDimens.edge10, bottom: AppDimens.edge15, end: AppDimens.edge10),
+                padding: const EdgeInsetsDirectional.only(start: AppDimens.edge10, bottom: AppDimens.edge15, end: AppDimens.edge10),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(AppDimens.borderRadius15)),
+                  borderRadius: const BorderRadius.all(Radius.circular(AppDimens.borderRadius15)),
                   child: ReorderableListView.builder(
                       key: AppTourService.keyList,
                       itemCount: Consumable.getCount(),
@@ -47,16 +46,12 @@ class _ConsumablesListWidgetState extends State<ConsumablesListWidget> {
                           duration: const Duration(milliseconds: AppNums.durationCardAnimation),
                           child: SlideAnimation(
                             child: FadeInAnimation(
-                              child: ConsumableItemWidget(
-                                  key: index == 0 ? AppTourService.keyCard : null,
-                                  index: index,
-                                  name: item.name),
+                              child: ConsumableItemWidget(key: index == 0 ? AppTourService.keyCard : null, index: index, name: item.name),
                             ),
                           ),
                         );
                       },
-                      onReorder: (oldIndex, newIndex) => setState(
-                          () => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
+                      onReorder: (oldIndex, newIndex) => setState(() => DatabaseHelper.changeConsumableOrder(context, oldIndex, newIndex))),
                 ),
               ),
             ),

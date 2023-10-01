@@ -18,8 +18,7 @@ class AppLocalizationsSetup {
 
   static Locale? localeResolutionCallback(Locale? locale, Iterable<Locale>? supportedLocales) {
     for (Locale supportedLocale in supportedLocales!) {
-      if (supportedLocale.languageCode == locale!.languageCode &&
-          supportedLocale.countryCode == locale.countryCode) {
+      if (supportedLocale.languageCode == locale!.languageCode && supportedLocale.countryCode == locale.countryCode) {
         return supportedLocale;
       }
     }

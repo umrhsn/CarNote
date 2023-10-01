@@ -32,8 +32,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
       NotificationsHelper.scheduleDailyNotification(context);
       NotificationsHelper.showAlarmingNotifications(context);
     });
-    if (AppTourService.shouldBeginTour(
-        prefsBoolKey: AppStrings.prefsBoolBeginConsumablesScreenTour)) {
+    if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginConsumablesScreenTour)) {
       AppTourService.beginConsumablesScreenTour(context);
     }
   }
@@ -65,7 +64,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   ConsumablesListWidget(list: _list),
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
-                  SizedBox(height: AppDimens.sizedBox15),
+                  const SizedBox(height: AppDimens.sizedBox15),
                   // const BannerAdWidget()
                 ],
               ),

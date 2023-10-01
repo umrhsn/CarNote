@@ -18,7 +18,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
-  final _splashDelay = AppNums.durationSplashDelay;
   final SharedPreferences _prefs = di.sl<SharedPreferences>();
 
   @override
@@ -29,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   _loadWidget() async {
-    var duration = Duration(seconds: _splashDelay);
+    var duration = const Duration(seconds: AppNums.durationSplashDelay);
     return Timer(duration, _checkFirstSeen);
   }
 
@@ -40,9 +39,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     _navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
   }
 
-  void _navigate(bool seen) => seen
-      ? Navigator.pushReplacementNamed(context, Routes.consumablesRoute)
-      : Navigator.pushReplacementNamed(context, Routes.carInfoRoute);
+  void _navigate(bool seen) =>
+      seen ? Navigator.pushReplacementNamed(context, Routes.consumablesRoute) : Navigator.pushReplacementNamed(context, Routes.chooseLanguageRoute);
 
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -54,10 +52,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   void _fadeInOutAnimation() {
-    _animationController =
-        AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
-    _animation = Tween<double>(begin: AppNums.animationSplashBegin, end: AppNums.animationSplashEnd)
-        .animate(_animationController);
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700));
+    _animation = Tween<double>(begin: AppNums.animationSplashBegin, end: AppNums.animationSplashEnd).animate(_animationController);
     AnimationHelper.continuousReversibleAnimation(_animationController, _animation);
   }
 
@@ -69,8 +65,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         child: Center(
           child: Column(children: [
             Expanded(
-              child: Center(
-                  child: FadeTransition(opacity: _animation, child: AssetManager.splashImage())),
+              child: Center(child: FadeTransition(opacity: _animation, child: AssetManager.splashImage())),
             ),
             const CustomProgressIndicator()
           ]),

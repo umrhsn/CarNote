@@ -115,8 +115,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -353,8 +352,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetToggleDetailedMode(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetToggleDetailedMode(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -369,8 +367,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetSaveToFile(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetSaveToFile(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -385,8 +382,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetDeleteAll(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetDeleteAll(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -401,8 +397,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetInfo(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetInfo(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -417,8 +412,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -459,8 +453,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetSwitchListGrid(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetSwitchListGrid(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -475,8 +468,7 @@ class AppTourService {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context),
-                style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetSwitchLang(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),

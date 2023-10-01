@@ -4,9 +4,8 @@ import 'package:flutter/services.dart';
 // not using it in this app anymore
 class TitleCaseInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    return TextEditingValue(text: capitalize(newValue.text), selection: newValue.selection);
-  }
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) =>
+      TextEditingValue(text: capitalize(newValue.text), selection: newValue.selection);
 }
 
 String capitalize(String value) {

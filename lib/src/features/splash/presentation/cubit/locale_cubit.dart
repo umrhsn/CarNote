@@ -13,8 +13,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   final GetSavedLangUseCase getSavedLangUseCase;
   final ChangeLangUseCase changeLangUseCase;
 
-  LocaleCubit({required this.getSavedLangUseCase, required this.changeLangUseCase})
-      : super(const ChangeLocaleState(Locale(AppStrings.en)));
+  LocaleCubit({required this.getSavedLangUseCase, required this.changeLangUseCase}) : super(const ChangeLocaleState(Locale(AppStrings.en)));
 
   /// Easy access object of Cubit
   static LocaleCubit get(BuildContext context) => BlocProvider.of<LocaleCubit>(context);
@@ -38,13 +37,15 @@ class LocaleCubit extends Cubit<LocaleState> {
     });
   }
 
-  void toEnglish(BuildContext context) {
-    _changeLang(AppStrings.en)
-        .then((value) => BotToast.showText(text: AppStrings.langChangedToast(context)));
+  void toEnglish(BuildContext context, {required bool showToast}) {
+    _changeLang(AppStrings.en).then((value) {
+      if (showToast) BotToast.showText(text: AppStrings.langChangedToast(context));
+    });
   }
 
-  void toArabic(BuildContext context) {
-    _changeLang(AppStrings.ar)
-        .then((value) => BotToast.showText(text: AppStrings.langChangedToast(context)));
+  void toArabic(BuildContext context, {required bool showToast}) {
+    _changeLang(AppStrings.ar).then((value) {
+      if (showToast) BotToast.showText(text: AppStrings.langChangedToast(context));
+    });
   }
 }

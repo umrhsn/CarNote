@@ -4,6 +4,7 @@ import 'package:car_note/src/core/services/form_validation/form_validation.dart'
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
+import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
 import 'package:car_note/src/core/widgets/texts/title_text.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/car_type_text_form_field.dart';
@@ -44,13 +45,15 @@ class _MyHomePageState extends State<CarInfoScreen> {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: EdgeInsets.only(top: AppDimens.edge20, right: AppDimens.edge15),
-              child: IconButton(
-                key: AppTourService.keySwitchLangCarInfoScreen,
-                icon: const FaIcon(FontAwesomeIcons.language),
+              padding: const EdgeInsets.only(top: AppDimens.edge20, right: AppDimens.edge15),
+              child: AnimatedIconButton(
+                key: AppTourService.keySwitchLangConsumalbesScreen,
+                faIcon: true,
+                icon: FontAwesomeIcons.language,
                 onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                    ? localeCubit.toArabic(context)
-                    : localeCubit.toEnglish(context),
+                    ? localeCubit.toArabic(context, showToast: true)
+                    : localeCubit.toEnglish(context, showToast: true),
+                tooltip: AppStrings.switchLangTooltip(context),
               ),
             ),
           ),
@@ -58,7 +61,7 @@ class _MyHomePageState extends State<CarInfoScreen> {
             child: SingleChildScrollView(
               child: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.all(AppDimens.edge20),
+                  padding: const EdgeInsets.all(AppDimens.edge20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -66,15 +69,15 @@ class _MyHomePageState extends State<CarInfoScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(AssetManager.icon, height: AppDimens.imageHeight100),
-                          SizedBox(width: AppDimens.sizedBox10),
+                          const SizedBox(width: AppDimens.sizedBox10),
                           TitleText(text: AppStrings.appName(context).toUpperCase()),
                         ],
                       ),
-                      SizedBox(height: AppDimens.sizedBox20),
+                      const SizedBox(height: AppDimens.sizedBox20),
                       CarTypeTextFormField(carCubit: carCubit, validator: validator),
                       ModelYearTextFormField(carCubit: carCubit, validator: validator),
                       CurrentKilometerTextFormField(carCubit: carCubit, validator: validator),
-                      SizedBox(height: AppDimens.sizedBox15),
+                      const SizedBox(height: AppDimens.sizedBox15),
                       ContinueButton(validator: validator, carCubit: carCubit),
                     ],
                   ),

@@ -21,18 +21,15 @@ class AppStrings {
   static const String en = 'en';
   static const String ar = 'ar';
 
-  static String _translate(BuildContext context, String stringKey) =>
-      AppLocalizations.of(context)!.translate(stringKey)!;
+  static String _translate(BuildContext context, String stringKey) => AppLocalizations.of(context)!.translate(stringKey)!;
 
-  static List<String> _translateList(BuildContext context, String stringKey) =>
-      AppLocalizations.of(context)!.translateList(stringKey)!;
+  static List<String> _translateList(BuildContext context, String stringKey) => AppLocalizations.of(context)!.translateList(stringKey)!;
 
   /// Database
   static const String carBox = 'car';
   static const String consumableBox = 'consumable';
 
-  static List<String> get consumables =>
-      LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
+  static List<String> get consumables => LocaleCubit.currentLangCode == ar ? consumablesArabicList : consumablesEnglishList;
 
   static List<String> consumablesEnglishList = [
     'Engine Oil',
@@ -68,25 +65,22 @@ class AppStrings {
   static const String prefsBoolDetailedModeOn = 'detailed_mode_on';
   static const String prefsBoolEditModeOn = 'edit_mode_on';
   static const String prefsBoolListAdded = 'list_added';
-  static const String prefsStringNotifScheduleTime = 'schedule_time';
   static const String prefsBoolBeginCarInfoScreenTour = 'begin_car_info_screen_tour';
   static const String prefsBoolBeginConsumablesScreenTour = 'begin_consumables_screen_tour';
   static const String prefsBoolBeginDashboardScreenTour = 'begin_dashboard_screen_tour';
+  static const String prefsStringNotifScheduleTime = 'schedule_time';
 
   /// Buttons
-  static String btnContinue(BuildContext context) =>
-      _translate(context, "btn_continue").toUpperCase();
+  static String btnContinue(BuildContext context) => _translate(context, "btn_continue").toUpperCase();
 
   static String btnSave(BuildContext context) => _translate(context, "btn_save").toUpperCase();
 
   static String btnAddItem(BuildContext context) => _translate(context, "add_item").toUpperCase();
 
   /// Toasts
-  static String dataSavedSuccessfully(BuildContext context) =>
-      _translate(context, "data_saved_successfully");
+  static String dataSavedSuccessfully(BuildContext context) => _translate(context, "data_saved_successfully");
 
-  static String somethingWentWrong(BuildContext context) =>
-      _translate(context, "something_went_wrong");
+  static String somethingWentWrong(BuildContext context) => _translate(context, "something_went_wrong");
 
   static String detailedModeOn(BuildContext context) => _translate(context, "detailed_mode_on");
 
@@ -94,17 +88,14 @@ class AppStrings {
 
   static String notifTimeMsg(BuildContext context) => _translate(context, "notif_time_msg");
 
-  static String getNotifTime(TimeOfDay scheduleTime) => scheduleTime.toString().substring(
-      scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
+  static String getNotifTime(TimeOfDay scheduleTime) =>
+      scheduleTime.toString().substring(scheduleTime.toString().indexOf('(') + 1, scheduleTime.toString().lastIndexOf(')'));
 
-  static String dailyNotificationOff(BuildContext context) =>
-      _translate(context, "daily_notif_off");
+  static String dailyNotificationOff(BuildContext context) => _translate(context, "daily_notif_off");
 
-  static String notificationTimeNotSet(BuildContext context) =>
-      _translate(context, "notif_time_not_set");
+  static String notificationTimeNotSet(BuildContext context) => _translate(context, "notif_time_not_set");
 
-  static String tapBackAgainToExit(BuildContext context) =>
-      _translate(context, "tap_back_again_to_exit");
+  static String tapBackAgainToExit(BuildContext context) => _translate(context, "tap_back_again_to_exit");
 
   static String langChangedToast(BuildContext context) => _translate(context, "lang_changed_toast");
 
@@ -115,8 +106,7 @@ class AppStrings {
 
   static String nameNotEmpty(BuildContext context) => _translate(context, "name_not_empty");
 
-  static String removedItem(BuildContext context) =>
-      _translate(context, "removed_item_successfully");
+  static String removedItem(BuildContext context) => _translate(context, "removed_item_successfully");
 
   static String removedAllData(BuildContext context) => _translate(context, "removed_all_data");
 
@@ -137,17 +127,13 @@ class AppStrings {
   static String currentKmLabel(BuildContext context) => _translate(context, "current_km_label");
 
   /// Labels
-  static String lastChangedAtLabel(BuildContext context) =>
-      _translate(context, "last_changed_at_label");
+  static String lastChangedAtLabel(BuildContext context) => _translate(context, "last_changed_at_label");
 
-  static String changeIntervalLabel(BuildContext context) =>
-      _translate(context, "change_interval_label");
+  static String changeIntervalLabel(BuildContext context) => _translate(context, "change_interval_label");
 
-  static String remainingKmNormalWarningLabel(BuildContext context) =>
-      _translate(context, "remaining_km_normal_warning_label");
+  static String remainingKmNormalWarningLabel(BuildContext context) => _translate(context, "remaining_km_normal_warning_label");
 
-  static String remainingKmErrorLabel(BuildContext context) =>
-      _translate(context, "remaining_km_error_label");
+  static String remainingKmErrorLabel(BuildContext context) => _translate(context, "remaining_km_error_label");
 
   static String advice(BuildContext context) => _translate(context, "advice");
 
@@ -158,15 +144,13 @@ class AppStrings {
   /// Validators
   static String requiredField(BuildContext context) => _translate(context, "required_field");
 
-  static String yearMatchesLength(BuildContext context) =>
-      _translate(context, "year_matches_length");
+  static String yearMatchesLength(BuildContext context) => _translate(context, "year_matches_length");
 
   static String yearInvalid(BuildContext context) => _translate(context, "year_invalid");
 
   static String invalidInput(BuildContext context) => _translate(context, "invalid_input");
 
-  static String normalAndWarningText(BuildContext context) =>
-      _translate(context, "normal_warning_text");
+  static String normalAndWarningText(BuildContext context) => _translate(context, "normal_warning_text");
 
   static String considerText(BuildContext context) => _translate(context, "consider_text");
 
@@ -185,8 +169,7 @@ class AppStrings {
 
   static String saveData(BuildContext context) => _translate(context, "save_data").toUpperCase();
 
-  static String exitWithoutSaving(BuildContext context) =>
-      _translate(context, "exit_without_saving").toUpperCase();
+  static String exitWithoutSaving(BuildContext context) => _translate(context, "exit_without_saving").toUpperCase();
 
   static String removingItem(BuildContext context, int index) =>
       "${_translate(context, "removing_item")}\n'${DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index].name}'";
@@ -195,27 +178,21 @@ class AppStrings {
 
   static String cancel(BuildContext context) => _translate(context, "cancel");
 
-  static String removeAllDataConfirmationDialogTitle(BuildContext context) =>
-      _translate(context, "remove_all_data_confirmation_dialog_title");
+  static String removeAllDataConfirmationDialogTitle(BuildContext context) => _translate(context, "remove_all_data_confirmation_dialog_title");
 
-  static String removeAllDataConfirmationDialogContent(BuildContext context) =>
-      _translate(context, "remove_all_data_confirmation_dialog_content");
+  static String removeAllDataConfirmationDialogContent(BuildContext context) => _translate(context, "remove_all_data_confirmation_dialog_content");
 
   static String proceed(BuildContext context) => _translate(context, "proceed");
 
-  static String removeAllDataAssuringDialogTitle(BuildContext context) =>
-      _translate(context, "remove_all_data_assuring_dialog_title");
+  static String removeAllDataAssuringDialogTitle(BuildContext context) => _translate(context, "remove_all_data_assuring_dialog_title");
 
-  static String removeAllDataAssuringDialogContent(BuildContext context) =>
-      _translate(context, "remove_all_data_assuring_dialog_content");
+  static String removeAllDataAssuringDialogContent(BuildContext context) => _translate(context, "remove_all_data_assuring_dialog_content");
 
   static String eraseData(BuildContext context) => _translate(context, "erase_data");
 
-  static String invalidDataDialogTitle(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_title");
+  static String invalidDataDialogTitle(BuildContext context) => _translate(context, "invalid_data_dialog_title");
 
-  static String invalidDataDialogContent(BuildContext context) =>
-      _translate(context, "invalid_data_dialog_content");
+  static String invalidDataDialogContent(BuildContext context) => _translate(context, "invalid_data_dialog_content");
 
   /// AppBar titles
   static String addConsumable(BuildContext context) => _translate(context, "add_an_item");
@@ -231,50 +208,36 @@ class AppStrings {
   static const String notifChannelBasicDescription = 'Notification channel for basic notifications';
   static const String notifChannelScheduledKey = 'scheduled_channel';
   static const String notifChannelScheduledName = 'Scheduled notifications';
-  static const String notifChannelScheduledDescription =
-      'Notification channel for scheduled notifications';
+  static const String notifChannelScheduledDescription = 'Notification channel for scheduled notifications';
 
-  static String dailyNotificationTitle(BuildContext context) =>
-      _translate(context, "daily_notif_title");
+  static String dailyNotificationTitle(BuildContext context) => _translate(context, "daily_notif_title");
 
-  static String dailyNotificationBody(BuildContext context) =>
-      _translate(context, "daily_notif_body");
+  static String dailyNotificationBody(BuildContext context) => _translate(context, "daily_notif_body");
 
-  static String dailyNotificationTimePickerHelperText(BuildContext context) =>
-      _translate(context, "daily_notif_time_picker_helper_text");
+  static String dailyNotificationTimePickerHelperText(BuildContext context) => _translate(context, "daily_notif_time_picker_helper_text");
 
   /// Tooltips
-  static String toggleModeTooltip(BuildContext context) =>
-      _translate(context, "toggle_mode_tooltip");
+  static String toggleModeTooltip(BuildContext context) => _translate(context, "toggle_mode_tooltip");
 
-  static String switchLangTooltip(BuildContext context) =>
-      _translate(context, "switch_language_tooltip");
+  static String switchLangTooltip(BuildContext context) => _translate(context, "switch_language_tooltip");
 
-  static String createFileTooltip(BuildContext context) =>
-      _translate(context, "create_file_tooltip");
+  static String createFileTooltip(BuildContext context) => _translate(context, "create_file_tooltip");
 
   static String infoTooltip(BuildContext context) => _translate(context, "info_tooltip");
 
-  static String switchToGridView(BuildContext context) =>
-      _translate(context, "switch_to_grid_view");
+  static String switchToGridView(BuildContext context) => _translate(context, "switch_to_grid_view");
 
-  static String switchToListView(BuildContext context) =>
-      _translate(context, "switch_to_list_view");
+  static String switchToListView(BuildContext context) => _translate(context, "switch_to_list_view");
 
-  static String switchedToGridView(BuildContext context) =>
-      _translate(context, "switched_to_grid_view");
+  static String switchedToGridView(BuildContext context) => _translate(context, "switched_to_grid_view");
 
-  static String switchedToListView(BuildContext context) =>
-      _translate(context, "switched_to_list_view");
+  static String switchedToListView(BuildContext context) => _translate(context, "switched_to_list_view");
 
-  static String sortByAlphaTooltip(BuildContext context) =>
-      _translate(context, "sort_by_alpha_tooltip");
+  static String sortByAlphaTooltip(BuildContext context) => _translate(context, "sort_by_alpha_tooltip");
 
-  static String sortByCategoryTooltip(BuildContext context) =>
-      _translate(context, "sort_by_category_tooltip");
+  static String sortByCategoryTooltip(BuildContext context) => _translate(context, "sort_by_category_tooltip");
 
-  static String sortBySeverityTooltip(BuildContext context) =>
-      _translate(context, "sort_by_severity_tooltip");
+  static String sortBySeverityTooltip(BuildContext context) => _translate(context, "sort_by_severity_tooltip");
 
   static String eraseDataTooltip(BuildContext context) => _translate(context, "erase_data_tooltip");
 
@@ -314,61 +277,25 @@ class AppStrings {
         ),
       );
 
-  static List<String> _warningTitles(BuildContext context) =>
-      _translateList(context, "warning_titles");
+  static List<String> _warningTitles(BuildContext context) => _translateList(context, "warning_titles");
 
-  static List<String> _advisoryTitles(BuildContext context) =>
-      _translateList(context, "advisory_titles");
+  static List<String> _advisoryTitles(BuildContext context) => _translateList(context, "advisory_titles");
 
   static List<String> _infoTitles(BuildContext context) => _translateList(context, "info_titles");
 
-  static List<String> _warningDescriptions(BuildContext context) =>
-      _translateList(context, "warning_descriptions");
+  static List<String> _warningDescriptions(BuildContext context) => _translateList(context, "warning_descriptions");
 
-  static List<String> _advisoryDescriptions(BuildContext context) =>
-      _translateList(context, "advisory_descriptions");
+  static List<String> _advisoryDescriptions(BuildContext context) => _translateList(context, "advisory_descriptions");
 
-  static List<String> _infoDescriptions(BuildContext context) =>
-      _translateList(context, "info_descriptions");
+  static List<String> _infoDescriptions(BuildContext context) => _translateList(context, "info_descriptions");
 
-  static List<String> _warningAdvices(BuildContext context) =>
-      _translateList(context, "warning_advices");
+  static List<String> _warningAdvices(BuildContext context) => _translateList(context, "warning_advices");
 
-  static List<String> _advisoryAdvices(BuildContext context) =>
-      _translateList(context, "advisory_advices");
+  static List<String> _advisoryAdvices(BuildContext context) => _translateList(context, "advisory_advices");
 
   static List<String> _infoAdvices(BuildContext context) => _translateList(context, "info_advices");
 
-  static final List<int> _warningSeverities = [
-    9,
-    9,
-    9,
-    8,
-    8,
-    7,
-    4,
-    7,
-    3,
-    8,
-    9,
-    9,
-    9,
-    9,
-    1,
-    1,
-    2,
-    4,
-    9,
-    1,
-    1,
-    7,
-    7,
-    8,
-    9,
-    7,
-    7,
-    9
-  ];
+  static final List<int> _warningSeverities = [9, 9, 9, 8, 8, 7, 4, 7, 3, 8, 9, 9, 9, 9, 1, 1, 2, 4, 9, 1, 1, 7, 7, 8, 9, 7, 7, 9];
   static final List<int> _advisorySeverities = [
     9,
     7,
@@ -459,8 +386,7 @@ class AppStrings {
   ];
 
   // FIXME: these methods were functional before switching lists to json files
-  static void sortAlphabetically(BuildContext context) =>
-      dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
+  static void sortAlphabetically(BuildContext context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
 
   static void sortCategories(BuildContext context) {
     sortAlphabetically(context);
@@ -477,56 +403,41 @@ class AppStrings {
   static String tryToAddItems(BuildContext context) => _translate(context, "try_to_add_items");
 
   /// App Tour
-  static String tourTargetAppBarTextField(BuildContext context) =>
-      _translate(context, "tour_target_app_bar_text_field");
+  static String tourTargetAppBarTextField(BuildContext context) => _translate(context, "tour_target_app_bar_text_field");
 
   static String tourTargetList(BuildContext context) => _translate(context, "tour_target_list");
 
   static String tourTargetCard(BuildContext context) => _translate(context, "tour_target_card");
 
-  static String tourTargetEditName(BuildContext context) =>
-      _translate(context, "tour_target_edit_name");
+  static String tourTargetEditName(BuildContext context) => _translate(context, "tour_target_edit_name");
 
-  static String tourTargetDeleteCard(BuildContext context) =>
-      _translate(context, "tour_target_delete_card");
+  static String tourTargetDeleteCard(BuildContext context) => _translate(context, "tour_target_delete_card");
 
-  static String tourTargetTextFieldLastChanged(BuildContext context) =>
-      _translate(context, "tour_target_text_field_last_changed");
+  static String tourTargetTextFieldLastChanged(BuildContext context) => _translate(context, "tour_target_text_field_last_changed");
 
-  static String tourTargetTextFieldChangeInterval(BuildContext context) =>
-      _translate(context, "tour_target_text_field_change_interval");
+  static String tourTargetTextFieldChangeInterval(BuildContext context) => _translate(context, "tour_target_text_field_change_interval");
 
-  static String tourTargetTextFieldRemaining(BuildContext context) =>
-      _translate(context, "tour_target_text_field_remaining");
+  static String tourTargetTextFieldRemaining(BuildContext context) => _translate(context, "tour_target_text_field_remaining");
 
-  static String tourTargetCardReorder(BuildContext context) =>
-      _translate(context, "tour_target_card_reorder");
+  static String tourTargetCardReorder(BuildContext context) => _translate(context, "tour_target_card_reorder");
 
-  static String tourTargetSaveData(BuildContext context) =>
-      _translate(context, "tour_target_save_data");
+  static String tourTargetSaveData(BuildContext context) => _translate(context, "tour_target_save_data");
 
-  static String tourTargetAddItem(BuildContext context) =>
-      _translate(context, "tour_target_add_item");
+  static String tourTargetAddItem(BuildContext context) => _translate(context, "tour_target_add_item");
 
-  static String tourTargetSwitchLang(BuildContext context) =>
-      _translate(context, "tour_target_switch_lang");
+  static String tourTargetSwitchLang(BuildContext context) => _translate(context, "tour_target_switch_lang");
 
-  static String tourTargetToggleDetailedMode(BuildContext context) =>
-      _translate(context, "tour_target_toggle_detailed_mode");
+  static String tourTargetToggleDetailedMode(BuildContext context) => _translate(context, "tour_target_toggle_detailed_mode");
 
-  static String tourTargetSaveToFile(BuildContext context) =>
-      _translate(context, "tour_target_save_to_file");
+  static String tourTargetSaveToFile(BuildContext context) => _translate(context, "tour_target_save_to_file");
 
-  static String tourTargetDeleteAll(BuildContext context) =>
-      _translate(context, "tour_target_delete_all");
+  static String tourTargetDeleteAll(BuildContext context) => _translate(context, "tour_target_delete_all");
 
   static String tourTargetInfo(BuildContext context) => _translate(context, "tour_target_info");
 
-  static String tourTargetGridItem(BuildContext context) =>
-      _translate(context, "tour_target_grid_item");
+  static String tourTargetGridItem(BuildContext context) => _translate(context, "tour_target_grid_item");
 
-  static String tourTargetSwitchListGrid(BuildContext context) =>
-      _translate(context, "tour_target_switch_list_grid");
+  static String tourTargetSwitchListGrid(BuildContext context) => _translate(context, "tour_target_switch_list_grid");
 
   /// Error handling
   static const String cacheFailure = 'Cache Failure';

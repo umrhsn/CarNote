@@ -4,6 +4,7 @@ import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
 import 'package:car_note/src/features/info/presentation/widgets/dashboard_symbols_card.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    if (AppTourService.shouldBeginTour(
-        prefsBoolKey: AppStrings.prefsBoolBeginDashboardScreenTour)) {
+    if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginDashboardScreenTour)) {
       AppTourService.beginDashboardScreenTour(context);
     }
   }
@@ -38,50 +38,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     Padding buildAppBarIcons() {
       return Padding(
-        padding: EdgeInsets.only(top: AppDimens.edge10),
+        padding: const EdgeInsets.only(top: AppDimens.edge10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back)),
-            IconButton(
+            AnimatedIconButton(onPressed: () => Navigator.pop(context), icon: Icons.arrow_back),
+            AnimatedIconButton(
               key: AppTourService.keySwitchLangDashboardScreen,
-              icon: const FaIcon(FontAwesomeIcons.language),
+              faIcon: true,
+              icon: FontAwesomeIcons.language,
               onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                  ? localeCubit.toArabic(context)
-                  : localeCubit.toEnglish(context),
+                  ? localeCubit.toArabic(context, showToast: true)
+                  : localeCubit.toEnglish(context, showToast: true),
               tooltip: AppStrings.switchLangTooltip(context),
             ),
-            IconButton(
+            AnimatedIconButton(
               key: AppTourService.keySwitchListGrid,
-              icon: Icon(_switchToListView ? Icons.grid_view_rounded : Icons.sort_rounded),
+              icon: _switchToListView ? Icons.grid_view_rounded : Icons.sort_rounded,
               onPressed: () {
                 setState(() {
                   _selectedIndex = null;
                   _switchToListView = !_switchToListView;
                 });
-                BotToast.showText(
-                    text: _switchToListView
-                        ? AppStrings.switchedToListView(context)
-                        : AppStrings.switchedToGridView(context));
+                BotToast.showText(text: _switchToListView ? AppStrings.switchedToListView(context) : AppStrings.switchedToGridView(context));
               },
-              tooltip: _switchToListView
-                  ? AppStrings.switchToGridView(context)
-                  : AppStrings.switchToListView(context),
+              tooltip: _switchToListView ? AppStrings.switchToGridView(context) : AppStrings.switchToListView(context),
             ),
             // FIXME: these methods were functional before switching lists to json files
-            // IconButton(
-            //   icon: const Icon(Icons.sort_by_alpha_rounded),
+            // AnimatedIconButton(
+            //   icon: Icons.sort_by_alpha_rounded,
             //   onPressed: () => setState(() => AppStrings.sortAlphabetically(context)),
             //   tooltip: AppStrings.sortByAlphaTooltip(context),
             // ),
-            // IconButton(
-            //   icon: const Icon(Icons.category_outlined),
+            // AnimatedIconButton(
+            //   icon: Icon(Icons.category_outlined,
             //   onPressed: () => setState(() => AppStrings.sortCategories(context)),
             //   tooltip: AppStrings.sortByCategoryTooltip(context),
             // ),
-            // IconButton(
-            //   icon: const Icon(Icons.warning_amber_rounded),
+            // AnimatedIconButton(
+            //   icon: Icons.warning_amber_rounded,
             //   onPressed: () => setState(() => AppStrings.sortSeverities(context)),
             //   tooltip: AppStrings.sortBySeverityTooltip(context),
             // ),
@@ -92,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     IntrinsicHeight buildAppBarWidgets() => IntrinsicHeight(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
             child: Column(
               children: [
                 buildAppBarIcons(),
@@ -106,8 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           reverseDirection: false,
                           image: AppStrings.dashboardItems(context)[_selectedIndex!].image,
                           title: AppStrings.dashboardItems(context)[_selectedIndex!].title,
-                          description:
-                              AppStrings.dashboardItems(context)[_selectedIndex!].description,
+                          description: AppStrings.dashboardItems(context)[_selectedIndex!].description,
                           advice: AppStrings.dashboardItems(context)[_selectedIndex!].advice,
                           severity: AppStrings.dashboardItems(context)[_selectedIndex!].severity,
                         ),
@@ -118,15 +113,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
 
     ClipRRect buildGrid() => ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(AppDimens.borderRadius30),
-              topRight: Radius.circular(AppDimens.borderRadius30)),
+          borderRadius:
+              const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: GridView.builder(
-            padding: EdgeInsetsDirectional.only(
-                start: AppDimens.edge10.w, end: AppDimens.edge10.w, bottom: AppDimens.edge10.h),
+            padding: EdgeInsetsDirectional.only(start: AppDimens.edge10.w, end: AppDimens.edge10.w, bottom: AppDimens.edge10.h),
             itemCount: AppStrings.dashboardItems(context).length,
-            gridDelegate:
-                const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
             itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
               position: index,
               duration: const Duration(milliseconds: AppNums.durationCardAnimation),
@@ -151,12 +143,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         );
 
     ClipRRect buildList() => ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(AppDimens.borderRadius30),
-              topRight: Radius.circular(AppDimens.borderRadius30)),
+          borderRadius:
+              const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: ListView.builder(
-            padding: EdgeInsetsDirectional.only(
-                start: AppDimens.edge10, end: AppDimens.edge10, bottom: AppDimens.edge10),
+            padding: const EdgeInsetsDirectional.only(start: AppDimens.edge10, end: AppDimens.edge10, bottom: AppDimens.edge10),
             itemCount: AppStrings.dashboardItems(context).length,
             itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
               position: index,

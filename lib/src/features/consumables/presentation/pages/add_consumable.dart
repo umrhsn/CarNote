@@ -7,7 +7,7 @@ import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/consumable_name_text_field.dart';
-import 'package:car_note/src/core/widgets/buttons/custom_button.dart';
+import 'package:car_note/src/core/widgets/buttons/animated_button.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,33 +32,27 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
   Widget build(BuildContext context) {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
-    Color getLastChangedAndChangeIntervalLabelColor() =>
-        cubit.getAddLastChangedKmValidatingText(context).data != ''
-            ? AppColors.getErrorColor(context)
-            : cubit.lastChangedFocus.hasFocus
-                ? AppColors.getTextFieldBorderAndLabelFocused(context)
-                : AppColors.getTextFieldBorderAndLabel(context);
+    Color getLastChangedAndChangeIntervalLabelColor() => cubit.getAddLastChangedKmValidatingText(context).data != ''
+        ? AppColors.getErrorColor(context)
+        : cubit.lastChangedFocus.hasFocus
+            ? AppColors.getTextFieldBorderAndLabelFocused(context)
+            : AppColors.getTextFieldBorderAndLabel(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder() =>
-        cubit.getAddLastChangedKmValidatingText(context).data != ''
-            ? cubit.getErrorBorder(context)
-            : cubit.getFocusedBorder(context);
+        cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getFocusedBorder(context);
 
     OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder() =>
-        cubit.getAddLastChangedKmValidatingText(context).data != ''
-            ? cubit.getErrorBorder(context)
-            : cubit.getDefaultBorder(context);
+        cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getDefaultBorder(context);
 
-    Color getChangeIntervalLabelColor() => cubit.changeIntervalFocus.hasFocus
-        ? AppColors.getTextFieldBorderAndLabelFocused(context)
-        : AppColors.getTextFieldBorderAndLabel(context);
+    Color getChangeIntervalLabelColor() =>
+        cubit.changeIntervalFocus.hasFocus ? AppColors.getTextFieldBorderAndLabelFocused(context) : AppColors.getTextFieldBorderAndLabel(context);
 
     Expanded buildLastChangedTextFormField() {
       return Expanded(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.only(end: AppDimens.edge8),
+              padding: const EdgeInsetsDirectional.only(end: AppDimens.edge8),
               child: TextFormField(
                 controller: cubit.lastChangedController,
                 focusNode: cubit.lastChangedFocus,
@@ -137,14 +131,14 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                 children: [
                   const Spacer(),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                     child: Card(
                       child: Padding(
-                        padding: EdgeInsets.all(AppDimens.edge20),
+                        padding: const EdgeInsets.all(AppDimens.edge20),
                         child: Column(
                           children: [
                             ConsumableNameTextField(),
-                            SizedBox(height: AppDimens.sizedBox20),
+                            const SizedBox(height: AppDimens.sizedBox20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,11 +154,11 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                   ),
                   const Spacer(),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+                    padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                     child: Row(
                       children: [
                         Expanded(
-                          child: CustomButton(
+                          child: AnimatedButton(
                             text: AppStrings.btnAddItem(context).toUpperCase(),
                             btnEnabled: cubit.shouldEnableAddButton(context),
                             onPressed: () {
@@ -173,12 +167,10 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                                 name: cubit.consumableNameController.text,
                                 lastChangedAt: cubit.lastChangedController.text.isEmpty
                                     ? 0
-                                    : int.parse(
-                                        cubit.lastChangedController.text.removeThousandSeparator()),
+                                    : int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
                                 changeInterval: cubit.changeIntervalController.text.isEmpty
                                     ? 0
-                                    : int.parse(cubit.changeIntervalController.text
-                                        .removeThousandSeparator()),
+                                    : int.parse(cubit.changeIntervalController.text.removeThousandSeparator()),
                               ).then((value) {
                                 if (value) {
                                   BotToast.showText(text: AppStrings.itemAdded(context));
@@ -191,21 +183,20 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                             },
                           ),
                         ),
-                        SizedBox(width: AppDimens.sizedBox10),
+                        const SizedBox(width: AppDimens.sizedBox10),
                         Expanded(
-                          child: CustomButton(
+                          child: AnimatedButton(
                             text: AppStrings.cancel(context).toUpperCase(),
                             onPressed: () {
                               Navigator.pop(context);
                               _resetControllersValues();
                             },
-                            btnEnabled: true,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: AppDimens.sizedBox15),
+                  const SizedBox(height: AppDimens.sizedBox15),
                   // Padding(
                   //   padding: const EdgeInsets.only(top: 15),
                   //   child: AdmobBanner(

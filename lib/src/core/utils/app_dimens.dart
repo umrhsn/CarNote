@@ -4,20 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDimens {
   /// AppBar
-  static double appBarHeight80 = 80;
-  static double appBarHeight140 = 140;
+  static const double appBarHeight80 = 80;
+  static const double appBarHeight140 = 140;
 
   /// EdgeInsets
-  static double edge8 = 8;
-  static double edge10 = 10;
-  static double edge15 = 15;
-  static double edge20 = 20;
+  static const double edge8 = 8;
+  static const double edge10 = 10;
+  static const double edge15 = 15;
+  static const double edge20 = 20;
 
   /// SizedBoxes
-  static double sizedBox10 = 10;
-  static double sizedBox15 = 15;
-  static double sizedBox20 = 20;
-  static double sizedBox30 = 30;
+  static const double sizedBox10 = 10;
+  static const double sizedBox15 = 15;
+  static const double sizedBox20 = 20;
+  static const double sizedBox30 = 30;
 
   /// Flexes
   static int flex30 = 30;
@@ -40,23 +40,23 @@ class AppDimens {
   static double labelSmall = 7.sp; // overline
 
   /// Font Sizes
-  static double fontSize15 = 15;
+  static const double fontSize15 = 15;
 
   /// Icon Sizes
-  static double iconSize50 = 50;
+  static const double iconSize50 = 50;
 
   /// TextFields
   static double textFieldWidth(BuildContext context) => context.isTablet ? 270.w : double.infinity;
 
   /// Buttons
-  static double elevatedButtonElevation = 3;
-  static double elevatedButtonHeight = 60;
+  static const double elevatedButtonElevation = 3;
+  static const double elevatedButtonHeight = 60;
 
   /// Images
-  static double imageHeight100 = 100;
+  static const double imageHeight100 = 100;
 
   /// Border Radii
-  static double borderRadius10 = 10;
-  static double borderRadius15 = 15;
-  static double borderRadius30 = 30;
+  static const double borderRadius10 = 10;
+  static const double borderRadius15 = 15;
+  static const double borderRadius30 = 30;
 }

@@ -52,10 +52,8 @@ class NotificationsHelper {
 
   // FIXME: works only if app is minimized, not closed
   static void scheduleDailyNotification(BuildContext context) {
-    Cron().schedule(
-        Schedule.parse('0 9 * * *'), () => NotificationsHelper._showDailyNotification(context));
-    Cron().schedule(
-        Schedule.parse('0 21 * * *'), () => NotificationsHelper._showDailyNotification(context));
+    Cron().schedule(Schedule.parse('0 9 * * *'), () => NotificationsHelper._showDailyNotification(context));
+    Cron().schedule(Schedule.parse('0 21 * * *'), () => NotificationsHelper._showDailyNotification(context));
   }
 
   static Future<bool> _showDailyNotification(BuildContext context) {

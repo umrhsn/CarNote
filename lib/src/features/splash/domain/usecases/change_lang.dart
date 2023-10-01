@@ -9,6 +9,5 @@ class ChangeLangUseCase implements UseCase<bool, String> {
   ChangeLangUseCase({required this.langRepository});
 
   @override
-  Future<Either<Failure, bool>> call(String langCode) async =>
-      await langRepository.changeLang(langCode: langCode);
+  Future<Either<Failure, bool>> call(String langCode) async => await langRepository.changeLang(langCode: langCode);
 }

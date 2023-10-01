@@ -24,7 +24,7 @@ class LastChangedTextFormField extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.only(end: AppDimens.edge8),
+            padding: const EdgeInsetsDirectional.only(end: AppDimens.edge8),
             child: TextFormField(
               key: index == 0 ? AppTourService.keyTextFieldLastChanged : null,
               controller: cubit.lastChangedAtControllers[index],
@@ -39,10 +39,8 @@ class LastChangedTextFormField extends StatelessWidget {
                   color: AppColors.getLastChangedAndChangeIntervalLabelColor(context, index, cubit),
                   fontWeight: FontWeight.bold,
                 ),
-                focusedBorder:
-                    AppColors.getLastChangedAndChangeIntervalFocusedBorder(context, index, cubit),
-                enabledBorder:
-                    AppColors.getLastChangedAndChangeIntervalEnabledBorder(context, index, cubit),
+                focusedBorder: AppColors.getLastChangedAndChangeIntervalFocusedBorder(context, index, cubit),
+                enabledBorder: AppColors.getLastChangedAndChangeIntervalEnabledBorder(context, index, cubit),
               ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(AppNums.lengthLimit9),

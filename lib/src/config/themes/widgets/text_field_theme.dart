@@ -20,10 +20,7 @@ class AppTextFieldThemes {
       focusColor: isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
       labelStyle: TextStyle(color: isLight ? AppColors.hintLight : AppColors.hintDark),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-            color: isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
-            strokeAlign: 0,
-            width: 1.2),
+        borderSide: BorderSide(color: isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark, strokeAlign: 0, width: 1.2),
       ),
       enabledBorder: outlineBorderWithColorHint,
       disabledBorder: outlineBorderWithColorHint,

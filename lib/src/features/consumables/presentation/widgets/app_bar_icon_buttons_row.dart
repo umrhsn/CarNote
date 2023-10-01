@@ -7,7 +7,7 @@ import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
-import 'package:car_note/src/core/widgets/buttons/custom_icon_button.dart';
+import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
@@ -42,38 +42,35 @@ class AppBarIconButtonsRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
+        AnimatedIconButton(
           key: AppTourService.keySwitchLangConsumalbesScreen,
-          icon: const FaIcon(FontAwesomeIcons.language),
+          faIcon: true,
+          icon: FontAwesomeIcons.language,
           onPressed: () => AppLocalizations.of(context)!.isEnLocale
-              ? localeCubit.toArabic(context)
-              : localeCubit.toEnglish(context),
+              ? localeCubit.toArabic(context, showToast: true)
+              : localeCubit.toEnglish(context, showToast: true),
           tooltip: AppStrings.switchLangTooltip(context),
         ),
         const Spacer(),
-        CustomIconButton(
+        AnimatedIconButton(
           key: AppTourService.keyToggleDetailedMode,
           btnEnabled: list!.isNotEmpty,
           icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
           onPressed: () => consumableCubit.changeVisibility(context),
           tooltip: AppStrings.toggleModeTooltip(context),
         ),
-        CustomIconButton(
+        AnimatedIconButton(
           key: AppTourService.keySaveToFile,
           btnEnabled: list.isNotEmpty,
           icon: Icons.file_copy,
-          onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) =>
-              FileCreator.writeDataToFile().then((value) => BotToast.showText(
-                  duration: Duration(
-                      seconds:
-                          value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
-                  text: value == true
-                      ? AppStrings.fileCreated(context)
-                      : AppStrings.fileNotCreated(context),
+          onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) => FileCreator.writeDataToFile().then((value) =>
+              BotToast.showText(
+                  duration: Duration(seconds: value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
+                  text: value == true ? AppStrings.fileCreated(context) : AppStrings.fileNotCreated(context),
                   textStyle: const TextStyle(color: Colors.white)))),
           tooltip: AppStrings.createFileTooltip(context),
         ),
-        CustomIconButton(
+        AnimatedIconButton(
           key: AppTourService.keyDeleteAll,
           btnEnabled: list.isNotEmpty,
           icon: Icons.delete_forever,
@@ -81,10 +78,10 @@ class AppBarIconButtonsRow extends StatelessWidget {
           tooltip: AppStrings.eraseDataTooltip(context),
         ),
         const Spacer(),
-        IconButton(
+        AnimatedIconButton(
           key: AppTourService.keyInfo,
+          icon: Icons.info,
           onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
-          icon: const Icon(Icons.info),
           tooltip: AppStrings.infoTooltip(context),
         ),
       ],

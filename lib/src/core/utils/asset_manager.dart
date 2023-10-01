@@ -14,6 +14,9 @@ class AssetManager {
 
   static const String nothingHere = '$imgPath/nothing_here.png';
 
+  static const String ar = '$imgPath/ar.png';
+  static const String en = '$imgPath/en.png';
+
   static List<String> warningSymbols = [
     '$warningPath/air_bad_symbol_in_red.png',
     '$warningPath/airbag_warning_symbol_in_red.png',

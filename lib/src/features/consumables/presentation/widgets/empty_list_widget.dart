@@ -15,7 +15,7 @@ class EmptyListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset(AssetManager.nothingHere, height: context.height / 5),
-        SizedBox(height: AppDimens.sizedBox15),
+        const SizedBox(height: AppDimens.sizedBox15),
         Text(
           AppStrings.nothingHere(context),
           style: TextStyle(
@@ -23,7 +23,7 @@ class EmptyListWidget extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: AppDimens.sizedBox10),
+        const SizedBox(height: AppDimens.sizedBox10),
         Text(
           AppStrings.tryToAddItems(context),
           style: TextStyle(color: AppColors.getHintColor(context)),

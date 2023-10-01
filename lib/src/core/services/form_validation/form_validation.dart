@@ -10,17 +10,12 @@ class FormValidation with ChangeNotifier {
   ValidationItem _currentKm = ValidationItem(null, null);
 
   ValidationItem get carType => _carType;
-
   ValidationItem get modelYear => _modelYear;
-
   ValidationItem get currentKm => _currentKm;
 
   bool get isCarTypeValid => _carType.value != null;
-
   bool get isModelYearValid => _modelYear.value != null;
-
   bool get isTravelledDistanceValid => _currentKm.value != null;
-
   bool get isValid => isCarTypeValid && isModelYearValid && isTravelledDistanceValid;
 
   void validateCarTypeForm(String? value, BuildContext context) {

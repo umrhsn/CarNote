@@ -26,17 +26,14 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
           controller: cubit.consumableNameController,
           decoration: InputDecoration(
             filled: false,
-            hintText: widget.index == null
-                ? AppStrings.nameHint(context)
-                : DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![widget.index!].name,
+            hintText:
+                widget.index == null ? AppStrings.nameHint(context) : DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![widget.index!].name,
             hintStyle: TextStyle(
               fontWeight: FontWeight.normal,
               color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
             ),
-            labelStyle:
-                TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
-            focusColor:
-                context.isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
+            labelStyle: TextStyle(color: context.isLight ? AppColors.hintLight : AppColors.hintDark),
+            focusColor: context.isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                 color: context.isLight ? AppColors.hintLight : AppColors.hintDark,
@@ -61,9 +58,7 @@ class _ConsumableNameTextFieldState extends State<ConsumableNameTextField> {
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: context.isLight
-                    ? AppColors.textFieldFocusedLight
-                    : AppColors.textFieldFocusedDark,
+                color: context.isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
                 strokeAlign: 0,
                 width: 1.2,
               ),

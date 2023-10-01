@@ -4,7 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 // ignore: must_be_immutable
 class WarningDialog extends StatelessWidget {
-  WarningDialog({
+  const WarningDialog({
     super.key,
     required this.title,
     required this.content,
@@ -16,14 +16,14 @@ class WarningDialog extends StatelessWidget {
     this.neutralText,
   });
 
-  String title;
-  String content;
-  void Function()? positiveAction;
-  String positiveText;
-  void Function()? negativeAction;
-  String negativeText;
-  void Function()? neutralAction;
-  String? neutralText;
+  final String title;
+  final String content;
+  final void Function()? positiveAction;
+  final String positiveText;
+  final void Function()? negativeAction;
+  final String negativeText;
+  final void Function()? neutralAction;
+  final String? neutralText;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class WarningDialog extends StatelessWidget {
       child: SlideAnimation(
         child: FadeInAnimation(
           child: AlertDialog(
-            icon: Icon(Icons.warning_rounded, size: AppDimens.iconSize50),
+            icon: const Icon(Icons.warning_rounded, size: AppDimens.iconSize50),
             title: Text(title),
             content: Text(content),
             actions: [
