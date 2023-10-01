@@ -1,11 +1,9 @@
 const String thousandSeparator = ',';
 
 extension StringHelper on String {
-  String toCapitalised() =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toCapitalised() => length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
 
-  String toTitleCase() =>
-      replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalised()).join(' ');
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ').split(' ').map((str) => str.toCapitalised()).join(' ');
 
   String removeThousandSeparator() => replaceAll(thousandSeparator, '');
 }
@@ -46,6 +44,5 @@ extension LocalizedNumerals on String {
 }
 
 extension DebuggingInfo on Function {
-  String getMethodName() =>
-      "Called method ==> ${toString().substring(toString().indexOf("'") + 1, toString().lastIndexOf("'"))}";
+  String getMethodName() => "Called method ==> ${toString().substring(toString().indexOf("'") + 1, toString().lastIndexOf("'"))}";
 }

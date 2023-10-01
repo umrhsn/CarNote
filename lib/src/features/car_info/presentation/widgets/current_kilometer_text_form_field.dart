@@ -34,8 +34,7 @@ class CurrentKilometerTextFormField extends StatelessWidget {
       hintText: AppStrings.currentKmCarInfoScreenHint(context),
       validationItem: validator.currentKm,
       validateItemForm: (value) => validator.validateCurrentKmForm(value, context),
-      onFieldSubmitted: (_) => DatabaseHelper.writeCarData(context)
-          .then((value) => carCubit.navigateToConsumablesScreen(context)),
+      onFieldSubmitted: (_) => DatabaseHelper.writeCarData(context).then((value) => carCubit.navigateToConsumablesScreen(context)),
     );
   }
 }

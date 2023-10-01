@@ -29,13 +29,9 @@ class RemainingKilometerTextFormField extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           decoration: InputDecoration(
-            labelText: cubit.isErrorText(index)
-                ? AppStrings.remainingKmErrorLabel(context)
-                : AppStrings.remainingKmNormalWarningLabel(context),
+            labelText: cubit.isErrorText(index) ? AppStrings.remainingKmErrorLabel(context) : AppStrings.remainingKmNormalWarningLabel(context),
             fillColor: AppColors.getDisabledTextFieldFill(context),
-            floatingLabelStyle: TextStyle(
-                color: AppColors.getRemainingKmLabelColor(context, index, cubit),
-                fontWeight: FontWeight.bold),
+            floatingLabelStyle: TextStyle(color: AppColors.getRemainingKmLabelColor(context, index, cubit), fontWeight: FontWeight.bold),
             disabledBorder: AppColors.getRemainingKmDisabledBorder(context, index, cubit),
           ),
         ),

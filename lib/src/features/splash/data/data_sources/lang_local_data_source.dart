@@ -13,11 +13,10 @@ class LangLocalDataSourceImpl implements LangLocalDataSource {
   LangLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<bool> changeLang({required String langCode}) async =>
-      await sharedPreferences.setString(AppStrings.locale, langCode);
+  Future<bool> changeLang({required String langCode}) async => await sharedPreferences.setString(AppStrings.locale, langCode);
 
+  // FIXME: getDeviceLocale if first opened
   @override
-  Future<String> getSavedLang() async => sharedPreferences.containsKey(AppStrings.locale)
-      ? sharedPreferences.getString(AppStrings.locale)!
-      : AppStrings.en;
+  Future<String> getSavedLang() async =>
+      sharedPreferences.containsKey(AppStrings.locale) ? sharedPreferences.getString(AppStrings.locale)! : AppStrings.en;
 }

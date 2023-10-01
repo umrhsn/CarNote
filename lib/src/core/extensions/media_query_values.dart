@@ -10,6 +10,5 @@ extension MediaQueryValues on BuildContext {
 
   Orientation get orientation => MediaQuery.of(this).orientation;
   bool get isPortrait => orientation == Orientation.portrait;
-  
   bool get isTablet => size.shortestSide >= 600;
 }

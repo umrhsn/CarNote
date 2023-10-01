@@ -47,12 +47,11 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
           ? AppColors.getCardErrorColor(context)
           : AppColors.getCardConsumableItemColor(context, cubit: _cubit, index: widget.index),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+        padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.only(
-                  top: AppDimens.edge20, bottom: AppDimens.edge10, start: AppDimens.edge10),
+              padding: const EdgeInsetsDirectional.only(top: AppDimens.edge20, bottom: AppDimens.edge10, start: AppDimens.edge10),
               child: Row(
                 children: [
                   !_editing
@@ -62,12 +61,11 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                             widget.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: AppDimens.fontSize15),
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppDimens.fontSize15),
                           ),
                         )
                       : Expanded(child: ConsumableNameTextField(index: widget.index)),
-                  !_editing ? const Spacer() : SizedBox(width: AppDimens.sizedBox30),
+                  !_editing ? const Spacer() : const SizedBox(width: AppDimens.sizedBox30),
                   Visibility(
                     visible: visible,
                     child: Row(
@@ -75,8 +73,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                         _editing
                             ? IconButton(
                                 onPressed: () {
-                                  DatabaseHelper.writeConsumableName(context, widget.index)
-                                      .then((value) {
+                                  DatabaseHelper.writeConsumableName(context, widget.index).then((value) {
                                     if (value) {
                                       setState(() => _editing = false);
                                       _cubit.consumableNameController.text = '';
@@ -101,12 +98,10 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                   _cubit.consumableNameController.text = '';
                                   setState(() => _editing = true);
                                 },
-                                icon: Icon(Icons.edit,
-                                    key: widget.index == 0 ? AppTourService.keyEditName : null))
+                                icon: Icon(Icons.edit, key: widget.index == 0 ? AppTourService.keyEditName : null))
                             : const SizedBox(),
                         IconButton(
-                          onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(
-                              context, widget.index),
+                          onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
                           icon: Icon(
                             Icons.delete,
                             key: widget.index == 0 ? AppTourService.keyDeleteCard : null,
@@ -121,10 +116,10 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
             Visibility(
               visible: visible,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+                padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
                 child: Column(
                   children: [
-                    SizedBox(height: AppDimens.sizedBox10),
+                    const SizedBox(height: AppDimens.sizedBox10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,12 +132,12 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                 ),
               ),
             ),
-            SizedBox(height: AppDimens.sizedBox10),
+            const SizedBox(height: AppDimens.sizedBox10),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+              padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
               child: RemainingKilometerTextFormField(cubit: _cubit, index: widget.index),
             ),
-            SizedBox(height: AppDimens.sizedBox20),
+            const SizedBox(height: AppDimens.sizedBox20),
           ],
         ),
       ),

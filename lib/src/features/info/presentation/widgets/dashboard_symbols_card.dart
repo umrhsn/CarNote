@@ -29,11 +29,9 @@ class DashboardSymbolsCard extends StatelessWidget {
     required this.severity,
   });
 
-  final TextDirection _direction =
-      LocaleCubit.currentLangCode == 'en' ? TextDirection.ltr : TextDirection.rtl;
+  final TextDirection _direction = LocaleCubit.currentLangCode == 'en' ? TextDirection.ltr : TextDirection.rtl;
 
-  final TextDirection _directionReversed =
-      LocaleCubit.currentLangCode == 'en' ? TextDirection.rtl : TextDirection.ltr;
+  final TextDirection _directionReversed = LocaleCubit.currentLangCode == 'en' ? TextDirection.rtl : TextDirection.ltr;
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +105,9 @@ class DashboardSymbolsCard extends StatelessWidget {
                                               style: const TextStyle(fontWeight: FontWeight.bold),
                                             ),
                                             Text(
-                                              LocaleCubit.currentLangCode == AppStrings.en
-                                                  ? '$severity / 10'
-                                                  : '$severity / 10'.toArabicNumerals(),
+                                              LocaleCubit.currentLangCode == AppStrings.en ? '$severity / 10' : '$severity / 10'.toArabicNumerals(),
                                               softWrap: true,
-                                              style:
-                                                  TextStyle(color: AppColors.getHintColor(context)),
+                                              style: TextStyle(color: AppColors.getHintColor(context)),
                                             ),
                                           ],
                                         ),

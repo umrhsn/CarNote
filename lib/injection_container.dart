@@ -16,8 +16,7 @@ Future<void> init() async {
   // cubits
   sl.registerFactory<CarCubit>(() => CarCubit());
   sl.registerFactory<ConsumableCubit>(() => ConsumableCubit());
-  sl.registerFactory<LocaleCubit>(
-      () => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
+  sl.registerFactory<LocaleCubit>(() => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
 
   // use cases
   sl.registerLazySingleton<GetSavedLangUseCase>(() => GetSavedLangUseCase(langRepository: sl()));
@@ -27,8 +26,7 @@ Future<void> init() async {
   sl.registerLazySingleton<LangRepository>(() => LangRepositoryImpl(langLocalDataSource: sl()));
 
   // data sources
-  sl.registerLazySingleton<LangLocalDataSource>(
-      () => LangLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSourceImpl(sharedPreferences: sl()));
 
   /// ===========================================================================================
   /// external

@@ -15,8 +15,7 @@ class AppThemes {
       useMaterial3: true,
       primaryColor: isLight ? AppColors.primaryLight : AppColors.primaryDark,
       primarySwatch: AppColors.getPrimarySwatchColor(isLight: isLight),
-      scaffoldBackgroundColor:
-          isLight ? AppColors.scaffoldBackgroundLight : AppColors.scaffoldBackgroundDark,
+      scaffoldBackgroundColor: isLight ? AppColors.scaffoldBackgroundLight : AppColors.scaffoldBackgroundDark,
       brightness: isLight ? Brightness.light : Brightness.dark,
       appBarTheme: AppBarThemes.appBarTheme(isLight: isLight),
       elevatedButtonTheme: AppButtonThemes.elevatedButtonTheme(isLight: isLight),
