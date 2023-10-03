@@ -2,10 +2,10 @@ import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
-import 'package:car_note/src/features/splash/presentation/widgets/choose_language_text_widget.dart';
-import 'package:car_note/src/features/splash/presentation/widgets/continue_button_widget.dart';
-import 'package:car_note/src/features/splash/presentation/widgets/language_selection_widget.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/widgets/language_selection_screen_widgets/choose_language_text_widget.dart';
+import 'package:car_note/src/features/intro/presentation/widgets/language_selection_screen_widgets/continue_button_widget.dart';
+import 'package:car_note/src/features/intro/presentation/widgets/language_selection_screen_widgets/language_selection_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

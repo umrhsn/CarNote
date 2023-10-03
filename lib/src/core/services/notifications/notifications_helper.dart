@@ -5,7 +5,7 @@ import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:car_note/injection_container.dart' as di;

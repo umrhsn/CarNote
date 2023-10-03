@@ -9,7 +9,7 @@ import 'package:car_note/src/features/consumables/presentation/widgets/app_bar_c
 import 'package:car_note/src/features/consumables/presentation/widgets/app_bar_icon_buttons_row.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/bottom_buttons.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumables_list_widget.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

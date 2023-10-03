@@ -11,7 +11,7 @@ import 'package:car_note/src/features/car_info/presentation/widgets/car_type_tex
 import 'package:car_note/src/features/car_info/presentation/widgets/continue_button.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/current_kilometer_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/model_year_text_form_field.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

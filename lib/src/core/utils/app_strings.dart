@@ -4,7 +4,7 @@ import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 
 class AppStrings {

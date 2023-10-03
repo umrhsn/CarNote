@@ -1,8 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/usecases/usecase.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/splash/domain/usecases/change_lang.dart';
-import 'package:car_note/src/features/splash/domain/usecases/get_saved_lang.dart';
+import 'package:car_note/src/features/intro/domain/usecases/change_lang.dart';
+import 'package:car_note/src/features/intro/domain/usecases/get_saved_lang.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';

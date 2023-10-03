@@ -1,7 +1,7 @@
 import 'package:car_note/src/core/errors/exceptions.dart';
 import 'package:car_note/src/core/errors/failures.dart';
-import 'package:car_note/src/features/splash/data/data_sources/lang_local_data_source.dart';
-import 'package:car_note/src/features/splash/domain/repositories/lang_repository.dart';
+import 'package:car_note/src/features/intro/data/data_sources/lang_local_data_source.dart';
+import 'package:car_note/src/features/intro/domain/repositories/lang_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class LangRepositoryImpl implements LangRepository {
