@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
@@ -27,11 +28,11 @@ class DatabaseHelper {
     if (di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) == null) {
       _consumableBox.put(AppStrings.consumableBox, []);
 
-      for (int index = 0; index < AppStrings.consumables.length; index++) {
+      for (int index = 0; index < AppLists.consumables.length; index++) {
         _consumableBox.get(AppStrings.consumableBox)!.add(
               Consumable(
                 id: index,
-                name: "${AppStrings.consumablesEnglishList[index]}  ${AppStrings.consumablesArabicList[index]}",
+                name: "${AppLists.consumablesEnglishList[index]}  ${AppLists.consumablesArabicList[index]}",
                 lastChangedAt: 0,
                 changeInterval: 0,
                 remainingKm: 0,

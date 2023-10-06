@@ -432,6 +432,18 @@
     "Use the correct window wiper setting to suit the conditions.",
     "Shift gear either up or down as directed where appropriate / conditions permit."
   ],
+  "onboarding_titles": [
+    "Keep track of your items",
+    "Keep focused on main data",
+    "Afraid of data loss?",
+    "Learn more about dashboard lights"
+  ],
+  "onboarding_subtitles": [
+    "With color aid",
+    "Using reduced detail mode",
+    "You can save them into a text file found in 'Download' folder",
+    "With detailed information including what to do when they appear"
+  ],
   "nothing_here": "Nothing here..",
   "try_to_add_items": "Try to add new items.\nPress the button (+) below.",
   "tour_target_app_bar_text_field": "In this field you can enter the current kilometer distance your car has travelled (can be seen in the dashboard).",

@@ -7,10 +7,12 @@ class ChooseLanguageTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "اخــــتَـــــــر اللُّــــغَــــــــة\nCHOOSE LANGUAGE",
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize, fontWeight: FontWeight.bold),
+    return FittedBox(
+      child: Text(
+        "اخــــتَـــــــر اللُّــــغَــــــــة\nCHOOSE LANGUAGE",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: Theme.of(context).textTheme.titleLarge!.fontSize, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

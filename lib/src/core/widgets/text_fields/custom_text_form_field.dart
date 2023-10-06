@@ -13,6 +13,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String? value)? validateItemForm;
   final void Function(String)? onFieldSubmitted;
   final TextStyle? style;
+  final void Function()? onEditingComplete;
 
   const CustomTextFormField({
     Key? key,
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validateItemForm,
     this.onFieldSubmitted,
     this.style,
+    this.onEditingComplete,
   }) : super(key: key);
 
   @override
@@ -42,11 +44,10 @@ class CustomTextFormField extends StatelessWidget {
         onChanged: (String? value) => validateItemForm!(value),
         onFieldSubmitted: onFieldSubmitted,
         style: style,
+        onEditingComplete: onEditingComplete,
       ),
     );
   }
 
-  static void requestFocus(BuildContext context, FocusNode? requestedFocusNode) {
-    FocusScope.of(context).requestFocus(requestedFocusNode);
-  }
+  static void requestFocus(BuildContext context, FocusNode? requestedFocusNode) => FocusScope.of(context).requestFocus(requestedFocusNode);
 }

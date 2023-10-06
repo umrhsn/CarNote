@@ -29,7 +29,7 @@ class ContinueButtonWidget extends StatelessWidget {
               child: !arSelected && !enSelected
                   ? AnimatedButtonWithIcon(icon: Icons.arrow_forward, btnEnabled: false, onPressed: null)
                   : AnimatedButton(
-                      text: AppStrings.btnContinue(context), onPressed: () => Navigator.pushReplacementNamed(context, Routes.carInfoRoute)),
+                      text: AppStrings.btnContinue(context), onPressed: () => Navigator.pushReplacementNamed(context, Routes.onboardingRoute)),
             ),
           ),
         ],

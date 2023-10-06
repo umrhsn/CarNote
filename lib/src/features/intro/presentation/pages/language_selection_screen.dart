@@ -72,6 +72,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
       );
 
   InkWell _buildArLangWidget(BuildContext context) => InkWell(
+        highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
         onTap: () {
           _triggerAnimation(controller: _arAnimationController);
@@ -89,6 +90,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
       );
 
   InkWell _buildEnLangWidget(BuildContext context) => InkWell(
+        highlightColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
         onTap: () {
           _triggerAnimation(controller: _enAnimationController);

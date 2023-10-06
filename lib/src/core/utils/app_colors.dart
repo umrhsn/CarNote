@@ -54,6 +54,8 @@ class AppColors {
   static const Color iconLight = Color(0xff54AEFF);
   static const Color iconDark = Color(0xff7D8590);
 
+  static Color getIconColor(BuildContext context) => context.isLight ? iconLight : iconDark;
+
   /// TextFields
   static Color getAppBarTextFieldLabel(BuildContext context) => context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);
 
@@ -134,12 +136,12 @@ class AppColors {
   static const Color _cardWarningLight = Color(0xfffffae9);
   static const Color _cardWarningDark = Color(0xff2f2e1b);
 
-  static Color _getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
+  static Color getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
 
   static Color getCardErrorColor(BuildContext context) => context.isLight ? _cardErrorLight : _cardErrorDark;
 
   static Color getCardConsumableItemColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
-      cubit.isNormalText(index) ? _getCardNormalColor(context) : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
+      cubit.isNormalText(index) ? getCardNormalColor(context) : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
 
   static Color _getCardConsumableItemAbnormalColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
       cubit.isErrorText(index) || cubit.isConsiderText(index)
@@ -151,11 +153,11 @@ class AppColors {
           ? context.isLight
               ? _cardErrorLight
               : _cardErrorDark
-          : _getCardNormalColor(context);
+          : getCardNormalColor(context);
 
   static Color _getCardWarningColor(BuildContext context, {required ConsumableCubit cubit, required int index}) => cubit.isWarningText(index)
       ? context.isLight
           ? _cardWarningLight
           : _cardWarningDark
-      : _getCardNormalColor(context);
+      : getCardNormalColor(context);
 }

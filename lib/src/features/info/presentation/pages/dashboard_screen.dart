@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
@@ -100,11 +101,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           detailed: true,
                           onTap: () => setState(() => _selectedIndex = null),
                           reverseDirection: false,
-                          image: AppStrings.dashboardItems(context)[_selectedIndex!].image,
-                          title: AppStrings.dashboardItems(context)[_selectedIndex!].title,
-                          description: AppStrings.dashboardItems(context)[_selectedIndex!].description,
-                          advice: AppStrings.dashboardItems(context)[_selectedIndex!].advice,
-                          severity: AppStrings.dashboardItems(context)[_selectedIndex!].severity,
+                          image: AppLists.dashboardItems(context)[_selectedIndex!].image,
+                          title: AppLists.dashboardItems(context)[_selectedIndex!].title,
+                          description: AppLists.dashboardItems(context)[_selectedIndex!].description,
+                          advice: AppLists.dashboardItems(context)[_selectedIndex!].advice,
+                          severity: AppLists.dashboardItems(context)[_selectedIndex!].severity,
                         ),
                       ),
               ],
@@ -117,7 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: GridView.builder(
             padding: EdgeInsetsDirectional.only(start: AppDimens.edge10.w, end: AppDimens.edge10.w, bottom: AppDimens.edge10.h),
-            itemCount: AppStrings.dashboardItems(context).length,
+            itemCount: AppLists.dashboardItems(context).length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
             itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
               position: index,
@@ -130,11 +131,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onTap: () => setState(() => _selectedIndex = index),
                     detailed: _switchToListView,
                     reverseDirection: index % 2 == 0 ? false : true,
-                    image: AppStrings.dashboardItems(context)[index].image,
-                    title: AppStrings.dashboardItems(context)[index].title,
-                    description: AppStrings.dashboardItems(context)[index].description,
-                    advice: AppStrings.dashboardItems(context)[index].advice,
-                    severity: AppStrings.dashboardItems(context)[index].severity,
+                    image: AppLists.dashboardItems(context)[index].image,
+                    title: AppLists.dashboardItems(context)[index].title,
+                    description: AppLists.dashboardItems(context)[index].description,
+                    advice: AppLists.dashboardItems(context)[index].advice,
+                    severity: AppLists.dashboardItems(context)[index].severity,
                   ),
                 ),
               ),
@@ -147,7 +148,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: ListView.builder(
             padding: const EdgeInsetsDirectional.only(start: AppDimens.edge10, end: AppDimens.edge10, bottom: AppDimens.edge10),
-            itemCount: AppStrings.dashboardItems(context).length,
+            itemCount: AppLists.dashboardItems(context).length,
             itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
               position: index,
               duration: const Duration(milliseconds: AppNums.durationCardAnimation),
@@ -156,11 +157,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: DashboardSymbolsCard(
                     detailed: _switchToListView,
                     reverseDirection: index % 2 == 0 ? false : true,
-                    image: AppStrings.dashboardItems(context)[index].image,
-                    title: AppStrings.dashboardItems(context)[index].title,
-                    description: AppStrings.dashboardItems(context)[index].description,
-                    advice: AppStrings.dashboardItems(context)[index].advice,
-                    severity: AppStrings.dashboardItems(context)[index].severity,
+                    image: AppLists.dashboardItems(context)[index].image,
+                    title: AppLists.dashboardItems(context)[index].title,
+                    description: AppLists.dashboardItems(context)[index].description,
+                    advice: AppLists.dashboardItems(context)[index].advice,
+                    severity: AppLists.dashboardItems(context)[index].severity,
                   ),
                 ),
               ),

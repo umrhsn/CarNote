@@ -15,6 +15,7 @@ class AppNums {
   static const int durationForwardButtonAnimation = 150; // milliseconds
   static const int durationReverseButtonAnimation = 200; // milliseconds
   static const int durationSplashDelay = 0; // seconds
+  static const int durationOnboarding = 10; // seconds
   static const int durationCardAnimation = 375; // milliseconds
   static const int durationToastShort = 2; // seconds
   static const int durationToastLong = 7; // seconds

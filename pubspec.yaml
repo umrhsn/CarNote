@@ -23,7 +23,7 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.1.1
   shared_preferences: ^2.2.1
-  awesome_notifications: ^0.7.7
+  awesome_notifications: ^0.8.2
   get_it: ^7.6.4
   bot_toast: ^4.1.3
   dartz: ^0.10.1
@@ -33,6 +33,7 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   tutorial_coach_mark: ^1.2.9
   flutter_screenutil: ^5.9.0
+  smooth_page_indicator: ^1.1.0
 #  TODO: add this when the loading bug in Google AdMob is fixed
 #  google_mobile_ads: ^3.0.0
 
@@ -77,6 +78,7 @@ flutter:
     - assets/images/dashboard_lights/warning/
     - assets/images/dashboard_lights/advisory/
     - assets/images/dashboard_lights/info/
+    - assets/images/onboarding/
 
   fonts:
     - family: ArabicTwo
