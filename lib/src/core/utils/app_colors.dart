@@ -70,10 +70,17 @@ class AppColors {
 
   static Color getDisabledTextFieldFill(BuildContext context) => context.isLight ? _disabledTextFieldLight : _disabledTextFieldDark;
 
-  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
+  static Color getLastChangedAndChangeIntervalLabelColorIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != ''
           ? getErrorColor(context)
           : cubit.lastChangedAtFocuses[index].hasFocus
+              ? getTextFieldBorderAndLabelFocused(context)
+              : getTextFieldBorderAndLabel(context);
+
+  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != ''
+          ? getErrorColor(context)
+          : cubit.lastChangedFocus.hasFocus
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
@@ -84,14 +91,23 @@ class AppColors {
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
-  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorderIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != '' ? cubit.getErrorBorder(context) : cubit.getFocusedBorder(context);
 
-  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getFocusedBorder(context);
+
+  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorderIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != '' ? cubit.getErrorBorder(context) : cubit.getDefaultBorder(context);
 
-  static Color getChangeIntervalLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getDefaultBorder(context);
+
+  static Color getChangeIntervalLabelColorIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.changeIntervalFocuses[index].hasFocus ? getTextFieldBorderAndLabelFocused(context) : getTextFieldBorderAndLabel(context);
+
+  static Color getChangeIntervalLabelColor(BuildContext context, ConsumableCubit cubit) =>
+      cubit.changeIntervalFocus.hasFocus ? getTextFieldBorderAndLabelFocused(context) : getTextFieldBorderAndLabel(context);
 
   static OutlineInputBorder getRemainingKmDisabledBorder(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getRemainingKmValidatingText(context, index).data != '' && !cubit.isNormalText(index)

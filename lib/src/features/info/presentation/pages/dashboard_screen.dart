@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -28,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginDashboardScreenTour)) {
+    if (AppTourService.shouldBeginTour(prefsBoolKey: AppKeys.prefsBoolBeginDashboardScreenTour)) {
       AppTourService.beginDashboardScreenTour(context);
     }
   }
@@ -39,14 +40,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     Padding buildAppBarIcons() {
       return Padding(
-        padding: const EdgeInsets.only(top: AppDimens.edge10),
+        padding: const EdgeInsets.only(top: AppDimens.padding10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             AnimatedIconButton(onPressed: () => Navigator.pop(context), icon: Icons.arrow_back),
             AnimatedIconButton(
-              key: AppTourService.keySwitchLangDashboardScreen,
+              key: AppKeys.keySwitchLangDashboardScreen,
               faIcon: true,
               icon: FontAwesomeIcons.language,
               onPressed: () => AppLocalizations.of(context)!.isEnLocale
@@ -55,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               tooltip: AppStrings.switchLangTooltip(context),
             ),
             AnimatedIconButton(
-              key: AppTourService.keySwitchListGrid,
+              key: AppKeys.keySwitchListGrid,
               icon: _switchToListView ? Icons.grid_view_rounded : Icons.sort_rounded,
               onPressed: () {
                 setState(() {
@@ -89,14 +90,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     IntrinsicHeight buildAppBarWidgets() => IntrinsicHeight(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+            padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
             child: Column(
               children: [
                 buildAppBarIcons(),
                 _selectedIndex == null
                     ? const SizedBox()
                     : Padding(
-                        padding: EdgeInsets.only(bottom: AppDimens.edge10.w),
+                        padding: EdgeInsets.only(bottom: AppDimens.padding10.w),
                         child: DashboardSymbolsCard(
                           detailed: true,
                           onTap: () => setState(() => _selectedIndex = null),
@@ -117,7 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           borderRadius:
               const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: GridView.builder(
-            padding: EdgeInsetsDirectional.only(start: AppDimens.edge10.w, end: AppDimens.edge10.w, bottom: AppDimens.edge10.h),
+            padding: EdgeInsetsDirectional.only(start: AppDimens.padding10.w, end: AppDimens.padding10.w, bottom: AppDimens.padding10.h),
             itemCount: AppLists.dashboardItems(context).length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: _gridColumnsCount),
             itemBuilder: (context, index) => AnimationConfiguration.staggeredGrid(
@@ -127,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: ScaleAnimation(
                 child: FadeInAnimation(
                   child: DashboardSymbolsCard(
-                    key: index == 0 ? AppTourService.keyGridItem : null,
+                    key: index == 0 ? AppKeys.keyGridItem : null,
                     onTap: () => setState(() => _selectedIndex = index),
                     detailed: _switchToListView,
                     reverseDirection: index % 2 == 0 ? false : true,
@@ -147,7 +148,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           borderRadius:
               const BorderRadius.only(topLeft: Radius.circular(AppDimens.borderRadius30), topRight: Radius.circular(AppDimens.borderRadius30)),
           child: ListView.builder(
-            padding: const EdgeInsetsDirectional.only(start: AppDimens.edge10, end: AppDimens.edge10, bottom: AppDimens.edge10),
+            padding: const EdgeInsetsDirectional.only(start: AppDimens.padding10, end: AppDimens.padding10, bottom: AppDimens.padding10),
             itemCount: AppLists.dashboardItems(context).length,
             itemBuilder: (context, index) => AnimationConfiguration.staggeredList(
               position: index,

@@ -34,6 +34,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       } else if (_currentShowIndex == 1) {
         _pageController.animateTo(context.width * 2, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
       } else if (_currentShowIndex == 2) {
+        _pageController.animateTo(context.width * 3, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+      } else if (_currentShowIndex == 3) {
         _pageController.animateTo(0, duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
       }
     });
@@ -66,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
 
   Padding _buildPageButtons(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(AppDimens.edge20),
+        padding: const EdgeInsets.all(AppDimens.padding20),
         child: Column(
           children: [
             AnimatedButton(

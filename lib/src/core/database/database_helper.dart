@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
@@ -22,14 +23,14 @@ class DatabaseHelper {
       ..registerAdapter<Car>(CarAdapter())
       ..registerAdapter<Consumable>(ConsumableAdapter());
 
-    await Hive.openBox<Car>(AppStrings.carBox);
-    await Hive.openBox<List>(AppStrings.consumableBox);
+    await Hive.openBox<Car>(AppKeys.carBox);
+    await Hive.openBox<List>(AppKeys.consumableBox);
 
-    if (di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolListAdded) == null) {
-      _consumableBox.put(AppStrings.consumableBox, []);
+    if (di.sl<SharedPreferences>().getBool(AppKeys.prefsBoolListAdded) == null) {
+      _consumableBox.put(AppKeys.consumableBox, []);
 
       for (int index = 0; index < AppLists.consumables.length; index++) {
-        _consumableBox.get(AppStrings.consumableBox)!.add(
+        _consumableBox.get(AppKeys.consumableBox)!.add(
               Consumable(
                 id: index,
                 name: "${AppLists.consumablesEnglishList[index]}  ${AppLists.consumablesArabicList[index]}",
@@ -40,14 +41,14 @@ class DatabaseHelper {
             );
       }
 
-      if (_consumableBox.get(AppStrings.consumableBox) != null) {
-        di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolListAdded, true);
+      if (_consumableBox.get(AppKeys.consumableBox) != null) {
+        di.sl<SharedPreferences>().setBool(AppKeys.prefsBoolListAdded, true);
       }
     }
   }
 
   /// Car
-  static final Box<Car> _carBox = Hive.box<Car>(AppStrings.carBox);
+  static final Box<Car> _carBox = Hive.box<Car>(AppKeys.carBox);
 
   static Box<Car> get carBox => _carBox;
 
@@ -57,7 +58,7 @@ class DatabaseHelper {
     bool isNotNull = true;
 
     _carBox.put(
-      AppStrings.carBox,
+      AppKeys.carBox,
       Car(
         type: carCubit.carTypeController.text,
         modelYear: int.parse(carCubit.modelYearController.text),
@@ -65,20 +66,20 @@ class DatabaseHelper {
       ),
     );
 
-    if (_carBox.get(AppStrings.carBox) == null) isNotNull = false;
+    if (_carBox.get(AppKeys.carBox) == null) isNotNull = false;
 
     if (isNotNull) {
-      prefs.setBool(AppStrings.prefsBoolSeen, true);
+      prefs.setBool(AppKeys.prefsBoolSeen, true);
       BotToast.showText(text: AppStrings.dataSavedSuccessfully(context));
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));
     }
 
-    return prefs.getBool(AppStrings.prefsBoolSeen) ?? false;
+    return prefs.getBool(AppKeys.prefsBoolSeen) ?? false;
   }
 
   /// Consumables
-  static final Box<List> _consumableBox = Hive.box<List>(AppStrings.consumableBox);
+  static final Box<List> _consumableBox = Hive.box<List>(AppKeys.consumableBox);
 
   static Box<List> get consumableBox => _consumableBox;
 
@@ -88,7 +89,7 @@ class DatabaseHelper {
     if (consumableCubit.consumableNameController.text.isEmpty) {
       return false;
     } else {
-      _consumableBox.get(AppStrings.consumableBox)![index].name = consumableCubit.consumableNameController.text;
+      _consumableBox.get(AppKeys.consumableBox)![index].name = consumableCubit.consumableNameController.text;
       writeConsumablesData(context).then((value) => BotToast.showText(text: AppStrings.dataSavedSuccessfully(context)));
       return true;
     }
@@ -98,10 +99,10 @@ class DatabaseHelper {
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
     _carBox.put(
-      AppStrings.carBox,
+      AppKeys.carBox,
       Car(
-        type: _carBox.get(AppStrings.carBox)!.type,
-        modelYear: _carBox.get(AppStrings.carBox)!.modelYear,
+        type: _carBox.get(AppKeys.carBox)!.type,
+        modelYear: _carBox.get(AppKeys.carBox)!.modelYear,
         currentKm: int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()),
       ),
     );
@@ -109,9 +110,9 @@ class DatabaseHelper {
     List<Consumable> list = [];
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      _consumableBox.get(AppStrings.consumableBox)![index] = Consumable(
+      _consumableBox.get(AppKeys.consumableBox)![index] = Consumable(
         id: index,
-        name: _consumableBox.get(AppStrings.consumableBox)![index].name,
+        name: _consumableBox.get(AppKeys.consumableBox)![index].name,
         lastChangedAt: consumableCubit.lastChangedAtControllers[index].text.isNotEmpty
             ? int.parse(consumableCubit.lastChangedAtControllers[index].text.removeThousandSeparator())
             : 0,
@@ -123,10 +124,10 @@ class DatabaseHelper {
             : 0,
       );
 
-      list.add(_consumableBox.get(AppStrings.consumableBox)![index]);
+      list.add(_consumableBox.get(AppKeys.consumableBox)![index]);
     }
 
-    _consumableBox.put(AppStrings.consumableBox, list);
+    _consumableBox.put(AppKeys.consumableBox, list);
   }
 
   static Future<bool> addConsumable(
@@ -137,9 +138,9 @@ class DatabaseHelper {
   }) async {
     if (name.isEmpty || lastChangedAt == 0 || changeInterval == 0) return false;
 
-    _consumableBox.get(AppStrings.consumableBox)!.add(
+    _consumableBox.get(AppKeys.consumableBox)!.add(
           Consumable(
-            id: _consumableBox.get(AppStrings.consumableBox)!.length,
+            id: _consumableBox.get(AppKeys.consumableBox)!.length,
             name: name,
             lastChangedAt: lastChangedAt,
             changeInterval: changeInterval,
@@ -147,7 +148,7 @@ class DatabaseHelper {
           ),
         );
 
-    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+    _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
@@ -163,8 +164,8 @@ class DatabaseHelper {
   }
 
   static void removeConsumable(int index, BuildContext context) {
-    _consumableBox.get(AppStrings.consumableBox)!.removeAt(index);
-    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+    _consumableBox.get(AppKeys.consumableBox)!.removeAt(index);
+    _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
@@ -180,8 +181,8 @@ class DatabaseHelper {
   }
 
   static void removeAllData(BuildContext context) {
-    _consumableBox.get(AppStrings.consumableBox)!.clear();
-    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+    _consumableBox.get(AppKeys.consumableBox)!.clear();
+    _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
 
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
@@ -200,7 +201,7 @@ class DatabaseHelper {
     if (oldIndex < newIndex) newIndex -= 1;
     ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-    Consumable item = _consumableBox.get(AppStrings.consumableBox)!.removeAt(oldIndex);
+    Consumable item = _consumableBox.get(AppKeys.consumableBox)!.removeAt(oldIndex);
     int lastChangedAt = int.parse(consumableCubit.lastChangedAtControllers.removeAt(oldIndex).text.removeThousandSeparator());
     int changeInterval = int.parse(consumableCubit.changeIntervalControllers.removeAt(oldIndex).text.removeThousandSeparator());
     int remainingKm = int.parse(consumableCubit.remainingKmControllers.removeAt(oldIndex).text.removeThousandSeparator());
@@ -208,7 +209,7 @@ class DatabaseHelper {
     consumableCubit.changeIntervalFocuses.removeAt(oldIndex);
     consumableCubit.remainingKmFocuses.removeAt(oldIndex);
 
-    _consumableBox.get(AppStrings.consumableBox)!.insert(newIndex, item);
+    _consumableBox.get(AppKeys.consumableBox)!.insert(newIndex, item);
     consumableCubit.lastChangedAtControllers.insert(newIndex, TextEditingController(text: lastChangedAt.toThousands()));
     consumableCubit.changeIntervalControllers.insert(newIndex, TextEditingController(text: changeInterval.toThousands()));
     consumableCubit.remainingKmControllers.insert(newIndex, TextEditingController(text: remainingKm.toThousands()));
@@ -216,6 +217,6 @@ class DatabaseHelper {
     consumableCubit.changeIntervalFocuses.insert(newIndex, FocusNode());
     consumableCubit.remainingKmFocuses.insert(newIndex, FocusNode());
 
-    _consumableBox.put(AppStrings.consumableBox, _consumableBox.get(AppStrings.consumableBox)!);
+    _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
   }
 }

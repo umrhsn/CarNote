@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/dialogs/warning_dialog.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
@@ -27,8 +28,8 @@ class DialogHelper {
     }
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
-      Consumable? consumable = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+      Car? car = DatabaseHelper.carBox.get(AppKeys.carBox);
+      Consumable? consumable = DatabaseHelper.consumableBox.get(AppKeys.consumableBox)![index];
 
       /// Case 1
       // Current kilometer doesn't match the database value

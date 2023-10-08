@@ -2,7 +2,7 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
-import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/app_bar_current_kilometer_text_field.dart';
@@ -21,18 +21,18 @@ class ConsumablesScreen extends StatefulWidget {
 }
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
-  // ignore: prefer_final_fields
-  List? _list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+  late List? _list;
 
   @override
   void initState() {
     super.initState();
+    _list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox);
     NotificationsHelper.requestNotificationsPermission();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       NotificationsHelper.scheduleDailyNotification(context);
       NotificationsHelper.showAlarmingNotifications(context);
     });
-    if (AppTourService.shouldBeginTour(prefsBoolKey: AppStrings.prefsBoolBeginConsumablesScreenTour)) {
+    if (AppTourService.shouldBeginTour(prefsBoolKey: AppKeys.prefsBoolBeginConsumablesScreenTour)) {
       AppTourService.beginConsumablesScreenTour(context);
     }
   }
@@ -61,7 +61,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ConsumablesListWidget(list: _list),
+                  ConsumablesListWidget(list: _list!),
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
                   const SizedBox(height: AppDimens.sizedBox15),

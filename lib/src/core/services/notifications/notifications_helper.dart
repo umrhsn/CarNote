@@ -3,6 +3,7 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
@@ -75,7 +76,7 @@ class NotificationsHelper {
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      Consumable item = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+      Consumable item = DatabaseHelper.consumableBox.get(AppKeys.consumableBox)![index];
 
       if (cubit.lastChangedAtControllers[index].text.isNotEmpty &&
               cubit.changeIntervalControllers[index].text.isNotEmpty &&

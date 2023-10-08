@@ -1,5 +1,5 @@
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class RemainingKilometerTextFormField extends StatelessWidget {
     return Column(
       children: [
         TextFormField(
-          key: index == 0 ? AppTourService.keyTextFieldRemaining : null,
+          key: index == 0 ? AppKeys.keyTextFieldRemaining : null,
           enabled: false,
           controller: cubit.remainingKmControllers[index],
           textAlign: TextAlign.center,

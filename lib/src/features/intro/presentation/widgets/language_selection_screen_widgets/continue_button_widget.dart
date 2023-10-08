@@ -23,7 +23,7 @@ class ContinueButtonWidget extends StatelessWidget {
         children: [
           SizedBox(height: AppDimens.sizedBox30.r),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppDimens.edge10.r),
+            padding: EdgeInsets.symmetric(horizontal: AppDimens.padding10.r),
             child: SizedBox(
               width: double.infinity,
               child: !arSelected && !enSelected

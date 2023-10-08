@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,9 +20,9 @@ class LanguageSelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(AppDimens.edge8.r),
+      padding: EdgeInsets.all(AppDimens.padding8.r),
       child: ScaleTransition(
-        scale: Tween<double>(begin: 1.0, end: 0.9).animate(animationController),
+        scale: Tween<double>(begin: AppNums.tweenBegin, end: AppNums.tweenEnd).animate(animationController),
         child: Container(
             foregroundDecoration: context.isLight
                 ? BoxDecoration(color: isSelected ? Colors.transparent : AppColors.boxShadowLight, backgroundBlendMode: BlendMode.color)

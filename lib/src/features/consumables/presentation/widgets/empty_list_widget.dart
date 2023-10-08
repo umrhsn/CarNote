@@ -6,11 +6,13 @@ import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:flutter/material.dart';
 
 class EmptyListWidget extends StatelessWidget {
-  const EmptyListWidget({super.key});
+  const EmptyListWidget({super.key,required this.list});
+
+  final List? list;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return list!.isEmpty ? Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -30,6 +32,6 @@ class EmptyListWidget extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ],
-    );
+    ) : const SizedBox();
   }
 }

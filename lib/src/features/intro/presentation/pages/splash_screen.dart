@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/animations/animation_helper.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
-import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/indicators/custom_progress_indictor.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +33,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   void _checkFirstSeen() {
-    if (DatabaseHelper.carBox.get(AppStrings.carBox) != null) {
-      _prefs.setBool(AppStrings.prefsBoolSeen, true);
+    if (DatabaseHelper.carBox.get(AppKeys.carBox) != null) {
+      _prefs.setBool(AppKeys.prefsBoolSeen, true);
     }
-    _navigate(_prefs.getBool(AppStrings.prefsBoolSeen) ?? false);
+    _navigate(_prefs.getBool(AppKeys.prefsBoolSeen) ?? false);
   }
 
   void _navigate(bool seen) =>

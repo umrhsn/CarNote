@@ -1,4 +1,5 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
@@ -170,8 +171,8 @@ class AppLists {
   static List<PageData> onboardingPages(BuildContext context) => List.generate(
         onboardingPagesCount,
         (index) => PageData(
-          title: AppStrings.translateList(context, "onboarding_titles")[index],
-          subtitle: AppStrings.translateList(context, "onboarding_subtitles")[index],
+          title: AppStrings.translateList(context, AppKeys.onboarding_titles)[index],
+          subtitle: AppStrings.translateList(context, AppKeys.onboarding_subtitles)[index],
           image: LocaleCubit.currentLangCode == AppStrings.ar
               ? context.isLight
                   ? AssetManager.onboarding[index]
@@ -181,4 +182,17 @@ class AppLists {
                   : AssetManager.onboarding[index + 12],
         ),
       );
+
+  // FIXME: these methods were functional before switching lists to json files
+  static void sortAlphabetically(BuildContext context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
+
+  static void sortCategories(BuildContext context) {
+    sortAlphabetically(context);
+    dashboardItems(context).sort((a, b) => a.category.compareTo(b.category));
+  }
+
+  static void sortSeverities(BuildContext context) {
+    sortCategories(context);
+    dashboardItems(context).sort((a, b) => b.severity.compareTo(a.severity));
+  }
 }

@@ -27,24 +27,20 @@ class CarNote extends StatelessWidget {
         ],
         child: BlocBuilder<LocaleCubit, LocaleState>(
           buildWhen: (previousState, currentState) => previousState != currentState,
-          builder: (context, state) {
-            return ScreenUtilInit(
-              builder: (context, child) {
-                return MaterialApp(
-                  builder: BotToastInit(),
-                  navigatorObservers: [BotToastNavigatorObserver()],
-                  theme: AppThemes.appTheme(isLight: true),
-                  darkTheme: AppThemes.appTheme(isLight: false),
-                  onGenerateRoute: AppRoutes.onGenerateRoute,
-                  debugShowCheckedModeBanner: false,
-                  locale: state.locale,
-                  supportedLocales: AppLocalizationsSetup.supportedLocales,
-                  localeResolutionCallback: AppLocalizationsSetup.localeResolutionCallback,
-                  localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
-                );
-              },
-            );
-          },
+          builder: (context, state) => ScreenUtilInit(
+            builder: (context, child) => MaterialApp(
+              builder: BotToastInit(),
+              navigatorObservers: [BotToastNavigatorObserver()],
+              theme: AppThemes.appTheme(isLight: true),
+              darkTheme: AppThemes.appTheme(isLight: false),
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+              debugShowCheckedModeBanner: false,
+              locale: state.locale,
+              supportedLocales: AppLocalizationsSetup.supportedLocales,
+              localeResolutionCallback: AppLocalizationsSetup.localeResolutionCallback,
+              localizationsDelegates: AppLocalizationsSetup.localizationsDelegates,
+            ),
+          ),
         ),
       ),
     );

@@ -7,11 +7,11 @@ class AppDimens {
   static const double appBarHeight80 = 80;
   static const double appBarHeight140 = 140;
 
-  /// EdgeInsets
-  static const double edge8 = 8;
-  static const double edge10 = 10;
-  static const double edge15 = 15;
-  static const double edge20 = 20;
+  /// Paddings
+  static const double padding8 = 8;
+  static const double padding10 = 10;
+  static const double padding15 = 15;
+  static const double padding20 = 20;
 
   /// SizedBoxes
   static const double sizedBox10 = 10;
@@ -21,6 +21,7 @@ class AppDimens {
 
   /// Flexes
   static int flex30 = 30;
+  static int flex1000 = 1000;
 
   /// Texts
   static double displayLarge = 96.sp; // headline1
