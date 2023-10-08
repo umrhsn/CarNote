@@ -40,23 +40,28 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Center(
-          child: SizedBox(
-            width: context.isTablet ? 190.w : 190.h,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const ChooseLanguageTextWidget(),
-                SizedBox(height: AppDimens.sizedBox15.r),
-                _buildLangWidgetsRow(context),
-                ContinueButtonWidget(arSelected: _arSelected, enSelected: _enSelected)
-              ],
+      body: Stack(
+        children: [
+          Center(
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: SizedBox(
+                width: context.isTablet ? 190.w : 190.h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const ChooseLanguageTextWidget(),
+                    SizedBox(height: AppDimens.sizedBox15.r),
+                    _buildLangWidgetsRow(context),
+                    ContinueButtonWidget(arSelected: _arSelected, enSelected: _enSelected),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+          // const BannerAdWidget(),
+        ],
       ),
     );
   }
