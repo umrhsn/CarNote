@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:equatable/equatable.dart';
@@ -14,7 +15,7 @@ part 'consumable_state.dart';
 
 class ConsumableCubit extends Cubit<ConsumableState> {
   ConsumableCubit() : super(AppInitial()) {
-    List? list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+    List? list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox);
 
     for (int index = 0; index < Consumable.getCount(); index++) {
       Consumable item = list![index];
@@ -39,9 +40,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Main fields
   final TextEditingController currentKmController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
-          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm != 0
-              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
+          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm != 0
+              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm.toThousands()
               : ''
           : '');
 
@@ -254,11 +255,11 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   /// Control widgets visibility
   void changeVisibility(BuildContext context) {
-    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
+    bool visible = di.sl<SharedPreferences>().getBool(AppKeys.prefsBoolDetailedModeOn) ?? true;
     emit(VisibilityChanging());
     visible = !visible;
     visible ? BotToast.showText(text: AppStrings.detailedModeOn(context)) : BotToast.showText(text: AppStrings.detailedModeOff(context));
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolDetailedModeOn, visible);
+    di.sl<SharedPreferences>().setBool(AppKeys.prefsBoolDetailedModeOn, visible);
     emit(VisibilityChanged());
   }
 

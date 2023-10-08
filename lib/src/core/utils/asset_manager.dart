@@ -7,6 +7,8 @@ const String warningPath = '$dashboardLightsPath/warning';
 const String advisoryPath = '$dashboardLightsPath/advisory';
 const String infoPath = '$dashboardLightsPath/info';
 
+const String onboardingPath = '$imgPath/onboarding';
+
 class AssetManager {
   static const String icon = '$imgPath/icon.png';
 
@@ -17,7 +19,26 @@ class AssetManager {
   static const String ar = '$imgPath/ar.png';
   static const String en = '$imgPath/en.png';
 
-  static List<String> warningSymbols = [
+  static final List<String> onboarding = [
+    '$onboardingPath/onboardingArLight1.jpg', // 0 (index)
+    '$onboardingPath/onboardingArLight2.jpg',
+    '$onboardingPath/onboardingArLight3.jpg',
+    '$onboardingPath/onboardingArLight4.jpg',
+    '$onboardingPath/onboardingEnLight1.jpg', // 4 (index + 4)
+    '$onboardingPath/onboardingEnLight2.jpg',
+    '$onboardingPath/onboardingEnLight3.jpg',
+    '$onboardingPath/onboardingEnLight4.jpg',
+    '$onboardingPath/onboardingArDark1.jpg', // 8 (index + 8)
+    '$onboardingPath/onboardingArDark2.jpg',
+    '$onboardingPath/onboardingArDark3.jpg',
+    '$onboardingPath/onboardingArDark4.jpg',
+    '$onboardingPath/onboardingEnDark1.jpg', // 12 (index + 12)
+    '$onboardingPath/onboardingEnDark2.jpg',
+    '$onboardingPath/onboardingEnDark3.jpg',
+    '$onboardingPath/onboardingEnDark4.jpg',
+  ];
+
+  static final List<String> warningSymbols = [
     '$warningPath/air_bad_symbol_in_red.png',
     '$warningPath/airbag_warning_symbol_in_red.png',
     '$warningPath/srs_symbol_in_red.png',
@@ -48,7 +69,7 @@ class AssetManager {
     '$warningPath/warning_symbol_in_red.png'
   ];
 
-  static List<String> advisorySymbols = [
+  static final List<String> advisorySymbols = [
     '$advisoryPath/abs_warning_light_in_orange.png',
     '$advisoryPath/brake_pad_warning_symbol_in_orange.png',
     '$advisoryPath/brake_warning_symbol_in_orange.png',
@@ -98,7 +119,7 @@ class AssetManager {
     '$advisoryPath/information_symbol_in_orange.png',
   ];
 
-  static List<String> infoSymbols = [
+  static final List<String> infoSymbols = [
     '$infoPath/fresh_air_ventilation_symbol_in_white.png',
     '$infoPath/air_flow_recirculation_symbol_in_white.png',
     '$infoPath/air_flow_lower_car_symbol_in_white.png',

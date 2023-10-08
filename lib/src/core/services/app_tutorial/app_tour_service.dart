@@ -1,5 +1,8 @@
 import 'dart:ui';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
+import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,31 +14,6 @@ class AppTourService {
 
   static void showTutorial(BuildContext context) => _tutorialCoachMark.show(context: context);
 
-  /// CarInfo
-  static final GlobalKey keySwitchLangCarInfoScreen = GlobalKey();
-
-  /// ConsumablesScreen
-  static final GlobalKey keyAppBarTextField = GlobalKey();
-  static final GlobalKey keyList = GlobalKey();
-  static final GlobalKey keyCard = GlobalKey();
-  static final GlobalKey keyEditName = GlobalKey();
-  static final GlobalKey keyTextFieldLastChanged = GlobalKey();
-  static final GlobalKey keyTextFieldChangeInterval = GlobalKey();
-  static final GlobalKey keyTextFieldRemaining = GlobalKey();
-  static final GlobalKey keyDeleteCard = GlobalKey();
-  static final GlobalKey keySaveData = GlobalKey();
-  static final GlobalKey keyAddItem = GlobalKey();
-  static final GlobalKey keySwitchLangConsumalbesScreen = GlobalKey();
-  static final GlobalKey keyToggleDetailedMode = GlobalKey();
-  static final GlobalKey keySaveToFile = GlobalKey();
-  static final GlobalKey keyDeleteAll = GlobalKey();
-  static final GlobalKey keyInfo = GlobalKey();
-
-  /// DashboardScreen
-  static final GlobalKey keyGridItem = GlobalKey();
-  static final GlobalKey keySwitchListGrid = GlobalKey();
-  static final GlobalKey keySwitchLangDashboardScreen = GlobalKey();
-
   static bool shouldBeginTour({required String prefsBoolKey}) {
     SharedPreferences prefs = di.sl<SharedPreferences>();
     if (prefs.getBool(prefsBoolKey) == null) prefs.setBool(prefsBoolKey, true);
@@ -46,21 +24,21 @@ class AppTourService {
   static beginCarInfoScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createCarInfoScreenTour(context);
-      Future.delayed(const Duration(seconds: 1), () => AppTourService.showTutorial(context));
+      Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));
     });
   }
 
   static beginConsumablesScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createConsumablesScreenTour(context);
-      Future.delayed(const Duration(seconds: 1), () => AppTourService.showTutorial(context));
+      Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));
     });
   }
 
   static beginDashboardScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createDashboardScreenTour(context);
-      Future.delayed(const Duration(seconds: 1), () => AppTourService.showTutorial(context));
+      Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));
     });
   }
 
@@ -70,11 +48,11 @@ class AppTourService {
       colorShadow: AppColors.getPrimaryColor(context),
       textSkip: AppStrings.skip(context).toUpperCase(),
       textStyleSkip: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      paddingFocus: 10,
-      opacityShadow: 0.5,
-      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      paddingFocus: AppDimens.padding10,
+      opacityShadow: AppNums.tutorialOpacityShadow,
+      imageFilter: ImageFilter.blur(sigmaX: AppNums.tutorialImageFilterSigmaX, sigmaY: AppNums.tutorialImageFilterSigmaY),
     );
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolBeginCarInfoScreenTour, false);
+    di.sl<SharedPreferences>().setBool(AppKeys.prefsBoolBeginCarInfoScreenTour, false);
   }
 
   static void _createConsumablesScreenTour(BuildContext context) {
@@ -83,11 +61,11 @@ class AppTourService {
       colorShadow: AppColors.getPrimaryColor(context),
       textSkip: AppStrings.skip(context).toUpperCase(),
       textStyleSkip: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      paddingFocus: 10,
-      opacityShadow: 0.5,
-      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      paddingFocus: AppDimens.padding10,
+      opacityShadow: AppNums.tutorialOpacityShadow,
+      imageFilter: ImageFilter.blur(sigmaX: AppNums.tutorialImageFilterSigmaX, sigmaY: AppNums.tutorialImageFilterSigmaY),
     );
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolBeginConsumablesScreenTour, false);
+    di.sl<SharedPreferences>().setBool(AppKeys.prefsBoolBeginConsumablesScreenTour, false);
   }
 
   static void _createDashboardScreenTour(BuildContext context) {
@@ -96,11 +74,11 @@ class AppTourService {
       colorShadow: AppColors.getPrimaryColor(context),
       textSkip: AppStrings.skip(context).toUpperCase(),
       textStyleSkip: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-      paddingFocus: 10,
-      opacityShadow: 0.5,
-      imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+      paddingFocus: AppDimens.padding10,
+      opacityShadow: AppNums.tutorialOpacityShadow,
+      imageFilter: ImageFilter.blur(sigmaX: AppNums.tutorialImageFilterSigmaX, sigmaY: AppNums.tutorialImageFilterSigmaY),
     );
-    di.sl<SharedPreferences>().setBool(AppStrings.prefsBoolBeginDashboardScreenTour, false);
+    di.sl<SharedPreferences>().setBool(AppKeys.prefsBoolBeginDashboardScreenTour, false);
   }
 
   static List<TargetFocus> _createCarInfoScreenTargets(BuildContext context) {
@@ -108,8 +86,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_switch_lang",
-        keyTarget: keySwitchLangCarInfoScreen,
+        identify: AppKeys.key_switch_lang,
+        keyTarget: AppKeys.keySwitchLangCarInfoScreen,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -129,8 +107,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_app_bar_text_field",
-        keyTarget: keyAppBarTextField,
+        identify: AppKeys.key_app_bar_text_field,
+        keyTarget: AppKeys.keyAppBarTextField,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -149,8 +127,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_list",
-        keyTarget: keyList,
+        identify: AppKeys.key_list,
+        keyTarget: AppKeys.keyList,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -169,8 +147,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_card",
-        keyTarget: keyCard,
+        identify: AppKeys.key_card,
+        keyTarget: AppKeys.keyCard,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -189,8 +167,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_text_field_last_changed",
-        keyTarget: keyTextFieldLastChanged,
+        identify: AppKeys.key_text_field_last_changed,
+        keyTarget: AppKeys.keyTextFieldLastChanged,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -209,8 +187,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_text_field_change_interval",
-        keyTarget: keyTextFieldChangeInterval,
+        identify: AppKeys.key_text_field_change_interval,
+        keyTarget: AppKeys.keyTextFieldChangeInterval,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -229,8 +207,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_text_field_remaining",
-        keyTarget: keyTextFieldRemaining,
+        identify: AppKeys.key_text_field_remaining,
+        keyTarget: AppKeys.keyTextFieldRemaining,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -249,8 +227,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_edit_name",
-        keyTarget: keyEditName,
+        identify: AppKeys.key_edit_name,
+        keyTarget: AppKeys.keyEditName,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -267,8 +245,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_delete_card",
-        keyTarget: keyDeleteCard,
+        identify: AppKeys.key_delete_card,
+        keyTarget: AppKeys.keyDeleteCard,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -285,8 +263,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_card_reorder",
-        keyTarget: keyCard,
+        identify: AppKeys.key_card_reorder,
+        keyTarget: AppKeys.keyCard,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -305,8 +283,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_save_data",
-        keyTarget: keySaveData,
+        identify: AppKeys.key_save_data,
+        keyTarget: AppKeys.keySaveData,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -325,8 +303,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_add_item",
-        keyTarget: keyAddItem,
+        identify: AppKeys.key_add_item,
+        keyTarget: AppKeys.keyAddItem,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -345,8 +323,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_toggle_detailed_mode",
-        keyTarget: keyToggleDetailedMode,
+        identify: AppKeys.key_toggle_detailed_mode,
+        keyTarget: AppKeys.keyToggleDetailedMode,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -360,8 +338,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_save_to_file",
-        keyTarget: keySaveToFile,
+        identify: AppKeys.key_save_to_file,
+        keyTarget: AppKeys.keySaveToFile,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -375,8 +353,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_delete_all",
-        keyTarget: keyDeleteAll,
+        identify: AppKeys.key_delete_all,
+        keyTarget: AppKeys.keyDeleteAll,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -390,8 +368,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_info",
-        keyTarget: keyInfo,
+        identify: AppKeys.key_info,
+        keyTarget: AppKeys.keyInfo,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -405,8 +383,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_switch_lang",
-        keyTarget: keySwitchLangConsumalbesScreen,
+        identify: AppKeys.key_switch_lang,
+        keyTarget: AppKeys.keySwitchLangConsumablesScreen,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -426,8 +404,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_grid_item",
-        keyTarget: keyGridItem,
+        identify: AppKeys.key_grid_item,
+        keyTarget: AppKeys.keyGridItem,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
@@ -446,8 +424,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_switch_list_grid",
-        keyTarget: keySwitchListGrid,
+        identify: AppKeys.key_switch_list_grid,
+        keyTarget: AppKeys.keySwitchListGrid,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
@@ -461,8 +439,8 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: "key_switch_lang",
-        keyTarget: keySwitchLangDashboardScreen,
+        identify: AppKeys.key_switch_lang,
+        keyTarget: AppKeys.keySwitchLangDashboardScreen,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [

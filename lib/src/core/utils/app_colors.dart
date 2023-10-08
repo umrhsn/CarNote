@@ -54,6 +54,8 @@ class AppColors {
   static const Color iconLight = Color(0xff54AEFF);
   static const Color iconDark = Color(0xff7D8590);
 
+  static Color getIconColor(BuildContext context) => context.isLight ? iconLight : iconDark;
+
   /// TextFields
   static Color getAppBarTextFieldLabel(BuildContext context) => context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);
 
@@ -68,10 +70,17 @@ class AppColors {
 
   static Color getDisabledTextFieldFill(BuildContext context) => context.isLight ? _disabledTextFieldLight : _disabledTextFieldDark;
 
-  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
+  static Color getLastChangedAndChangeIntervalLabelColorIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != ''
           ? getErrorColor(context)
           : cubit.lastChangedAtFocuses[index].hasFocus
+              ? getTextFieldBorderAndLabelFocused(context)
+              : getTextFieldBorderAndLabel(context);
+
+  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != ''
+          ? getErrorColor(context)
+          : cubit.lastChangedFocus.hasFocus
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
@@ -82,14 +91,23 @@ class AppColors {
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
-  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorderIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != '' ? cubit.getErrorBorder(context) : cubit.getFocusedBorder(context);
 
-  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalFocusedBorder(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getFocusedBorder(context);
+
+  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorderIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getLastChangedKmValidatingText(context, index).data != '' ? cubit.getErrorBorder(context) : cubit.getDefaultBorder(context);
 
-  static Color getChangeIntervalLabelColor(BuildContext context, int index, ConsumableCubit cubit) =>
+  static OutlineInputBorder getLastChangedAndChangeIntervalEnabledBorder(BuildContext context, ConsumableCubit cubit) =>
+      cubit.getAddLastChangedKmValidatingText(context).data != '' ? cubit.getErrorBorder(context) : cubit.getDefaultBorder(context);
+
+  static Color getChangeIntervalLabelColorIndexed(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.changeIntervalFocuses[index].hasFocus ? getTextFieldBorderAndLabelFocused(context) : getTextFieldBorderAndLabel(context);
+
+  static Color getChangeIntervalLabelColor(BuildContext context, ConsumableCubit cubit) =>
+      cubit.changeIntervalFocus.hasFocus ? getTextFieldBorderAndLabelFocused(context) : getTextFieldBorderAndLabel(context);
 
   static OutlineInputBorder getRemainingKmDisabledBorder(BuildContext context, int index, ConsumableCubit cubit) =>
       cubit.getRemainingKmValidatingText(context, index).data != '' && !cubit.isNormalText(index)
@@ -134,12 +152,12 @@ class AppColors {
   static const Color _cardWarningLight = Color(0xfffffae9);
   static const Color _cardWarningDark = Color(0xff2f2e1b);
 
-  static Color _getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
+  static Color getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
 
   static Color getCardErrorColor(BuildContext context) => context.isLight ? _cardErrorLight : _cardErrorDark;
 
   static Color getCardConsumableItemColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
-      cubit.isNormalText(index) ? _getCardNormalColor(context) : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
+      cubit.isNormalText(index) ? getCardNormalColor(context) : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
 
   static Color _getCardConsumableItemAbnormalColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
       cubit.isErrorText(index) || cubit.isConsiderText(index)
@@ -151,11 +169,11 @@ class AppColors {
           ? context.isLight
               ? _cardErrorLight
               : _cardErrorDark
-          : _getCardNormalColor(context);
+          : getCardNormalColor(context);
 
   static Color _getCardWarningColor(BuildContext context, {required ConsumableCubit cubit, required int index}) => cubit.isWarningText(index)
       ? context.isLight
           ? _cardWarningLight
           : _cardWarningDark
-      : _getCardNormalColor(context);
+      : getCardNormalColor(context);
 }

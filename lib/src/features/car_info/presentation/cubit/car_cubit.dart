@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -19,23 +20,23 @@ class CarCubit extends Cubit<CarState> {
 
   /// Main fields
   final TextEditingController carTypeController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
-          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.type.isNotEmpty
-              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.type
+      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
+          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.type.isNotEmpty
+              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.type
               : null
           : null);
 
   final TextEditingController modelYearController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
-          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.modelYear != 0
-              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.modelYear.toString()
+      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
+          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.modelYear != 0
+              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.modelYear.toString()
               : null
           : null);
 
   final TextEditingController currentKmController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppStrings.carBox) != null
-          ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm != 0
-              ? DatabaseHelper.carBox.get(AppStrings.carBox)!.currentKm.toThousands()
+      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
+          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm != 0
+              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm.toThousands()
               : null
           : null);
 
@@ -46,7 +47,7 @@ class CarCubit extends Cubit<CarState> {
   void navigateToConsumablesScreen(BuildContext context) {
     SharedPreferences prefs = di.sl<SharedPreferences>();
 
-    if (prefs.getBool(AppStrings.prefsBoolSeen) ?? false) {
+    if (prefs.getBool(AppKeys.prefsBoolSeen) ?? false) {
       Navigator.pushReplacementNamed(context, Routes.consumablesRoute);
     } else {
       BotToast.showText(text: AppStrings.somethingWentWrong(context));

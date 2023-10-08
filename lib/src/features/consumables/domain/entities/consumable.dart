@@ -1,5 +1,5 @@
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:hive/hive.dart';
 
 part 'consumable.g.dart';
@@ -20,5 +20,5 @@ class Consumable extends HiveObject {
     required this.remainingKm,
   });
 
-  static int getCount() => DatabaseHelper.consumableBox.get(AppStrings.consumableBox)!.length;
+  static int getCount() => DatabaseHelper.consumableBox.get(AppKeys.consumableBox)!.length;
 }

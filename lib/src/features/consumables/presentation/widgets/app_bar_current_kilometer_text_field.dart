@@ -1,6 +1,6 @@
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -18,7 +18,7 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      key: AppTourService.keyAppBarTextField,
+      key: AppKeys.keyAppBarTextField,
       focusNode: consumableCubit.currentKmFocus,
       cursorColor: AppColors.getTextFieldBorderAndLabel(context),
       controller: consumableCubit.currentKmController,

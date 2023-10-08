@@ -1,8 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_button.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_button_with_icon.dart';
@@ -21,14 +21,14 @@ class BottomButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+    _list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+      padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
       child: Row(
         children: [
           Expanded(
-            key: AppTourService.keySaveData,
+            key: AppKeys.keySaveData,
             child: AnimatedButton(
               text: AppStrings.btnSave(context),
               btnEnabled: consumableCubit.shouldEnableButtons(context) && _list!.isNotEmpty,
@@ -38,7 +38,7 @@ class BottomButtons extends StatelessWidget {
           ),
           const SizedBox(width: AppDimens.sizedBox10),
           AnimatedButtonWithIcon(
-            key: AppTourService.keyAddItem,
+            key: AppKeys.keyAddItem,
             icon: Icons.add,
             btnEnabled: consumableCubit.shouldEnableButtons(context),
             onPressed: () => Navigator.pushNamed(context, Routes.addConsumableRoute),

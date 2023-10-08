@@ -1,7 +1,7 @@
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
@@ -24,9 +24,9 @@ class LastChangedTextFormField extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.only(end: AppDimens.edge8),
+            padding: const EdgeInsetsDirectional.only(end: AppDimens.padding8),
             child: TextFormField(
-              key: index == 0 ? AppTourService.keyTextFieldLastChanged : null,
+              key: index == 0 ? AppKeys.keyTextFieldLastChanged : null,
               controller: cubit.lastChangedAtControllers[index],
               focusNode: cubit.lastChangedAtFocuses[index],
               cursorColor: AppColors.getTextFieldBorderAndLabelFocused(context),
@@ -36,11 +36,11 @@ class LastChangedTextFormField extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: AppStrings.lastChangedAtLabel(context),
                 floatingLabelStyle: TextStyle(
-                  color: AppColors.getLastChangedAndChangeIntervalLabelColor(context, index, cubit),
+                  color: AppColors.getLastChangedAndChangeIntervalLabelColorIndexed(context, index, cubit),
                   fontWeight: FontWeight.bold,
                 ),
-                focusedBorder: AppColors.getLastChangedAndChangeIntervalFocusedBorder(context, index, cubit),
-                enabledBorder: AppColors.getLastChangedAndChangeIntervalEnabledBorder(context, index, cubit),
+                focusedBorder: AppColors.getLastChangedAndChangeIntervalFocusedBorderIndexed(context, index, cubit),
+                enabledBorder: AppColors.getLastChangedAndChangeIntervalEnabledBorderIndexed(context, index, cubit),
               ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(AppNums.lengthLimit9),

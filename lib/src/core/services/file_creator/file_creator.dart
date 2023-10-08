@@ -3,10 +3,11 @@ import 'dart:typed_data';
 import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/features/car_info/domain/entities/car.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:car_note/injection_container.dart' as di;
 
@@ -29,14 +30,14 @@ class FileCreator {
   static String get fileName => _fileName;
 
   static String get _fileData {
-    Car? car = DatabaseHelper.carBox.get(AppStrings.carBox);
+    Car? car = DatabaseHelper.carBox.get(AppKeys.carBox);
     ConsumableCubit cubit = di.sl<ConsumableCubit>();
 
     String data =
         '${enLocale ? 'Current kilometer' : 'الكيلومتر الحالي'}: ${enLocale ? car!.currentKm.toThousands() : car!.currentKm.toThousands().toArabicNumerals()}\n';
 
     for (int index = 0; index < Consumable.getCount(); index++) {
-      Consumable? item = DatabaseHelper.consumableBox.get(AppStrings.consumableBox)![index];
+      Consumable? item = DatabaseHelper.consumableBox.get(AppKeys.consumableBox)![index];
       if (item != null) {
         if (item.lastChangedAt != 0 || item.changeInterval != 0) {
           data += '\n${item.name}:${cubit.isErrorText(index) ? enLocale ? ' (Exceeded)' : ' (تم التجاوز)' : ''}'

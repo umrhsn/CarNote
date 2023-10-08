@@ -2,7 +2,7 @@ import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/features/splash/presentation/cubit/locale_cubit.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';

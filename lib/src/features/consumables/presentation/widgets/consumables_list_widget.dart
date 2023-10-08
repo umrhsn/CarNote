@@ -1,8 +1,7 @@
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
-import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_item_widget/consumable_item_widget.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/empty_list_widget.dart';
@@ -21,24 +20,32 @@ class ConsumablesListWidget extends StatefulWidget {
 
 class _ConsumablesListWidgetState extends State<ConsumablesListWidget> {
   @override
+  void initState() {
+    widget.list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    widget.list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox)!;
+
     return Expanded(
-      flex: 1000,
-      child: widget.list != null && widget.list!.isEmpty
-          ? const EmptyListWidget()
+      flex: AppDimens.flex1000,
+      child: widget.list!.isEmpty
+          ? EmptyListWidget(list: widget.list)
           : Scrollbar(
               interactive: true,
               thumbVisibility: false,
               trackVisibility: false,
               child: Padding(
-                padding: const EdgeInsetsDirectional.only(start: AppDimens.edge10, bottom: AppDimens.edge15, end: AppDimens.edge10),
+                padding: const EdgeInsetsDirectional.only(start: AppDimens.padding10, bottom: AppDimens.padding15, end: AppDimens.padding10),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(AppDimens.borderRadius15)),
                   child: ReorderableListView.builder(
-                      key: AppTourService.keyList,
+                      key: AppKeys.keyList,
                       itemCount: Consumable.getCount(),
                       itemBuilder: (context, index) {
-                        widget.list = DatabaseHelper.consumableBox.get(AppStrings.consumableBox);
+                        widget.list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox)!;
                         Consumable item = widget.list![index];
                         return AnimationConfiguration.staggeredList(
                           key: ValueKey(index),
@@ -46,7 +53,7 @@ class _ConsumablesListWidgetState extends State<ConsumablesListWidget> {
                           duration: const Duration(milliseconds: AppNums.durationCardAnimation),
                           child: SlideAnimation(
                             child: FadeInAnimation(
-                              child: ConsumableItemWidget(key: index == 0 ? AppTourService.keyCard : null, index: index, name: item.name),
+                              child: ConsumableItemWidget(key: index == 0 ? AppKeys.keyCard : null, index: index, name: item.name),
                             ),
                           ),
                         );

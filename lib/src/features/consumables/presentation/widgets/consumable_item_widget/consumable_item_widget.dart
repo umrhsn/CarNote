@@ -1,8 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/consumable_name_text_field.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
@@ -36,7 +36,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool visible = di.sl<SharedPreferences>().getBool(AppStrings.prefsBoolDetailedModeOn) ?? true;
+    bool visible = di.sl<SharedPreferences>().getBool(AppKeys.prefsBoolDetailedModeOn) ?? true;
 
     _cubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
     _cubit.calculateWarningDifference(widget.index);
@@ -47,11 +47,11 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
           ? AppColors.getCardErrorColor(context)
           : AppColors.getCardConsumableItemColor(context, cubit: _cubit, index: widget.index),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+        padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsetsDirectional.only(top: AppDimens.edge20, bottom: AppDimens.edge10, start: AppDimens.edge10),
+              padding: const EdgeInsetsDirectional.only(top: AppDimens.padding20, bottom: AppDimens.padding10, start: AppDimens.padding10),
               child: Row(
                 children: [
                   !_editing
@@ -98,13 +98,13 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                   _cubit.consumableNameController.text = '';
                                   setState(() => _editing = true);
                                 },
-                                icon: Icon(Icons.edit, key: widget.index == 0 ? AppTourService.keyEditName : null))
+                                icon: Icon(Icons.edit, key: widget.index == 0 ? AppKeys.keyEditName : null))
                             : const SizedBox(),
                         IconButton(
                           onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
                           icon: Icon(
                             Icons.delete,
-                            key: widget.index == 0 ? AppTourService.keyDeleteCard : null,
+                            key: widget.index == 0 ? AppKeys.keyDeleteCard : null,
                           ),
                         ),
                       ],
@@ -116,7 +116,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
             Visibility(
               visible: visible,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+                padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
                 child: Column(
                   children: [
                     const SizedBox(height: AppDimens.sizedBox10),
@@ -134,7 +134,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
             ),
             const SizedBox(height: AppDimens.sizedBox10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppDimens.edge10),
+              padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
               child: RemainingKilometerTextFormField(cubit: _cubit, index: widget.index),
             ),
             const SizedBox(height: AppDimens.sizedBox20),

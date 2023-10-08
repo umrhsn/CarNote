@@ -2,13 +2,15 @@ import 'package:car_note/src/features/car_info/presentation/pages/car_info_scree
 import 'package:car_note/src/features/consumables/presentation/pages/add_consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/pages/consumables_screen.dart';
 import 'package:car_note/src/features/info/presentation/pages/dashboard_screen.dart';
-import 'package:car_note/src/features/splash/presentation/pages/language_selection_screen.dart';
-import 'package:car_note/src/features/splash/presentation/pages/splash_screen.dart';
+import 'package:car_note/src/features/intro/presentation/pages/language_selection_screen.dart';
+import 'package:car_note/src/features/intro/presentation/pages/onboarding_screen.dart';
+import 'package:car_note/src/features/intro/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
   static const String initialRoute = '/';
-  static const String chooseLanguageRoute = 'choose_language';
+  static const String chooseLanguageRoute = '/choose_language';
+  static const String onboardingRoute = '/onboarding';
   static const String carInfoRoute = '/car_info';
   static const String consumablesRoute = '/consumables_screen';
   static const String addConsumableRoute = '/add_consumable';
@@ -23,6 +25,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: ((context) => const SplashScreen()));
       case Routes.chooseLanguageRoute:
         return MaterialPageRoute(builder: ((context) => const LanguageSelectionScreen()));
+      case Routes.onboardingRoute:
+        return MaterialPageRoute(builder: ((context) => const OnboardingScreen()));
       case Routes.carInfoRoute:
         return MaterialPageRoute(builder: ((context) => const CarInfoScreen()));
       case Routes.consumablesRoute:
