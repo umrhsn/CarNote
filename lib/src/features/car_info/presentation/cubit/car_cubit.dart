@@ -1,7 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
-import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:equatable/equatable.dart';
@@ -19,26 +17,9 @@ class CarCubit extends Cubit<CarState> {
   static CarCubit get(BuildContext context) => BlocProvider.of<CarCubit>(context);
 
   /// Main fields
-  final TextEditingController carTypeController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
-          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.type.isNotEmpty
-              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.type
-              : null
-          : null);
-
-  final TextEditingController modelYearController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
-          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.modelYear != 0
-              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.modelYear.toString()
-              : null
-          : null);
-
-  final TextEditingController currentKmController = TextEditingController(
-      text: DatabaseHelper.carBox.get(AppKeys.carBox) != null
-          ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm != 0
-              ? DatabaseHelper.carBox.get(AppKeys.carBox)!.currentKm.toThousands()
-              : null
-          : null);
+  final TextEditingController carTypeController = TextEditingController();
+  final TextEditingController modelYearController = TextEditingController();
+  final TextEditingController currentKmController = TextEditingController();
 
   final FocusNode carTypeFocus = FocusNode();
   final FocusNode modelYearFocus = FocusNode();

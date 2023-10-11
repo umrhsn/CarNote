@@ -1,50 +1,57 @@
 import 'package:car_note/src/core/services/form_validation/validation_item.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final String hintText;
-  final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final TextAlign textAlign;
   final List<TextInputFormatter>? inputFormatters;
   final ValidationItem? validationItem;
   final void Function(String? value)? validateItemForm;
-  final void Function(String)? onFieldSubmitted;
-  final TextStyle? style;
   final void Function()? onEditingComplete;
+  final void Function(String)? onFieldSubmitted;
+  final String? Function(String?)? validator;
+  final TextStyle? style;
 
   const CustomTextFormField({
     Key? key,
     required this.controller,
-    required this.focusNode,
+    this.focusNode,
     required this.hintText,
+    this.keyboardType = TextInputType.number,
     this.textInputAction = TextInputAction.next,
-    this.keyboardType = TextInputType.text,
+    this.textAlign = TextAlign.center,
     this.inputFormatters,
+    this.onEditingComplete,
     this.validationItem,
     this.validateItemForm,
     this.onFieldSubmitted,
+    this.validator,
     this.style,
-    this.onEditingComplete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: AppDimens.padding8),
       child: TextFormField(
         controller: controller,
         focusNode: focusNode,
-        keyboardType: keyboardType,
         textInputAction: textInputAction,
+        keyboardType: keyboardType,
+        textAlign: textAlign,
         inputFormatters: inputFormatters,
         decoration: InputDecoration(hintText: hintText, errorText: validationItem!.error),
         onChanged: (String? value) => validateItemForm!(value),
         onFieldSubmitted: onFieldSubmitted,
         style: style,
         onEditingComplete: onEditingComplete,
+        validator: validator,
       ),
     );
   }
