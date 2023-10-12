@@ -23,6 +23,7 @@ class CurrentKilometerTextFormField extends StatelessWidget {
     return CustomTextFormField(
       controller: carCubit.currentKmController,
       focusNode: carCubit.currentKmFocus,
+      textAlign: TextAlign.start,
       textInputAction: TextInputAction.done,
       inputFormatters: [
         LengthLimitingTextInputFormatter(AppNums.lengthLimit9),
