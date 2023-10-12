@@ -1,13 +1,15 @@
-import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/onboarding_screen/pager_widget.dart';
-import 'package:flutter/material.dart';
 
 class AppLists {
+  /// Localizations
+  static List<String> _translateList(context, String stringKey) => AppLocalizations.of(context)!.translateList(stringKey)!;
+
   static List<String> get consumables => LocaleCubit.currentLangCode == AppStrings.ar ? consumablesArabicList : consumablesEnglishList;
 
   static final List<String> consumablesEnglishList = [
@@ -40,15 +42,15 @@ class AppLists {
     'تيل الفرامل'
   ];
 
-  static List<DashboardItem> dashboardItems(BuildContext context) =>
+  static List<DashboardItem> dashboardItems(context) =>
       List.generate(
         AssetManager.warningSymbols.length,
         (index) => DashboardItem(
           category: 1,
           image: AssetManager.warningSymbols[index],
-          title: AppStrings.warningTitles(context)[index],
-          description: AppStrings.warningDescriptions(context)[index],
-          advice: AppStrings.warningAdvices(context)[index],
+          title: _warningTitles(context)[index],
+          description: _warningDescriptions(context)[index],
+          advice: _warningAdvices(context)[index],
           severity: _warningSeverities[index],
         ),
       ) +
@@ -57,9 +59,9 @@ class AppLists {
         (index) => DashboardItem(
           category: 2,
           image: AssetManager.advisorySymbols[index],
-          title: AppStrings.advisoryTitles(context)[index],
-          description: AppStrings.advisoryDescriptions(context)[index],
-          advice: AppStrings.advisoryAdvices(context)[index],
+          title: _advisoryTitles(context)[index],
+          description: _advisoryDescriptions(context)[index],
+          advice: _advisoryAdvices(context)[index],
           severity: _advisorySeverities[index],
         ),
       ) +
@@ -68,12 +70,24 @@ class AppLists {
         (index) => DashboardItem(
           category: 3,
           image: AssetManager.infoSymbols[index],
-          title: AppStrings.infoTitles(context)[index],
-          description: AppStrings.infoDescriptions(context)[index],
-          advice: AppStrings.infoAdvices(context)[index],
+          title: _infoTitles(context)[index],
+          description: _infoDescriptions(context)[index],
+          advice: _infoAdvices(context)[index],
           severity: _infoSeverities[index],
         ),
       );
+
+  static List<String> _warningTitles(context) => _translateList(context, AppKeys.warning_titles);
+  static List<String> _advisoryTitles(context) => _translateList(context, AppKeys.advisory_titles);
+  static List<String> _infoTitles(context) => _translateList(context, AppKeys.info_titles);
+
+  static List<String> _warningDescriptions(context) => _translateList(context, AppKeys.warning_descriptions);
+  static List<String> _advisoryDescriptions(context) => _translateList(context, AppKeys.advisory_descriptions);
+  static List<String> _infoDescriptions(context) => _translateList(context, AppKeys.info_descriptions);
+
+  static List<String> _warningAdvices(context) => _translateList(context, AppKeys.warning_advices);
+  static List<String> _advisoryAdvices(context) => _translateList(context, AppKeys.advisory_advices);
+  static List<String> _infoAdvices(context) => _translateList(context, AppKeys.info_advices);
 
   static final List<int> _warningSeverities = [9, 9, 9, 8, 8, 7, 4, 7, 3, 8, 9, 9, 9, 9, 1, 1, 2, 4, 9, 1, 1, 7, 7, 8, 9, 7, 7, 9];
   static final List<int> _advisorySeverities = [
@@ -168,11 +182,11 @@ class AppLists {
   /// OnboardingScreen
   static final int onboardingPagesCount = AssetManager.onboarding.length ~/ 4; // 16 / 4 = 4
 
-  static List<PageData> onboardingPages(BuildContext context) => List.generate(
+  static List<PageData> onboardingPages(context) => List.generate(
         onboardingPagesCount,
         (index) => PageData(
-          title: AppStrings.translateList(context, AppKeys.onboarding_titles)[index],
-          subtitle: AppStrings.translateList(context, AppKeys.onboarding_subtitles)[index],
+          title: _translateList(context, AppKeys.onboarding_titles)[index],
+          subtitle: _translateList(context, AppKeys.onboarding_subtitles)[index],
           image: LocaleCubit.currentLangCode == AppStrings.ar
               ? context.isLight
                   ? AssetManager.onboarding[index]
@@ -184,14 +198,14 @@ class AppLists {
       );
 
   // FIXME: these methods were functional before switching lists to json files
-  static void sortAlphabetically(BuildContext context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
+  static void sortAlphabetically(context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
 
-  static void sortCategories(BuildContext context) {
+  static void sortCategories(context) {
     sortAlphabetically(context);
     dashboardItems(context).sort((a, b) => a.category.compareTo(b.category));
   }
 
-  static void sortSeverities(BuildContext context) {
+  static void sortSeverities(context) {
     sortCategories(context);
     dashboardItems(context).sort((a, b) => b.severity.compareTo(a.severity));
   }
