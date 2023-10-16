@@ -1,6 +1,8 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_input_borders.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_texts.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +33,14 @@ class RemainingKilometerTextFormField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: cubit.isErrorText(index) ? AppStrings.remainingKmErrorLabel(context) : AppStrings.remainingKmNormalWarningLabel(context),
             fillColor: AppColors.getDisabledTextFieldFill(context),
-            floatingLabelStyle: TextStyle(color: AppColors.getRemainingKmLabelColor(context, index, cubit), fontWeight: FontWeight.bold),
-            disabledBorder: AppColors.getRemainingKmDisabledBorder(context, index, cubit),
+            floatingLabelStyle:
+                TextStyle(color: AppColors.getRemainingKmLabelColor(context, cubit: cubit, index: index), fontWeight: FontWeight.bold),
+            disabledBorder: AppInputBorders.getRemainingKmDisabledBorder(context, cubit: cubit, index: index),
           ),
         ),
         Align(
           alignment: AlignmentDirectional.centerStart,
-          child: cubit.getRemainingKmValidatingText(context, index),
+          child: AppTexts.getRemainingKmValidatingText(context, cubit: cubit, index: index),
         )
       ],
     );

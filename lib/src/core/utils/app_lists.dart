@@ -1,14 +1,16 @@
 import 'package:car_note/src/config/locale/app_localizations.dart';
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/onboarding_screen/pager_widget.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppLists {
   /// Localizations
-  static List<String> _translateList(context, String stringKey) => AppLocalizations.of(context)!.translateList(stringKey)!;
+  static List<String> _translateList(BuildContext context, String stringKey) => AppLocalizations.of(context)!.translateList(stringKey)!;
 
   static List<String> get consumables => LocaleCubit.currentLangCode == AppStrings.ar ? consumablesArabicList : consumablesEnglishList;
 
@@ -42,7 +44,7 @@ class AppLists {
     'تيل الفرامل'
   ];
 
-  static List<DashboardItem> dashboardItems(context) =>
+  static List<DashboardItem> dashboardItems(BuildContext context) =>
       List.generate(
         AssetManager.warningSymbols.length,
         (index) => DashboardItem(
@@ -77,17 +79,23 @@ class AppLists {
         ),
       );
 
-  static List<String> _warningTitles(context) => _translateList(context, AppKeys.warning_titles);
-  static List<String> _advisoryTitles(context) => _translateList(context, AppKeys.advisory_titles);
-  static List<String> _infoTitles(context) => _translateList(context, AppKeys.info_titles);
+  static List<String> _warningTitles(BuildContext context) => _translateList(context, AppKeys.warning_titles);
 
-  static List<String> _warningDescriptions(context) => _translateList(context, AppKeys.warning_descriptions);
-  static List<String> _advisoryDescriptions(context) => _translateList(context, AppKeys.advisory_descriptions);
-  static List<String> _infoDescriptions(context) => _translateList(context, AppKeys.info_descriptions);
+  static List<String> _advisoryTitles(BuildContext context) => _translateList(context, AppKeys.advisory_titles);
 
-  static List<String> _warningAdvices(context) => _translateList(context, AppKeys.warning_advices);
-  static List<String> _advisoryAdvices(context) => _translateList(context, AppKeys.advisory_advices);
-  static List<String> _infoAdvices(context) => _translateList(context, AppKeys.info_advices);
+  static List<String> _infoTitles(BuildContext context) => _translateList(context, AppKeys.info_titles);
+
+  static List<String> _warningDescriptions(BuildContext context) => _translateList(context, AppKeys.warning_descriptions);
+
+  static List<String> _advisoryDescriptions(BuildContext context) => _translateList(context, AppKeys.advisory_descriptions);
+
+  static List<String> _infoDescriptions(BuildContext context) => _translateList(context, AppKeys.info_descriptions);
+
+  static List<String> _warningAdvices(BuildContext context) => _translateList(context, AppKeys.warning_advices);
+
+  static List<String> _advisoryAdvices(BuildContext context) => _translateList(context, AppKeys.advisory_advices);
+
+  static List<String> _infoAdvices(BuildContext context) => _translateList(context, AppKeys.info_advices);
 
   static final List<int> _warningSeverities = [9, 9, 9, 8, 8, 7, 4, 7, 3, 8, 9, 9, 9, 9, 1, 1, 2, 4, 9, 1, 1, 7, 7, 8, 9, 7, 7, 9];
   static final List<int> _advisorySeverities = [
@@ -182,7 +190,7 @@ class AppLists {
   /// OnboardingScreen
   static final int onboardingPagesCount = AssetManager.onboarding.length ~/ 4; // 16 / 4 = 4
 
-  static List<PageData> onboardingPages(context) => List.generate(
+  static List<PageData> onboardingPages(BuildContext context) => List.generate(
         onboardingPagesCount,
         (index) => PageData(
           title: _translateList(context, AppKeys.onboarding_titles)[index],
@@ -198,14 +206,14 @@ class AppLists {
       );
 
   // FIXME: these methods were functional before switching lists to json files
-  static void sortAlphabetically(context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
+  static void sortAlphabetically(BuildContext context) => dashboardItems(context).sort((a, b) => a.title.compareTo(b.title));
 
-  static void sortCategories(context) {
+  static void sortCategories(BuildContext context) {
     sortAlphabetically(context);
     dashboardItems(context).sort((a, b) => a.category.compareTo(b.category));
   }
 
-  static void sortSeverities(context) {
+  static void sortSeverities(BuildContext context) {
     sortCategories(context);
     dashboardItems(context).sort((a, b) => b.severity.compareTo(a.severity));
   }
