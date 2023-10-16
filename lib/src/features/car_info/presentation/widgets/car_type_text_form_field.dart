@@ -19,6 +19,8 @@ class CarTypeTextFormField extends StatelessWidget {
     return CustomTextFormField(
       controller: carCubit.carTypeController,
       focusNode: carCubit.carTypeFocus,
+      keyboardType: TextInputType.text,
+      textAlign: TextAlign.start,
       hintText: AppStrings.carTypeHint(context),
       validationItem: validator.carType,
       validateItemForm: (value) => validator.validateCarTypeForm(value, context),

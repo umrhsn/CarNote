@@ -1,9 +1,11 @@
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_input_borders.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_texts.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,11 +38,11 @@ class LastChangedTextFormField extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: AppStrings.lastChangedAtLabel(context),
                 floatingLabelStyle: TextStyle(
-                  color: AppColors.getLastChangedAndChangeIntervalLabelColorIndexed(context, index, cubit),
+                  color: AppColors.getLastChangedAndChangeIntervalLabelColorIndexed(context, cubit: cubit, index: index),
                   fontWeight: FontWeight.bold,
                 ),
-                focusedBorder: AppColors.getLastChangedAndChangeIntervalFocusedBorderIndexed(context, index, cubit),
-                enabledBorder: AppColors.getLastChangedAndChangeIntervalEnabledBorderIndexed(context, index, cubit),
+                focusedBorder: AppInputBorders.getLastChangedAndChangeIntervalFocusedBorderIndexed(context, cubit: cubit, index: index),
+                enabledBorder: AppInputBorders.getLastChangedAndChangeIntervalEnabledBorderIndexed(context, cubit: cubit, index: index),
               ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(AppNums.lengthLimit9),
@@ -52,7 +54,7 @@ class LastChangedTextFormField extends StatelessWidget {
           ),
           Align(
             alignment: AlignmentDirectional.centerStart,
-            child: cubit.getLastChangedKmValidatingText(context, index),
+            child: AppTexts.getLastChangedKmValidatingText(context, cubit: cubit, index: index),
           ),
         ],
       ),

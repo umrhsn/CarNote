@@ -1,6 +1,7 @@
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_input_borders.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/text_fields/custom_text_form_field.dart';
@@ -34,11 +35,11 @@ class LastChangedTextFormField extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: AppStrings.lastChangedAtLabel(context),
                 floatingLabelStyle: TextStyle(
-                  color: AppColors.getLastChangedAndChangeIntervalLabelColor(context, cubit),
+                  color: AppColors.getLastChangedAndChangeIntervalLabelColor(context, cubit: cubit),
                   fontWeight: FontWeight.bold,
                 ),
-                focusedBorder: AppColors.getLastChangedAndChangeIntervalFocusedBorder(context, cubit),
-                enabledBorder: AppColors.getLastChangedAndChangeIntervalEnabledBorder(context, cubit),
+                focusedBorder: AppInputBorders.getLastChangedAndChangeIntervalFocusedBorder(context, cubit: cubit),
+                enabledBorder: AppInputBorders.getLastChangedAndChangeIntervalEnabledBorder(context, cubit: cubit),
               ),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(AppNums.lengthLimit9),

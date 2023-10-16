@@ -27,7 +27,7 @@ class ChangeIntervalTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: AppStrings.changeIntervalLabel(context),
           floatingLabelStyle: TextStyle(
-            color: AppColors.getChangeIntervalLabelColorIndexed(context, index, cubit),
+            color: AppColors.getChangeIntervalLabelColorIndexed(context, cubit: cubit, index: index),
             fontWeight: FontWeight.bold,
           ),
         ),

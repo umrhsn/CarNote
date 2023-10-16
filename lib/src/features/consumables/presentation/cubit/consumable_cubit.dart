@@ -4,6 +4,7 @@ import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/utils/app_texts.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -56,72 +57,14 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   final List<FocusNode> changeIntervalFocuses = [];
   final List<FocusNode> remainingKmFocuses = [];
 
-  /// Color controlling methods
-  Color getValidatingTextColor(BuildContext context, int index) => isNormalText(index)
-      ? AppColors.getHintColor(context)
-      : isWarningText(index)
-          ? AppColors.getWarningColor(context)
-          : AppColors.getErrorColor(context);
-
-  OutlineInputBorder getFocusedBorder(BuildContext context) => OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.getTextFieldBorderAndLabelFocused(context),
-          strokeAlign: 0,
-          width: 1.2,
-        ),
-      );
-
-  OutlineInputBorder getDefaultBorder(BuildContext context) => OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.getHintColor(context),
-          width: 1.2,
-          strokeAlign: 0,
-        ),
-      );
-
-  OutlineInputBorder getErrorBorder(BuildContext context) =>
-      OutlineInputBorder(borderSide: BorderSide(color: AppColors.getErrorColor(context), width: 2));
-
-  OutlineInputBorder getWarningBorder(BuildContext context) =>
-      OutlineInputBorder(borderSide: BorderSide(color: AppColors.getWarningColor(context), width: 2));
-
   bool shouldEnableButtons(BuildContext context) {
     for (int index = 0; index < lastChangedAtControllers.length; index++) {
-      if (currentKmController.text.isEmpty || getLastChangedKmValidatingText(context, index).data != '') {
+      if (currentKmController.text.isEmpty || AppTexts.getLastChangedKmValidatingText(context, cubit: ConsumableCubit.get(context), index: index).data != '') {
         return false;
       }
     }
     return true;
   }
-
-  /// Error and warning Text widgets
-  Text getCurrentKmValidatingText(BuildContext context) => Text(
-        _validateCurrentKilometer(context) ?? '',
-        style: TextStyle(
-          color: AppColors.getErrorColor(context),
-          height: _validateCurrentKilometer(context) != null ? 2 : 0,
-          fontSize: 11,
-        ),
-      );
-
-  Text getLastChangedKmValidatingText(BuildContext context, int index) => Text(
-        _validateLastChangedKilometer(index, context) ?? '',
-        style: TextStyle(
-          color: AppColors.getErrorColor(context),
-          height: _validateLastChangedKilometer(index, context) != null ? 2 : 0,
-          fontSize: 11,
-        ),
-      );
-
-  Text getRemainingKmValidatingText(BuildContext context, int index) => Text(
-        _validateRemainingKilometer(index, context) ?? '',
-        style: TextStyle(
-          fontFamily: AppStrings.fontFamily,
-          color: getValidatingTextColor(context, index),
-          height: _validateRemainingKilometer(index, context) != '' ? 2 : 0,
-          fontSize: 11,
-        ),
-      );
 
   /// Calculation and validation methods
   int _calculateRemainingKm(TextEditingController lastChangedAtKmController, TextEditingController changeIntervalController) {
@@ -151,7 +94,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
     emit(ValidatingItem());
     // FIXME
     for (int index = 0; index < Consumable.getCount(); index++) {
-      _validateLastChangedKilometer(index, context);
+      validateLastChangedKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
@@ -159,13 +102,13 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   void validateAllChangeKilometerFields(BuildContext context) {
     emit(ValidatingItem());
     for (int index = 0; index < Consumable.getCount(); index++) {
-      _validateRemainingKilometer(index, context);
+      validateRemainingKilometer(index, context);
     }
     emit(ValidatingComplete());
   }
 
   // current kilometer should not be empty
-  String? _validateCurrentKilometer(BuildContext context) {
+  String? validateCurrentKilometer(BuildContext context) {
     emit(ValidatingItem());
     if (currentKmController.text.isEmpty) return AppStrings.invalidInput(context);
     emit(ValidatingComplete());
@@ -173,7 +116,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   }
 
   // last changed kilometer should not exceed current kilometer
-  String? _validateLastChangedKilometer(int index, BuildContext context) {
+  String? validateLastChangedKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
     if (lastChangedAtControllers[index].text.isNotEmpty && currentKmController.text.isNotEmpty) {
       if (int.parse(lastChangedAtControllers[index].text.removeThousandSeparator()) > int.parse(currentKmController.text.removeThousandSeparator())) {
@@ -235,7 +178,7 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   // Gives an error message to the user if current kilometer exceeded change kilometer.
   // If exceeded; that means the user forgot to change the consumable item.
-  String? _validateRemainingKilometer(int index, BuildContext context) {
+  String? validateRemainingKilometer(int index, BuildContext context) {
     emit(ValidatingItem());
     if (isNormalText(index) || isWarningText(index)) {
       emit(ValidatingComplete());

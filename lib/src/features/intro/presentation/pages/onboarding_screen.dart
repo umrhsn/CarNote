@@ -64,6 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _buildPageIndicator(),
           _buildPageButtons(context),
           SizedBox(height: context.paddingBottom),
+          // const BannerAdWidget()
         ],
       );
 

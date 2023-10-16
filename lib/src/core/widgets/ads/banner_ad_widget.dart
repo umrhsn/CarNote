@@ -1,4 +1,4 @@
-// TODO: add this when the loading bug in Google AdMob is fixed
+// // TODO: add this when the loading bug in Google AdMob is fixed
 // import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -12,12 +12,11 @@
 //
 // class _BannerAdWidgetState extends State<BannerAdWidget> {
 //   BannerAd? _bannerAd;
+//   // ignore: unused_field
 //   bool _isLoaded = false;
 //
 // // TODO: replace this test ad unit with your own ad unit.
-//   final _adUnitId = Platform.isAndroid
-//       ? 'ca-app-pub-3940256099942544/6300978111'
-//       : 'ca-app-pub-3940256099942544/2934735716';
+//   final _adUnitId = Platform.isAndroid ? 'ca-app-pub-3940256099942544/6300978111' : 'ca-app-pub-3940256099942544/2934735716';
 //
 //   /// Loads a banner ad.
 //   void _loadAd(BuildContext context) {
@@ -53,12 +52,10 @@
 //       return Align(
 //         alignment: Alignment.bottomCenter,
 //         child: SafeArea(
-//           child: Center(
-//             child: SizedBox(
-//               width: _bannerAd!.size.width.toDouble(),
-//               height: _bannerAd!.size.height.toDouble(),
-//               child: AdWidget(ad: _bannerAd!),
-//             ),
+//           child: SizedBox(
+//             width: _bannerAd!.size.width.toDouble(),
+//             height: _bannerAd!.size.height.toDouble(),
+//             child: AdWidget(ad: _bannerAd!),
 //           ),
 //         ),
 //       );

@@ -93,13 +93,13 @@ class NotificationsHelper {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: index,
-            backgroundColor: cubit.getValidatingTextColor(context, index),
+            backgroundColor: AppColors.getValidatingTextColor(context, cubit: cubit, index: index),
             channelKey: AppStrings.notifChannelBasicKey,
             title: item.name,
             body: cubit.isErrorText(index)
                 ? '${AppStrings.remainingKmErrorLabel(context)} $remainingKm ${AppStrings.km(context)}'
                 : '$remainingKm ${AppStrings.km(context)} ${AppStrings.remaining(context)}',
-            color: cubit.getValidatingTextColor(context, index),
+            color: AppColors.getValidatingTextColor(context, cubit: cubit, index: index),
             badge: 0,
           ),
         );

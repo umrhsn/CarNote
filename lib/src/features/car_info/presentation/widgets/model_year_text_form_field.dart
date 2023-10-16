@@ -21,7 +21,7 @@ class ModelYearTextFormField extends StatelessWidget {
     return CustomTextFormField(
       controller: carCubit.modelYearController,
       focusNode: carCubit.modelYearFocus,
-      keyboardType: TextInputType.number,
+      textAlign: TextAlign.start,
       hintText: AppStrings.modelYearHint(context),
       inputFormatters: [
         LengthLimitingTextInputFormatter(AppNums.lengthLimit4),

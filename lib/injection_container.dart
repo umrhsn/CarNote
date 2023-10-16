@@ -9,28 +9,30 @@ import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get_it/get_it.dart';
 
-GetIt sl = GetIt.instance; // service locator instance
+final GetIt sl = GetIt.instance; // service locator instance
 
 Future<void> init() async {
-  /// features
-  // cubits
+  /* Features */
+
+  /// Cubits
+  sl.registerFactory<LocaleCubit>(() => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
   sl.registerFactory<CarCubit>(() => CarCubit());
   sl.registerFactory<ConsumableCubit>(() => ConsumableCubit());
-  sl.registerFactory<LocaleCubit>(() => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
 
-  // use cases
+  /// Use Cases
   sl.registerLazySingleton<GetSavedLangUseCase>(() => GetSavedLangUseCase(langRepository: sl()));
   sl.registerLazySingleton<ChangeLangUseCase>(() => ChangeLangUseCase(langRepository: sl()));
 
-  // repositories
+  /// Repositories
   sl.registerLazySingleton<LangRepository>(() => LangRepositoryImpl(langLocalDataSource: sl()));
 
-  // data sources
+  /// Data Sources
   sl.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSourceImpl(sharedPreferences: sl()));
 
-  /// ===========================================================================================
-  /// external
-  // shared preferences
+  /* =========================================================================================== */
+  /* External */
+
+  /// SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }
