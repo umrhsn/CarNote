@@ -1,5 +1,7 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class TitleText extends StatelessWidget {
@@ -13,7 +15,7 @@ class TitleText extends StatelessWidget {
       text,
       style: TextStyle(
         color: context.isLight ? Colors.black.withAlpha(950) : Colors.white.withAlpha(950),
-        fontSize: 40,
+        fontSize: Theme.of(context).textTheme.headlineLarge?.fontSize?.r,
         fontWeight: FontWeight.bold,
       ),
     );

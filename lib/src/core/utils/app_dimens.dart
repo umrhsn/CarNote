@@ -55,7 +55,7 @@ class AppDimens {
   static const double elevatedButtonHeight = 60;
 
   /// Images
-  static const double imageHeight100 = 100;
+  static const double imageHeight90 = 90;
 
   /// Border Radii
   static const double borderRadius10 = 10;

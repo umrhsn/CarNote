@@ -1,3 +1,4 @@
+import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
@@ -12,6 +13,7 @@ import 'package:car_note/src/features/car_info/presentation/widgets/model_year_t
 import 'package:car_note/src/features/car_info/presentation/widgets/switch_lang_button_widget.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CarInfoScreen extends StatefulWidget {
@@ -45,16 +47,16 @@ class _MyHomePageState extends State<CarInfoScreen> {
             child: SingleChildScrollView(
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.all(AppDimens.padding20),
+                  padding: EdgeInsets.all(AppDimens.padding20.r),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const LogoWidget(),
-                      const SizedBox(height: AppDimens.sizedBox20),
+                      SizedBox(height: AppDimens.sizedBox20.r),
                       CarTypeTextFormField(carCubit: carCubit, validator: validator),
                       ModelYearTextFormField(carCubit: carCubit, validator: validator),
                       CurrentKilometerTextFormField(carCubit: carCubit, validator: validator),
-                      const SizedBox(height: AppDimens.sizedBox15),
+                      SizedBox(height: AppDimens.sizedBox15.r),
                       ContinueButton(validator: validator, carCubit: carCubit),
                     ],
                   ),
