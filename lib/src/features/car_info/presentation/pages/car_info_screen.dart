@@ -1,4 +1,3 @@
-import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
