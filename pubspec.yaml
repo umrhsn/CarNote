@@ -34,8 +34,7 @@ dependencies:
   tutorial_coach_mark: ^1.2.9
   flutter_screenutil: ^5.9.0
   smooth_page_indicator: ^1.1.0
-#  TODO: add this when the loading bug in Google AdMob is fixed
-#  google_mobile_ads: ^3.0.0
+  google_mobile_ads: ^3.0.0
 
 dev_dependencies:
   flutter_test:

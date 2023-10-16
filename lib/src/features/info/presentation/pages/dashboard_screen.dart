@@ -6,6 +6,7 @@ import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
 import 'package:car_note/src/features/info/presentation/widgets/dashboard_symbols_card.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
@@ -187,7 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            // const BannerAdWidget()
+            const BannerAdWidget()
           ],
         ),
       ),
