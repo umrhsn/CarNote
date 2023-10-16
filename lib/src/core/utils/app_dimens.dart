@@ -12,6 +12,7 @@ class AppDimens {
   static const double padding10 = 10;
   static const double padding15 = 15;
   static const double padding20 = 20;
+  static const double padding70 = 70;
 
   /// SizedBoxes
   static const double sizedBox10 = 10;

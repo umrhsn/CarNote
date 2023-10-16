@@ -64,7 +64,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _buildPager(),
           _buildPageIndicator(),
           _buildPageButtons(context),
-          SizedBox(height: context.paddingBottom),
           const BannerAdWidget()
         ],
       );
@@ -99,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           pageSnapping: true,
           onPageChanged: (index) => _currentShowIndex = index,
           scrollDirection: Axis.horizontal,
-          children: List.generate(AppLists.onboardingPagesCount, (index) => PagePopup(data: AppLists.onboardingPages(context)[index])),
+          children: List.generate(AppLists.onboardingPagesCount, (index) => PagerWidget(data: AppLists.onboardingPages(context)[index])),
         ),
       );
 }
