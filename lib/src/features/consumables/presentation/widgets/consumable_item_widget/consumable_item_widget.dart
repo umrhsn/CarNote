@@ -141,7 +141,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
                 child: RemainingKilometerTextFormField(cubit: _cubit, index: widget.index),
               ),
-              const SizedBox(height: AppDimens.sizedBox8),
+              const SizedBox(height: AppDimens.sizedBox20),
             ],
           ),
         ),
