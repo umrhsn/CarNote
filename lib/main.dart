@@ -4,7 +4,6 @@ import 'package:car_note/src/core/services/notifications/notifications_helper.da
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:car_note/injection_container.dart' as di;
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +11,7 @@ void main() async {
   await di.init();
   await DatabaseHelper().init();
   NotificationsHelper().init();
-  MobileAds.instance.initialize();
+  // MobileAds.instance.initialize();
 
   runApp(const CarNote());
 }

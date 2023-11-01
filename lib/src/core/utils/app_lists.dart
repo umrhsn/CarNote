@@ -4,8 +4,8 @@ import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/features/info/domain/entities/dashboard_item.dart';
+import 'package:car_note/src/features/intro/domain/entities/onboarding_page.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
-import 'package:car_note/src/features/intro/presentation/widgets/onboarding_screen/pager_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppLists {
@@ -190,9 +190,9 @@ class AppLists {
   /// OnboardingScreen
   static final int onboardingPagesCount = AssetManager.onboarding.length ~/ 4; // 16 / 4 = 4
 
-  static List<PageData> onboardingPages(BuildContext context) => List.generate(
+  static List<OnboardingPage> onboardingPages(BuildContext context) => List.generate(
         onboardingPagesCount,
-        (index) => PageData(
+        (index) => OnboardingPage(
           title: _translateList(context, AppKeys.onboarding_titles)[index],
           subtitle: _translateList(context, AppKeys.onboarding_subtitles)[index],
           image: LocaleCubit.currentLangCode == AppStrings.ar

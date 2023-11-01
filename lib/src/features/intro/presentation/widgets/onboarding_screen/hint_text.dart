@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class HintText extends StatelessWidget {
   const HintText({
-    Key? key,
+    super.key,
     required this.text,
     this.alignment = Alignment.center,
     this.onTap,
     this.textAlign = TextAlign.center,
-  }) : super(key: key);
+  });
 
   final Alignment? alignment;
   final TextAlign? textAlign;

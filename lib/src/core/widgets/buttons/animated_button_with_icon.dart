@@ -8,11 +8,11 @@ class AnimatedButtonWithIcon extends StatefulWidget {
   final void Function()? onPressed;
 
   AnimatedButtonWithIcon({
-    Key? key,
+    super.key,
     required this.icon,
     this.btnEnabled = true,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedButtonWithIcon> createState() => _AnimatedButtonWithIconState();

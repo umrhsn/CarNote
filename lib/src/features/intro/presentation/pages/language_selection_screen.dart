@@ -2,7 +2,6 @@ import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
-import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/language_selection_screen_widgets/choose_language_text_widget.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/language_selection_screen_widgets/continue_button_widget.dart';
@@ -61,7 +60,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
               ),
             ),
           ),
-          const BannerAdWidget(),
+          // const BannerAdWidget(),
         ],
       ),
     );

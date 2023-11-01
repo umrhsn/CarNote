@@ -8,12 +8,15 @@ class AppDimens {
   static const double appBarHeight140 = 140;
 
   /// Paddings
+  static const double padding5 = 5;
   static const double padding8 = 8;
   static const double padding10 = 10;
   static const double padding15 = 15;
   static const double padding20 = 20;
+  static const double padding70 = 70;
 
   /// SizedBoxes
+  static const double sizedBox8 = 8;
   static const double sizedBox10 = 10;
   static const double sizedBox15 = 15;
   static const double sizedBox20 = 20;
@@ -54,7 +57,7 @@ class AppDimens {
   static const double elevatedButtonHeight = 60;
 
   /// Images
-  static const double imageHeight100 = 100;
+  static const double imageHeight90 = 90;
 
   /// Border Radii
   static const double borderRadius10 = 10;
