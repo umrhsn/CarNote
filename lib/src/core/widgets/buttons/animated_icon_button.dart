@@ -13,13 +13,13 @@ class AnimatedIconButton extends StatefulWidget {
   bool faIcon;
 
   AnimatedIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     this.btnEnabled = true,
     required this.onPressed,
     this.tooltip,
     this.faIcon = false,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedIconButton> createState() => _AnimatedIconButtonState();

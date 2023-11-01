@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class PagerWidget extends StatelessWidget {
   final OnboardingPage data;
 
-  const PagerWidget({Key? key, required this.data}) : super(key: key);
+  const PagerWidget({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {

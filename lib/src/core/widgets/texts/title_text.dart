@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TitleText extends StatelessWidget {
   String text;
 
-  TitleText({Key? key, required this.text}) : super(key: key);
+  TitleText({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {

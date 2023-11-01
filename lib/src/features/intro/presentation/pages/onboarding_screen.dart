@@ -7,7 +7,6 @@ import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
-import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_button.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/onboarding_screen/pager_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -64,7 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _buildPager(),
           _buildPageIndicator(),
           _buildPageButtons(context),
-          const BannerAdWidget()
+          // const BannerAdWidget()
         ],
       );
 

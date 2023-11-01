@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextStyle? style;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     this.focusNode,
     required this.hintText,
@@ -33,7 +33,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     this.validator,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

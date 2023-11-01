@@ -20,7 +20,7 @@ class ConsumableItemWidget extends StatefulWidget {
   final int index;
   final String name;
 
-  const ConsumableItemWidget({Key? key, required this.index, required this.name}) : super(key: key);
+  const ConsumableItemWidget({super.key, required this.index, required this.name});
 
   @override
   State<ConsumableItemWidget> createState() => ConsumableItemWidgetState();
