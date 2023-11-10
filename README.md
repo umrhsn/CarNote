@@ -1,6 +1,6 @@
 # Car Note
 ![feature_graphic_en](https://github.com/umrhsn/CarNote/assets/55505500/61bac443-ca7f-47e2-8de8-d0b21cc5058a)
-> A special app for your car made with Flutter.
+> A special app for your car made with [Flutter](https://flutter.dev/).
 > Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
@@ -8,14 +8,11 @@
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
-* [Setup](#setup)
-* [Usage](#usage)
+* [Dependencies](#dependencies)
 * [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
-<!-- * [License](#license) -->
-
 
 ## General Information
 Have you ever struggled with remembering when you have to replace / change items in your car, like engine oil, timing belt, etc...?
@@ -24,13 +21,12 @@ This app is designed just for you to make your life easier.
 
 
 ## Technologies Used
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- Clean Architecture.
+- BLoC state management.
+- Hive database.
 
 
 ## Features
-List the ready features here:
 - Add your car data.
 - Track your car's status.
 - Learn about dashboard lights.
@@ -40,19 +36,28 @@ List the ready features here:
 ![screenshots_github](https://github.com/umrhsn/CarNote/assets/55505500/28a3dcf3-1c03-421c-b729-83d5be485cfe)
 
 
-## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
-
-
-
-Proceed to describe how to install / setup one's local environment / get started with the project.
-
-
-## Usage
-How does one go about using it?
-Provide various use cases and code examples here.
-
-`write-your-code-here`
+## Dependencies
+- cupertino_icons: ^1.0.6
+- equatable: ^2.0.5
+- intl: ^0.18.1
+- font_awesome_flutter: ^10.6.0
+- flutter_bloc: ^8.1.3
+- provider: ^6.0.5
+- hive: ^2.2.3
+- hive_flutter: ^1.1.0
+- path_provider: ^2.1.1
+- shared_preferences: ^2.2.2
+- awesome_notifications: ^0.8.2
+- get_it: ^7.6.4
+- bot_toast: ^4.1.3
+- dartz: ^0.10.1
+- document_file_save_plus: ^2.0.0
+- cron: ^0.5.1
+- flutter_background_service: ^5.0.2
+- flutter_staggered_animations: ^1.1.1
+- tutorial_coach_mark: ^1.2.11
+- flutter_screenutil: ^5.9.0
+- smooth_page_indicator: ^1.1.0
 
 
 ## Project Status
@@ -60,8 +65,6 @@ Project is: _complete_.
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
 - Implement use cases for testing.
 
@@ -70,18 +73,9 @@ To do:
 
 
 ## Acknowledgements
-Give credit here.
-- This project was inspired by my friend Ahmed Yehia, a certified SAP Consultant.
-- This project used clean architecture based on [this tutorial](https://www.example.com](https://www.udemy.com/course/clean-architecture-in-flutter-arabic ).
-- Many thanks to...
+- This project was inspired by my friend [Ahmed Yehia](https://www.linkedin.com/in/ahmed-yehia-63b2661a5/), a certified SAP Consultant.
+- This project used clean architecture based on [this tutorial](https://www.udemy.com/course/clean-architecture-in-flutter-arabic).
 
 
 ## Contact
-Created by [@flynerdpl](https://www.flynerd.pl/) - feel free to contact me!
-
-
-<!-- Optional -->
-<!-- ## License -->
-<!-- This project is open source and available under the [... License](). -->
-
-<!-- You don't have to include all sections - just the one's relevant to your project -->
+Created by [Umar Hasan](https://www.linkedin.com/in/umrhsn/) - feel free to contact me!
