@@ -1,6 +1,6 @@
 # Car Note
 ![feature_graphic_en](https://github.com/umrhsn/CarNote/assets/55505500/61bac443-ca7f-47e2-8de8-d0b21cc5058a)
-> A special app for your car.
+> A special app for your car made with Flutter.
 > Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
@@ -43,6 +43,8 @@ List the ready features here:
 ## Setup
 What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
 
+
+
 Proceed to describe how to install / setup one's local environment / get started with the project.
 
 
@@ -54,25 +56,23 @@ Provide various use cases and code examples here.
 
 
 ## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: _complete_.
 
 
 ## Room for Improvement
 Include areas you believe need improvement / could be improved. Also add TODOs for future development.
 
 Room for improvement:
-- Improvement to be done 1
-- Improvement to be done 2
+- Implement use cases for testing.
 
 To do:
-- Feature to be added 1
-- Feature to be added 2
+- Implement car model default data.
 
 
 ## Acknowledgements
 Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
+- This project was inspired by my friend Ahmed Yehia, a certified SAP Consultant.
+- This project used clean architecture based on [this tutorial](https://www.example.com](https://www.udemy.com/course/clean-architecture-in-flutter-arabic ).
 - Many thanks to...
 
 
