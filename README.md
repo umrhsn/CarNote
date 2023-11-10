@@ -1,4 +1,5 @@
 # Car Note
+![feature_graphic_en](https://github.com/umrhsn/CarNote/assets/55505500/61bac443-ca7f-47e2-8de8-d0b21cc5058a)
 > A special app for your car.
 > Live demo [_here_](https://www.example.com). <!-- If you have the project hosted somewhere, include the link here. -->
 
