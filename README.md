@@ -37,8 +37,7 @@ List the ready features here:
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
+![screenshots_github](https://github.com/umrhsn/CarNote/assets/55505500/28a3dcf3-1c03-421c-b729-83d5be485cfe)
 
 
 ## Setup
