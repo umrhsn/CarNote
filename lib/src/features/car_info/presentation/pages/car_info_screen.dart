@@ -40,7 +40,6 @@ class _MyHomePageState extends State<CarInfoScreen> {
       appBar: AppBar(),
       body: Stack(
         children: [
-          SwitchLangButtonWidget(localeCubit: localeCubit),
           Center(
             child: SingleChildScrollView(
               child: SafeArea(
@@ -62,6 +61,7 @@ class _MyHomePageState extends State<CarInfoScreen> {
               ),
             ),
           ),
+          SwitchLangButtonWidget(localeCubit: localeCubit),
           // const BannerAdWidget(),
         ],
       ),

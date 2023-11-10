@@ -1,5 +1,7 @@
 import 'package:car_note/src/core/services/form_validation/validation_item.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -46,7 +48,10 @@ class CustomTextFormField extends StatelessWidget {
         keyboardType: keyboardType,
         textAlign: textAlign,
         inputFormatters: inputFormatters,
-        decoration: InputDecoration(hintText: hintText, errorText: validationItem!.error),
+        decoration: InputDecoration(
+            hintText: hintText,
+            errorText: validationItem!.error,
+            errorStyle: TextStyle(fontFamily: LocaleCubit.currentLangCode == AppStrings.en ? AppStrings.fontFamilyEn : AppStrings.fontFamilyAr)),
         onChanged: (String? value) => validateItemForm!(value),
         onFieldSubmitted: onFieldSubmitted,
         style: style,
