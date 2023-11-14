@@ -22,6 +22,7 @@ This app is designed just for you to make your life easier.
 
 ## Technologies Used
 - Clean Architecture.
+- Dependency Injection.
 - BLoC state management.
 - Hive database.
 
