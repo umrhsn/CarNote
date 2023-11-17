@@ -1,5 +1,5 @@
 # Car Note
-![feature_graphic_en](https://github.com/umrhsn/CarNote/assets/55505500/61bac443-ca7f-47e2-8de8-d0b21cc5058a)
+![feature_graphic_en](https://github.com/umrhsn/CarNote/assets/55505500/bad4f3ed-71b4-4c6b-b15e-9de8b96a27d7)
 > A special app for your car made with [Flutter](https://flutter.dev/).
 > Live demo [_here_](https://drive.google.com/file/d/19giAcufBPk1uVwB0XPbEUAxo8IJM5PfE/view?usp=sharing).
 
@@ -34,7 +34,7 @@ This app is designed just for you to make your life easier.
 
 
 ## Screenshots
-![screenshots_github](https://github.com/umrhsn/CarNote/assets/55505500/28a3dcf3-1c03-421c-b729-83d5be485cfe)
+![screenshots_github](https://github.com/umrhsn/CarNote/assets/55505500/5ab13079-1b3a-40e1-a232-eed88e7732c4)
 
 
 ## Dependencies
