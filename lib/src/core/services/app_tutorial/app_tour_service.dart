@@ -245,14 +245,30 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: AppKeys.key_delete_card,
-        keyTarget: AppKeys.keyDeleteCard,
+        identify: AppKeys.key_reset_card,
+        keyTarget: AppKeys.keyResetCard,
         alignSkip: AlignmentDirectional.topEnd,
         enableOverlayTab: true,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetDeleteCard(context),
+            builder: (context, controller) => Text(AppStrings.tourTargetResetItem(context),
+                style: const TextStyle(
+                  color: Colors.white,
+                )),
+          ),
+        ],
+      ),
+    );    targets.add(
+      TargetFocus(
+        identify: AppKeys.key_remove_card,
+        keyTarget: AppKeys.keyRemoveCard,
+        alignSkip: AlignmentDirectional.topEnd,
+        enableOverlayTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) => Text(AppStrings.tourTargetRemoveItem(context),
                 style: const TextStyle(
                   color: Colors.white,
                 )),
@@ -353,14 +369,29 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
-        identify: AppKeys.key_delete_all,
-        keyTarget: AppKeys.keyDeleteAll,
+        identify: AppKeys.key_reset_all_cards,
+        keyTarget: AppKeys.keyResetAllCards,
         alignSkip: AlignmentDirectional.bottomEnd,
         enableOverlayTab: true,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            builder: (context, controller) => Text(AppStrings.tourTargetDeleteAll(context), style: const TextStyle(color: Colors.white)),
+            builder: (context, controller) => Text(AppStrings.tourTargetResetAllCards(context), style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: AppKeys.key_remove_all_cards,
+        keyTarget: AppKeys.keyRemoveAllCards,
+        alignSkip: AlignmentDirectional.bottomEnd,
+        enableOverlayTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) => Text(AppStrings.tourTargetRemoveAllCards(context), style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),

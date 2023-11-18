@@ -105,10 +105,17 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                   icon: Icon(Icons.edit, key: widget.index == 0 ? AppKeys.keyEditName : null))
                               : const SizedBox(),
                           IconButton(
+                            onPressed: () => DialogHelper.showResetConsumableConfirmationDialog(context, widget.index),
+                            icon: Icon(
+                              Icons.restore_rounded,
+                              key: widget.index == 0 ? AppKeys.keyResetCard : null,
+                            ),
+                          ),
+                          IconButton(
                             onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
                             icon: Icon(
                               Icons.delete,
-                              key: widget.index == 0 ? AppKeys.keyDeleteCard : null,
+                              key: widget.index == 0 ? AppKeys.keyRemoveCard : null,
                             ),
                           ),
                         ],

@@ -1,4 +1,5 @@
 import 'package:car_note/src/core/services/form_validation/validation_item.dart';
+import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
@@ -49,9 +50,13 @@ class CustomTextFormField extends StatelessWidget {
         textAlign: textAlign,
         inputFormatters: inputFormatters,
         decoration: InputDecoration(
-            hintText: hintText,
-            errorText: validationItem!.error,
-            errorStyle: TextStyle(fontFamily: LocaleCubit.currentLangCode == AppStrings.en ? AppStrings.fontFamilyEn : AppStrings.fontFamilyAr)),
+          hintText: hintText,
+          errorText: validationItem!.error,
+          errorStyle: TextStyle(
+            color: AppColors.getErrorColor(context),
+            fontFamily: LocaleCubit.currentLangCode == AppStrings.en ? AppStrings.fontFamilyEn : AppStrings.fontFamilyAr,
+          ),
+        ),
         onChanged: (String? value) => validateItemForm!(value),
         onFieldSubmitted: onFieldSubmitted,
         style: style,

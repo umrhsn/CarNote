@@ -58,9 +58,13 @@ class AppStrings {
 
   static String nameNotEmpty(BuildContext context) => _translate(context, AppKeys.name_not_empty);
 
-  static String removedItem(BuildContext context) => _translate(context, AppKeys.removed_item_successfully);
+  static String resetItemSuccessfully(BuildContext context) => _translate(context, AppKeys.reset_item_successfully);
 
-  static String removedAllData(BuildContext context) => _translate(context, AppKeys.removed_all_data);
+  static String removedItemSuccessfully(BuildContext context) => _translate(context, AppKeys.removed_item_successfully);
+
+  static String resetAllCards(BuildContext context) => _translate(context, AppKeys.reset_all_data);
+
+  static String removedAllCards(BuildContext context) => _translate(context, AppKeys.removed_all_cards);
 
   static String itemAdded(BuildContext context) => _translate(context, AppKeys.item_added);
 
@@ -115,7 +119,9 @@ class AppStrings {
   /// Dialogs
   static String changedDataMsg(BuildContext context) => _translate(context, AppKeys.changed_data_msg);
 
-  static String sureToDeleteMsg(BuildContext context) => _translate(context, AppKeys.sure_to_delete);
+  static String sureToResetMsg(BuildContext context) => _translate(context, AppKeys.sure_to_reset);
+
+  static String sureToRemoveMsg(BuildContext context) => _translate(context, AppKeys.sure_to_remove);
 
   static String sureToExitMsg(BuildContext context) => _translate(context, AppKeys.sure_to_exit);
 
@@ -123,25 +129,42 @@ class AppStrings {
 
   static String exitWithoutSaving(BuildContext context) => _translate(context, AppKeys.exit_without_saving).toUpperCase();
 
+  static String resettingItem(context, int index) =>
+      "${_translate(context, AppKeys.resetting_item)}\n'${DatabaseHelper.consumableBox.get(AppKeys.consumableBox)![index].name}'";
+
   static String removingItem(context, int index) =>
       "${_translate(context, AppKeys.removing_item)}\n'${DatabaseHelper.consumableBox.get(AppKeys.consumableBox)![index].name}'";
+
+  static String resetItem(BuildContext context) => _translate(context, AppKeys.reset_item);
 
   static String removeItem(BuildContext context) => _translate(context, AppKeys.remove_item);
 
   static String cancel(BuildContext context) => _translate(context, AppKeys.cancel);
 
-  static String removeAllDataConfirmationDialogTitle(BuildContext context) => _translate(context, AppKeys.remove_all_data_confirmation_dialog_title);
+  static String resetAllCardsConfirmationDialogTitle(BuildContext context) => _translate(context, AppKeys.reset_all_cards_confirmation_dialog_title);
 
-  static String removeAllDataConfirmationDialogContent(BuildContext context) =>
-      _translate(context, AppKeys.remove_all_data_confirmation_dialog_content);
+  static String resetAllCardsConfirmationDialogContent(BuildContext context) =>
+      _translate(context, AppKeys.reset_all_cards_confirmation_dialog_content);
+
+  static String removeAllCardsConfirmationDialogTitle(BuildContext context) =>
+      _translate(context, AppKeys.remove_all_cards_confirmation_dialog_title);
+
+  static String removeAllCardsConfirmationDialogContent(BuildContext context) =>
+      _translate(context, AppKeys.remove_all_cards_confirmation_dialog_content);
 
   static String proceed(BuildContext context) => _translate(context, AppKeys.proceed);
 
-  static String removeAllDataAssuringDialogTitle(BuildContext context) => _translate(context, AppKeys.remove_all_data_assuring_dialog_title);
+  static String resetAllCardsAssuringDialogTitle(BuildContext context) => _translate(context, AppKeys.reset_all_cards_assuring_dialog_title);
 
-  static String removeAllDataAssuringDialogContent(BuildContext context) => _translate(context, AppKeys.remove_all_data_assuring_dialog_content);
+  static String resetAllCardsAssuringDialogContent(BuildContext context) => _translate(context, AppKeys.reset_all_cards_assuring_dialog_content);
+
+  static String removeAllCardsAssuringDialogTitle(BuildContext context) => _translate(context, AppKeys.remove_all_cards_assuring_dialog_title);
+
+  static String removeAllCardsAssuringDialogContent(BuildContext context) => _translate(context, AppKeys.remove_all_cards_assuring_dialog_content);
 
   static String eraseData(BuildContext context) => _translate(context, AppKeys.erase_data);
+
+  static String removeCards(BuildContext context) => _translate(context, AppKeys.remove_cards);
 
   static String invalidDataDialogTitle(BuildContext context) => _translate(context, AppKeys.invalid_data_dialog_title);
 
@@ -208,7 +231,9 @@ class AppStrings {
 
   static String tourTargetEditName(BuildContext context) => _translate(context, AppKeys.tour_target_edit_name);
 
-  static String tourTargetDeleteCard(BuildContext context) => _translate(context, AppKeys.tour_target_delete_card);
+  static String tourTargetResetItem(BuildContext context) => _translate(context, AppKeys.tour_target_reset_item);
+
+  static String tourTargetRemoveItem(BuildContext context) => _translate(context, AppKeys.tour_target_remove_item);
 
   static String tourTargetTextFieldLastChanged(BuildContext context) => _translate(context, AppKeys.tour_target_text_field_last_changed);
 
@@ -228,7 +253,9 @@ class AppStrings {
 
   static String tourTargetSaveToFile(BuildContext context) => _translate(context, AppKeys.tour_target_save_to_file);
 
-  static String tourTargetDeleteAll(BuildContext context) => _translate(context, AppKeys.tour_target_delete_all);
+  static String tourTargetResetAllCards(BuildContext context) => _translate(context, AppKeys.tour_target_reset_all_cards);
+
+  static String tourTargetRemoveAllCards(BuildContext context) => _translate(context, AppKeys.tour_target_remove_all_cards);
 
   static String tourTargetInfo(BuildContext context) => _translate(context, AppKeys.tour_target_info);
 

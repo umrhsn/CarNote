@@ -200,4 +200,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 If you have any questions about this Privacy Policy, You can contact us:
 
 
-- By email: umrhsne2020@gmail.com
+- By email: omar.hasan.2327@gmail.com

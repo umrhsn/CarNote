@@ -160,11 +160,26 @@ class DialogHelper {
             negativeText: AppStrings.cancel(context),
           ));
 
+  static void showResetConsumableConfirmationDialog(BuildContext context, int index) => showDialog(
+    context: context,
+    builder: (context) => WarningDialog(
+      title: AppStrings.resettingItem(context, index),
+      content: AppStrings.sureToResetMsg(context),
+      positiveAction: () {
+        DatabaseHelper.resetConsumable(index, context);
+        Navigator.pop(context);
+      },
+      positiveText: AppStrings.resetItem(context),
+      negativeAction: () => Navigator.pop(context),
+      negativeText: AppStrings.cancel(context),
+    ),
+  );
+
   static void showRemoveConsumableConfirmationDialog(BuildContext context, int index) => showDialog(
         context: context,
         builder: (context) => WarningDialog(
           title: AppStrings.removingItem(context, index),
-          content: AppStrings.sureToDeleteMsg(context),
+          content: AppStrings.sureToRemoveMsg(context),
           positiveAction: () {
             DatabaseHelper.removeConsumable(index, context);
             Navigator.pop(context);
@@ -175,30 +190,59 @@ class DialogHelper {
         ),
       );
 
-  static void showRemoveAllDataConfirmationDialog(BuildContext context) => showDialog(
+  static void showResetAllCardsConfirmationDialog(BuildContext context) => showDialog(
       context: context,
       builder: (context) => WarningDialog(
-            title: AppStrings.removeAllDataConfirmationDialogTitle(context),
-            content: AppStrings.removeAllDataConfirmationDialogContent(context),
+        title: AppStrings.resetAllCardsConfirmationDialogTitle(context),
+        content: AppStrings.resetAllCardsConfirmationDialogContent(context),
+        positiveAction: () {
+          Navigator.pop(context);
+          _showResetAllCardsAssuringDialog(context);
+        },
+        positiveText: AppStrings.proceed(context),
+        negativeAction: () => Navigator.pop(context),
+        negativeText: AppStrings.cancel(context),
+      ));
+
+  static void _showResetAllCardsAssuringDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (context) => WarningDialog(
+      title: AppStrings.resetAllCardsAssuringDialogTitle(context).toUpperCase(),
+      content: AppStrings.resetAllCardsAssuringDialogContent(context),
+      positiveAction: () {
+        DatabaseHelper.resetAllCards(context);
+        Navigator.pop(context);
+      },
+      positiveText: AppStrings.eraseData(context),
+      negativeAction: () => Navigator.pop(context),
+      negativeText: AppStrings.cancel(context),
+    ),
+  );
+
+  static void showRemoveAllCardsConfirmationDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) => WarningDialog(
+            title: AppStrings.removeAllCardsConfirmationDialogTitle(context),
+            content: AppStrings.removeAllCardsConfirmationDialogContent(context),
             positiveAction: () {
               Navigator.pop(context);
-              _showRemoveAllDataAssuringDialog(context);
+              _showRemoveAllCardsAssuringDialog(context);
             },
             positiveText: AppStrings.proceed(context),
             negativeAction: () => Navigator.pop(context),
             negativeText: AppStrings.cancel(context),
           ));
 
-  static void _showRemoveAllDataAssuringDialog(BuildContext context) => showDialog(
+  static void _showRemoveAllCardsAssuringDialog(BuildContext context) => showDialog(
         context: context,
         builder: (context) => WarningDialog(
-          title: AppStrings.removeAllDataAssuringDialogTitle(context).toUpperCase(),
-          content: AppStrings.removeAllDataAssuringDialogContent(context),
+          title: AppStrings.removeAllCardsAssuringDialogTitle(context).toUpperCase(),
+          content: AppStrings.removeAllCardsAssuringDialogContent(context),
           positiveAction: () {
-            DatabaseHelper.removeAllData(context);
+            DatabaseHelper.removeAllCards(context);
             Navigator.pop(context);
           },
-          positiveText: AppStrings.eraseData(context),
+          positiveText: AppStrings.removeCards(context),
           negativeAction: () => Navigator.pop(context),
           negativeText: AppStrings.cancel(context),
         ),
