@@ -1,3 +1,14 @@
-icon
-
+icon.png
 <a href="https://www.flaticon.com/free-icons/driving" title="driving icons">Driving icons created by Smashicons - Flaticon</a>
+
+nothing_here.png
+<a href="https://www.flaticon.com/free-icons/empty" title="empty icons">Empty icons created by Freepik - Flaticon</a>
+
+ar.png
+<a href="https://www.flaticon.com/free-icons/arabic-language" title="arabic language icons">Arabic language icons created by NajmunNahar - Flaticon</a>
+
+eng.png
+<a href="https://www.flaticon.com/free-icons/english" title="english icons">English icons created by Freepik - Flaticon</a>
+
+dashboard lights images and data
+rhinocarhire.com
