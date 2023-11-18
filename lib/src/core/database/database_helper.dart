@@ -163,6 +163,26 @@ class DatabaseHelper {
     return true;
   }
 
+  static void resetConsumable(int index, BuildContext context) {
+    List<Consumable> list = [];
+
+    for (int i = 0; i < _consumableBox.get(AppKeys.consumableBox)!.length; i++) {
+      list.add(_consumableBox.get(AppKeys.consumableBox)![i]);
+    }
+
+    list[index] = Consumable(id: list[index].id, name: list[index].name, lastChangedAt: 0, changeInterval: 0, remainingKm: 0);
+
+    _consumableBox.put(AppKeys.consumableBox, list);
+
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+
+    consumableCubit.lastChangedAtControllers[index].text = '';
+    consumableCubit.changeIntervalControllers[index].text = '';
+    consumableCubit.remainingKmControllers[index].text = '';
+
+    BotToast.showText(text: AppStrings.resetItemSuccessfully(context));
+  }
+
   static void removeConsumable(int index, BuildContext context) {
     _consumableBox.get(AppKeys.consumableBox)!.removeAt(index);
     _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
@@ -177,10 +197,27 @@ class DatabaseHelper {
     consumableCubit.changeIntervalFocuses.removeAt(index);
     consumableCubit.remainingKmFocuses.removeAt(index);
 
-    BotToast.showText(text: AppStrings.removedItem(context));
+    BotToast.showText(text: AppStrings.removedItemSuccessfully(context));
   }
 
-  static void removeAllData(BuildContext context) {
+  static void resetAllCards(BuildContext context) {
+    ConsumableCubit consumableCubit = ConsumableCubit.get(context);
+    List<Consumable> list = [];
+
+    for (int index = 0; index < _consumableBox.get(AppKeys.consumableBox)!.length; index++) {
+      Consumable item = _consumableBox.get(AppKeys.consumableBox)![index];
+      list.add(Consumable(id: item.id, name: item.name, lastChangedAt: 0, changeInterval: 0, remainingKm: 0));
+      consumableCubit.lastChangedAtControllers[index].text = '';
+      consumableCubit.changeIntervalControllers[index].text = '';
+      consumableCubit.remainingKmControllers[index].text = '';
+    }
+
+    _consumableBox.put(AppKeys.consumableBox, list);
+
+    BotToast.showText(text: AppStrings.resetAllCards(context));
+  }
+
+  static void removeAllCards(BuildContext context) {
     _consumableBox.get(AppKeys.consumableBox)!.clear();
     _consumableBox.put(AppKeys.consumableBox, _consumableBox.get(AppKeys.consumableBox)!);
 
@@ -194,7 +231,7 @@ class DatabaseHelper {
     consumableCubit.changeIntervalFocuses.clear();
     consumableCubit.remainingKmFocuses.clear();
 
-    BotToast.showText(text: AppStrings.removedAllData(context));
+    BotToast.showText(text: AppStrings.removedAllCards(context));
   }
 
   static void changeConsumableOrder(BuildContext context, int oldIndex, int newIndex) {
