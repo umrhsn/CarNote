@@ -215,7 +215,9 @@ class AppStrings {
 
   static String sortBySeverityTooltip(BuildContext context) => _translate(context, AppKeys.sort_by_severity_tooltip);
 
-  static String eraseDataTooltip(BuildContext context) => _translate(context, AppKeys.erase_data_tooltip);
+  static String resetItemsTooltip(BuildContext context) => _translate(context, AppKeys.reset_items_tooltip);
+
+  static String removeItemsTooltip(BuildContext context) => _translate(context, AppKeys.remove_items_tooltip);
 
   /// Lists
   static String nothingHere(BuildContext context) => _translate(context, AppKeys.nothing_here);

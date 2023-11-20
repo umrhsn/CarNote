@@ -79,7 +79,7 @@
   "toggle_mode_tooltip": "toggle detailed mode",
   "switch_language_tooltip": "switch language",
   "create_file_tooltip": "save data to file",
-  "info_tooltip": "info",
+  "info_tooltip": "dashboard lights",
   "switch_to_grid_view": "switch to grid view",
   "switch_to_list_view": "switch to list view",
   "switched_to_grid_view": "Switched to grid view",
@@ -87,7 +87,8 @@
   "sort_by_alpha_tooltip": "sort alphabetically",
   "sort_by_category_tooltip": "sort by category",
   "sort_by_severity_tooltip": "sort by severity",
-  "erase_data_tooltip": "erase all data",
+  "reset_items_tooltip": "reset all items",
+  "remove_items_tooltip": "remove all items",
   "warning_titles": [
     "Airbag (Supplemental Restraint System 'SRS')",
     "Airbag (Supplemental Restraint System 'SRS')",

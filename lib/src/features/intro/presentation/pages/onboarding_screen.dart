@@ -69,13 +69,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Padding _buildPageButtons(BuildContext context) => Padding(
         padding: const EdgeInsets.all(AppDimens.padding20),
-        child: Column(
-          children: [
-            AnimatedButton(
-              text: AppStrings.btnContinue(context),
-              onPressed: () => Navigator.pushReplacementNamed(context, Routes.carInfoRoute),
-            ),
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              AnimatedButton(
+                text: AppStrings.btnContinue(context),
+                onPressed: () => Navigator.pushReplacementNamed(context, Routes.carInfoRoute),
+              ),
+            ],
+          ),
         ),
       );
 

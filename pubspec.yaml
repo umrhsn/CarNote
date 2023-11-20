@@ -3,7 +3,7 @@ description: A special app for your car.
 
 publish_to: 'none'
 
-version: 1.0.1+1
+version: 1.0.1+3
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
@@ -77,6 +77,9 @@ flutter:
     - assets/images/dashboard_lights/advisory/
     - assets/images/dashboard_lights/info/
     - assets/images/onboarding/
+#    - assets/images/boycott/
+#    - assets/images/boycott/logos
+#    - assets/images/boycott/proofs
 
   fonts:
     - family: ArabicTwo
