@@ -90,7 +90,8 @@ class AppKeys {
   static const String sort_by_alpha_tooltip = "sort_by_alpha_tooltip";
   static const String sort_by_category_tooltip = "sort_by_category_tooltip";
   static const String sort_by_severity_tooltip = "sort_by_severity_tooltip";
-  static const String erase_data_tooltip = "erase_data_tooltip";
+  static const String reset_items_tooltip = "reset_items_tooltip";
+  static const String remove_items_tooltip = "remove_items_tooltip";
 
   // lists
   static const String warning_titles = "warning_titles";

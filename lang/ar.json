@@ -78,7 +78,7 @@
   "item_added": "تمت إضافة العنصر",
   "toggle_mode_tooltip": "تبديل الواجهة",
   "switch_language_tooltip": "تبديل اللغة",
-  "info_tooltip": "معلومات",
+  "info_tooltip": "أضواء التابل",
   "create_file_tooltip": "حفظ البيانات في ملف",
   "switch_to_grid_view": "الإظهار كجدول",
   "switch_to_list_view": "الإظهار كقائمة",
@@ -87,7 +87,8 @@
   "sort_by_alpha_tooltip": "الترتيب أبجديًّا",
   "sort_by_category_tooltip": "الترتيب حسب الفئة",
   "sort_by_severity_tooltip": "الترتيب حسب درجة الخطورة",
-  "erase_data_tooltip": "إزالة جميع البيانات",
+  "reset_items_tooltip": "إزالة جميع البيانات",
+  "remove_items_tooltip": "إزالة جميع العناصر",
   "warning_titles": [
     "الأكياس الهوائية (نظام تقييد الحركة التكميلي)",
     "الأكياس الهوائية (نظام تقييد الحركة التكميلي)",
