@@ -77,9 +77,6 @@ flutter:
     - assets/images/dashboard_lights/advisory/
     - assets/images/dashboard_lights/info/
     - assets/images/onboarding/
-#    - assets/images/boycott/
-#    - assets/images/boycott/logos
-#    - assets/images/boycott/proofs
 
   fonts:
     - family: ArabicTwo
