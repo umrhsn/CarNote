@@ -26,7 +26,7 @@ class HintText extends StatelessWidget {
         child: Text(
           text,
           textAlign: textAlign,
-          style: TextStyle(fontSize: AppDimens.fontSize15.r, color: AppColors.getHintColor(context)),
+          style: TextStyle(fontSize: AppDimens.fontSize15, color: AppColors.getHintColor(context)),
         ),
       ),
     );

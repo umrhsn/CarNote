@@ -6,12 +6,14 @@ class TitleText extends StatelessWidget {
   const TitleText({
     super.key,
     required this.text,
+    this.textAlign = TextAlign.center,
   });
 
   final String text;
+  final TextAlign? textAlign;
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: TextStyle(fontSize: AppDimens.fontSize20.r, fontWeight: FontWeight.bold));
+    return Text(text, style: const TextStyle(fontSize: AppDimens.fontSize20, fontWeight: FontWeight.bold), textAlign: textAlign);
   }
 }
