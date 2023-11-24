@@ -82,6 +82,7 @@ class AppKeys {
   static const String toggle_mode_tooltip = "toggle_mode_tooltip";
   static const String switch_language_tooltip = "switch_language_tooltip";
   static const String create_file_tooltip = "create_file_tooltip";
+  static const String boycott_brands_tooltip = "boycott_brands_tooltip";
   static const String info_tooltip = "info_tooltip";
   static const String switch_to_grid_view = "switch_to_grid_view";
   static const String switch_to_list_view = "switch_to_list_view";
@@ -127,6 +128,7 @@ class AppKeys {
   static const String tour_target_reset_all_cards = "tour_target_reset_all_cards";
   static const String tour_target_remove_all_cards = "tour_target_remove_all_cards";
   static const String tour_target_info = "tour_target_info";
+  static const String tour_target_boycott = "tour_target_boycott";
   static const String tour_target_grid_item = "tour_target_grid_item";
   static const String tour_target_switch_list_grid = "tour_target_switch_list_grid";
 
@@ -173,6 +175,7 @@ class AppKeys {
   static const String key_reset_all_cards = "key_reset_all_cards";
   static const String key_remove_all_cards = "key_remove_all_cards";
   static const String key_info = "key_info";
+  static const String key_boycott = "key_boycott";
   static const String key_grid_item = "key_grid_item";
   static const String key_switch_list_grid = "key_switch_list_grid";
 
@@ -198,6 +201,7 @@ class AppKeys {
   static final GlobalKey keyResetAllCards = GlobalKey();
   static final GlobalKey keyRemoveAllCards = GlobalKey();
   static final GlobalKey keyInfo = GlobalKey();
+  static final GlobalKey keyBoycott = GlobalKey();
 
   // DashboardScreen
   static final GlobalKey keyGridItem = GlobalKey();

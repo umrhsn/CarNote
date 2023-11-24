@@ -42,54 +42,74 @@ class AppBarIconButtonsRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AnimatedIconButton(
-          key: AppKeys.keySwitchLangConsumablesScreen,
-          faIcon: true,
-          icon: FontAwesomeIcons.language,
-          onPressed: () => AppLocalizations.of(context)!.isEnLocale
-              ? localeCubit.toArabic(context, showToast: true)
-              : localeCubit.toEnglish(context, showToast: true),
-          tooltip: AppStrings.switchLangTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keyBoycott,
+            icon: Icons.do_not_touch_rounded,
+            onPressed: () => Navigator.pushNamed(context, Routes.boycottRoute),
+            tooltip: AppStrings.boycottTooltip(context),
+          ),
         ),
         const Spacer(),
-        AnimatedIconButton(
-          key: AppKeys.keyToggleDetailedMode,
-          btnEnabled: list!.isNotEmpty,
-          icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
-          onPressed: () => consumableCubit.changeVisibility(context),
-          tooltip: AppStrings.toggleModeTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keyToggleDetailedMode,
+            btnEnabled: list!.isNotEmpty,
+            icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
+            onPressed: () => consumableCubit.changeVisibility(context),
+            tooltip: AppStrings.toggleModeTooltip(context),
+          ),
         ),
-        AnimatedIconButton(
-          key: AppKeys.keySaveToFile,
-          btnEnabled: list.isNotEmpty,
-          icon: Icons.file_copy,
-          onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) => FileCreator.writeDataToFile().then((value) =>
-              BotToast.showText(
-                  duration: Duration(seconds: value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
-                  text: value == true ? AppStrings.fileCreated(context) : AppStrings.fileNotCreated(context),
-                  textStyle: const TextStyle(color: Colors.white)))),
-          tooltip: AppStrings.createFileTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keySaveToFile,
+            btnEnabled: list.isNotEmpty,
+            icon: Icons.file_copy,
+            onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) => FileCreator.writeDataToFile().then((value) =>
+                BotToast.showText(
+                    duration: Duration(seconds: value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
+                    text: value == true ? AppStrings.fileCreated(context) : AppStrings.fileNotCreated(context),
+                    textStyle: const TextStyle(color: Colors.white)))),
+            tooltip: AppStrings.createFileTooltip(context),
+          ),
         ),
-        AnimatedIconButton(
-          key: AppKeys.keyResetAllCards,
-          btnEnabled: list.isNotEmpty,
-          icon: Icons.restore_rounded,
-          onPressed: () => DialogHelper.showResetAllCardsConfirmationDialog(context),
-          tooltip: AppStrings.resetItemsTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keySwitchLangConsumablesScreen,
+            faIcon: true,
+            icon: FontAwesomeIcons.language,
+            onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                ? localeCubit.toArabic(context, showToast: true)
+                : localeCubit.toEnglish(context, showToast: true),
+            tooltip: AppStrings.switchLangTooltip(context),
+          ),
         ),
-        AnimatedIconButton(
-          key: AppKeys.keyRemoveAllCards,
-          btnEnabled: list.isNotEmpty,
-          icon: Icons.delete_forever,
-          onPressed: () => DialogHelper.showRemoveAllCardsConfirmationDialog(context),
-          tooltip: AppStrings.removeItemsTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keyResetAllCards,
+            btnEnabled: list.isNotEmpty,
+            icon: Icons.restore_page_rounded,
+            onPressed: () => DialogHelper.showResetAllCardsConfirmationDialog(context),
+            tooltip: AppStrings.resetItemsTooltip(context),
+          ),
+        ),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keyRemoveAllCards,
+            btnEnabled: list.isNotEmpty,
+            icon: Icons.delete_forever_rounded,
+            onPressed: () => DialogHelper.showRemoveAllCardsConfirmationDialog(context),
+            tooltip: AppStrings.removeItemsTooltip(context),
+          ),
         ),
         const Spacer(),
-        AnimatedIconButton(
-          key: AppKeys.keyInfo,
-          icon: Icons.car_crash,
-          onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
-          tooltip: AppStrings.infoTooltip(context),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keyInfo,
+            icon: Icons.car_crash_rounded,
+            onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
+            tooltip: AppStrings.infoTooltip(context),
+          ),
         ),
       ],
     );

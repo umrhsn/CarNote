@@ -12,3 +12,6 @@ eng.png
 
 dashboard lights images and data
 rhinocarhire.com
+
+ps.png
+<a href="https://www.flaticon.com/free-icons/palestine" title="palestine icons">Palestine icons created by Rifal Hari Topan - Flaticon</a>

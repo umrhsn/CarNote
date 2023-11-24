@@ -399,6 +399,21 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
+        identify: AppKeys.key_boycott,
+        keyTarget: AppKeys.keyBoycott,
+        alignSkip: AlignmentDirectional.bottomEnd,
+        enableOverlayTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) => Text(AppStrings.tourTargetBoycott(context), style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
         identify: AppKeys.key_info,
         keyTarget: AppKeys.keyInfo,
         alignSkip: AlignmentDirectional.bottomEnd,

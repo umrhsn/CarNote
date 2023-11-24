@@ -79,6 +79,7 @@
   "toggle_mode_tooltip": "toggle detailed mode",
   "switch_language_tooltip": "switch language",
   "create_file_tooltip": "save data to file",
+  "boycott_brands_tooltip": "boycott car brands",
   "info_tooltip": "dashboard lights",
   "switch_to_grid_view": "switch to grid view",
   "switch_to_list_view": "switch to list view",
@@ -475,6 +476,7 @@
   "tour_target_reset_all_cards": "Press this button to reset your list by deleting all data values you entered in it.",
   "tour_target_remove_all_cards": "Press this button to reset your list by removing all item cards in it.",
   "tour_target_info": "Additional info about the dashboard lights, what they mean and what you need to do when you see them.",
+  "tour_target_boycott": "Additional info about the car brands included in the boycott list.",
   "tour_target_grid_item": "These are the most common lights you might see in your car's dashboard.\n\nYou can click any item here to display its details.",
   "tour_target_switch_list_grid": "You can click this to increase / reduce details."
 }

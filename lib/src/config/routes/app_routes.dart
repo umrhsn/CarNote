@@ -1,3 +1,4 @@
+import 'package:car_note/src/features/boycott/presentation/pages/boycott_screen.dart';
 import 'package:car_note/src/features/car_info/presentation/pages/car_info_screen.dart';
 import 'package:car_note/src/features/consumables/presentation/pages/add_consumable.dart';
 import 'package:car_note/src/features/consumables/presentation/pages/consumables_screen.dart';
@@ -15,6 +16,7 @@ class Routes {
   static const String consumablesRoute = '/consumables_screen';
   static const String addConsumableRoute = '/add_consumable';
   static const String infoRoute = '/info';
+  static const String boycottRoute = '/boycott';
   static const String noRouteFound = 'No Route Found';
 }
 
@@ -35,6 +37,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: ((context) => const AddConsumableScreen()));
       case Routes.infoRoute:
         return MaterialPageRoute(builder: ((context) => const DashboardScreen()));
+      case Routes.boycottRoute:
+        return MaterialPageRoute(builder: ((context) => const BoycottScreen()));
       default:
         return undefinedRoute();
     }

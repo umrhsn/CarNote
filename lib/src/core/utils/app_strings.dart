@@ -199,6 +199,8 @@ class AppStrings {
 
   static String createFileTooltip(BuildContext context) => _translate(context, AppKeys.create_file_tooltip);
 
+  static String boycottTooltip(BuildContext context) => _translate(context, AppKeys.boycott_brands_tooltip);
+
   static String infoTooltip(BuildContext context) => _translate(context, AppKeys.info_tooltip);
 
   static String switchToGridView(BuildContext context) => _translate(context, AppKeys.switch_to_grid_view);
@@ -260,6 +262,8 @@ class AppStrings {
   static String tourTargetRemoveAllCards(BuildContext context) => _translate(context, AppKeys.tour_target_remove_all_cards);
 
   static String tourTargetInfo(BuildContext context) => _translate(context, AppKeys.tour_target_info);
+
+  static String tourTargetBoycott(BuildContext context) => _translate(context, AppKeys.tour_target_boycott);
 
   static String tourTargetGridItem(BuildContext context) => _translate(context, AppKeys.tour_target_grid_item);
 
