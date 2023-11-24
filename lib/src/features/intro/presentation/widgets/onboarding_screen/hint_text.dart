@@ -1,5 +1,7 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HintText extends StatelessWidget {
   const HintText({
@@ -24,7 +26,7 @@ class HintText extends StatelessWidget {
         child: Text(
           text,
           textAlign: textAlign,
-          style: TextStyle(color: AppColors.getHintColor(context)),
+          style: TextStyle(fontSize: AppDimens.fontSize15.r, color: AppColors.getHintColor(context)),
         ),
       ),
     );

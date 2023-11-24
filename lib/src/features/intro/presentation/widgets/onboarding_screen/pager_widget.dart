@@ -15,15 +15,16 @@ class PagerWidget extends StatelessWidget {
     return SingleChildScrollView(
       child: IntrinsicHeight(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: AppDimens.sizedBox30.r),
-            AspectRatio(aspectRatio: 0.9.r, child: Image.asset(data.image)),
-            SizedBox(height: AppDimens.sizedBox20.r),
+            Center(
+              child: AspectRatio(aspectRatio: 1, child: Image.asset(data.image)),
+            ),
             TitleText(text: data.title),
-            SizedBox(height: AppDimens.sizedBox10.r),
+            SizedBox(height: AppDimens.sizedBox8.r),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding70),
+              padding: EdgeInsets.symmetric(horizontal: AppDimens.padding30.r),
               child: HintText(text: data.subtitle),
             ),
           ],

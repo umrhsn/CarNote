@@ -13,7 +13,7 @@ class AppDimens {
   static const double padding10 = 10;
   static const double padding15 = 15;
   static const double padding20 = 20;
-  static const double padding70 = 70;
+  static const double padding30 = 30;
 
   /// SizedBoxes
   static const double sizedBox8 = 8;
@@ -44,7 +44,9 @@ class AppDimens {
   static double labelSmall = 7.sp; // overline
 
   /// Font Sizes
+  static const double fontSize12 = 12;
   static const double fontSize15 = 15;
+  static const double fontSize20 = 20;
 
   /// Icon Sizes
   static const double iconSize50 = 50;
