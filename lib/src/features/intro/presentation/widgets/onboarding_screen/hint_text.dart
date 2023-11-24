@@ -1,7 +1,6 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HintText extends StatelessWidget {
   const HintText({
