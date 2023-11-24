@@ -4,6 +4,7 @@ import 'package:car_note/src/features/consumables/presentation/pages/consumables
 import 'package:car_note/src/features/info/presentation/pages/dashboard_screen.dart';
 import 'package:car_note/src/features/intro/presentation/pages/language_selection_screen.dart';
 import 'package:car_note/src/features/intro/presentation/pages/onboarding_screen.dart';
+import 'package:car_note/src/features/intro/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -21,7 +22,7 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
-        return MaterialPageRoute(builder: ((context) => const OnboardingScreen()));
+        return MaterialPageRoute(builder: ((context) => const SplashScreen()));
       case Routes.chooseLanguageRoute:
         return MaterialPageRoute(builder: ((context) => const LanguageSelectionScreen()));
       case Routes.onboardingRoute:
