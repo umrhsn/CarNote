@@ -2,7 +2,6 @@ import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ignore: must_be_immutable
 class AnimatedIconButton extends StatefulWidget {
@@ -10,7 +9,6 @@ class AnimatedIconButton extends StatefulWidget {
   bool btnEnabled;
   final void Function()? onPressed;
   String? tooltip;
-  bool faIcon;
 
   AnimatedIconButton({
     super.key,
@@ -18,7 +16,6 @@ class AnimatedIconButton extends StatefulWidget {
     this.btnEnabled = true,
     required this.onPressed,
     this.tooltip,
-    this.faIcon = false,
   });
 
   @override
@@ -55,7 +52,7 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton> with TickerProv
         style: !widget.btnEnabled
             ? ButtonStyle(foregroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)))
             : ButtonStyle(foregroundColor: MaterialStateProperty.all(context.isLight ? AppColors.iconLight : AppColors.iconDark)),
-        icon: widget.faIcon ? FaIcon(widget.icon) : Icon(widget.icon),
+        icon: Icon(widget.icon),
         tooltip: widget.tooltip,
       ),
     );

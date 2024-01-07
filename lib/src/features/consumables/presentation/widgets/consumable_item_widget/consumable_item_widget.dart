@@ -13,6 +13,8 @@ import 'package:car_note/src/features/consumables/presentation/widgets/consumabl
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_item_widget/last_changed_text_form_field.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/consumable_item_widget/remaining_kilometer_text_form_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
@@ -61,21 +63,27 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                     !_editing
                         ? Expanded(
                             flex: AppDimens.flex30,
-                            child: Text(
-                              widget.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppDimens.fontSize15),
+                            child: Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: Text(
+                                widget.name,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppDimens.fontSize15),
+                              ),
                             ),
                           )
                         : Expanded(child: ConsumableNameTextField(index: widget.index)),
                     !_editing ? const Spacer() : const SizedBox(width: AppDimens.sizedBox30),
-                    Visibility(
-                      visible: visible,
-                      child: Row(
-                        children: [
-                          _editing
-                              ? IconButton(
+                    SizedBox(
+                      width: 35.r,
+                      child: Visibility(
+                        visible: _editing,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: IconButton(
                                   onPressed: () {
                                     DatabaseHelper.writeConsumableName(context, widget.index).then((value) {
                                       if (value) {
@@ -86,39 +94,60 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                       }
                                     });
                                   },
-                                  icon: const Icon(Icons.check))
-                              : const SizedBox(),
-                          _editing
-                              ? IconButton(
-                                  onPressed: () {
-                                    _cubit.consumableNameController.text = '';
-                                    setState(() => _editing = false);
-                                  },
-                                  icon: const Icon(Icons.close))
-                              : const SizedBox(),
-                          !_editing
-                              ? IconButton(
-                                  onPressed: () {
-                                    _cubit.consumableNameController.text = '';
-                                    setState(() => _editing = true);
-                                  },
-                                  icon: Icon(Icons.edit, key: widget.index == 0 ? AppKeys.keyEditName : null))
-                              : const SizedBox(),
-                          IconButton(
-                            onPressed: () => DialogHelper.showResetConsumableConfirmationDialog(context, widget.index),
-                            icon: Icon(
-                              Icons.restore_rounded,
-                              key: widget.index == 0 ? AppKeys.keyResetCard : null,
+                                  icon: const Icon(Icons.check)),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
-                            icon: Icon(
-                              Icons.delete,
-                              key: widget.index == 0 ? AppKeys.keyRemoveCard : null,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: visible,
+                      child: SizedBox(
+                        width: 110.r,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            _editing
+                                ? Flexible(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          _cubit.consumableNameController.text = '';
+                                          setState(() => _editing = false);
+                                        },
+                                        icon: const Icon(Icons.close)),
+                                  )
+                                : const SizedBox(),
+                            !_editing
+                                ? Flexible(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          _cubit.consumableNameController.text = '';
+                                          setState(() => _editing = true);
+                                        },
+                                        icon: Icon(Icons.edit, key: widget.index == 0 ? AppKeys.keyEditName : null)),
+                                  )
+                                : const SizedBox(),
+                            Flexible(
+                              child: IconButton(
+                                onPressed: () => DialogHelper.showResetConsumableConfirmationDialog(context, widget.index),
+                                icon: Icon(
+                                  MdiIcons.restore,
+                                  key: widget.index == 0 ? AppKeys.keyResetCard : null,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                            Flexible(
+                              child: IconButton(
+                                onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(context, widget.index),
+                                icon: Icon(
+                                  MdiIcons.deleteForever,
+                                  key: widget.index == 0 ? AppKeys.keyRemoveCard : null,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

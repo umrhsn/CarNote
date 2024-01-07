@@ -11,7 +11,7 @@ import 'package:car_note/src/core/widgets/buttons/animated_icon_button.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
@@ -45,8 +45,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keySwitchLangConsumablesScreen,
-            faIcon: true,
-            icon: FontAwesomeIcons.language,
+            icon: MdiIcons.translateVariant,
             onPressed: () => AppLocalizations.of(context)!.isEnLocale
                 ? localeCubit.toArabic(context, showToast: true)
                 : localeCubit.toEnglish(context, showToast: true),
@@ -58,7 +57,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
           child: AnimatedIconButton(
             key: AppKeys.keyToggleDetailedMode,
             btnEnabled: list!.isNotEmpty,
-            icon: _getVisibilityStatus() ? Icons.visibility : Icons.visibility_outlined,
+            icon: _getVisibilityStatus() ? MdiIcons.eye : MdiIcons.eyeOutline,
             onPressed: () => consumableCubit.changeVisibility(context),
             tooltip: AppStrings.toggleModeTooltip(context),
           ),
@@ -67,7 +66,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
           child: AnimatedIconButton(
             key: AppKeys.keySaveToFile,
             btnEnabled: list.isNotEmpty,
-            icon: Icons.file_copy,
+            icon: MdiIcons.fileExport,
             onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) => FileCreator.writeDataToFile().then((value) =>
                 BotToast.showText(
                     duration: Duration(seconds: value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
@@ -80,7 +79,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
           child: AnimatedIconButton(
             key: AppKeys.keyResetAllCards,
             btnEnabled: list.isNotEmpty,
-            icon: Icons.restore_page_rounded,
+            icon: MdiIcons.restore,
             onPressed: () => DialogHelper.showResetAllCardsConfirmationDialog(context),
             tooltip: AppStrings.resetItemsTooltip(context),
           ),
@@ -89,7 +88,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
           child: AnimatedIconButton(
             key: AppKeys.keyRemoveAllCards,
             btnEnabled: list.isNotEmpty,
-            icon: Icons.delete_forever,
+            icon: MdiIcons.deleteForever,
             onPressed: () => DialogHelper.showRemoveAllCardsConfirmationDialog(context),
             tooltip: AppStrings.removeItemsTooltip(context),
           ),
@@ -98,7 +97,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keyInfo,
-            icon: Icons.car_crash,
+            icon: MdiIcons.oil,
             onPressed: () => Navigator.pushNamed(context, Routes.infoRoute),
             tooltip: AppStrings.infoTooltip(context),
           ),
