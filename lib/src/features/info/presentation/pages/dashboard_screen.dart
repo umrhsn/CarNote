@@ -12,7 +12,7 @@ import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -48,8 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             AnimatedIconButton(onPressed: () => Navigator.pop(context), icon: Icons.arrow_back),
             AnimatedIconButton(
               key: AppKeys.keySwitchLangDashboardScreen,
-              faIcon: true,
-              icon: FontAwesomeIcons.language,
+              icon: MdiIcons.translateVariant,
               onPressed: () => AppLocalizations.of(context)!.isEnLocale
                   ? localeCubit.toArabic(context, showToast: true)
                   : localeCubit.toEnglish(context, showToast: true),
@@ -57,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             AnimatedIconButton(
               key: AppKeys.keySwitchListGrid,
-              icon: _switchToListView ? Icons.grid_view_rounded : Icons.sort_rounded,
+              icon: _switchToListView ? Icons.grid_view_rounded : MdiIcons.listBox,
               onPressed: () {
                 setState(() {
                   _selectedIndex = null;

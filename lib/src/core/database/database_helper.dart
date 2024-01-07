@@ -60,9 +60,9 @@ class DatabaseHelper {
     _carBox.put(
       AppKeys.carBox,
       Car(
-        type: carCubit.carTypeController.text,
-        modelYear: int.parse(carCubit.modelYearController.text),
-        currentKm: int.parse(carCubit.currentKmController.text.removeThousandSeparator()),
+        type: carCubit.carTypeController.text.trim(),
+        modelYear: int.parse(carCubit.modelYearController.text.trim()),
+        currentKm: int.parse(carCubit.currentKmController.text.trim().removeThousandSeparator()),
       ),
     );
 
@@ -103,7 +103,7 @@ class DatabaseHelper {
       Car(
         type: _carBox.get(AppKeys.carBox)!.type,
         modelYear: _carBox.get(AppKeys.carBox)!.modelYear,
-        currentKm: int.parse(consumableCubit.currentKmController.text.removeThousandSeparator()),
+        currentKm: int.parse(consumableCubit.currentKmController.text.trim().removeThousandSeparator()),
       ),
     );
 
@@ -141,7 +141,7 @@ class DatabaseHelper {
     _consumableBox.get(AppKeys.consumableBox)!.add(
           Consumable(
             id: _consumableBox.get(AppKeys.consumableBox)!.length,
-            name: name,
+            name: name.trim(),
             lastChangedAt: lastChangedAt,
             changeInterval: changeInterval,
             remainingKm: 0,

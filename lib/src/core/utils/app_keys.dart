@@ -181,6 +181,7 @@ class AppKeys {
   static final GlobalKey keySwitchLangCarInfoScreen = GlobalKey();
 
   // ConsumablesScreen
+  static final GlobalKey keyChooseCar = GlobalKey();
   static final GlobalKey keyAppBarTextField = GlobalKey();
   static final GlobalKey keyList = GlobalKey();
   static final GlobalKey keyCard = GlobalKey();

@@ -16,7 +16,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   equatable: ^2.0.5
   intl: ^0.18.1
-  font_awesome_flutter: ^10.6.0
   flutter_bloc: ^8.1.3
   provider: ^6.1.1
   hive: ^2.2.3
@@ -33,6 +32,7 @@ dependencies:
   tutorial_coach_mark: ^1.2.11
   flutter_screenutil: ^5.9.0
   smooth_page_indicator: ^1.1.0
+  material_design_icons_flutter: ^7.0.7296
 #  google_mobile_ads: ^3.1.0
 
 dev_dependencies:
