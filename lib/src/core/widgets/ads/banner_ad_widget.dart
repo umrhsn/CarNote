@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -22,35 +23,38 @@ class BannerAdWidget extends StatefulWidget {
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _bannerAd;
 
-  // ignore: unused_field
-  bool _isLoaded = false;
-
   /// Loads a banner ad.
-  void _loadAd(BuildContext context) {
-    _bannerAd = BannerAd(
+  void _loadAd() {
+    debugPrint('androidAdUnitId = ${widget.androidAdUnitId}');
+    BannerAd(
       adUnitId: Platform.isAndroid ? widget.androidAdUnitId : widget.iosAdUnitId!,
       request: const AdRequest(),
-      size: AdSize.fullBanner,
+      size: AdSize.banner,
       listener: BannerAdListener(
         // Called when an ad is successfully received.
-        onAdLoaded: (ad) {
-          debugPrint('$ad loaded.');
-          setState(() => _isLoaded = true);
-        },
+        onAdLoaded: (ad) => setState(() => _bannerAd = ad as BannerAd),
         // Called when an ad request failed.
-        onAdFailedToLoad: (ad, err) {
-          debugPrint('BannerAd failed to load: $err');
-          // Dispose the ad here to free resources.
-          ad.dispose();
-        },
+        onAdFailedToLoad: (ad, err) => ad.dispose(),
+        // Called when an ad opens an overlay that covers the screen.
+        onAdOpened: (Ad ad) {},
+        // Called when an ad removes an overlay that covers the screen.
+        onAdClosed: (Ad ad) {},
+        // Called when an impression occurs on the ad.
+        onAdImpression: (Ad ad) {},
       ),
-    )..load();
+    ).load();
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) => _loadAd(context));
+    _loadAd();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
   }
 
   @override
