@@ -339,6 +339,21 @@ class AppTourService {
 
     targets.add(
       TargetFocus(
+        identify: AppKeys.key_my_cars,
+        keyTarget: AppKeys.keyMyCars,
+        alignSkip: AlignmentDirectional.bottomEnd,
+        enableOverlayTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            builder: (context, controller) => Text(AppStrings.tourTargetMyCars(context), style: const TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
         identify: AppKeys.key_toggle_detailed_mode,
         keyTarget: AppKeys.keyToggleDetailedMode,
         alignSkip: AlignmentDirectional.bottomEnd,

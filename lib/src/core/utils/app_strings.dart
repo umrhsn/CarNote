@@ -201,6 +201,8 @@ class AppStrings {
 
   static String infoTooltip(BuildContext context) => _translate(context, AppKeys.info_tooltip);
 
+  static String myCarsTooltip(BuildContext context) => _translate(context, AppKeys.my_cars_tooltip);
+
   static String switchToGridView(BuildContext context) => _translate(context, AppKeys.switch_to_grid_view);
 
   static String switchToListView(BuildContext context) => _translate(context, AppKeys.switch_to_list_view);
@@ -250,6 +252,8 @@ class AppStrings {
   static String tourTargetAddItem(BuildContext context) => _translate(context, AppKeys.tour_target_add_item);
 
   static String tourTargetSwitchLang(BuildContext context) => _translate(context, AppKeys.tour_target_switch_lang);
+
+  static String tourTargetMyCars(BuildContext context) => _translate(context, AppKeys.tour_target_my_cars);
 
   static String tourTargetToggleDetailedMode(BuildContext context) => _translate(context, AppKeys.tour_target_toggle_detailed_mode);
 

@@ -83,6 +83,7 @@ class AppKeys {
   static const String switch_language_tooltip = "switch_language_tooltip";
   static const String create_file_tooltip = "create_file_tooltip";
   static const String info_tooltip = "info_tooltip";
+  static const String my_cars_tooltip = "my_cars_tooltip";
   static const String switch_to_grid_view = "switch_to_grid_view";
   static const String switch_to_list_view = "switch_to_list_view";
   static const String switched_to_grid_view = "switched_to_grid_view";
@@ -122,6 +123,7 @@ class AppKeys {
   static const String tour_target_save_data = "tour_target_save_data";
   static const String tour_target_add_item = "tour_target_add_item";
   static const String tour_target_switch_lang = "tour_target_switch_lang";
+  static const String tour_target_my_cars = "tour_target_my_cars";
   static const String tour_target_toggle_detailed_mode = "tour_target_toggle_detailed_mode";
   static const String tour_target_save_to_file = "tour_target_save_to_file";
   static const String tour_target_reset_all_cards = "tour_target_reset_all_cards";
@@ -168,6 +170,7 @@ class AppKeys {
   static const String key_card_reorder = "key_card_reorder";
   static const String key_save_data = "key_save_data";
   static const String key_add_item = "key_add_item";
+  static const String key_my_cars = "key_my_cars";
   static const String key_toggle_detailed_mode = "key_toggle_detailed_mode";
   static const String key_save_to_file = "key_save_to_file";
   static const String key_reset_all_cards = "key_reset_all_cards";
@@ -199,6 +202,7 @@ class AppKeys {
   static final GlobalKey keyResetAllCards = GlobalKey();
   static final GlobalKey keyRemoveAllCards = GlobalKey();
   static final GlobalKey keyInfo = GlobalKey();
+  static final GlobalKey keyMyCars = GlobalKey();
 
   // DashboardScreen
   static final GlobalKey keyGridItem = GlobalKey();
