@@ -8,6 +8,7 @@ class AppKeys {
   static const String btn_continue = "btn_continue";
   static const String btn_save = "btn_save";
   static const String add_item = "add_item";
+  static const String add_car = "add_car";
   static const String data_saved_successfully = "data_saved_successfully";
   static const String something_went_wrong = "something_went_wrong";
   static const String detailed_mode_on = "detailed_mode_on";

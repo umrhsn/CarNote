@@ -24,7 +24,7 @@ class AppRoutes {
   static Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case Routes.initialRoute:
-        return MaterialPageRoute(builder: ((context) => const SplashScreen()));
+        return MaterialPageRoute(builder: ((context) => const MyCarsScreen())); // SplashScreen
       case Routes.chooseLanguageRoute:
         return MaterialPageRoute(builder: ((context) => const LanguageSelectionScreen()));
       case Routes.onboardingRoute:

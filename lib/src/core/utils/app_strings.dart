@@ -29,6 +29,8 @@ class AppStrings {
 
   static String btnAddItem(BuildContext context) => _translate(context, AppKeys.add_item).toUpperCase();
 
+  static String btnAddCar(BuildContext context) => _translate(context, AppKeys.add_car).toUpperCase();
+
   /// Toasts
   static String dataSavedSuccessfully(BuildContext context) => _translate(context, AppKeys.data_saved_successfully);
 
