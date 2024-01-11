@@ -26,11 +26,9 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
     ConsumableCubit cubit = ConsumableCubit.get(context);
 
     return BlocBuilder<ConsumableCubit, ConsumableState>(
-      builder: (context, state) => WillPopScope(
-        onWillPop: () async {
-          _resetControllersValues();
-          return true;
-        },
+      builder: (context, state) => PopScope(
+        canPop: true,
+        onPopInvoked: (didPop) => _resetControllersValues(),
         child: Scaffold(
           appBar: AppBar(
             toolbarHeight: AppDimens.appBarHeight80,

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DialogHelper {
-  static Future<bool> showOnWillPopDialogs(BuildContext context) async {
+  static bool showOnWillPopDialogs(BuildContext context) {
     bool canExit = true;
     String debugMsg = "onWillPop\n\n";
 
@@ -161,19 +161,19 @@ class DialogHelper {
           ));
 
   static void showResetConsumableConfirmationDialog(BuildContext context, int index) => showDialog(
-    context: context,
-    builder: (context) => WarningDialog(
-      title: AppStrings.resettingItem(context, index),
-      content: AppStrings.sureToResetMsg(context),
-      positiveAction: () {
-        DatabaseHelper.resetConsumable(index, context);
-        Navigator.pop(context);
-      },
-      positiveText: AppStrings.resetItem(context),
-      negativeAction: () => Navigator.pop(context),
-      negativeText: AppStrings.cancel(context),
-    ),
-  );
+        context: context,
+        builder: (context) => WarningDialog(
+          title: AppStrings.resettingItem(context, index),
+          content: AppStrings.sureToResetMsg(context),
+          positiveAction: () {
+            DatabaseHelper.resetConsumable(index, context);
+            Navigator.pop(context);
+          },
+          positiveText: AppStrings.resetItem(context),
+          negativeAction: () => Navigator.pop(context),
+          negativeText: AppStrings.cancel(context),
+        ),
+      );
 
   static void showRemoveConsumableConfirmationDialog(BuildContext context, int index) => showDialog(
         context: context,
@@ -193,31 +193,31 @@ class DialogHelper {
   static void showResetAllCardsConfirmationDialog(BuildContext context) => showDialog(
       context: context,
       builder: (context) => WarningDialog(
-        title: AppStrings.resetAllCardsConfirmationDialogTitle(context),
-        content: AppStrings.resetAllCardsConfirmationDialogContent(context),
-        positiveAction: () {
-          Navigator.pop(context);
-          _showResetAllCardsAssuringDialog(context);
-        },
-        positiveText: AppStrings.proceed(context),
-        negativeAction: () => Navigator.pop(context),
-        negativeText: AppStrings.cancel(context),
-      ));
+            title: AppStrings.resetAllCardsConfirmationDialogTitle(context),
+            content: AppStrings.resetAllCardsConfirmationDialogContent(context),
+            positiveAction: () {
+              Navigator.pop(context);
+              _showResetAllCardsAssuringDialog(context);
+            },
+            positiveText: AppStrings.proceed(context),
+            negativeAction: () => Navigator.pop(context),
+            negativeText: AppStrings.cancel(context),
+          ));
 
   static void _showResetAllCardsAssuringDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (context) => WarningDialog(
-      title: AppStrings.resetAllCardsAssuringDialogTitle(context).toUpperCase(),
-      content: AppStrings.resetAllCardsAssuringDialogContent(context),
-      positiveAction: () {
-        DatabaseHelper.resetAllCards(context);
-        Navigator.pop(context);
-      },
-      positiveText: AppStrings.eraseData(context),
-      negativeAction: () => Navigator.pop(context),
-      negativeText: AppStrings.cancel(context),
-    ),
-  );
+        context: context,
+        builder: (context) => WarningDialog(
+          title: AppStrings.resetAllCardsAssuringDialogTitle(context).toUpperCase(),
+          content: AppStrings.resetAllCardsAssuringDialogContent(context),
+          positiveAction: () {
+            DatabaseHelper.resetAllCards(context);
+            Navigator.pop(context);
+          },
+          positiveText: AppStrings.eraseData(context),
+          negativeAction: () => Navigator.pop(context),
+          negativeText: AppStrings.cancel(context),
+        ),
+      );
 
   static void showRemoveAllCardsConfirmationDialog(BuildContext context) => showDialog(
       context: context,

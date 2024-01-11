@@ -22,6 +22,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   late List? _list;
+  bool _canPop = false;
 
   @override
   void initState() {
@@ -44,8 +45,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         LocaleCubit localeCubit = LocaleCubit.get(context);
         ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-        return WillPopScope(
-          onWillPop: () => DialogHelper.showOnWillPopDialogs(context),
+        return PopScope(
+          canPop: _canPop,
+          onPopInvoked: (didPop) {
+            if (DialogHelper.showOnWillPopDialogs(context)) {
+              setState(() => _canPop = true);
+            }
+          },
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
