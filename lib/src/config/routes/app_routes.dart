@@ -5,6 +5,7 @@ import 'package:car_note/src/features/info/presentation/pages/dashboard_screen.d
 import 'package:car_note/src/features/intro/presentation/pages/language_selection_screen.dart';
 import 'package:car_note/src/features/intro/presentation/pages/onboarding_screen.dart';
 import 'package:car_note/src/features/intro/presentation/pages/splash_screen.dart';
+import 'package:car_note/src/features/my_cars/presentation/pages/my_cars_screen.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -15,6 +16,7 @@ class Routes {
   static const String consumablesRoute = '/consumables_screen';
   static const String addConsumableRoute = '/add_consumable';
   static const String infoRoute = '/info';
+  static const String myCarsRoute = '/my_cars';
   static const String noRouteFound = 'No Route Found';
 }
 
@@ -35,6 +37,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: ((context) => const AddConsumableScreen()));
       case Routes.infoRoute:
         return MaterialPageRoute(builder: ((context) => const DashboardScreen()));
+      case Routes.myCarsRoute:
+        return MaterialPageRoute(builder: ((context) => const MyCarsScreen()));
       default:
         return undefinedRoute();
     }

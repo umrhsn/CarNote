@@ -46,7 +46,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
           child: AnimatedIconButton(
             key: AppKeys.keyMyCars,
             icon: MdiIcons.carMultiple,
-            onPressed: () {},
+            onPressed: () => Navigator.pushNamed(context, Routes.myCarsRoute),
             tooltip: AppStrings.myCarsTooltip(context),
           ),
         ),
