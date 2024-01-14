@@ -23,6 +23,5 @@ class MyCarsScreenWidget extends StatelessWidget {
       ),
     );
   }
-
 }
 
