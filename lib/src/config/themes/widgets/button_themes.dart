@@ -27,5 +27,5 @@ class AppButtonThemes {
       );
 
   static IconButtonThemeData iconButtonTheme({required bool isLight}) =>
-      IconButtonThemeData(style: ButtonStyle(foregroundColor: MaterialStateProperty.all(isLight ? AppColors.iconLight : AppColors.iconDark)));
+      IconButtonThemeData(style: ButtonStyle(foregroundColor: MaterialStateProperty.all(isLight ? AppColors.iconButtonLight : AppColors.iconButtonDark)));
 }

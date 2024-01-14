@@ -22,7 +22,7 @@ class SwitchLangButtonWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(top: AppDimens.padding20, right: AppDimens.padding15),
         child: AnimatedIconButton(
-          key: AppKeys.keySwitchLangConsumablesScreen,
+          key: AppKeys.keySwitchLangMyCarsScreen,
           icon: MdiIcons.translateVariant,
           onPressed: () => AppLocalizations.of(context)!.isEnLocale
               ? localeCubit.toArabic(context, showToast: true)

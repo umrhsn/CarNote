@@ -21,6 +21,7 @@ class AppDimens {
   static const double sizedBox15 = 15;
   static const double sizedBox20 = 20;
   static const double sizedBox30 = 30;
+  static const double sizedBox100 = 80;
 
   /// Flexes
   static int flex30 = 30;

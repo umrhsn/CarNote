@@ -33,6 +33,7 @@
   "add_an_item": "أضف عنصرًا",
   "add_item": "أضف العنصر",
   "add_car": "أضف سيارة",
+  "btn_return": "رجوع",
   "exit_without_saving": "الخروج دون حفظ",
   "tap_back_again_to_exit": "اضغط زر الرجوع مرة أخرى للخروج",
   "notif_channel_basic_group_name": "مجموعة قنوات الإشعارات الأساسية",
@@ -91,6 +92,9 @@
   "sort_by_severity_tooltip": "الترتيب حسب درجة الخطورة",
   "reset_items_tooltip": "إزالة جميع البيانات",
   "remove_items_tooltip": "إزالة جميع العناصر",
+  "edit_car_data_tooltip": "عدل بيانات السيارة",
+  "remove_car_tooltip": "إزالة السيارة",
+  "share_car_data_tooltip": "مشاركة بيانات السيارة",
   "warning_titles": [
     "الأكياس الهوائية (نظام تقييد الحركة التكميلي)",
     "الأكياس الهوائية (نظام تقييد الحركة التكميلي)",

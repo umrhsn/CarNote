@@ -9,6 +9,7 @@ class AppKeys {
   static const String btn_save = "btn_save";
   static const String add_item = "add_item";
   static const String add_car = "add_car";
+  static const String btn_return = "btn_return";
   static const String data_saved_successfully = "data_saved_successfully";
   static const String something_went_wrong = "something_went_wrong";
   static const String detailed_mode_on = "detailed_mode_on";
@@ -94,6 +95,9 @@ class AppKeys {
   static const String sort_by_severity_tooltip = "sort_by_severity_tooltip";
   static const String reset_items_tooltip = "reset_items_tooltip";
   static const String remove_items_tooltip = "remove_items_tooltip";
+  static const String edit_car_data_tooltip = "edit_car_data_tooltip";
+  static const String remove_car_tooltip = "remove_car_tooltip";
+  static const String share_car_data_tooltip = "share_car_data_tooltip";
 
   // lists
   static const String warning_titles = "warning_titles";
@@ -198,6 +202,7 @@ class AppKeys {
   static final GlobalKey keySaveData = GlobalKey();
   static final GlobalKey keyAddItem = GlobalKey();
   static final GlobalKey keySwitchLangConsumablesScreen = GlobalKey();
+  static final GlobalKey keySwitchLangMyCarsScreen = GlobalKey();
   static final GlobalKey keyToggleDetailedMode = GlobalKey();
   static final GlobalKey keySaveToFile = GlobalKey();
   static final GlobalKey keyResetAllCards = GlobalKey();

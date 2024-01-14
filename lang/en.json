@@ -33,6 +33,7 @@
   "add_an_item": "Add an item",
   "add_item": "Add item",
   "add_car": "Add car",
+  "btn_return": "return",
   "exit_without_saving": "Exit without saving",
   "tap_back_again_to_exit": "Tap back again to exit",
   "notif_channel_basic_group_name": "Basic group",
@@ -91,6 +92,9 @@
   "sort_by_severity_tooltip": "sort by severity",
   "reset_items_tooltip": "reset all items",
   "remove_items_tooltip": "remove all items",
+  "edit_car_data_tooltip": "edit car data",
+  "remove_car_tooltip": "remove car",
+  "share_car_data_tooltip": "share car",
   "warning_titles": [
     "Airbag (Supplemental Restraint System 'SRS')",
     "Airbag (Supplemental Restraint System 'SRS')",
