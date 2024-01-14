@@ -1,5 +1,6 @@
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/add_consumable_screen_widgets/bottom_buttons_widget.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/add_consumable_screen_widgets/consumable_data_card_widget.dart';
@@ -45,7 +46,7 @@ class AddConsumableScreenState extends State<AddConsumableScreen> {
                 const Spacer(),
                 BottomButtonsWidget(cubit: cubit),
                 const SizedBox(height: AppDimens.sizedBox15),
-                // const BannerAdWidget(),
+                const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/2025477625'),
               ],
             ),
           ),

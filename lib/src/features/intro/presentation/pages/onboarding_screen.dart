@@ -7,6 +7,7 @@ import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_button.dart';
 import 'package:car_note/src/features/intro/presentation/widgets/onboarding_screen/pager_widget.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _buildPager(),
           _buildPageIndicator(),
           _buildPageButtons(context),
-          // const BannerAdWidget()
+          const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/8418090611')
         ],
       );
 

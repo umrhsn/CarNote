@@ -11,12 +11,15 @@ class MyCarsListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: AppDimens.padding15.r, vertical: AppDimens.padding8.r),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [CarDetails(), IconsRow()],
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: AppDimens.padding15),
+      child: Card(
+        child: Padding(
+          padding: EdgeInsetsDirectional.symmetric(horizontal: AppDimens.padding15.r, vertical: AppDimens.padding8.r),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [CarDetails(), IconsRow()],
+          ),
         ),
       ),
     );

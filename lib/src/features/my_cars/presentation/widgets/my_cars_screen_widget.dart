@@ -13,20 +13,12 @@ class MyCarsScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            top: AppDimens.padding20,
-            start: AppDimens.padding20,
-            end: AppDimens.padding20,
-            bottom: AppDimens.padding15,
-          ),
-          child: Column(
-            children: [
-              const LogoAndMyCarsListWidgets(),
-              SizedBox(height: AppDimens.sizedBox15.r),
-              const BottomButtonsWidget(),
-            ],
-          ),
+        child: Column(
+          children: [
+            const LogoAndMyCarsListWidgets(),
+            SizedBox(height: AppDimens.sizedBox15.r),
+            const BottomButtonsWidget(),
+          ],
         ),
       ),
     );

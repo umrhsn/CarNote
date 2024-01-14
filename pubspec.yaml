@@ -33,7 +33,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   smooth_page_indicator: ^1.1.0
   material_design_icons_flutter: ^7.0.7296
-#  google_mobile_ads: ^3.1.0
+  google_mobile_ads: ^3.1.0
 
 dev_dependencies:
   flutter_test:

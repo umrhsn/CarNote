@@ -1,3 +1,4 @@
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/core/widgets/buttons/switch_lang_button_widget.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:car_note/src/features/my_cars/presentation/widgets/my_cars_screen_widget.dart';
@@ -21,7 +22,6 @@ class _MyCarsScreenState extends State<MyCarsScreen> {
         children: [
           const MyCarsScreenWidget(),
           SwitchLangButtonWidget(localeCubit: localeCubit),
-          // const BannerAdWidget(),
         ],
       ),
     );
