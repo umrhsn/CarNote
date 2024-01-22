@@ -44,12 +44,10 @@ class AppBarIconButtonsRow extends StatelessWidget {
       children: [
         Expanded(
           child: AnimatedIconButton(
-            key: AppKeys.keySwitchLangConsumablesScreen,
-            icon: MdiIcons.translateVariant,
-            onPressed: () => AppLocalizations.of(context)!.isEnLocale
-                ? localeCubit.toArabic(context, showToast: true)
-                : localeCubit.toEnglish(context, showToast: true),
-            tooltip: AppStrings.switchLangTooltip(context),
+            key: AppKeys.keyMyCars,
+            icon: MdiIcons.carMultiple,
+            onPressed: () => Navigator.pushNamed(context, Routes.myCarsRoute),
+            tooltip: AppStrings.myCarsTooltip(context),
           ),
         ),
         const Spacer(),
@@ -73,6 +71,16 @@ class AppBarIconButtonsRow extends StatelessWidget {
                     text: value == true ? AppStrings.fileCreated(context) : AppStrings.fileNotCreated(context),
                     textStyle: const TextStyle(color: Colors.white)))),
             tooltip: AppStrings.createFileTooltip(context),
+          ),
+        ),
+        Expanded(
+          child: AnimatedIconButton(
+            key: AppKeys.keySwitchLangConsumablesScreen,
+            icon: MdiIcons.translateVariant,
+            onPressed: () => AppLocalizations.of(context)!.isEnLocale
+                ? localeCubit.toArabic(context, showToast: true)
+                : localeCubit.toEnglish(context, showToast: true),
+            tooltip: AppStrings.switchLangTooltip(context),
           ),
         ),
         Expanded(

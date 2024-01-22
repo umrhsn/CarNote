@@ -52,10 +52,12 @@ class AppColors {
   static MaterialColor getPrimarySwatchColor({required bool isLight}) => isLight ? _primarySwatchLight : _primarySwatchDark;
 
   /// Icons
-  static const Color iconLight = Color(0xff54AEFF);
-  static const Color iconDark = Color(0xff7D8590);
+  static Color icon = getPrimarySwatchColor(isLight: false).shade200;
 
-  static Color getIconColor(BuildContext context) => context.isLight ? iconLight : iconDark;
+  static const Color iconButtonLight = Color(0xff54AEFF);
+  static const Color iconButtonDark = Color(0xff7D8590);
+
+  static Color getIconColor(BuildContext context) => context.isLight ? iconButtonLight : iconButtonDark;
 
   /// TextFields
   static Color getAppBarTextFieldLabel(BuildContext context) => context.isLight ? Colors.black.withAlpha(70) : Colors.white.withAlpha(80);

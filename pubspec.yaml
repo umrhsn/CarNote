@@ -3,7 +3,7 @@ description: A special app for your car.
 
 publish_to: 'none'
 
-version: 1.0.1+8
+version: 2.0.0+1
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
@@ -33,7 +33,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   smooth_page_indicator: ^1.1.0
   material_design_icons_flutter: ^7.0.7296
-#  google_mobile_ads: ^3.1.0
+  google_mobile_ads: ^3.1.0
 
 dev_dependencies:
   flutter_test:

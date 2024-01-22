@@ -1,15 +1,18 @@
 import 'package:car_note/src/core/utils/app_colors.dart';
+import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AnimatedButtonWithIcon extends StatefulWidget {
   final IconData icon;
+  final String? text;
   bool btnEnabled;
   final void Function()? onPressed;
 
   AnimatedButtonWithIcon({
     super.key,
     required this.icon,
+    this.text,
     this.btnEnabled = true,
     required this.onPressed,
   });
@@ -51,7 +54,16 @@ class _AnimatedButtonWithIconState extends State<AnimatedButtonWithIcon> with Si
                 padding: MaterialStateProperty.all(EdgeInsets.zero),
                 fixedSize: MaterialStateProperty.all(const Size(60, 60)),
               ),
-        child: Icon(widget.icon),
+        child: widget.text != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(widget.text!),
+                  const SizedBox(width: AppDimens.sizedBox8),
+                  Icon(widget.icon),
+                ],
+              )
+            : Icon(widget.icon),
       ),
     );
   }

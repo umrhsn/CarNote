@@ -29,6 +29,10 @@ class AppStrings {
 
   static String btnAddItem(BuildContext context) => _translate(context, AppKeys.add_item).toUpperCase();
 
+  static String btnAddCar(BuildContext context) => _translate(context, AppKeys.add_car).toUpperCase();
+
+  static String btnReturn(BuildContext context) => _translate(context, AppKeys.btn_return).toUpperCase();
+
   /// Toasts
   static String dataSavedSuccessfully(BuildContext context) => _translate(context, AppKeys.data_saved_successfully);
 
@@ -201,6 +205,8 @@ class AppStrings {
 
   static String infoTooltip(BuildContext context) => _translate(context, AppKeys.info_tooltip);
 
+  static String myCarsTooltip(BuildContext context) => _translate(context, AppKeys.my_cars_tooltip);
+
   static String switchToGridView(BuildContext context) => _translate(context, AppKeys.switch_to_grid_view);
 
   static String switchToListView(BuildContext context) => _translate(context, AppKeys.switch_to_list_view);
@@ -218,6 +224,12 @@ class AppStrings {
   static String resetItemsTooltip(BuildContext context) => _translate(context, AppKeys.reset_items_tooltip);
 
   static String removeItemsTooltip(BuildContext context) => _translate(context, AppKeys.remove_items_tooltip);
+
+  static String editCarDataTooltip(BuildContext context) => _translate(context, AppKeys.edit_car_data_tooltip);
+
+  static String removeCarTooltip(BuildContext context) => _translate(context, AppKeys.remove_car_tooltip);
+
+  static String shareCarDataTooltip(BuildContext context) => _translate(context, AppKeys.share_car_data_tooltip);
 
   /// Lists
   static String nothingHere(BuildContext context) => _translate(context, AppKeys.nothing_here);
@@ -250,6 +262,8 @@ class AppStrings {
   static String tourTargetAddItem(BuildContext context) => _translate(context, AppKeys.tour_target_add_item);
 
   static String tourTargetSwitchLang(BuildContext context) => _translate(context, AppKeys.tour_target_switch_lang);
+
+  static String tourTargetMyCars(BuildContext context) => _translate(context, AppKeys.tour_target_my_cars);
 
   static String tourTargetToggleDetailedMode(BuildContext context) => _translate(context, AppKeys.tour_target_toggle_detailed_mode);
 

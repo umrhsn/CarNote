@@ -2,13 +2,14 @@ import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/form_validation/form_validation.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/car_type_text_form_field.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/continue_button.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/current_kilometer_text_form_field.dart';
-import 'package:car_note/src/features/car_info/presentation/widgets/logo_widget.dart';
+import 'package:car_note/src/core/widgets/logo/logo_widget.dart';
 import 'package:car_note/src/features/car_info/presentation/widgets/model_year_text_form_field.dart';
-import 'package:car_note/src/features/car_info/presentation/widgets/switch_lang_button_widget.dart';
+import 'package:car_note/src/core/widgets/buttons/switch_lang_button_widget.dart';
 import 'package:car_note/src/features/intro/presentation/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<CarInfoScreen> {
             ),
           ),
           SwitchLangButtonWidget(localeCubit: localeCubit),
-          // const BannerAdWidget(),
+          const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/9783143176'),
         ],
       ),
     );

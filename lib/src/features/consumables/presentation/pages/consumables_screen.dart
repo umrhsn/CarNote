@@ -4,6 +4,7 @@ import 'package:car_note/src/core/services/notifications/notifications_helper.da
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
+import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/app_bar_current_kilometer_text_field.dart';
 import 'package:car_note/src/features/consumables/presentation/widgets/app_bar_icon_buttons_row.dart';
@@ -22,6 +23,7 @@ class ConsumablesScreen extends StatefulWidget {
 
 class _ConsumablesScreenState extends State<ConsumablesScreen> {
   late List? _list;
+  bool _canPop = false;
 
   @override
   void initState() {
@@ -44,8 +46,13 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
         LocaleCubit localeCubit = LocaleCubit.get(context);
         ConsumableCubit consumableCubit = ConsumableCubit.get(context);
 
-        return WillPopScope(
-          onWillPop: () => DialogHelper.showOnWillPopDialogs(context),
+        return PopScope(
+          canPop: _canPop,
+          onPopInvoked: (didPop) {
+            if (DialogHelper.showOnWillPopDialogs(context)) {
+              setState(() => _canPop = true);
+            }
+          },
           child: Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -65,7 +72,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
                   const SizedBox(height: AppDimens.sizedBox15),
-                  // const BannerAdWidget()
+                  const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/4651640963')
                 ],
               ),
             ),
