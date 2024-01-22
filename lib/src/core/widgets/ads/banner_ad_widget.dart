@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -47,6 +48,12 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (_bannerAd != null) {
       return Align(
@@ -60,6 +67,6 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         ),
       );
     }
-    return const SizedBox();
+    return const SizedBox(height: 0, width: 0);
   }
 }
