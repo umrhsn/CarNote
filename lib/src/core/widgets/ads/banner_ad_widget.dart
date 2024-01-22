@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
