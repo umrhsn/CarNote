@@ -33,6 +33,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
         // Called when an ad request failed.
         onAdFailedToLoad: (ad, err) {
           debugPrint('BannerAd failed to load: $err');
+          setState(() => _isLoaded = false);
           // Dispose the ad here to free resources.
           ad.dispose();
         },
@@ -54,18 +55,17 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_bannerAd != null) {
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: SafeArea(
-          child: SizedBox(
-            width: _bannerAd!.size.width.toDouble(),
-            height: _bannerAd!.size.height.toDouble(),
-            child: AdWidget(ad: _bannerAd!),
-          ),
-        ),
-      );
-    }
-    return const SizedBox(height: 0, width: 0);
+    return _bannerAd == null || _isLoaded == false
+        ? const SizedBox()
+        : Align(
+            alignment: Alignment.bottomCenter,
+            child: SafeArea(
+              child: SizedBox(
+                width: _bannerAd!.size.width.toDouble(),
+                height: _bannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAd!),
+              ),
+            ),
+          );
   }
 }
