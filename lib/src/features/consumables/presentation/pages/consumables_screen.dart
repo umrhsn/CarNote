@@ -2,6 +2,7 @@ import 'package:car_note/src/core/database/database_helper.dart';
 import 'package:car_note/src/core/services/app_tutorial/app_tour_service.dart';
 import 'package:car_note/src/core/services/notifications/notifications_helper.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/services/dialogs/dialog_helper.dart';
 import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
@@ -72,7 +73,7 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                   const Spacer(),
                   BottomButtons(consumableCubit: consumableCubit),
                   const SizedBox(height: AppDimens.sizedBox15),
-                  const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/4651640963')
+                  const BannerAdWidget(androidAdUnitId: AppIDs.adUnitConsumables)
                 ],
               ),
             ),

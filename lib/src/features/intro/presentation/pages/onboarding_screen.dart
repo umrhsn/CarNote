@@ -4,6 +4,7 @@ import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -64,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           _buildPager(),
           _buildPageIndicator(),
           _buildPageButtons(context),
-          const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/8418090611')
+          const BannerAdWidget(androidAdUnitId: AppIDs.adUnitOnboarding)
         ],
       );
 
