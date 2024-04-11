@@ -1,4 +1,6 @@
+import 'package:car_note/src/config/routes/app_routes.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
 import 'package:car_note/src/core/widgets/buttons/animated_button.dart';
@@ -24,7 +26,7 @@ class BottomButtonsWidget extends StatelessWidget {
                 child: AnimatedButtonWithIcon(
                   icon: MdiIcons.plus,
                   text: AppStrings.btnAddCar(context),
-                  onPressed: () {},
+                  onPressed: () => Navigator.pushNamed(context, Routes.carInfoRoute),
                 ),
               ),
               const SizedBox(width: AppDimens.sizedBox10),
@@ -38,7 +40,7 @@ class BottomButtonsWidget extends StatelessWidget {
           ),
         ),
         SizedBox(height: AppDimens.sizedBox15.r),
-        const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/3141567413'),
+        const BannerAdWidget(androidAdUnitId: AppIDs.adUnitMyCars),
       ],
     );
   }

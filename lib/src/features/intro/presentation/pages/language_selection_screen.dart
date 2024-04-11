@@ -1,5 +1,6 @@
 import 'package:car_note/src/core/extensions/media_query_values.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
+import 'package:car_note/src/core/utils/app_ids.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/asset_manager.dart';
 import 'package:car_note/src/core/widgets/ads/banner_ad_widget.dart';
@@ -61,7 +62,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> with 
               ),
             ),
           ),
-          const BannerAdWidget(androidAdUnitId: 'ca-app-pub-8427642569951372/2100094271'),
+          const BannerAdWidget(androidAdUnitId: AppIDs.adUnitLangSelection),
         ],
       ),
     );
