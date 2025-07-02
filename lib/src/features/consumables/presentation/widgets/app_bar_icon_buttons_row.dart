@@ -65,11 +65,17 @@ class AppBarIconButtonsRow extends StatelessWidget {
             key: AppKeys.keySaveToFile,
             btnEnabled: list.isNotEmpty,
             icon: MdiIcons.fileExport,
-            onPressed: () => DatabaseHelper.writeConsumablesData(context).then((value) => FileCreator.writeDataToFile().then((value) =>
-                BotToast.showText(
-                    duration: Duration(seconds: value == true ? AppNums.durationToastLong : AppNums.durationToastShort),
-                    text: value == true ? AppStrings.fileCreated(context) : AppStrings.fileNotCreated(context),
-                    textStyle: const TextStyle(color: Colors.white)))),
+            onPressed: () => DatabaseHelper.writeConsumablesData(context).then(
+                (value) => di.sl<FileCreator>().writeDataToFile().then((value) =>
+                    BotToast.showText(
+                        duration: Duration(
+                            seconds: value == true
+                                ? AppNums.durationToastLong
+                                : AppNums.durationToastShort),
+                        text: value == true
+                            ? AppStrings.fileCreated(context)
+                            : AppStrings.fileNotCreated(context),
+                        textStyle: const TextStyle(color: Colors.white)))),
             tooltip: AppStrings.createFileTooltip(context),
           ),
         ),
@@ -88,7 +94,8 @@ class AppBarIconButtonsRow extends StatelessWidget {
             key: AppKeys.keyResetAllCards,
             btnEnabled: list.isNotEmpty,
             icon: MdiIcons.restore,
-            onPressed: () => DialogHelper.showResetAllCardsConfirmationDialog(context),
+            onPressed: () =>
+                DialogHelper.showResetAllCardsConfirmationDialog(context),
             tooltip: AppStrings.resetItemsTooltip(context),
           ),
         ),
@@ -97,7 +104,8 @@ class AppBarIconButtonsRow extends StatelessWidget {
             key: AppKeys.keyRemoveAllCards,
             btnEnabled: list.isNotEmpty,
             icon: MdiIcons.deleteForever,
-            onPressed: () => DialogHelper.showRemoveAllCardsConfirmationDialog(context),
+            onPressed: () =>
+                DialogHelper.showRemoveAllCardsConfirmationDialog(context),
             tooltip: AppStrings.removeItemsTooltip(context),
           ),
         ),
