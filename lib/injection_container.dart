@@ -1,3 +1,4 @@
+import 'package:car_note/src/core/services/file_creator/file_creator.dart';
 import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:car_note/src/features/intro/data/data_sources/lang_local_data_source.dart';
@@ -15,19 +16,24 @@ Future<void> init() async {
   /* Features */
 
   /// Cubits
-  sl.registerFactory<LocaleCubit>(() => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
+  sl.registerFactory<LocaleCubit>(
+      () => LocaleCubit(getSavedLangUseCase: sl(), changeLangUseCase: sl()));
   sl.registerFactory<CarCubit>(() => CarCubit());
   sl.registerFactory<ConsumableCubit>(() => ConsumableCubit());
 
   /// Use Cases
-  sl.registerLazySingleton<GetSavedLangUseCase>(() => GetSavedLangUseCase(langRepository: sl()));
-  sl.registerLazySingleton<ChangeLangUseCase>(() => ChangeLangUseCase(langRepository: sl()));
+  sl.registerLazySingleton<GetSavedLangUseCase>(
+      () => GetSavedLangUseCase(langRepository: sl()));
+  sl.registerLazySingleton<ChangeLangUseCase>(
+      () => ChangeLangUseCase(langRepository: sl()));
 
   /// Repositories
-  sl.registerLazySingleton<LangRepository>(() => LangRepositoryImpl(langLocalDataSource: sl()));
+  sl.registerLazySingleton<LangRepository>(
+      () => LangRepositoryImpl(langLocalDataSource: sl()));
 
   /// Data Sources
-  sl.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerLazySingleton<LangLocalDataSource>(
+      () => LangLocalDataSourceImpl(sharedPreferences: sl()));
 
   /* =========================================================================================== */
   /* External */
@@ -35,4 +41,5 @@ Future<void> init() async {
   /// SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  sl.registerLazySingleton<FileCreator>(() => FileCreatorImpl());
 }
