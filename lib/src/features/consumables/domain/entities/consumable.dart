@@ -1,18 +1,13 @@
-import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/utils/app_keys.dart';
-import 'package:hive/hive.dart';
+import 'package:equatable/equatable.dart';
 
-part 'consumable.g.dart';
+class Consumable extends Equatable {
+  final int id;
+  final String name;
+  final int lastChangedAt;
+  final int changeInterval;
+  final int remainingKm;
 
-@HiveType(typeId: 2)
-class Consumable extends HiveObject {
-  @HiveField(0) int id;
-  @HiveField(1) String name;
-  @HiveField(2) final int lastChangedAt;
-  @HiveField(3) final int changeInterval;
-  @HiveField(4) final int remainingKm;
-
-  Consumable({
+  const Consumable({
     required this.id,
     required this.name,
     required this.lastChangedAt,
@@ -20,5 +15,29 @@ class Consumable extends HiveObject {
     required this.remainingKm,
   });
 
-  static int getCount() => DatabaseHelper.consumableBox.get(AppKeys.consumableBox)!.length;
+  @override
+  List<Object?> get props =>
+      [id, name, lastChangedAt, changeInterval, remainingKm];
+
+  // Create a copy with updated values
+  Consumable copyWith({
+    int? id,
+    String? name,
+    int? lastChangedAt,
+    int? changeInterval,
+    int? remainingKm,
+  }) {
+    return Consumable(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      lastChangedAt: lastChangedAt ?? this.lastChangedAt,
+      changeInterval: changeInterval ?? this.changeInterval,
+      remainingKm: remainingKm ?? this.remainingKm,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'Consumable(id: $id, name: $name, lastChangedAt: $lastChangedAt, changeInterval: $changeInterval, remainingKm: $remainingKm)';
+  }
 }

@@ -1,10 +1,9 @@
-// lib/src/core/services/database/hive_database_service.dart
 import 'dart:io';
 import 'package:car_note/src/core/services/database/database_service.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_lists.dart';
-import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
+import 'package:car_note/src/features/car_info/data/models/car_model.dart';
+import 'package:car_note/src/features/consumables/data/models/consumable_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,10 +13,10 @@ class HiveDatabaseService implements DatabaseService {
 
   HiveDatabaseService({required this.sharedPreferences});
 
-  Box<Car>? _carBox;
+  Box<CarModel>? _carBox;
   Box<List>? _consumableBox;
 
-  Box<Car> get carBox => _carBox!;
+  Box<CarModel> get carBox => _carBox!;
 
   Box<List> get consumableBox => _consumableBox!;
 
@@ -26,12 +25,16 @@ class HiveDatabaseService implements DatabaseService {
     Directory dir = await getApplicationDocumentsDirectory();
     Hive
       ..init(dir.path)
-      ..registerAdapter<Car>(CarAdapter())
-      ..registerAdapter<Consumable>(ConsumableAdapter());
+      ..registerAdapter<CarModel>(CarModelAdapter())
+      ..registerAdapter<ConsumableModel>(ConsumableModelAdapter());
 
-    _carBox = await Hive.openBox<Car>(AppKeys.carBox);
+    _carBox = await Hive.openBox<CarModel>(AppKeys.carBox);
     _consumableBox = await Hive.openBox<List>(AppKeys.consumableBox);
 
+    await _initializeDefaultConsumables();
+  }
+
+  Future<void> _initializeDefaultConsumables() async {
     if (sharedPreferences.getBool(AppKeys.prefsBoolListAdded) == null) {
       _consumableBox!.put(AppKeys.consumableBox, []);
 
@@ -39,7 +42,7 @@ class HiveDatabaseService implements DatabaseService {
           index < AppLists.consumablesEnglishList.length;
           index++) {
         _consumableBox!.get(AppKeys.consumableBox)!.add(
-              Consumable(
+              ConsumableModel(
                 id: index,
                 name:
                     "${AppLists.consumablesEnglishList[index]}  ${AppLists.consumablesArabicList[index]}",
@@ -57,9 +60,9 @@ class HiveDatabaseService implements DatabaseService {
   }
 
   @override
-  Future<bool> saveCar(Car car) async {
+  Future<bool> saveCarModel(CarModel carModel) async {
     try {
-      await _carBox!.put(AppKeys.carBox, car);
+      await _carBox!.put(AppKeys.carBox, carModel);
       return _carBox!.get(AppKeys.carBox) != null;
     } catch (e) {
       return false;
@@ -67,36 +70,37 @@ class HiveDatabaseService implements DatabaseService {
   }
 
   @override
-  Car? getCar() {
+  CarModel? getCarModel() {
     return _carBox!.get(AppKeys.carBox);
   }
 
   @override
-  Future<void> saveConsumables(List<Consumable> consumables) async {
-    await _consumableBox!.put(AppKeys.consumableBox, consumables);
+  Future<void> saveConsumableModels(
+      List<ConsumableModel> consumableModels) async {
+    await _consumableBox!.put(AppKeys.consumableBox, consumableModels);
   }
 
   @override
-  List<Consumable> getConsumables() {
+  List<ConsumableModel> getConsumableModels() {
     final list = _consumableBox!.get(AppKeys.consumableBox);
     if (list == null) return [];
-    return List<Consumable>.from(list);
+    return List<ConsumableModel>.from(list);
   }
 
   @override
-  Future<bool> addConsumable(Consumable consumable) async {
+  Future<bool> addConsumableModel(ConsumableModel consumableModel) async {
     try {
-      final list = getConsumables();
-      final newConsumable = Consumable(
+      final list = getConsumableModels();
+      final newConsumableModel = ConsumableModel(
         id: list.length,
-        name: consumable.name,
-        lastChangedAt: consumable.lastChangedAt,
-        changeInterval: consumable.changeInterval,
-        remainingKm: consumable.remainingKm,
+        name: consumableModel.name,
+        lastChangedAt: consumableModel.lastChangedAt,
+        changeInterval: consumableModel.changeInterval,
+        remainingKm: consumableModel.remainingKm,
       );
 
-      list.add(newConsumable);
-      await saveConsumables(list);
+      list.add(newConsumableModel);
+      await saveConsumableModels(list);
       return true;
     } catch (e) {
       return false;
@@ -104,34 +108,34 @@ class HiveDatabaseService implements DatabaseService {
   }
 
   @override
-  void removeConsumable(int index) {
-    final list = getConsumables();
+  void removeConsumableModel(int index) {
+    final list = getConsumableModels();
     if (index >= 0 && index < list.length) {
       list.removeAt(index);
-      saveConsumables(list);
+      saveConsumableModels(list);
     }
   }
 
   @override
-  void resetConsumable(int index) {
-    final list = getConsumables();
+  void resetConsumableModel(int index) {
+    final list = getConsumableModels();
     if (index >= 0 && index < list.length) {
-      list[index] = Consumable(
+      list[index] = ConsumableModel(
         id: list[index].id,
         name: list[index].name,
         lastChangedAt: 0,
         changeInterval: 0,
         remainingKm: 0,
       );
-      saveConsumables(list);
+      saveConsumableModels(list);
     }
   }
 
   @override
-  void resetAllConsumables() {
-    final list = getConsumables();
+  void resetAllConsumableModels() {
+    final list = getConsumableModels();
     for (int i = 0; i < list.length; i++) {
-      list[i] = Consumable(
+      list[i] = ConsumableModel(
         id: list[i].id,
         name: list[i].name,
         lastChangedAt: 0,
@@ -139,38 +143,38 @@ class HiveDatabaseService implements DatabaseService {
         remainingKm: 0,
       );
     }
-    saveConsumables(list);
+    saveConsumableModels(list);
   }
 
   @override
-  void removeAllConsumables() {
+  void removeAllConsumableModels() {
     _consumableBox!.put(AppKeys.consumableBox, []);
   }
 
   @override
-  void reorderConsumables(int oldIndex, int newIndex) {
-    final list = getConsumables();
+  void reorderConsumableModels(int oldIndex, int newIndex) {
+    final list = getConsumableModels();
     if (oldIndex < newIndex) newIndex -= 1;
 
     final item = list.removeAt(oldIndex);
     list.insert(newIndex, item);
-    saveConsumables(list);
+    saveConsumableModels(list);
   }
 
   @override
-  bool updateConsumableName(int index, String name) {
+  bool updateConsumableModelName(int index, String name) {
     if (name.isEmpty) return false;
 
-    final list = getConsumables();
+    final list = getConsumableModels();
     if (index >= 0 && index < list.length) {
-      list[index] = Consumable(
+      list[index] = ConsumableModel(
         id: list[index].id,
         name: name,
         lastChangedAt: list[index].lastChangedAt,
         changeInterval: list[index].changeInterval,
         remainingKm: list[index].remainingKm,
       );
-      saveConsumables(list);
+      saveConsumableModels(list);
       return true;
     }
     return false;

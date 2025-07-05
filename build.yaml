@@ -1,0 +1,17 @@
+﻿targets:
+  $default:
+    builders:
+      hive_generator|hive_generator:
+        enabled: true
+        generate_for:
+          - lib/src/features/*/data/models/*.dart
+        options:
+          # Add any Hive generator options here
+      json_serializable|json_serializable:
+        enabled: true
+        generate_for:
+          - lib/src/features/*/data/models/*.dart
+        options:
+          # JSON serialization options
+          explicit_to_json: true
+          include_if_null: false

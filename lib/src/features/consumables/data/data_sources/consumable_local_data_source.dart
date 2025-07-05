@@ -1,5 +1,5 @@
-// lib/src/features/consumables/data/data_sources/consumable_local_data_source.dart
 import 'package:car_note/src/core/services/database/database_service.dart';
+import 'package:car_note/src/features/consumables/data/models/consumable_model.dart';
 import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 
 abstract class ConsumableLocalDataSource {
@@ -29,46 +29,50 @@ class ConsumableLocalDataSourceImpl implements ConsumableLocalDataSource {
 
   @override
   Future<void> saveConsumables(List<Consumable> consumables) async {
-    await databaseService.saveConsumables(consumables);
+    final consumableModels =
+        consumables.map((e) => ConsumableModel.fromEntity(e)).toList();
+    await databaseService.saveConsumableModels(consumableModels);
   }
 
   @override
   List<Consumable> getConsumables() {
-    return databaseService.getConsumables();
+    final consumableModels = databaseService.getConsumableModels();
+    return consumableModels.map((model) => model.toEntity()).toList();
   }
 
   @override
   Future<bool> addConsumable(Consumable consumable) async {
-    return await databaseService.addConsumable(consumable);
+    final consumableModel = ConsumableModel.fromEntity(consumable);
+    return await databaseService.addConsumableModel(consumableModel);
   }
 
   @override
   void removeConsumable(int index) {
-    databaseService.removeConsumable(index);
+    databaseService.removeConsumableModel(index);
   }
 
   @override
   void resetConsumable(int index) {
-    databaseService.resetConsumable(index);
+    databaseService.resetConsumableModel(index);
   }
 
   @override
   void resetAllConsumables() {
-    databaseService.resetAllConsumables();
+    databaseService.resetAllConsumableModels();
   }
 
   @override
   void removeAllConsumables() {
-    databaseService.removeAllConsumables();
+    databaseService.removeAllConsumableModels();
   }
 
   @override
   void reorderConsumables(int oldIndex, int newIndex) {
-    databaseService.reorderConsumables(oldIndex, newIndex);
+    databaseService.reorderConsumableModels(oldIndex, newIndex);
   }
 
   @override
   bool updateConsumableName(int index, String name) {
-    return databaseService.updateConsumableName(index, name);
+    return databaseService.updateConsumableModelName(index, name);
   }
 }

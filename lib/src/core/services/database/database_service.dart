@@ -1,31 +1,30 @@
-// lib/src/core/services/database/database_service.dart
-import 'package:car_note/src/features/car_info/domain/entities/car.dart';
-import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
+import 'package:car_note/src/features/car_info/data/models/car_model.dart';
+import 'package:car_note/src/features/consumables/data/models/consumable_model.dart';
 
 abstract class DatabaseService {
   Future<void> init();
 
   // Car operations
-  Future<bool> saveCar(Car car);
+  Future<bool> saveCarModel(CarModel carModel);
 
-  Car? getCar();
+  CarModel? getCarModel();
 
   // Consumable operations
-  Future<void> saveConsumables(List<Consumable> consumables);
+  Future<void> saveConsumableModels(List<ConsumableModel> consumableModels);
 
-  List<Consumable> getConsumables();
+  List<ConsumableModel> getConsumableModels();
 
-  Future<bool> addConsumable(Consumable consumable);
+  Future<bool> addConsumableModel(ConsumableModel consumableModel);
 
-  void removeConsumable(int index);
+  void removeConsumableModel(int index);
 
-  void resetConsumable(int index);
+  void resetConsumableModel(int index);
 
-  void resetAllConsumables();
+  void resetAllConsumableModels();
 
-  void removeAllConsumables();
+  void removeAllConsumableModels();
 
-  void reorderConsumables(int oldIndex, int newIndex);
+  void reorderConsumableModels(int oldIndex, int newIndex);
 
-  bool updateConsumableName(int index, String name);
+  bool updateConsumableModelName(int index, String name);
 }
