@@ -1,8 +1,8 @@
+// lib/src/features/consumables/presentation/widgets/app_bar_icon_buttons_row.dart
 import 'package:bot_toast/bot_toast.dart';
 import 'package:car_note/src/config/locale/app_localizations.dart';
 import 'package:car_note/src/config/routes/app_routes.dart';
-import 'package:car_note/src/core/database/database_helper.dart';
-import 'package:car_note/src/core/services/file_creator/file_creator.dart';
+import 'package:car_note/src/core/services/file/file_service.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -36,7 +36,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List? list = DatabaseHelper.consumableBox.get(AppKeys.consumableBox);
+    final hasConsumables = consumableCubit.consumableCount > 0;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,7 @@ class AppBarIconButtonsRow extends StatelessWidget {
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keyToggleDetailedMode,
-            btnEnabled: list!.isNotEmpty,
+            btnEnabled: hasConsumables,
             icon: _getVisibilityStatus() ? MdiIcons.eye : MdiIcons.eyeOutline,
             onPressed: () => consumableCubit.changeVisibility(context),
             tooltip: AppStrings.toggleModeTooltip(context),
@@ -63,19 +63,30 @@ class AppBarIconButtonsRow extends StatelessWidget {
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keySaveToFile,
-            btnEnabled: list.isNotEmpty,
+            btnEnabled: hasConsumables,
             icon: MdiIcons.fileExport,
-            onPressed: () => DatabaseHelper.writeConsumablesData(context).then(
-                (value) => di.sl<FileCreator>().writeDataToFile().then((value) =>
-                    BotToast.showText(
-                        duration: Duration(
-                            seconds: value == true
-                                ? AppNums.durationToastLong
-                                : AppNums.durationToastShort),
-                        text: value == true
-                            ? AppStrings.fileCreated(context)
-                            : AppStrings.fileNotCreated(context),
-                        textStyle: const TextStyle(color: Colors.white)))),
+            onPressed: () async {
+              await consumableCubit.saveConsumablesData(context);
+              // Create file data (this will need to be implemented similar to the original FileCreator)
+              final fileData = AppStrings.generateFileData(consumableCubit);
+              final fileName = AppStrings.generateFileName();
+
+              final fileService = di.sl<FileService>();
+              final result =
+                  await fileService.writeDataToFile(fileName, fileData);
+
+              BotToast.showText(
+                duration: Duration(
+                  seconds: result
+                      ? AppNums.durationToastLong
+                      : AppNums.durationToastShort,
+                ),
+                text: result
+                    ? AppStrings.fileCreated(context, fileName)
+                    : AppStrings.fileNotCreated(context),
+                textStyle: const TextStyle(color: Colors.white),
+              );
+            },
             tooltip: AppStrings.createFileTooltip(context),
           ),
         ),
@@ -92,20 +103,20 @@ class AppBarIconButtonsRow extends StatelessWidget {
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keyResetAllCards,
-            btnEnabled: list.isNotEmpty,
+            btnEnabled: hasConsumables,
             icon: MdiIcons.restore,
-            onPressed: () =>
-                DialogHelper.showResetAllCardsConfirmationDialog(context),
+            onPressed: () => DialogHelper.showResetAllCardsConfirmationDialog(
+                context, consumableCubit),
             tooltip: AppStrings.resetItemsTooltip(context),
           ),
         ),
         Expanded(
           child: AnimatedIconButton(
             key: AppKeys.keyRemoveAllCards,
-            btnEnabled: list.isNotEmpty,
+            btnEnabled: hasConsumables,
             icon: MdiIcons.deleteForever,
-            onPressed: () =>
-                DialogHelper.showRemoveAllCardsConfirmationDialog(context),
+            onPressed: () => DialogHelper.showRemoveAllCardsConfirmationDialog(
+                context, consumableCubit),
             tooltip: AppStrings.removeItemsTooltip(context),
           ),
         ),

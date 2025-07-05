@@ -1,3 +1,4 @@
+// lib/src/core/errors/exceptions.dart
 import 'package:equatable/equatable.dart';
 
 class ServerException extends Equatable implements Exception {
@@ -14,6 +15,32 @@ class ServerException extends Equatable implements Exception {
   }
 }
 
+class DatabaseException extends ServerException {
+  const DatabaseException([String? message])
+      : super(message ?? "Database operation failed");
+}
+
+class CacheException extends ServerException {
+  const CacheException([String? message])
+      : super(message ?? "Cache operation failed");
+}
+
+class ValidationException extends ServerException {
+  const ValidationException([String? message])
+      : super(message ?? "Validation failed");
+}
+
+class NotificationException extends ServerException {
+  const NotificationException([String? message])
+      : super(message ?? "Notification operation failed");
+}
+
+class FileException extends ServerException {
+  const FileException([String? message])
+      : super(message ?? "File operation failed");
+}
+
+// Keep existing exceptions for backward compatibility
 class FetchDataException extends ServerException {
   const FetchDataException([message]) : super("Error During Communication");
 }
@@ -35,11 +62,11 @@ class ConflictException extends ServerException {
 }
 
 class InternalServerErrorException extends ServerException {
-  const InternalServerErrorException([message]) : super("Internal Server Error");
+  const InternalServerErrorException([message])
+      : super("Internal Server Error");
 }
 
 class NoInternetConnectionException extends ServerException {
-  const NoInternetConnectionException([message]) : super("No Internet Connection");
+  const NoInternetConnectionException([message])
+      : super("No Internet Connection");
 }
-
-class CacheException implements Exception {}

@@ -1,5 +1,4 @@
-import 'package:bot_toast/bot_toast.dart';
-import 'package:car_note/src/core/database/database_helper.dart';
+// lib/src/features/consumables/presentation/widgets/add_consumable_screen_widgets/bottom_buttons_widget.dart
 import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
@@ -31,22 +30,21 @@ class BottomButtonsWidget extends StatelessWidget {
             child: AnimatedButton(
               text: AppStrings.btnAddItem(context).toUpperCase(),
               btnEnabled: cubit.shouldEnableAddButton(context),
-              onPressed: () {
-                DatabaseHelper.addConsumable(
+              onPressed: () async {
+                await cubit.addConsumable(
                   context,
                   name: cubit.consumableNameController.text,
-                  lastChangedAt: cubit.lastChangedController.text.isEmpty ? 0 : int.parse(cubit.lastChangedController.text.removeThousandSeparator()),
-                  changeInterval:
-                      cubit.changeIntervalController.text.isEmpty ? 0 : int.parse(cubit.changeIntervalController.text.removeThousandSeparator()),
-                ).then((value) {
-                  if (value) {
-                    BotToast.showText(text: AppStrings.itemAdded(context));
-                    Navigator.pop(context);
-                  } else {
-                    BotToast.showText(text: AppStrings.invalidInput(context));
-                  }
-                  _resetControllersValues();
-                });
+                  lastChangedAt: cubit.lastChangedController.text.isEmpty
+                      ? 0
+                      : int.parse(cubit.lastChangedController.text
+                          .removeThousandSeparator()),
+                  changeInterval: cubit.changeIntervalController.text.isEmpty
+                      ? 0
+                      : int.parse(cubit.changeIntervalController.text
+                          .removeThousandSeparator()),
+                );
+                Navigator.pop(context);
+                _resetControllersValues();
               },
             ),
           ),

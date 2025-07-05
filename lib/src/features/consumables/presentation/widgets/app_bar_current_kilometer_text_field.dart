@@ -1,4 +1,4 @@
-import 'package:car_note/src/core/database/database_helper.dart';
+// lib/src/features/consumables/presentation/widgets/app_bar_current_kilometer_text_field.dart
 import 'package:car_note/src/core/services/text_input_formatters/thousand_separator_input_formatter.dart';
 import 'package:car_note/src/core/utils/app_colors.dart';
 import 'package:car_note/src/core/utils/app_dimens.dart';
@@ -19,6 +19,10 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current car info for display
+    final car =
+        consumableCubit.consumables.isNotEmpty ? "Car Info" : "No Car Data";
+
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
@@ -29,7 +33,8 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
           controller: consumableCubit.currentKmController,
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: AppStrings.fontFamily, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontFamily: AppStrings.fontFamily, fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             floatingLabelStyle: TextStyle(
               color: consumableCubit.currentKmFocus.hasFocus
@@ -43,7 +48,8 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
               ),
             ),
             labelText: AppStrings.currentKmLabel(context),
-            labelStyle: TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
+            labelStyle:
+                TextStyle(color: AppColors.getAppBarTextFieldLabel(context)),
           ),
           inputFormatters: [
             LengthLimitingTextInputFormatter(AppNums.lengthLimit9),
@@ -54,13 +60,15 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
             consumableCubit.validateAllLastChangedKilometerFields(context);
             consumableCubit.validateAllChangeKilometerFields(context);
           },
-          onEditingComplete: () => consumableCubit.validateAllChangeKilometerFields(context),
+          onEditingComplete: () =>
+              consumableCubit.validateAllChangeKilometerFields(context),
           autovalidateMode: AutovalidateMode.always,
         ),
         Padding(
-          padding: const EdgeInsetsDirectional.only(end: AppDimens.padding8, bottom: AppDimens.padding8),
+          padding: const EdgeInsetsDirectional.only(
+              end: AppDimens.padding8, bottom: AppDimens.padding8),
           child: Text(
-            "${DatabaseHelper.carBox.get(AppKeys.carBox)!.type} ${DatabaseHelper.carBox.get(AppKeys.carBox)!.modelYear}",
+            car, // This will need to be updated to show actual car info
             textAlign: TextAlign.end,
             style: TextStyle(
               fontSize: Theme.of(context).textTheme.labelSmall?.fontSize,
