@@ -496,8 +496,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
 
   String? validateCurrentKilometer(BuildContext context) {
     emit(ValidatingItem());
-    if (currentKmController.text.isEmpty)
+    if (currentKmController.text.isEmpty) {
       return AppStrings.invalidInput(context);
+    }
     emit(ValidatingComplete());
     return null;
   }
@@ -644,7 +645,9 @@ class ConsumableCubit extends Cubit<ConsumableState> {
   bool shouldEnableAddButton(BuildContext context) {
     if (consumableNameController.text.isEmpty ||
         lastChangedController.text.isEmpty ||
-        changeIntervalController.text.isEmpty) return false;
+        changeIntervalController.text.isEmpty) {
+      return false;
+    }
     if (_validateAddLastChangedKilometer(context) != null) return false;
     return true;
   }

@@ -5,9 +5,11 @@ import 'package:car_note/src/core/utils/app_dimens.dart';
 import 'package:car_note/src/core/utils/app_keys.dart';
 import 'package:car_note/src/core/utils/app_nums.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
+import 'package:car_note/src/features/car_info/presentation/cubit/car_cubit.dart';
 import 'package:car_note/src/features/consumables/presentation/cubit/consumable_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBarCurrentKilometerTextField extends StatelessWidget {
   const AppBarCurrentKilometerTextField({
@@ -17,12 +19,30 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
 
   final ConsumableCubit consumableCubit;
 
+  String _getCarDisplayText(BuildContext context) {
+    // Get car data from CarCubit
+    final carCubit = BlocProvider.of<CarCubit>(context);
+
+    return BlocBuilder<CarCubit, CarState>(
+      builder: (context, state) {
+        if (state is CarLoaded && state.car != null) {
+          final car = state.car!;
+          return Text('${car.type} ${car.modelYear}');
+        } else if (state is CarError) {
+          return Text('Error loading car');
+        } else if (state is CarLoading) {
+          return Text('Loading...');
+        } else {
+          // Try to get car data if not loaded
+          carCubit.getCar();
+          return Text('No car data');
+        }
+      },
+    ).toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get the current car info for display
-    final car =
-        consumableCubit.consumables.isNotEmpty ? "Car Info" : "No Car Data";
-
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
@@ -67,15 +87,34 @@ class AppBarCurrentKilometerTextField extends StatelessWidget {
         Padding(
           padding: const EdgeInsetsDirectional.only(
               end: AppDimens.padding8, bottom: AppDimens.padding8),
-          child: Text(
-            car, // This will need to be updated to show actual car info
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.labelSmall?.fontSize,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold,
-              color: AppColors.getHintColor(context),
-            ),
+          child: BlocBuilder<CarCubit, CarState>(
+            builder: (context, state) {
+              String carDisplayText;
+
+              if (state is CarLoaded && state.car != null) {
+                final car = state.car!;
+                carDisplayText = '${car.type} ${car.modelYear}';
+              } else if (state is CarError) {
+                carDisplayText = 'Error loading car';
+              } else if (state is CarLoading) {
+                carDisplayText = 'Loading...';
+              } else {
+                // Try to get car data if not loaded
+                BlocProvider.of<CarCubit>(context).getCar();
+                carDisplayText = 'No car data';
+              }
+
+              return Text(
+                carDisplayText,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.labelSmall?.fontSize,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.getHintColor(context),
+                ),
+              );
+            },
           ),
         ),
       ],

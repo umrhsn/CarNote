@@ -50,8 +50,8 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton> with TickerProv
               }
             : null,
         style: !widget.btnEnabled
-            ? ButtonStyle(foregroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)))
-            : ButtonStyle(foregroundColor: MaterialStateProperty.all(context.isLight ? AppColors.iconButtonLight : AppColors.iconButtonDark)),
+            ? ButtonStyle(foregroundColor: WidgetStateProperty.all(AppColors.getBtnDisabledBackground(context)))
+            : ButtonStyle(foregroundColor: WidgetStateProperty.all(context.isLight ? AppColors.iconButtonLight : AppColors.iconButtonDark)),
         icon: Icon(widget.icon),
         tooltip: widget.tooltip,
       ),

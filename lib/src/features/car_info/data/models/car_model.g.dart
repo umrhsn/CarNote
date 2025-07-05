@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+﻿// GENERATED CODE - DO NOT MODIFY BY HAND (Created manually)
 
 part of 'car_model.dart';
 
@@ -26,7 +26,7 @@ class CarModelAdapter extends TypeAdapter<CarModel> {
   @override
   void write(BinaryWriter writer, CarModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(3)  // Number of fields
       ..writeByte(0)
       ..write(obj.type)
       ..writeByte(1)
@@ -45,19 +45,3 @@ class CarModelAdapter extends TypeAdapter<CarModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-CarModel _$CarModelFromJson(Map<String, dynamic> json) => CarModel(
-      type: json['type'] as String,
-      modelYear: json['modelYear'] as int,
-      currentKm: json['currentKm'] as int,
-    );
-
-Map<String, dynamic> _$CarModelToJson(CarModel instance) => <String, dynamic>{
-      'type': instance.type,
-      'modelYear': instance.modelYear,
-      'currentKm': instance.currentKm,
-    };

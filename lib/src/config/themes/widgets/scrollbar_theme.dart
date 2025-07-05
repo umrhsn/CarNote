@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 class AppScrollbarThemes {
   static ScrollbarThemeData scrollbarTheme({required bool isLight}) {
     return ScrollbarThemeData(
-      thickness: MaterialStateProperty.all(5),
-      thumbVisibility: MaterialStateProperty.all(true),
-      trackVisibility: MaterialStateProperty.all(true),
-      trackBorderColor: MaterialStateProperty.all(Colors.transparent),
-      thumbColor: MaterialStateProperty.all(isLight ? AppColors.hintLight : AppColors.hintDark),
+      thickness: WidgetStateProperty.all(5),
+      thumbVisibility: WidgetStateProperty.all(true),
+      trackVisibility: WidgetStateProperty.all(true),
+      trackBorderColor: WidgetStateProperty.all(Colors.transparent),
+      thumbColor: WidgetStateProperty.all(isLight ? AppColors.hintLight : AppColors.hintDark),
     );
   }
 }

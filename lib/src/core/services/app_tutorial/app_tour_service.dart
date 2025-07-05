@@ -21,21 +21,21 @@ class AppTourService {
     return showTutorial;
   }
 
-  static beginCarInfoScreenTour(BuildContext context) {
+  static void beginCarInfoScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createCarInfoScreenTour(context);
       Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));
     });
   }
 
-  static beginConsumablesScreenTour(BuildContext context) {
+  static void beginConsumablesScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createConsumablesScreenTour(context);
       Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));
     });
   }
 
-  static beginDashboardScreenTour(BuildContext context) {
+  static void beginDashboardScreenTour(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AppTourService._createDashboardScreenTour(context);
       Future.delayed(const Duration(seconds: AppNums.durationTutorialDelay), () => AppTourService.showTutorial(context));

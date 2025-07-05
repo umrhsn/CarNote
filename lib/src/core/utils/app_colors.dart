@@ -128,7 +128,7 @@ class AppColors {
 
   static Color getErrorColor(BuildContext context) => context.isLight ? errorLight : errorDark;
 
-  static Color getNormalTextColor(BuildContext context) => Theme.of(context).colorScheme.onBackground;
+  static Color getNormalTextColor(BuildContext context) => Theme.of(context).colorScheme.onSurface;
 
   static Color getHintColor(BuildContext context) => context.isLight ? hintLight : hintDark;
 

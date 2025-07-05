@@ -2,7 +2,7 @@
 // import 'package:flutter/material.dart';
 
 class AppTextThemes {
-  static textTheme() {
+  static void textTheme() {
     // return TextTheme(
     //   // displayLarge: TextStyle(fontSize: AppDimens.displayLarge),
     //   // displayMedium: TextStyle(fontSize: AppDimens.displayMedium),

@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     _fadeInOutAnimation();
   }
 
-  _loadWidget() async {
+  Future<Timer> _loadWidget() async {
     var duration = const Duration(seconds: AppNums.durationSplashDelay);
     return Timer(duration, _checkFirstSeen);
   }

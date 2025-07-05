@@ -44,15 +44,15 @@ class _AnimatedButtonWithIconState extends State<AnimatedButtonWithIcon> with Si
             : null,
         style: !widget.btnEnabled
             ? ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                elevation: MaterialStateProperty.all(0),
-                foregroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
-                backgroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
-                fixedSize: MaterialStateProperty.all(const Size(60, 60)),
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                elevation: WidgetStateProperty.all(0),
+                foregroundColor: WidgetStateProperty.all(AppColors.getBtnDisabledForeground(context)),
+                backgroundColor: WidgetStateProperty.all(AppColors.getBtnDisabledBackground(context)),
+                fixedSize: WidgetStateProperty.all(const Size(60, 60)),
               )
             : ButtonStyle(
-                padding: MaterialStateProperty.all(EdgeInsets.zero),
-                fixedSize: MaterialStateProperty.all(const Size(60, 60)),
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                fixedSize: WidgetStateProperty.all(const Size(60, 60)),
               ),
         child: widget.text != null
             ? Row(

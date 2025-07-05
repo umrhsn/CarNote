@@ -49,13 +49,13 @@ class _AnimatedButtonState extends State<AnimatedButton> with SingleTickerProvid
             : null,
         style: !widget.btnEnabled
             ? ButtonStyle(
-                elevation: MaterialStateProperty.all(0),
-                foregroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledForeground(context)),
-                backgroundColor: MaterialStateProperty.all(AppColors.getBtnDisabledBackground(context)),
-                fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, AppDimens.elevatedButtonHeight)),
+                elevation: WidgetStateProperty.all(0),
+                foregroundColor: WidgetStateProperty.all(AppColors.getBtnDisabledForeground(context)),
+                backgroundColor: WidgetStateProperty.all(AppColors.getBtnDisabledBackground(context)),
+                fixedSize: WidgetStateProperty.all(const Size(double.maxFinite, AppDimens.elevatedButtonHeight)),
               )
             : ButtonStyle(
-                fixedSize: MaterialStateProperty.all(const Size(double.maxFinite, AppDimens.elevatedButtonHeight)),
+                fixedSize: WidgetStateProperty.all(const Size(double.maxFinite, AppDimens.elevatedButtonHeight)),
               ),
         child: Text(widget.text),
       ),

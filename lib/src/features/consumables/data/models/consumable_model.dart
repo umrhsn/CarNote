@@ -1,30 +1,23 @@
 ﻿import 'package:car_note/src/features/consumables/domain/entities/consumable.dart';
 import 'package:hive/hive.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'consumable_model.g.dart';
 
 @HiveType(typeId: 2)
-@JsonSerializable()
 class ConsumableModel extends HiveObject {
   @HiveField(0)
-  @JsonKey(name: 'id')
   final int id;
-  
+
   @HiveField(1)
-  @JsonKey(name: 'name')
   String name;
-  
+
   @HiveField(2)
-  @JsonKey(name: 'lastChangedAt')
   final int lastChangedAt;
-  
+
   @HiveField(3)
-  @JsonKey(name: 'changeInterval')
   final int changeInterval;
-  
+
   @HiveField(4)
-  @JsonKey(name: 'remainingKm')
   final int remainingKm;
 
   ConsumableModel({
@@ -57,9 +50,26 @@ class ConsumableModel extends HiveObject {
     );
   }
 
-  // JSON serialization
-  factory ConsumableModel.fromJson(Map<String, dynamic> json) => _$ConsumableModelFromJson(json);
-  Map<String, dynamic> toJson() => _$ConsumableModelToJson(this);
+  // For JSON serialization (if needed for API calls)
+  factory ConsumableModel.fromJson(Map<String, dynamic> json) {
+    return ConsumableModel(
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      lastChangedAt: json['lastChangedAt'] ?? 0,
+      changeInterval: json['changeInterval'] ?? 0,
+      remainingKm: json['remainingKm'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'lastChangedAt': lastChangedAt,
+      'changeInterval': changeInterval,
+      'remainingKm': remainingKm,
+    };
+  }
 
   // Create a copy with updated values
   ConsumableModel copyWith({
@@ -81,25 +91,5 @@ class ConsumableModel extends HiveObject {
   @override
   String toString() {
     return 'ConsumableModel(id: $id, name: $name, lastChangedAt: $lastChangedAt, changeInterval: $changeInterval, remainingKm: $remainingKm)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is ConsumableModel &&
-        other.id == id &&
-        other.name == name &&
-        other.lastChangedAt == lastChangedAt &&
-        other.changeInterval == changeInterval &&
-        other.remainingKm == remainingKm;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        lastChangedAt.hashCode ^
-        changeInterval.hashCode ^
-        remainingKm.hashCode;
   }
 }

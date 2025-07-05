@@ -11,26 +11,21 @@ abstract class Failure extends Equatable {
 }
 
 class DatabaseFailure extends Failure {
-  const DatabaseFailure([String message = 'Database operation failed'])
-      : super(message);
+  const DatabaseFailure([super.message = 'Database operation failed']);
 }
 
 class CacheFailure extends Failure {
-  const CacheFailure([String message = 'Cache operation failed'])
-      : super(message);
+  const CacheFailure([super.message = 'Cache operation failed']);
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure([String message = 'Validation failed'])
-      : super(message);
+  const ValidationFailure([super.message = 'Validation failed']);
 }
 
 class NotificationFailure extends Failure {
-  const NotificationFailure([String message = 'Notification operation failed'])
-      : super(message);
+  const NotificationFailure([super.message = 'Notification operation failed']);
 }
 
 class FileFailure extends Failure {
-  const FileFailure([String message = 'File operation failed'])
-      : super(message);
+  const FileFailure([super.message = 'File operation failed']);
 }

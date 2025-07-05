@@ -1,6 +1,4 @@
 // lib/src/core/services/dialogs/dialog_helper.dart
-import 'package:bot_toast/bot_toast.dart';
-import 'package:car_note/src/core/extensions/string_helper.dart';
 import 'package:car_note/src/core/utils/app_strings.dart';
 import 'package:car_note/src/core/utils/app_texts.dart';
 import 'package:car_note/src/core/widgets/dialogs/warning_dialog.dart';

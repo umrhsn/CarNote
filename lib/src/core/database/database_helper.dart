@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:car_note/injection_container.dart' as di;
 
 class DatabaseHelper {
-  init() async {
+  Future<void> init() async {
     Directory dir = await getApplicationDocumentsDirectory();
     Hive
       ..init(dir.path)
