@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   /// Scaffold - Updated to match the light gray background from the image
   static const Color scaffoldBackgroundLight = Color(0xffF5F7FA);
-  static const Color scaffoldBackgroundDark =
-      Color(0xff0F172A); // Modern dark blue-gray
+  static const Color scaffoldBackgroundDark = Color(0xff0F172A); // Modern dark blue-gray
 
   /// Primary - Updated to match the blue accent color from the image
   static const Color primaryLight = Color(0xff007BFF);
@@ -48,8 +47,7 @@ class AppColors {
   static const Color boxShadowLight = Color(0xffE0E6ED);
   static const Color boxShadowDark = Color(0xff1E293B);
 
-  static Color getPrimaryColor(BuildContext context) =>
-      context.isLight ? primaryLight : primaryDark;
+  static Color getPrimaryColor(BuildContext context) => context.isLight ? primaryLight : primaryDark;
 
   static MaterialColor getPrimarySwatchColor({required bool isLight}) =>
       isLight ? _primarySwatchLight : _primarySwatchDark;
@@ -60,8 +58,7 @@ class AppColors {
   static const Color iconButtonLight = Color(0xff6B7280);
   static const Color iconButtonDark = Color(0xff94A3B8);
 
-  static Color getIconColor(BuildContext context) =>
-      context.isLight ? iconButtonLight : iconButtonDark;
+  static Color getIconColor(BuildContext context) => context.isLight ? iconButtonLight : iconButtonDark;
 
   /// TextFields
   static Color getAppBarTextFieldLabel(BuildContext context) =>
@@ -75,46 +72,35 @@ class AppColors {
   static final Color textFieldFocusedLight = primaryLight;
   static const Color textFieldFocusedDark = Color(0xff60A5FA);
 
-  static Color getTextFieldBorderAndLabel(BuildContext context) =>
-      context.isLight ? hintLight : hintDark;
+  static Color getTextFieldBorderAndLabel(BuildContext context) => context.isLight ? hintLight : hintDark;
 
   static Color getDisabledTextFieldFill(BuildContext context) =>
       context.isLight ? _disabledTextFieldLight : _disabledTextFieldDark;
 
-  static Color getValidatingTextColor(BuildContext context,
-          {required ConsumableCubit cubit, required int index}) =>
+  static Color getValidatingTextColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
       cubit.isNormalText(index)
           ? getHintColor(context)
           : cubit.isWarningText(index)
               ? AppColors.getWarningColor(context)
               : AppColors.getErrorColor(context);
 
-  static Color getLastChangedAndChangeIntervalLabelColorIndexed(
-          BuildContext context,
-          {required ConsumableCubit cubit,
-          required int index}) =>
-      AppTexts.getLastChangedKmValidatingText(context,
-                      cubit: cubit, index: index)
-                  .data !=
-              ''
+  static Color getLastChangedAndChangeIntervalLabelColorIndexed(BuildContext context,
+          {required ConsumableCubit cubit, required int index}) =>
+      AppTexts.getLastChangedKmValidatingText(context, cubit: cubit, index: index).data != ''
           ? getErrorColor(context)
           : cubit.lastChangedAtFocuses[index].hasFocus
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
-  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context,
-          {required ConsumableCubit cubit}) =>
+  static Color getLastChangedAndChangeIntervalLabelColor(BuildContext context, {required ConsumableCubit cubit}) =>
       cubit.getAddLastChangedKmValidatingText(context).data != ''
           ? getErrorColor(context)
           : cubit.lastChangedFocus.hasFocus
               ? getTextFieldBorderAndLabelFocused(context)
               : getTextFieldBorderAndLabel(context);
 
-  static Color getRemainingKmLabelColor(BuildContext context,
-          {required ConsumableCubit cubit, required int index}) =>
-      AppTexts.getRemainingKmValidatingText(context, cubit: cubit, index: index)
-                  .data !=
-              ''
+  static Color getRemainingKmLabelColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
+      AppTexts.getRemainingKmValidatingText(context, cubit: cubit, index: index).data != ''
           ? getValidatingTextColor(context, cubit: cubit, index: index)
           : cubit.remainingKmFocuses[index].hasFocus
               ? getTextFieldBorderAndLabelFocused(context)
@@ -126,8 +112,7 @@ class AppColors {
           ? getTextFieldBorderAndLabelFocused(context)
           : getTextFieldBorderAndLabel(context);
 
-  static Color getChangeIntervalLabelColor(BuildContext context,
-          {required ConsumableCubit cubit}) =>
+  static Color getChangeIntervalLabelColor(BuildContext context, {required ConsumableCubit cubit}) =>
       cubit.changeIntervalFocus.hasFocus
           ? getTextFieldBorderAndLabelFocused(context)
           : getTextFieldBorderAndLabel(context);
@@ -136,100 +121,79 @@ class AppColors {
   static final Color _btnDisabledLight = Color(0xffE5E7EB);
   static final Color _btnDisabledDark = Color(0xff374151);
 
-  static Color getBtnDisabledForeground(BuildContext context) => context.isLight
-      ? scaffoldBackgroundLight
-      : scaffoldBackgroundLight.withAlpha(60);
+  static Color getBtnDisabledForeground(BuildContext context) =>
+      context.isLight ? scaffoldBackgroundLight : scaffoldBackgroundLight.withAlpha(60);
 
-  static Color getBtnDisabledBackground(BuildContext context) =>
-      context.isLight ? _btnDisabledLight : _btnDisabledDark;
+  static Color getBtnDisabledBackground(BuildContext context) => context.isLight ? _btnDisabledLight : _btnDisabledDark;
 
   /// Texts
-  static const Color errorLight =
-      Color(0xffDC2626); // Updated to match red from image
+  static const Color errorLight = Color(0xffDC2626); // Updated to match red from image
   static const Color errorDark = Color(0xffF87171);
 
-  static const Color _warningLight =
-      Color(0xffF59E0B); // Updated to match orange/yellow from image
+  static const Color _warningLight = Color(0xffF59E0B); // Updated to match orange/yellow from image
   static const Color _warningDark = Color(0xffFBBF24);
 
-  static const Color hintLight =
-      Color(0xff6B7280); // Updated to match gray text from image
+  static const Color hintLight = Color(0xff6B7280); // Updated to match gray text from image
   static const Color hintDark = Color(0xffA1A1AA);
 
   /// Success color for positive status (extracted from green card in image)
   static const Color successLight = Color(0xff10B981);
   static const Color successDark = Color(0xff4ADE80);
 
-  static Color getWarningColor(BuildContext context) =>
-      context.isLight ? _warningLight : _warningDark;
+  static Color getWarningColor(BuildContext context) => context.isLight ? _warningLight : _warningDark;
 
-  static Color getErrorColor(BuildContext context) =>
-      context.isLight ? errorLight : errorDark;
+  static Color getErrorColor(BuildContext context) => context.isLight ? errorLight : errorDark;
 
-  static Color getSuccessColor(BuildContext context) =>
-      context.isLight ? successLight : successDark;
+  static Color getSuccessColor(BuildContext context) => context.isLight ? successLight : successDark;
 
-  static Color getNormalTextColor(BuildContext context) =>
-      Theme.of(context).colorScheme.onSurface;
+  static Color getNormalTextColor(BuildContext context) => Theme.of(context).colorScheme.onSurface;
 
-  static Color getHintColor(BuildContext context) =>
-      context.isLight ? hintLight : hintDark;
+  static Color getHintColor(BuildContext context) => context.isLight ? hintLight : hintDark;
 
   /// Cards - Updated to match the white/light cards from the image
   static const Color cardLight = Color(0xffFFFFFF);
   static const Color cardDark = Color(0xff1E293B);
 
-  static const Color _cardErrorLight =
-      Color(0xffFEF2F2); // Light red background
-  static const Color _cardErrorDark = Color(0xff3F1F1F);
+  static const Color cardErrorLight = Color(0xffFEF2F2); // Light red background
+  static const Color cardErrorDark = Color(0xff3F1F1F);
 
-  static const Color _cardWarningLight =
-      Color(0xffFFFBEB); // Light orange/yellow background
-  static const Color _cardWarningDark = Color(0xff3F3B1F);
+  static const Color cardWarningLight = Color(0xffFFFBEB); // Light orange/yellow background
+  static const Color cardWarningDark = Color(0xff3F3B1F);
 
-  static const Color _cardSuccessLight =
-      Color(0xffF0FDF4); // Light green background
-  static const Color _cardSuccessDark = Color(0xff1F3F25);
+  static const Color cardSuccessLight = Color(0xffF0FDF4); // Light green background
+  static const Color cardSuccessDark = Color(0xff1F3F25);
 
-  static Color getCardNormalColor(BuildContext context) =>
-      context.isLight ? cardLight : cardDark;
+  static Color getCardNormalColor(BuildContext context) => context.isLight ? cardLight : cardDark;
 
-  static Color getCardErrorColor(BuildContext context) =>
-      context.isLight ? _cardErrorLight : _cardErrorDark;
+  static Color getCardErrorColor(BuildContext context) => context.isLight ? cardErrorLight : cardErrorDark;
 
-  static Color getCardWarningColor(BuildContext context) =>
-      context.isLight ? _cardWarningLight : _cardWarningDark;
+  static Color getCardWarningColor(BuildContext context) => context.isLight ? cardWarningLight : cardWarningDark;
 
-  static Color getCardSuccessColor(BuildContext context) =>
-      context.isLight ? _cardSuccessLight : _cardSuccessDark;
+  static Color getCardSuccessColor(BuildContext context) => context.isLight ? cardSuccessLight : cardSuccessDark;
 
-  static Color getCardConsumableItemColor(BuildContext context,
-          {required ConsumableCubit cubit, required int index}) =>
+  static Color getCardConsumableItemColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
       cubit.isNormalText(index)
           ? getCardNormalColor(context)
-          : _getCardConsumableItemAbnormalColor(context,
-              cubit: cubit, index: index);
+          : _getCardConsumableItemAbnormalColor(context, cubit: cubit, index: index);
 
   static Color _getCardConsumableItemAbnormalColor(BuildContext context,
           {required ConsumableCubit cubit, required int index}) =>
       cubit.isErrorText(index) || cubit.isConsiderText(index)
-          ? _getCardConsumableItemErrorColor(context,
-              cubit: cubit, index: index)
+          ? _getCardConsumableItemErrorColor(context, cubit: cubit, index: index)
           : _getCardWarningColor(context, cubit: cubit, index: index);
 
   static Color _getCardConsumableItemErrorColor(BuildContext context,
           {required ConsumableCubit cubit, required int index}) =>
       cubit.isErrorText(index) || cubit.isConsiderText(index)
           ? context.isLight
-              ? _cardErrorLight
-              : _cardErrorDark
+              ? cardErrorLight
+              : cardErrorDark
           : getCardNormalColor(context);
 
-  static Color _getCardWarningColor(BuildContext context,
-          {required ConsumableCubit cubit, required int index}) =>
+  static Color _getCardWarningColor(BuildContext context, {required ConsumableCubit cubit, required int index}) =>
       cubit.isWarningText(index)
           ? context.isLight
-              ? _cardWarningLight
-              : _cardWarningDark
+              ? cardWarningLight
+              : cardWarningDark
           : getCardNormalColor(context);
 }
