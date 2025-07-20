@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 class AppTextFieldThemes {
   static InputDecorationTheme inputDecorationTheme({required bool isLight}) {
     OutlineInputBorder focusedBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(4),
         borderSide: BorderSide(
             color: isLight ? AppColors.textFieldFocusedLight : AppColors.textFieldFocusedDark,
             strokeAlign: 0,
             width: 2.0));
 
     OutlineInputBorder outlineBorderWithColorHint = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: isLight ? AppColors.hintLight : AppColors.hintDark, width: 1.0, strokeAlign: 0));
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: isLight ? AppColors.hintLight : AppColors.hintDark, width: 1.2, strokeAlign: 0));
 
     OutlineInputBorder focusedErrorBorder = OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),

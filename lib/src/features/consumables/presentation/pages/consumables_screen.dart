@@ -114,17 +114,17 @@ class _ConsumablesScreenState extends State<ConsumablesScreen> {
                         androidAdUnitId: AppIDs.adUnitConsumables),
 
                     // Debug button for testing notifications (remove in production)
-                    if (kDebugMode)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            debugPrint("🔔 Debug: Manual notification trigger");
-                            consumableCubit.triggerNotifications(context);
-                          },
-                          child: const Text("Test Notifications"),
-                        ),
-                      ),
+                    // if (kDebugMode)
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: ElevatedButton(
+                    //       onPressed: () {
+                    //         debugPrint("🔔 Debug: Manual notification trigger");
+                    //         consumableCubit.triggerNotifications(context);
+                    //       },
+                    //       child: const Text("Test Notifications"),
+                    //     ),
+                    //   ),
                   ],
                 ),
               ),

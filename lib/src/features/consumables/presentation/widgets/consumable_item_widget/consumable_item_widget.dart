@@ -38,37 +38,37 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool visible =
-        di.sl<SharedPreferences>().getBool(AppKeys.prefsBoolDetailedModeOn) ??
-            true;
+    bool visible = di.sl<SharedPreferences>().getBool(AppKeys.prefsBoolDetailedModeOn) ?? true;
 
-    widget.consumableCubit
-        .calculateRemainingKmAndCurrentKmDifference(widget.index);
+    widget.consumableCubit.calculateRemainingKmAndCurrentKmDifference(widget.index);
     widget.consumableCubit.calculateWarningDifference(widget.index);
     widget.consumableCubit.getRemainingKm(widget.index);
 
+    // Determine card color based on validation and status
+    Color cardColor;
+    if (AppTexts.getLastChangedKmValidatingText(context, cubit: widget.consumableCubit, index: widget.index).data !=
+        '') {
+      cardColor = AppColors.getCardErrorColor(context);
+    } else {
+      cardColor = AppColors.getCardConsumableItemColor(context, cubit: widget.consumableCubit, index: widget.index);
+    }
+
     return Padding(
       padding: EdgeInsets.only(
-          bottom: widget.index != (widget.consumableCubit.consumableCount - 1)
-              ? AppDimens.padding5
-              : 0),
+          bottom: widget.index != (widget.consumableCubit.consumableCount - 1) ? AppDimens.padding5 : 0),
       child: Card(
-        color: AppTexts.getLastChangedKmValidatingText(context,
-                        cubit: widget.consumableCubit, index: widget.index)
-                    .data !=
-                ''
-            ? AppColors.getCardErrorColor(context)
-            : AppColors.getCardConsumableItemColor(context,
-                cubit: widget.consumableCubit, index: widget.index),
+        color: cardColor,
+        elevation: 2.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsetsDirectional.only(
-                    top: AppDimens.padding20,
-                    bottom: AppDimens.padding8,
-                    start: AppDimens.padding10),
+                    top: AppDimens.padding20, bottom: AppDimens.padding8, start: AppDimens.padding10),
                 child: Row(
                   children: [
                     !_editing
@@ -80,18 +80,15 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                 widget.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: AppDimens.fontSize15),
+                                    fontSize: AppDimens.fontSize15,
+                                    color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ),
                           )
-                        : Expanded(
-                            child:
-                                ConsumableNameTextField(index: widget.index)),
-                    !_editing
-                        ? const Spacer()
-                        : const SizedBox(width: AppDimens.sizedBox30),
+                        : Expanded(child: ConsumableNameTextField(index: widget.index)),
+                    !_editing ? const Spacer() : const SizedBox(width: AppDimens.sizedBox30),
                     SizedBox(
                       width: 35.r,
                       child: Visibility(
@@ -102,20 +99,16 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                             Flexible(
                               child: IconButton(
                                   onPressed: () async {
-                                    final success = await widget.consumableCubit
-                                        .updateConsumableName(
-                                            context, widget.index);
+                                    final success =
+                                        await widget.consumableCubit.updateConsumableName(context, widget.index);
                                     if (success) {
                                       setState(() => _editing = false);
-                                      widget.consumableCubit
-                                          .consumableNameController.text = '';
+                                      widget.consumableCubit.consumableNameController.text = '';
                                     } else {
-                                      BotToast.showText(
-                                          text:
-                                              AppStrings.nameNotEmpty(context));
+                                      BotToast.showText(text: AppStrings.nameNotEmpty(context));
                                     }
                                   },
-                                  icon: const Icon(Icons.check)),
+                                  icon: Icon(Icons.check, color: AppColors.getSuccessColor(context))),
                             ),
                           ],
                         ),
@@ -133,58 +126,43 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                                 ? Flexible(
                                     child: IconButton(
                                         onPressed: () {
-                                          widget
-                                              .consumableCubit
-                                              .consumableNameController
-                                              .text = '';
+                                          widget.consumableCubit.consumableNameController.text = '';
                                           setState(() => _editing = false);
                                         },
-                                        icon: const Icon(Icons.close)),
+                                        icon: Icon(Icons.close, color: AppColors.getErrorColor(context))),
                                   )
                                 : const SizedBox(),
                             !_editing
                                 ? Flexible(
                                     child: IconButton(
                                         onPressed: () {
-                                          widget
-                                              .consumableCubit
-                                              .consumableNameController
-                                              .text = '';
+                                          widget.consumableCubit.consumableNameController.text = '';
                                           setState(() => _editing = true);
                                         },
                                         icon: Icon(Icons.edit,
-                                            key: widget.index == 0
-                                                ? AppKeys.keyEditName
-                                                : null)),
+                                            key: widget.index == 0 ? AppKeys.keyEditName : null,
+                                            color: AppColors.getIconColor(context))),
                                   )
                                 : const SizedBox(),
                             Flexible(
                               child: IconButton(
-                                onPressed: () => DialogHelper
-                                    .showResetConsumableConfirmationDialog(
-                                        context,
-                                        widget.index,
-                                        widget.consumableCubit),
+                                onPressed: () => DialogHelper.showResetConsumableConfirmationDialog(
+                                    context, widget.index, widget.consumableCubit),
                                 icon: Icon(
                                   MdiIcons.restore,
-                                  key: widget.index == 0
-                                      ? AppKeys.keyResetCard
-                                      : null,
+                                  key: widget.index == 0 ? AppKeys.keyResetCard : null,
+                                  color: AppColors.getWarningColor(context),
                                 ),
                               ),
                             ),
                             Flexible(
                               child: IconButton(
-                                onPressed: () => DialogHelper
-                                    .showRemoveConsumableConfirmationDialog(
-                                        context,
-                                        widget.index,
-                                        widget.consumableCubit),
+                                onPressed: () => DialogHelper.showRemoveConsumableConfirmationDialog(
+                                    context, widget.index, widget.consumableCubit),
                                 icon: Icon(
                                   MdiIcons.deleteForever,
-                                  key: widget.index == 0
-                                      ? AppKeys.keyRemoveCard
-                                      : null,
+                                  key: widget.index == 0 ? AppKeys.keyRemoveCard : null,
+                                  color: AppColors.getErrorColor(context),
                                 ),
                               ),
                             ),
@@ -198,8 +176,7 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
               Visibility(
                 visible: visible,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppDimens.padding10),
+                  padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
                   child: Column(
                     children: [
                       const SizedBox(height: AppDimens.sizedBox10),
@@ -207,12 +184,8 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          LastChangedTextFormField(
-                              cubit: widget.consumableCubit,
-                              index: widget.index),
-                          ChangeIntervalTextFormField(
-                              cubit: widget.consumableCubit,
-                              index: widget.index),
+                          LastChangedTextFormField(cubit: widget.consumableCubit, index: widget.index),
+                          ChangeIntervalTextFormField(cubit: widget.consumableCubit, index: widget.index),
                         ],
                       ),
                     ],
@@ -221,10 +194,8 @@ class ConsumableItemWidgetState extends State<ConsumableItemWidget> {
               ),
               const SizedBox(height: AppDimens.sizedBox8),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
-                child: RemainingKilometerTextFormField(
-                    cubit: widget.consumableCubit, index: widget.index),
+                padding: const EdgeInsets.symmetric(horizontal: AppDimens.padding10),
+                child: RemainingKilometerTextFormField(cubit: widget.consumableCubit, index: widget.index),
               ),
               const SizedBox(height: AppDimens.sizedBox20),
             ],

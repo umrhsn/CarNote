@@ -121,10 +121,20 @@ class AppColors {
   static final Color _btnDisabledLight = Color(0xffE5E7EB);
   static final Color _btnDisabledDark = Color(0xff374151);
 
-  static Color getBtnDisabledForeground(BuildContext context) =>
-      context.isLight ? scaffoldBackgroundLight : scaffoldBackgroundLight.withAlpha(60);
+  static Color getBtnDisabledForegroundLight() => scaffoldBackgroundLight;
 
-  static Color getBtnDisabledBackground(BuildContext context) => context.isLight ? _btnDisabledLight : _btnDisabledDark;
+  static Color getBtnDisabledForegroundDark() => scaffoldBackgroundLight.withAlpha(60);
+
+  static Color getBtnDisabledForeground(BuildContext? context) => context != null
+      ? (context.isLight ? getBtnDisabledForegroundLight() : getBtnDisabledForegroundDark())
+      : getBtnDisabledForegroundLight();
+
+  static Color getBtnDisabledBackgroundLight() => _btnDisabledLight;
+
+  static Color getBtnDisabledBackgroundDark() => _btnDisabledDark;
+
+  static Color getBtnDisabledBackground(BuildContext? context) =>
+      context != null ? (context.isLight ? _btnDisabledLight : _btnDisabledDark) : _btnDisabledLight;
 
   /// Texts
   static const Color errorLight = Color(0xffDC2626); // Updated to match red from image

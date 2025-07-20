@@ -9,7 +9,7 @@ class AppInputBorders {
         borderSide: BorderSide(
           color: AppColors.getTextFieldBorderAndLabelFocused(context),
           strokeAlign: 0,
-          width: 1.2,
+          width: 2.0,
         ),
       );
 
